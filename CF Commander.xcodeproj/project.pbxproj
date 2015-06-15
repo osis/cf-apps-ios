@@ -7,13 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30812DA93268737FC817AF66 /* Pods_CF_Commander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84669CD0AFF331E1AB1DC699 /* Pods_CF_Commander.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		651C847C1B2A7FB50006DC3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C847B1B2A7FB50006DC3A /* AppDelegate.swift */; };
 		651C847F1B2A7FB50006DC3A /* CF_Commander.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 651C847D1B2A7FB50006DC3A /* CF_Commander.xcdatamodeld */; };
 		651C84811B2A7FB50006DC3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C84801B2A7FB50006DC3A /* ViewController.swift */; };
 		651C84841B2A7FB50006DC3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 651C84821B2A7FB50006DC3A /* Main.storyboard */; };
-		651C84861B2A7FB50006DC3A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 651C84851B2A7FB50006DC3A /* Images.xcassets */; };
 		651C84891B2A7FB50006DC3A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 651C84871B2A7FB50006DC3A /* LaunchScreen.xib */; };
 		651C84951B2A7FB60006DC3A /* CF_CommanderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C84941B2A7FB60006DC3A /* CF_CommanderTests.swift */; };
+		651C84A31B2A9C5E0006DC3A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 651C84A21B2A9C5E0006DC3A /* Images.xcassets */; };
+		6533B5DA1B2E353800377E63 /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533B5D91B2E353800377E63 /* AppsViewController.swift */; };
+		6533B5DC1B2E419E00377E63 /* CF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533B5DB1B2E419E00377E63 /* CF.swift */; };
+		EE3C14310548B98E95F44EAF /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482DC6D2CB08F89E565F9137 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,24 +31,32 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		482DC6D2CB08F89E565F9137 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		651C84761B2A7FB50006DC3A /* CF Commander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CF Commander.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		651C847A1B2A7FB50006DC3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		651C847B1B2A7FB50006DC3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		651C847E1B2A7FB50006DC3A /* CF_Commander.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CF_Commander.xcdatamodel; sourceTree = "<group>"; };
 		651C84801B2A7FB50006DC3A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		651C84831B2A7FB50006DC3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		651C84851B2A7FB50006DC3A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		651C84881B2A7FB50006DC3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		651C848E1B2A7FB60006DC3A /* CF CommanderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CF CommanderTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		651C84931B2A7FB60006DC3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		651C84941B2A7FB60006DC3A /* CF_CommanderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CF_CommanderTests.swift; sourceTree = "<group>"; };
+		651C84A21B2A9C5E0006DC3A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		6533B5D91B2E353800377E63 /* AppsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsViewController.swift; sourceTree = "<group>"; };
+		6533B5DB1B2E419E00377E63 /* CF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CF.swift; sourceTree = "<group>"; };
+		78926A83B0CC406B909D0EF6 /* Pods-CF Commander.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CF Commander.release.xcconfig"; path = "Pods/Target Support Files/Pods-CF Commander/Pods-CF Commander.release.xcconfig"; sourceTree = "<group>"; };
+		84669CD0AFF331E1AB1DC699 /* Pods_CF_Commander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CF_Commander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AE3DD1734B951A1D95F4DBD /* Pods-CF Commander.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CF Commander.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CF Commander/Pods-CF Commander.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		651C84731B2A7FB50006DC3A /* Frameworks */ = {
+		19BA5FE226052FF747E9F688 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE3C14310548B98E95F44EAF /* Pods.framework in Frameworks */,
+				30812DA93268737FC817AF66 /* Pods_CF_Commander.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,12 +70,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4EC2FBA25392327415D172CB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				482DC6D2CB08F89E565F9137 /* Pods.framework */,
+				84669CD0AFF331E1AB1DC699 /* Pods_CF_Commander.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		651C846D1B2A7FB50006DC3A = {
 			isa = PBXGroup;
 			children = (
 				651C84781B2A7FB50006DC3A /* CF Commander */,
 				651C84911B2A7FB60006DC3A /* CF CommanderTests */,
 				651C84771B2A7FB50006DC3A /* Products */,
+				4EC2FBA25392327415D172CB /* Frameworks */,
+				CE51E9DDC2392426274CCE8C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,13 +102,16 @@
 		651C84781B2A7FB50006DC3A /* CF Commander */ = {
 			isa = PBXGroup;
 			children = (
+				651C849E1B2A92A30006DC3A /* Resources */,
 				651C847B1B2A7FB50006DC3A /* AppDelegate.swift */,
 				651C84801B2A7FB50006DC3A /* ViewController.swift */,
 				651C84821B2A7FB50006DC3A /* Main.storyboard */,
-				651C84851B2A7FB50006DC3A /* Images.xcassets */,
+				651C84A21B2A9C5E0006DC3A /* Images.xcassets */,
 				651C84871B2A7FB50006DC3A /* LaunchScreen.xib */,
 				651C847D1B2A7FB50006DC3A /* CF_Commander.xcdatamodeld */,
 				651C84791B2A7FB50006DC3A /* Supporting Files */,
+				6533B5D91B2E353800377E63 /* AppsViewController.swift */,
+				6533B5DB1B2E419E00377E63 /* CF.swift */,
 			);
 			path = "CF Commander";
 			sourceTree = "<group>";
@@ -115,6 +141,22 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		651C849E1B2A92A30006DC3A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		CE51E9DDC2392426274CCE8C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8AE3DD1734B951A1D95F4DBD /* Pods-CF Commander.debug.xcconfig */,
+				78926A83B0CC406B909D0EF6 /* Pods-CF Commander.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -122,9 +164,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 651C84981B2A7FB60006DC3A /* Build configuration list for PBXNativeTarget "CF Commander" */;
 			buildPhases = (
+				54AD34A839FDB01748EB7AA1 /* Check Pods Manifest.lock */,
 				651C84721B2A7FB50006DC3A /* Sources */,
-				651C84731B2A7FB50006DC3A /* Frameworks */,
 				651C84741B2A7FB50006DC3A /* Resources */,
+				19BA5FE226052FF747E9F688 /* Frameworks */,
+				8035C9E7F08484205BD6A222 /* Copy Pods Resources */,
+				D21D5C107B734184102FD3D2 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -195,9 +240,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				651C84A31B2A9C5E0006DC3A /* Images.xcassets in Resources */,
 				651C84841B2A7FB50006DC3A /* Main.storyboard in Resources */,
 				651C84891B2A7FB50006DC3A /* LaunchScreen.xib in Resources */,
-				651C84861B2A7FB50006DC3A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,13 +255,63 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		54AD34A839FDB01748EB7AA1 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8035C9E7F08484205BD6A222 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CF Commander/Pods-CF Commander-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D21D5C107B734184102FD3D2 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CF Commander/Pods-CF Commander-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		651C84721B2A7FB50006DC3A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				651C84811B2A7FB50006DC3A /* ViewController.swift in Sources */,
+				6533B5DA1B2E353800377E63 /* AppsViewController.swift in Sources */,
 				651C847C1B2A7FB50006DC3A /* AppDelegate.swift in Sources */,
+				6533B5DC1B2E419E00377E63 /* CF.swift in Sources */,
 				651C847F1B2A7FB50006DC3A /* CF_Commander.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -344,6 +439,7 @@
 		};
 		651C84991B2A7FB60006DC3A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8AE3DD1734B951A1D95F4DBD /* Pods-CF Commander.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "CF Commander/Info.plist";
@@ -354,6 +450,7 @@
 		};
 		651C849A1B2A7FB60006DC3A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 78926A83B0CC406B909D0EF6 /* Pods-CF Commander.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "CF Commander/Info.plist";
@@ -415,6 +512,7 @@
 				651C849A1B2A7FB60006DC3A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		651C849B1B2A7FB60006DC3A /* Build configuration list for PBXNativeTarget "CF CommanderTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +521,7 @@
 				651C849D1B2A7FB60006DC3A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

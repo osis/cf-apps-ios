@@ -1,0 +1,6 @@
+framework module Pods_CF_Commander {
+  umbrella header "Pods-CF Commander-umbrella.h"
+
+  export *
+  module * { export * }
+}
