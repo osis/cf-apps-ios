@@ -1,0 +1,1 @@
+LOCKSMITH_OTHER_LDFLAGS = -framework "Security" -framework "UIKit"
