@@ -56,7 +56,7 @@ class AppsViewController: UITableViewController {
     func login(completeClosure: () -> Void) {
         let (username: String?, password: String?) = Keychain.getCredentials()
         
-        setRefreshTitle("Authenticating...")
+        setRefreshTitle("Authenticating")
         CFApi.login(username!, password: password!, success: {
             self.fetchApplications(completeClosure)
             }, error: {
@@ -65,7 +65,7 @@ class AppsViewController: UITableViewController {
     }
     
     func fetchApplications(completeClosure: () -> Void) {
-        setRefreshTitle("Fetching Apps...")
+        setRefreshTitle("Fetching Apps")
         Alamofire.request(CF.Apps())
             .validate()
             .responseJSON { (request, response, data, error) in
@@ -84,7 +84,7 @@ class AppsViewController: UITableViewController {
         items = dataStack.mainContext.executeFetchRequest(request, error: nil) as! [CFApp]
         
         tableView.reloadData()
-        setRefreshTitle("Refresh Apps...")
+        setRefreshTitle("Refresh Apps")
     }
     
     func handleAppsResponse(data: AnyObject, completeClosure: () -> Void) {
