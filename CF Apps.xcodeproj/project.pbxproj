@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		193BC5E70C2B9B5F0DE4D210 /* Pods_CF_Apps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F77405F17D6E09FD0F7CB1 /* Pods_CF_Apps.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		65032FE61B61CDED007E7DA3 /* CFAppsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65032FE51B61CDED007E7DA3 /* CFAppsTests.swift */; };
+		65032FE71B61D8FA007E7DA3 /* CFApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44371B530622009ED489 /* CFApp.swift */; };
+		65032FE91B74507D007E7DA3 /* CFStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 655B44341B530622009ED489 /* CFStore.xcdatamodeld */; };
+		65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65032FED1B75B01A007E7DA3 /* KeychainTests.swift */; };
+		65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B443D1B530868009ED489 /* Keychain.swift */; };
+		6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */; };
+		6547EBB11B76D16E00C1E13E /* CFRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44391B530622009ED489 /* CFRequest.swift */; };
 		655B442E1B5305FD009ED489 /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B442C1B5305FD009ED489 /* AppsViewController.swift */; };
 		655B44321B53060E009ED489 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 655B44311B53060E009ED489 /* Info.plist */; };
 		655B443A1B530622009ED489 /* CFStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 655B44341B530622009ED489 /* CFStore.xcdatamodeld */; };
@@ -36,8 +43,11 @@
 		13F77405F17D6E09FD0F7CB1 /* Pods_CF_Apps.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CF_Apps.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		295620854460634F467BF474 /* Pods-CF Apps.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CF Apps.release.xcconfig"; path = "Pods/Target Support Files/Pods-CF Apps/Pods-CF Apps.release.xcconfig"; sourceTree = "<group>"; };
 		482DC6D2CB08F89E565F9137 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		65032FE51B61CDED007E7DA3 /* CFAppsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFAppsTests.swift; path = "CF AppsTests/Models/CFAppsTests.swift"; sourceTree = "<group>"; };
+		65032FED1B75B01A007E7DA3 /* KeychainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainTests.swift; path = "CF AppsTests/Data/KeychainTests.swift"; sourceTree = "<group>"; };
 		651C84761B2A7FB50006DC3A /* CF Apps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CF Apps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		651C848E1B2A7FB60006DC3A /* CF AppsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CF AppsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		651C848E1B2A7FB60006DC3A /* CF Apps Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CF Apps Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFRequestTests.swift; path = "CF AppsTests/Network/CFRequestTests.swift"; sourceTree = "<group>"; };
 		655B442C1B5305FD009ED489 /* AppsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsViewController.swift; sourceTree = "<group>"; };
 		655B44311B53060E009ED489 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		655B44351B530622009ED489 /* CFStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CFStore.xcdatamodel; sourceTree = "<group>"; };
@@ -85,10 +95,37 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		65032FE11B61CD12007E7DA3 /* CF Apps Tests */ = {
+			isa = PBXGroup;
+			children = (
+				65032FEA1B75ADC9007E7DA3 /* Data */,
+				65032FE21B61CD39007E7DA3 /* Models */,
+				6547EBA91B76CFCC00C1E13E /* Network */,
+			);
+			name = "CF Apps Tests";
+			sourceTree = "<group>";
+		};
+		65032FE21B61CD39007E7DA3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				65032FE51B61CDED007E7DA3 /* CFAppsTests.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		65032FEA1B75ADC9007E7DA3 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				65032FED1B75B01A007E7DA3 /* KeychainTests.swift */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
 		651C846D1B2A7FB50006DC3A = {
 			isa = PBXGroup;
 			children = (
 				651C84781B2A7FB50006DC3A /* CF Apps */,
+				65032FE11B61CD12007E7DA3 /* CF Apps Tests */,
 				651C84771B2A7FB50006DC3A /* Products */,
 				4EC2FBA25392327415D172CB /* Frameworks */,
 				CE51E9DDC2392426274CCE8C /* Pods */,
@@ -99,7 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				651C84761B2A7FB50006DC3A /* CF Apps.app */,
-				651C848E1B2A7FB60006DC3A /* CF AppsTests.xctest */,
+				651C848E1B2A7FB60006DC3A /* CF Apps Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,6 +164,14 @@
 				65EE6FCB1B4712A70047519D /* Images.xcassets */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		6547EBA91B76CFCC00C1E13E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */,
+			);
+			name = Network;
 			sourceTree = "<group>";
 		};
 		655B442B1B5305FD009ED489 /* Views */ = {
@@ -211,9 +256,9 @@
 			productReference = 651C84761B2A7FB50006DC3A /* CF Apps.app */;
 			productType = "com.apple.product-type.application";
 		};
-		651C848D1B2A7FB60006DC3A /* CF AppsTests */ = {
+		651C848D1B2A7FB60006DC3A /* CF Apps Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 651C849B1B2A7FB60006DC3A /* Build configuration list for PBXNativeTarget "CF AppsTests" */;
+			buildConfigurationList = 651C849B1B2A7FB60006DC3A /* Build configuration list for PBXNativeTarget "CF Apps Tests" */;
 			buildPhases = (
 				651C848A1B2A7FB60006DC3A /* Sources */,
 				651C848B1B2A7FB60006DC3A /* Frameworks */,
@@ -224,9 +269,9 @@
 			dependencies = (
 				651C84901B2A7FB60006DC3A /* PBXTargetDependency */,
 			);
-			name = "CF AppsTests";
+			name = "CF Apps Tests";
 			productName = "CF CommanderTests";
-			productReference = 651C848E1B2A7FB60006DC3A /* CF AppsTests.xctest */;
+			productReference = 651C848E1B2A7FB60006DC3A /* CF Apps Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -263,7 +308,7 @@
 			projectRoot = "";
 			targets = (
 				651C84751B2A7FB50006DC3A /* CF Apps */,
-				651C848D1B2A7FB60006DC3A /* CF AppsTests */,
+				651C848D1B2A7FB60006DC3A /* CF Apps Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -357,6 +402,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6547EBB11B76D16E00C1E13E /* CFRequest.swift in Sources */,
+				65032FE71B61D8FA007E7DA3 /* CFApp.swift in Sources */,
+				65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */,
+				65032FE91B74507D007E7DA3 /* CFStore.xcdatamodeld in Sources */,
+				65032FE61B61CDED007E7DA3 /* CFAppsTests.swift in Sources */,
+				6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */,
+				65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,7 +558,7 @@
 		651C849C1B2A7FB60006DC3A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -518,14 +570,16 @@
 				INFOPLIST_FILE = "CF AppsTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CF Commander.app/CF Commander";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CF Apps.app/CF Apps";
 			};
 			name = Debug;
 		};
 		651C849D1B2A7FB60006DC3A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -533,7 +587,8 @@
 				INFOPLIST_FILE = "CF AppsTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CF Commander.app/CF Commander";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CF Apps.app/CF Apps";
 			};
 			name = Release;
 		};
@@ -558,7 +613,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		651C849B1B2A7FB60006DC3A /* Build configuration list for PBXNativeTarget "CF AppsTests" */ = {
+		651C849B1B2A7FB60006DC3A /* Build configuration list for PBXNativeTarget "CF Apps Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				651C849C1B2A7FB60006DC3A /* Debug */,

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "220CBDBF96C75FCBFA3D6AE1"
+               BlueprintIdentifier = "4DA0ABE8981EE7FB5A45B9EB3149C8A6"
                BuildableName = "Pods_CF_Apps.framework"
                BlueprintName = "Pods-CF Apps"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -43,8 +43,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "651C848D1B2A7FB60006DC3A"
-               BuildableName = "CF AppsTests.xctest"
-               BlueprintName = "CF AppsTests"
+               BuildableName = "CF Apps Tests.xctest"
+               BlueprintName = "CF Apps Tests"
                ReferencedContainer = "container:CF Apps.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -61,8 +61,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "651C848D1B2A7FB60006DC3A"
-               BuildableName = "CF AppsTests.xctest"
-               BlueprintName = "CF AppsTests"
+               BuildableName = "CF Apps Tests.xctest"
+               BlueprintName = "CF Apps Tests"
                ReferencedContainer = "container:CF Apps.xcodeproj">
             </BuildableReference>
          </TestableReference>

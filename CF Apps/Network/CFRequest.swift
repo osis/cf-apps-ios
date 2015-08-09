@@ -27,15 +27,6 @@ enum CF: URLRequestConvertible {
         }
     }
     
-    var method: Alamofire.Method {
-        switch self {
-        case .Login:
-            return .POST
-        default:
-            return .GET
-        }
-    }
-    
     var path: String {
         switch self {
         case .Info:
@@ -46,8 +37,15 @@ enum CF: URLRequestConvertible {
             return "/v2/organizations"
         case .Apps:
             return "/v2/apps"
+        }
+    }
+    
+    var method: Alamofire.Method {
+        switch self {
+        case .Login:
+            return .POST
         default:
-            return "/"
+            return .GET
         }
     }
     

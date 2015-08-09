@@ -10,7 +10,7 @@ import Foundation
 import Locksmith
 
 class Keychain {
-    static let loginAccount: String = "cfLogin"
+    class var loginAccount: String { return "cfLogin" }
     
     class func hasCredentials() -> BooleanType {
         let (dictionary, error) = Locksmith.loadDataForUserAccount(loginAccount)
