@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14F27" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="CFApp" representedClassName="CFApp" syncable="YES">
         <attribute name="buildpack" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="detectedBuildpack" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="diskQuota" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="guid" optional="YES" attributeType="String" syncable="YES">
@@ -16,6 +17,6 @@
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CFApp" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="CFApp" positionX="-63" positionY="-18" width="128" height="193"/>
     </elements>
 </model>

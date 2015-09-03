@@ -23,7 +23,6 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        apiTargetField.text = "https://api.run.pivotal.io"
         
         hideLoginForm()
     }

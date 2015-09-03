@@ -16,7 +16,7 @@ enum CF: URLRequestConvertible {
     case Info()
     case Login(String, String)
     case Orgs()
-    case Apps()
+    case Apps(Int)
     
     var baseURLString: String {
         switch self {
@@ -60,7 +60,7 @@ enum CF: URLRequestConvertible {
         
         switch self {
         case .Login(let username, let password):
-            let parameters = [
+            let loginParams = [
                 "grant_type": "password",
                 "username": username,
                 "password": password,
@@ -69,7 +69,15 @@ enum CF: URLRequestConvertible {
             
             mutableURLRequest.setValue("Basic \(CF.loginAuthToken)", forHTTPHeaderField: "Authorization")
             
-            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
+            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: loginParams).0
+        case .Apps(let page):
+            let appsParams: [String : AnyObject] = [
+                "order-direction": "desc",
+                "results-per-page": "25",
+                "page": page,
+            ]
+            
+            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: appsParams).0
         default:
             return mutableURLRequest
         }

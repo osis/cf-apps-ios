@@ -73,7 +73,7 @@ public class Request {
 
         :returns: The request.
     */
-    public func authenticate(#user: String, password: String) -> Self {
+    public func authenticate(user: String, password: String) -> Self {
         let credential = NSURLCredential(user: user, password: password, persistence: .ForSession)
 
         return authenticate(usingCredential: credential)

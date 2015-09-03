@@ -51,7 +51,7 @@ class CFAppsTests: XCTestCase {
         let cfApp = makeApp()
         cfApp.name = ""
         
-        XCTAssert((cfApp.name as Any) is String, "Name is a String")
+        XCTAssert((cfApp.name as Any?) is String, "Name is a String")
     }
     
     func testPackageStateType() {

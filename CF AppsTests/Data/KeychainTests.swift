@@ -18,6 +18,7 @@ class KeychainTests: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
+        Locksmith.clearKeychain()
     }
     
     func setCredentials() -> NSError? {

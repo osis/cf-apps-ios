@@ -18,7 +18,8 @@ class AppsViewController: UITableViewController {
     var token:String?
     let dataStack: DATAStack
     var items = [CFApp]()
-    var currentPage = 0
+    var currentPage = 1
+    var totalPages:Int?
 
     required init!(coder aDecoder: NSCoder!) {
         dataStack = DATAStack(modelName: "CFStore")
@@ -35,6 +36,8 @@ class AppsViewController: UITableViewController {
     }
     
     @IBAction func refresh(sender: UIRefreshControl) {
+        currentPage = 1
+        dataStack.drop()
         loadApplications({
             sender.endRefreshing()
             self.fetchCurrentObjects()
@@ -66,20 +69,22 @@ class AppsViewController: UITableViewController {
     
     func fetchApplications(completeClosure: () -> Void) {
         setRefreshTitle("Fetching Apps")
-        Alamofire.request(CF.Apps())
+        Alamofire.request(CF.Apps(currentPage))
             .validate()
             .responseJSON { (request, response, data, error) in
                 if (error != nil) {
                     println(error)
                 } else {
-                    self.handleAppsResponse(data!, completeClosure: completeClosure)
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                        self.handleAppsResponse(data!, completeClosure: completeClosure)
+                    }
                 }
         }
     }
     
     func fetchCurrentObjects() {
         let request = NSFetchRequest(entityName: "CFApp")
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
         items = dataStack.mainContext.executeFetchRequest(request, error: nil) as! [CFApp]
         
@@ -101,22 +106,39 @@ class AppsViewController: UITableViewController {
                 json["resources"][index][metadataKey] = metadataSubJson
             }
             json["resources"][index]["metadata"] = nil
-
         }
+        
+        self.totalPages = json["total_pages"].intValue
+        
+        let app_count = json["total_results"]
+        
+        let predicate = NSPredicate(format: "guid == ''")
 
-        Sync.changes(
-            json["resources"].arrayObject,
-            inEntityNamed: "CFApp",
-            dataStack: dataStack,
-            completion: { error in
-                completeClosure()
-            }
-        )
-        println(json["resources"][0])
+        
+            Sync.changes(
+                json["resources"].arrayObject,
+                inEntityNamed: "CFApp",
+                predicate: predicate,
+                dataStack: self.dataStack,
+                completion: { error in
+                    completeClosure()
+                }
+            )
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (items.count > 1 && indexPath.row == items.count-1 && currentPage < totalPages) {
+            currentPage++
+            self.tableView.tableFooterView = loadingCell()
+            loadApplications({
+                self.fetchCurrentObjects()
+                self.tableView.tableFooterView = nil
+            })
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -138,26 +160,14 @@ class AppsViewController: UITableViewController {
         diskLabel.text = String(stringInterpolationSegment: cfApp.diskQuota)
         stateView.image = UIImage(named: cfApp.statusImageName())
         buildpackLabel.text = cfApp.activeBuildpack()
-        
+    
         return cell
     }
     
-    func loadingCell() -> UITableViewCell {
-        var cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: nil)
-        var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
-        
-        activityIndicator.center = cell.center
-        cell.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-        cell.tag = 99
-        
-        return cell
+    func loadingCell() -> UIActivityIndicatorView {
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+        spinner.startAnimating()
+        spinner.frame = CGRectMake(0, 0, 320, 44)
+        return spinner
     }
-    
-//    func mergeChild(parentJson: JSON, childKey: String) {
-//        for (key: String, subJson: JSON) in parentJson[childKey] {
-//            parentJson.dictionaryObject[key] = subJson.dictionaryObject
-//        }
-//        parentJson[childKey] = nil
-//    }
 }

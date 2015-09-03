@@ -97,14 +97,15 @@ class CFRequestTests: XCTestCase {
     
     func testAppsMember() {
         let path = "/v2/apps"
-        let request: NSURLRequest = CF.Apps().URLRequest
+        var currentPage: Int = 1
+        let request: NSURLRequest = CF.Apps(currentPage).URLRequest
         
-        XCTAssert((CF.Apps() as Any) is CF, "Apps is a member")
-        XCTAssertEqual(CF.Apps().baseURLString, baseApiURL, "Apps returns api URL")
-        XCTAssertEqual(CF.Apps().path, "/v2/apps", "Apps returns applications path")
-        XCTAssertEqual(CF.Apps().method, Alamofire.Method.GET, "Apps request method is GET")
+        XCTAssert((CF.Apps(currentPage) as Any) is CF, "Apps is a member")
+        XCTAssertEqual(CF.Apps(currentPage).baseURLString, baseApiURL, "Apps returns api URL")
+        XCTAssertEqual(CF.Apps(currentPage).path, "/v2/apps", "Apps returns applications path")
+        XCTAssertEqual(CF.Apps(currentPage).method, Alamofire.Method.GET, "Apps request method is GET")
         
-        XCTAssertEqual(request.URLString, baseApiURL + path, "Apps urlrequest returns the apps url")
+        XCTAssertEqual(request.URLString, baseApiURL + path + "?order-direction=desc&page=1&results-per-page=25", "Apps urlrequest returns the apps url")
         XCTAssertNil(request.valueForHTTPHeaderField("Authorization"), "Apps doesn't use basic auth")
     }
     
