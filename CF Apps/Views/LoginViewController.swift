@@ -23,6 +23,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        apiTargetField.text = "https://api.run.pivotal.io"
         
         hideLoginForm()
     }
@@ -75,9 +76,9 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPushed(sender: UIButton) {
-        let url = authEndpoint! + "/oauth/token"
+//        let url = authEndpoint! + "/oauth/token"
         
-        CFApi.login(usernameField.text, password: passwordField.text, success: {
+        CFApi.login(usernameField.text!, password: passwordField.text!, success: {
             self.performSegueWithIdentifier("loginSegue", sender: nil)
         }, error: {
             self.passwordField.layer.borderColor = UIColor.redColor().CGColor
@@ -87,19 +88,19 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func targetPushed(sender: AnyObject) {
-        var url = apiTargetField.text + "/v2/info"
+//        var url = apiTargetField.text! + "/v2/info"
         Alamofire.request(CF.Info())
             .validate()
-            .responseJSON { (request, response, data, error) in
-                if (error != nil) {
-                    self.apiTargetField.layer.borderColor = UIColor.redColor().CGColor
-                    self.apiTargetField.layer.borderWidth = 1
-                    self.apiTargetField.layer.masksToBounds = true
-                } else {
-                    let json = JSON(data!)
+            .responseJSON { (_, _, result) in
+                if (result.isSuccess) {
+                    let json = JSON(result.value!)
                     self.authEndpoint = json["authorization_endpoint"].string
                     self.hideTargetForm()
                     self.showLoginForm()
+                } else {
+                    self.apiTargetField.layer.borderColor = UIColor.redColor().CGColor
+                    self.apiTargetField.layer.borderWidth = 1
+                    self.apiTargetField.layer.masksToBounds = true
                 }
         }
     }

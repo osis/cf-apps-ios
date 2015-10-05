@@ -17,6 +17,7 @@
                 localKey:localKey
                remoteKey:remoteKey
                  context:context
+               predicate:nil
                 inserted:inserted
                  updated:updated];
 }

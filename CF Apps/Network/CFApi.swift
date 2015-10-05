@@ -14,11 +14,9 @@ class CFApi {
     class func login(username: String, password: String, success: () -> Void, error: () -> Void) {
         Alamofire.request(CF.Login(username, password))
             .validate()
-            .responseJSON { (request, response, data, _error) in
-                if (_error != nil) {
-                    error()
-                } else {
-                    let json = JSON(data!)
+            .responseJSON { (_, _, result) in
+                if (result.isSuccess) {
+                    let json = JSON(result.value!)
                     let token = json["access_token"].string
                     CF.oauthToken = token
                     Keychain.setCredentials([
@@ -26,6 +24,8 @@ class CFApi {
                         "password": password
                         ])
                     success()
+                } else {
+                    error()
                 }
         }
     }

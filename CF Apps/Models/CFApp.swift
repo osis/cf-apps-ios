@@ -21,7 +21,7 @@ class CFApp: NSManagedObject {
     @NSManaged var state: String
     @NSManaged var diskQuota: Int32
     @NSManaged var memory: Int32
-    @NSManaged var instances: Int16
+    @NSManaged var command: String
     
     func activeBuildpack() -> String {
         if ((detectedBuildpack?.isEmpty) == false) {
@@ -43,5 +43,4 @@ class CFApp: NSManagedObject {
             return "stopped"
         }
     }
-    
 }

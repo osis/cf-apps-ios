@@ -82,13 +82,6 @@ class CFAppsTests: XCTestCase {
         XCTAssert((cfApp.memory as Any) is Int32, "Disk quota is an Int32")
     }
     
-    func testInstancesType() {
-        let cfApp = makeApp()
-        cfApp.instances = 0
-        
-        XCTAssert((cfApp.instances as Any) is Int16, "Instance is an Int16")
-    }
-    
     func testEmptyActiveBuildpack() {
         let cfApp = makeApp()
         

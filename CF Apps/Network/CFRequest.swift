@@ -17,6 +17,8 @@ enum CF: URLRequestConvertible {
     case Login(String, String)
     case Orgs()
     case Apps(Int)
+    case AppSummary(String)
+    case AppStats(String)
     
     var baseURLString: String {
         switch self {
@@ -37,6 +39,10 @@ enum CF: URLRequestConvertible {
             return "/v2/organizations"
         case .Apps:
             return "/v2/apps"
+        case .AppSummary(let guid):
+            return "/v2/apps/\(guid)/summary"
+        case .AppStats(let guid):
+            return "/v2/apps/\(guid)/stats"
         }
     }
     
@@ -49,7 +55,7 @@ enum CF: URLRequestConvertible {
         }
     }
     
-    var URLRequest: NSURLRequest {
+    var URLRequest: NSMutableURLRequest {
         let URL = NSURL(string: baseURLString)!
         let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
         mutableURLRequest.HTTPMethod = method.rawValue

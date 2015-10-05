@@ -21,7 +21,7 @@ class AppsViewController: UITableViewController {
     var currentPage = 1
     var totalPages:Int?
 
-    required init!(coder aDecoder: NSCoder!) {
+    required init!(coder aDecoder: NSCoder) {
         dataStack = DATAStack(modelName: "CFStore")
         super.init(coder: aDecoder)
     }
@@ -33,6 +33,16 @@ class AppsViewController: UITableViewController {
             self.fetchCurrentObjects()
             self.refreshControl!.endRefreshing()
         })
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "app") {
+            let controller = segue.destinationViewController as! AppViewController
+            let cell = sender as! UITableViewCell
+            let index = self.tableView.indexPathForCell(cell)
+            
+            controller.app = items[index!.item]
+        }
     }
     
     @IBAction func refresh(sender: UIRefreshControl) {
@@ -57,13 +67,13 @@ class AppsViewController: UITableViewController {
     }
     
     func login(completeClosure: () -> Void) {
-        let (username: String?, password: String?) = Keychain.getCredentials()
+        let (username, password) = Keychain.getCredentials()
         
         setRefreshTitle("Authenticating")
         CFApi.login(username!, password: password!, success: {
             self.fetchApplications(completeClosure)
             }, error: {
-                println("Well this is embarrassing...")
+                print("Well this is embarrassing...")
         })
     }
     
@@ -71,13 +81,13 @@ class AppsViewController: UITableViewController {
         setRefreshTitle("Fetching Apps")
         Alamofire.request(CF.Apps(currentPage))
             .validate()
-            .responseJSON { (request, response, data, error) in
-                if (error != nil) {
-                    println(error)
-                } else {
+            .responseJSON { (_, _, result) in
+                if (result.isSuccess) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                        self.handleAppsResponse(data!, completeClosure: completeClosure)
+                        self.handleAppsResponse(result.value!, completeClosure: completeClosure)
                     }
+                } else {
+                    print(result.value)
                 }
         }
     }
@@ -86,7 +96,7 @@ class AppsViewController: UITableViewController {
         let request = NSFetchRequest(entityName: "CFApp")
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
-        items = dataStack.mainContext.executeFetchRequest(request, error: nil) as! [CFApp]
+        try! items = dataStack.mainContext.executeFetchRequest(request) as! [CFApp]
         
         tableView.reloadData()
         setRefreshTitle("Refresh Apps")
@@ -94,15 +104,15 @@ class AppsViewController: UITableViewController {
     
     func handleAppsResponse(data: AnyObject, completeClosure: () -> Void) {
         var json = JSON(data)
-        for (key: String, subJson: JSON) in json["resources"] {
-            var index = key.toInt()!
+        for (key, subJson) in json["resources"] {
+            let index = Int(key)!
             
-            for (entityKey: String, entitySubJson: JSON) in subJson["entity"] {
+            for (entityKey, entitySubJson) in subJson["entity"] {
                 json["resources"][index][entityKey] = entitySubJson
             }
             json["resources"][index]["entity"] = nil
             
-            for (metadataKey: String, metadataSubJson: JSON) in subJson["metadata"] {
+            for (metadataKey, metadataSubJson) in subJson["metadata"] {
                 json["resources"][index][metadataKey] = metadataSubJson
             }
             json["resources"][index]["metadata"] = nil
@@ -110,20 +120,19 @@ class AppsViewController: UITableViewController {
         
         self.totalPages = json["total_pages"].intValue
         
-        let app_count = json["total_results"]
+//        let app_count = json["total_results"]
         
         let predicate = NSPredicate(format: "guid == ''")
 
-        
-            Sync.changes(
-                json["resources"].arrayObject,
-                inEntityNamed: "CFApp",
-                predicate: predicate,
-                dataStack: self.dataStack,
-                completion: { error in
-                    completeClosure()
-                }
-            )
+        Sync.changes(
+            json["resources"].arrayObject,
+            inEntityNamed: "CFApp",
+            predicate: predicate,
+            dataStack: self.dataStack,
+            completion: { error in
+                completeClosure()
+            }
+        )
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -146,7 +155,7 @@ class AppsViewController: UITableViewController {
     }
     
     func appCell(indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = self.tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as! UITableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as UITableViewCell!
         let cfApp = self.items[indexPath.row]
         
         let appNameLabel: UILabel = cell.viewWithTag(1) as! UILabel

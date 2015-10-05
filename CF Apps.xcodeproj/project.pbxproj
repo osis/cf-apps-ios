@@ -16,13 +16,15 @@
 		6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */; };
 		6547EBB11B76D16E00C1E13E /* CFRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44391B530622009ED489 /* CFRequest.swift */; };
 		655B442E1B5305FD009ED489 /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B442C1B5305FD009ED489 /* AppsViewController.swift */; };
-		655B44321B53060E009ED489 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 655B44311B53060E009ED489 /* Info.plist */; };
 		655B443A1B530622009ED489 /* CFStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 655B44341B530622009ED489 /* CFStore.xcdatamodeld */; };
 		655B443B1B530622009ED489 /* CFApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44371B530622009ED489 /* CFApp.swift */; };
 		655B443C1B530622009ED489 /* CFRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44391B530622009ED489 /* CFRequest.swift */; };
 		655B443E1B530869009ED489 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B443D1B530868009ED489 /* Keychain.swift */; };
 		655B44401B530E1A009ED489 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B443F1B530E1A009ED489 /* LoginViewController.swift */; };
 		655B44421B532531009ED489 /* CFApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44411B532531009ED489 /* CFApi.swift */; };
+		65671C331B97D858003F4DC9 /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65671C321B97D857003F4DC9 /* AppViewController.swift */; };
+		65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65782EE91BC08A510005040F /* InstancesViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		65DBB5F81BC0D09200BD19BC /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBB5F71BC0D09200BD19BC /* Instance.swift */; settings = {ASSET_TAGS = (); }; };
 		65EE6FCC1B4712A70047519D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FCB1B4712A70047519D /* Images.xcassets */; };
 		65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE6FCD1B4712B30047519D /* AppDelegate.swift */; };
 		65EE6FDD1B4713E80047519D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FD91B4713E80047519D /* LaunchScreen.xib */; };
@@ -56,6 +58,9 @@
 		655B443D1B530868009ED489 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		655B443F1B530E1A009ED489 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		655B44411B532531009ED489 /* CFApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFApi.swift; sourceTree = "<group>"; };
+		65671C321B97D857003F4DC9 /* AppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
+		65782EE91BC08A510005040F /* InstancesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstancesViewController.swift; sourceTree = "<group>"; };
+		65DBB5F71BC0D09200BD19BC /* Instance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instance.swift; sourceTree = "<group>"; };
 		65EE6FCB1B4712A70047519D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "CF Apps/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		65EE6FCD1B4712B30047519D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "CF Apps/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		65EE6FDA1B4713E80047519D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "CF Apps/Base.lproj/LaunchScreen.xib"; sourceTree = SOURCE_ROOT; };
@@ -179,6 +184,8 @@
 			children = (
 				655B442C1B5305FD009ED489 /* AppsViewController.swift */,
 				655B443F1B530E1A009ED489 /* LoginViewController.swift */,
+				65671C321B97D857003F4DC9 /* AppViewController.swift */,
+				65782EE91BC08A510005040F /* InstancesViewController.swift */,
 			);
 			name = Views;
 			path = "CF Apps/Views";
@@ -207,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				655B44371B530622009ED489 /* CFApp.swift */,
+				65DBB5F71BC0D09200BD19BC /* Instance.swift */,
 			);
 			name = Models;
 			path = "CF Apps/Models";
@@ -281,7 +289,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Dwayne Forde";
 				TargetAttributes = {
 					651C84751B2A7FB50006DC3A = {
@@ -321,7 +329,6 @@
 				65EE6FDD1B4713E80047519D /* LaunchScreen.xib in Resources */,
 				65EE6FDE1B4713E80047519D /* Main.storyboard in Resources */,
 				65EE6FCC1B4712A70047519D /* Images.xcassets in Resources */,
-				655B44321B53060E009ED489 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,12 +394,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65DBB5F81BC0D09200BD19BC /* Instance.swift in Sources */,
 				655B442E1B5305FD009ED489 /* AppsViewController.swift in Sources */,
+				65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */,
 				655B44421B532531009ED489 /* CFApi.swift in Sources */,
 				655B443C1B530622009ED489 /* CFRequest.swift in Sources */,
 				655B443B1B530622009ED489 /* CFApp.swift in Sources */,
 				655B44401B530E1A009ED489 /* LoginViewController.swift in Sources */,
 				655B443A1B530622009ED489 /* CFStore.xcdatamodeld in Sources */,
+				65671C331B97D858003F4DC9 /* AppViewController.swift in Sources */,
 				65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */,
 				655B443E1B530869009ED489 /* Keychain.swift in Sources */,
 			);
@@ -463,6 +473,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -535,6 +546,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/CF Apps/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dwayneforde.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -550,6 +562,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/CF Apps/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dwayneforde.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -569,6 +582,7 @@
 				);
 				INFOPLIST_FILE = "CF AppsTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dwayneforde.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -586,6 +600,7 @@
 				);
 				INFOPLIST_FILE = "CF AppsTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dwayneforde.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CF Apps.app/CF Apps";

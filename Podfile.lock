@@ -1,45 +1,44 @@
 PODS:
-  - Alamofire (1.2.3)
-  - DATAFilter (0.8.1):
+  - Alamofire (2.0.1)
+  - DATAFilter (0.8.4):
     - DATAObjectIDs
   - DATAObjectIDs (0.5.0)
-  - DATAStack (3.0.4):
+  - DATAStack (3.1.0):
     - NSObject-HYPTesting (~> 1.2)
-  - Locksmith (1.2.2)
+  - Locksmith (2.0.1)
   - NSDictionary-ANDYSafeValue (0.3)
   - NSEntityDescription-SYNCPrimaryKey (0.1.0):
     - NSString-HYPNetworking
-  - NSManagedObject-HYPPropertyMapper (3.0.4):
+  - NSManagedObject-HYPPropertyMapper (3.3.0):
     - NSString-HYPNetworking (~> 0.3.2)
   - NSObject-HYPTesting (1.2)
   - NSString-HYPNetworking (0.3.2)
-  - SwiftyJSON (2.2.0)
-  - Sync (1.0.5):
-    - DATAFilter (~> 0.8.1)
-    - DATAStack (~> 3.0.4)
+  - SwiftyJSON (2.3.0)
+  - Sync (1.0.10):
+    - DATAFilter (~> 0.8.4)
+    - DATAStack (~> 3.1.0)
     - NSDictionary-ANDYSafeValue (~> 0.3)
     - NSEntityDescription-SYNCPrimaryKey (~> 0.1.0)
-    - NSManagedObject-HYPPropertyMapper (~> 3.0.4)
+    - NSManagedObject-HYPPropertyMapper (~> 3.3.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 1.2)
-  - DATAStack (~> 3.0.4)
-  - Locksmith
-  - SwiftyJSON (~> 2.2.0)
-  - Sync
+  - Alamofire (~> 2.0)
+  - Locksmith (~> 2.0.0)
+  - SwiftyJSON (~> 2.3)
+  - Sync (~> 1.0.10)
 
 SPEC CHECKSUMS:
-  Alamofire: 5550bf0b575ed1a4bf9be572f9463e1015cc169e
-  DATAFilter: 3f89692f7c52dd3c3973287ee8c9bb2c0e76d344
+  Alamofire: 1d8e208d616fbbfd2391b15eae766d07c96cdc49
+  DATAFilter: 3f224f9ffde5c04de4748b65cc259c6481770edf
   DATAObjectIDs: 472eae6d8d6b57109b973c837ec3dd5e78016ab6
-  DATAStack: de58e278b0487ff5a508d158cc74dd8b5e302389
-  Locksmith: c84c10bf23f99e6d04703dba65065dc38b038d88
+  DATAStack: 86cb614db684cf29d51fcc5de705e9d4b92cd90d
+  Locksmith: 2c7bdc5c3a31a97d748791ad830310b1af4b8549
   NSDictionary-ANDYSafeValue: c15ff39a6b1b82a52ea277c64520c7b574715afc
   NSEntityDescription-SYNCPrimaryKey: 72f1f0d30a7e8eb9d93277b1ce623cbaa6e47a38
-  NSManagedObject-HYPPropertyMapper: 165dc76cc94e9a59e0c86b19aee974e20db47c36
+  NSManagedObject-HYPPropertyMapper: 5963b59f14b1f208ad47ac2dbb7f8ae2c64c2beb
   NSObject-HYPTesting: fadde70c75061b731b313c390e20777aed0a914d
   NSString-HYPNetworking: f95766d4dc5693b45a0331ab8cf3a0b998f38cd7
-  SwiftyJSON: 0b3e6c07af17ff745e77e8e9984097b55c956e5c
-  Sync: 984b6dfb10cf8a7df97e7bfe22e1babb403fd4c7
+  SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
+  Sync: bbe7f023223fd9eb6705d2c5a6c49af7a38857e0
 
-COCOAPODS: 0.38.0.beta.2
+COCOAPODS: 0.39.0.beta.4

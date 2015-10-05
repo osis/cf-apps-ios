@@ -67,18 +67,18 @@ class CFRequestTests: XCTestCase {
         XCTAssertEqual(request.URLString, baseLoginURL + path, "Login urlrequest returns the login URL")
         XCTAssertEqual(request.valueForHTTPHeaderField("Authorization")!, "Basic \(CF.loginAuthToken)", "URLRequest returns the login URL")
 
-        var requestBody = NSString(data: request.HTTPBody!, encoding: NSUTF8StringEncoding)
+        let requestBody = NSString(data: request.HTTPBody!, encoding: NSUTF8StringEncoding)
         
-        var grantLocation = requestBody!.rangeOfString("grant_type=password").location
+        let grantLocation = requestBody!.rangeOfString("grant_type=password").location
         XCTAssertNotEqual(grantLocation, NSNotFound, "Login should have a grant_type param")
         
-        var usernameLocation = requestBody!.rangeOfString("username=testUser").location
+        let usernameLocation = requestBody!.rangeOfString("username=testUser").location
         XCTAssertNotEqual(usernameLocation, NSNotFound, "Login should have a grant_type param")
         
-        var passwordLocation = requestBody!.rangeOfString("password=testPassword").location
+        let passwordLocation = requestBody!.rangeOfString("password=testPassword").location
         XCTAssertNotEqual(passwordLocation, NSNotFound, "Login should have a grant_type param")
         
-        var scopeLocation = requestBody!.rangeOfString("scope=&").location
+        let scopeLocation = requestBody!.rangeOfString("scope=&").location
         XCTAssertNotEqual(scopeLocation, NSNotFound, "Login should have an empty scope param")
     }
     
@@ -97,7 +97,7 @@ class CFRequestTests: XCTestCase {
     
     func testAppsMember() {
         let path = "/v2/apps"
-        var currentPage: Int = 1
+        let currentPage: Int = 1
         let request: NSURLRequest = CF.Apps(currentPage).URLRequest
         
         XCTAssert((CF.Apps(currentPage) as Any) is CF, "Apps is a member")
@@ -105,12 +105,12 @@ class CFRequestTests: XCTestCase {
         XCTAssertEqual(CF.Apps(currentPage).path, "/v2/apps", "Apps returns applications path")
         XCTAssertEqual(CF.Apps(currentPage).method, Alamofire.Method.GET, "Apps request method is GET")
         
-        XCTAssertEqual(request.URLString, baseApiURL + path + "?order-direction=desc&page=1&results-per-page=25", "Apps urlrequest returns the apps url")
+        XCTAssertEqual(request.URLString, baseApiURL + path + "?order-direction=desc&page=1&results-per-page=25", "Apps urlrequest returns the apps url with the right params")
         XCTAssertNil(request.valueForHTTPHeaderField("Authorization"), "Apps doesn't use basic auth")
     }
     
     func testURLRequestMethod() {
-        var moo = CF.Login("", "").URLRequest
-        XCTAssertEqual(CF.Login("", "").URLRequest.HTTPMethod!, "POST", "URLRequest method should be set")
+        let request = CF.Login("", "").URLRequest
+        XCTAssertEqual(request.HTTPMethod, "POST", "URLRequest method should be set")
     }
 }

@@ -1,6 +1,0 @@
-#include "DATAFilter.xcconfig"
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/DATAFilter" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Alamofire" "${PODS_ROOT}/Headers/Public/DATAFilter" "${PODS_ROOT}/Headers/Public/DATAObjectIDs" "${PODS_ROOT}/Headers/Public/DATAStack" "${PODS_ROOT}/Headers/Public/Locksmith" "${PODS_ROOT}/Headers/Public/NSDictionary-ANDYSafeValue" "${PODS_ROOT}/Headers/Public/NSEntityDescription-SYNCPrimaryKey" "${PODS_ROOT}/Headers/Public/NSManagedObject-HYPPropertyMapper" "${PODS_ROOT}/Headers/Public/NSObject-HYPTesting" "${PODS_ROOT}/Headers/Public/NSString-HYPNetworking" "${PODS_ROOT}/Headers/Public/SwiftyJSON" "${PODS_ROOT}/Headers/Public/Sync"
-OTHER_LDFLAGS = ${DATAFILTER_OTHER_LDFLAGS}
-PODS_ROOT = ${SRCROOT}
-SKIP_INSTALL = YES

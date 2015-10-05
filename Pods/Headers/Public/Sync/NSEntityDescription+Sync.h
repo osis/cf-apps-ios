@@ -1,1 +1,0 @@
-../../../Sync/Source/NSEntityDescription+Sync.h

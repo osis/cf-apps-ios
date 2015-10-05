@@ -31,9 +31,11 @@
   * [Core Data Stack](#core-data-stack)
   * [Primary Key](#primary-key)
   * [Attribute Mapping](#attribute-mapping)
+  * [Attribute Types](#attribute-types)
   * [Networking](#networking)
   * [Supported iOS Versions](#supported-ios-versions)
 * [Components](#components)
+* [FAQ](#faq)
 * [Credits](#credits)
 * [License](#license)
 
@@ -182,6 +184,65 @@ If you want to map your Core Data attribute with a JSON attribute that has diffe
 
 ![Custom remote key](https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/custom-remote-key-v2.png)
 
+### Attribute Types
+
+#### Array/Dictionary
+
+To map **arrays** or **dictionaries** just set attributes as `Binary Data` on the Core Data modeler.
+
+![screen shot 2015-04-02 at 11 10 11 pm](https://cloud.githubusercontent.com/assets/1088217/6973785/7d3767dc-d98d-11e4-8add-9c9421b5ed47.png)
+
+#### Retreiving mapped arrays
+```json
+{
+  "hobbies": [
+    "football",
+    "soccer",
+    "code"
+  ]
+}
+```
+
+```objc
+NSArray *hobbies = [NSKeyedUnarchiver unarchiveObjectWithData:managedObject.hobbies];
+// ==> "football", "soccer", "code" 
+```
+
+#### Retreiving mapped dictionaries
+```json
+{
+  "expenses" : {
+    "cake" : 12.50,
+    "juice" : 0.50
+  }
+}
+```
+
+```objc
+NSDictionary *expenses = [NSKeyedUnarchiver unarchiveObjectWithData:managedObject.expenses];
+// ==> "cake" : 12.50, "juice" : 0.50
+```
+
+#### Dates
+
+We went for just supporting [ISO8601](http://en.wikipedia.org/wiki/ISO_8601) out of the box because that's the most common format when parsing dates, also we have a [quite performant way to parse this strings](https://github.com/hyperoslo/NSManagedObject-HYPPropertyMapper/blob/master/Source/NSManagedObject%2BHYPPropertyMapper.m#L272-L319) which overcomes the [performance issues of using `NSDateFormatter`](http://blog.soff.es/how-to-drastically-improve-your-app-with-an-afternoon-and-instruments/).
+
+```json
+{
+  "created_at": "2014-01-01T00:00:00+00:00",
+  "updated_at": "2014-01-02",
+  "number_of_attendes": 20
+}
+```
+
+```objc
+NSDate *createdAt = [managedObject valueForKey:@"createdAt"];
+// ==> "2014-01-01 00:00:00 +00:00" 
+
+NSDate *updatedAt = [managedObject valueForKey:@"updatedAt"];
+// ==> "2014-01-02 00:00:00 +00:00" 
+```
+
 ### Networking
 
 You are free to use any networking library.
@@ -201,10 +262,97 @@ You are free to use any networking library.
 
 * [**NSManagedObject-HYPPropertyMapper**](https://github.com/hyperoslo/NSManagedObject-HYPPropertyMapper): Maps JSON fields with their Core Data counterparts, it does most of it’s job using the paradigm “_convention over configuration_”
 
+## FAQ
+
+#### Using `hyper.primaryKey` in addition to `hyper.remoteKey`:
+
+Well, the thing is that if you add `hyper.primaryKey` it would uses the normal attribute for the local primary key, but the remote primary key is the snake_case representation of it. Some people might expect that the local keeps been the same (remoteID), or that the remote keeps been the same (id).
+
+For example if you add the flag `hyper.PrimaryKey` to the attribute `article_body` then:
+
+- Remote primary key: `article_body`
+- Local primary key: `articleBody`
+
+If you want to use `id` for the remote primary key you also have to add the flag `hyper.remoteKey` and write `id` as the value.
+
+#### How uniquing works (many-to-many, one-to-many)?:
+
+In a `one-to-many` relationship IDs are unique for a parent, but not between parents. For example in this example we have a list of posts where each post has many comments. When syncing posts 2 comment entries will be created:
+
+````json
+[
+  {
+    "id": 0,
+    "title": "Story title 0",
+    "comments": [
+      {
+        "id":0,
+        "body":"Comment body"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "title": "Story title 1",
+    "comments": [
+      {
+        "id":0,
+        "body":"Comment body"
+      }
+    ]
+  }
+]
+```
+
+Meanwhile in a `many-to-many` relationship childs are unique across parents.
+
+For example a author can have many documents and a document can have many authors. Here only one author will be created.
+
+```json
+[
+  {
+    "id": 0,
+    "title": "Document name 0",
+    "authors": [
+      {
+        "id":0,
+        "name":"Michael Jackson"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "title": "Document name 1",
+    "comments": [
+      {
+        "id":0,
+        "body":"Michael Jackson"
+      }
+    ]
+  }
+]
+```
+
+#### Logging changes:
+
+Logging changes to Core Data is quite simple, just subscribe to changes like this and print the needed elements:
+
+```objc
+[[NSNotificationCenter defaultCenter]addObserver:self
+                                        selector:@selector(changeNotification:)
+                                            name:NSManagedObjectContextObjectsDidChangeNotification
+                                          object:self.dataStack.mainContext];
+                                          
+- (void)changeNotification:(NSNotification *)notification {
+    NSSet *updatedObjects   = [[notification userInfo] objectForKey:NSUpdatedObjectsKey];
+    NSSet *deletedObjects   = [[notification userInfo] objectForKey:NSDeletedObjectsKey];
+    NSSet *insertedObjects  = [[notification userInfo] objectForKey:NSInsertedObjectsKey];
+}
+```
 
 ## Credits
 
-[Hyper](http://hyper.no) made this. We’re a digital communications agency with a passion for good code and delightful user experiences. If you’re using this library we probably want to [hire you](https://github.com/hyperoslo/iOS-playbook/blob/master/HYPER_RECIPES.md).
+[Hyper](http://hyper.no) made this. We’re a digital communications agency with a passion for good code and delightful user experiences. If you’re using this library we probably want to [hire you](https://github.com/hyperoslo/iOS-playbook/blob/master/HYPER_RECIPES.md) (we consider remote employees too, the only requirement is that you’re awesome).
 
 
 ## License
