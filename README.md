@@ -1,8 +1,8 @@
-# CF Apps for iOS
+# CF Apps for iOS [![Build Status](https://travis-ci.org/Osis/CF-Apps-iOS.svg)](https://travis-ci.org/Osis/CF-Apps-iOS)
 
 iOS Client for Cloud Foundry
 
-[![Build Status](https://travis-ci.org/Osis/CF-Apps-iOS.svg)](https://travis-ci.org/Osis/CF-Apps-iOS)
+
 
 ## Goal
 
