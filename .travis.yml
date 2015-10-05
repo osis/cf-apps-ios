@@ -7,7 +7,11 @@ branches:
 xcode_project: CF Apps.xcodeproj
 xcode_scheme: CF AppsTests
 osx_image: xcode7
-xcode_sdk: iphonesimulator8.3
+xcode_sdk: iphonesimulator9.0
+
+before_install:
+  - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
+  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
-- clean build test -workspace CF\ Apps.xcworkspace/ -scheme CF\ Apps
+- "xcodebuild clean build test -workspace \"CF Apps.xcworkspace\" -scheme \"CF Apps\" -sdk iphonesimulator | xcpretty -c"
