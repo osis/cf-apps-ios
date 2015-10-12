@@ -14,4 +14,4 @@ before_install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
-- "travis_wait xcodebuild clean build test -workspace \"CF Apps.xcworkspace\" -scheme \"CF Apps\" -sdk iphonesimulator | xcpretty -c"
+- "xcodebuild clean build test -workspace \"CF Apps.xcworkspace\" -scheme \"CF Apps\" -sdk iphonesimulator | xcpretty -c"
