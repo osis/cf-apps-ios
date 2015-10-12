@@ -10,11 +10,16 @@ import Foundation
 import UIKit
 import Alamofire
 import DATAStack
-import Charts
 import Sync
 import SwiftyJSON
 
-class AppViewController: UIViewController, ChartViewDelegate {
+class AppViewController: UIViewController {
+    @IBOutlet var commandLabel: UILabel!
+    @IBOutlet var diskLabel: UILabel!
+    @IBOutlet var memoryLabel: UILabel!
+    @IBOutlet var buildpackLabel: UILabel!
+    @IBOutlet var stateLabel: UILabel!
+    @IBOutlet var nameLabel: UILabel!
     @IBOutlet var servicesTableView: UITableView!
     @IBOutlet var instancesTableView: UITableView!
     let dataStack: DATAStack
@@ -26,8 +31,6 @@ class AppViewController: UIViewController, ChartViewDelegate {
     }
     
     override func viewDidLoad() {
-//        pieChart.delegate = self
-//        pieChart.animate(xAxisDuration: 1.5, yAxisDuration: 1.5, easingOption: ChartEasingOption.EaseOutBack)
         fetchSummary()
         fetchStats()
     }
@@ -55,7 +58,7 @@ class AppViewController: UIViewController, ChartViewDelegate {
             predicate: predicate,
             dataStack: self.dataStack,
             completion: { error in
-                self.setDataCount(json["guid"].stringValue)
+                self.setSummary(json["guid"].stringValue)
             }
         )
     }
@@ -94,38 +97,24 @@ class AppViewController: UIViewController, ChartViewDelegate {
 
     }
     
-    func setDataCount(guid: String) {
-//        let request = NSFetchRequest(entityName: "CFApp")
-//        let predicate = NSPredicate(format: "guid == %@", guid)
-//        request.predicate = predicate
-//        
-//        do {
-//            let apps = try dataStack.mainContext.executeFetchRequest(request) as! [CFApp]
-//            self.app = apps[0]
-//        } catch {
-//            self.app = nil
-//        }
-//        
-//        let runningData = ChartDataEntry(value: Double(app!.runningInstanceCount), xIndex: 0)
-//        let notRunningData = ChartDataEntry(value: Double(app!.stoppedInstanceCount()), xIndex: 1)
-//        let chartDataSet = PieChartDataSet(yVals: [runningData, notRunningData], label: "")
-//        
-//        let colors = [
-//                UIColor(red: 1/255.0, green: 255/255.0, blue: 1/255.0, alpha: 0.8),
-//                UIColor(red: 255/255.0, green: 1/255.0, blue: 1/255.0, alpha: 0.8)
-//            ]
-//        chartDataSet.colors = colors
-//        
-//        let pFormatter = NSNumberFormatter()
-//        pFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
-//        pFormatter.maximumFractionDigits = 1;
-//        pFormatter.multiplier = 1
-//        pFormatter.percentSymbol = " %";
-//        let data = PieChartData(xVals: ["Running", "Stopped"], dataSet: chartDataSet)
-////        data.addDataSet(notRunningDataSet)
-//        data.setValueFormatter(pFormatter)
-//        data.setValueFont(UIFont(name: "HelveticaNeue-Light", size: 11))
-//        
-//        pieChart.data = data
+    func setSummary(guid: String) {
+        let request = NSFetchRequest(entityName: "CFApp")
+        let predicate = NSPredicate(format: "guid == %@", guid)
+        request.predicate = predicate
+        
+        do {
+            let apps = try dataStack.mainContext.executeFetchRequest(request) as! [CFApp]
+            self.app = apps[0]
+            
+            nameLabel.text = app!.name
+            stateLabel.text = app!.state
+            buildpackLabel.text = app!.activeBuildpack()
+            memoryLabel.text = String(app!.memory)
+            memoryLabel.text = String(app!.diskQuota)
+            commandLabel.text = app!.command
+        } catch {
+            self.app = nil
+            nameLabel.text = "Error"
+        }
     }
 }
