@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import SwiftyJSON
-import Charts
 
 class InstancesViewConroller: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var instances: JSON?
