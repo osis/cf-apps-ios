@@ -117,7 +117,7 @@ class AppViewController: UIViewController {
             stateLabel.text = app!.state
             buildpackLabel.text = app!.activeBuildpack()
             memoryLabel.text = String(app!.memory)
-            memoryLabel.text = String(app!.diskQuota)
+            diskLabel.text = String(app!.diskQuota)
             commandLabel.text = app!.command
         } catch {
             self.app = nil
