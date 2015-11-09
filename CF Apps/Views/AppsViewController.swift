@@ -14,6 +14,7 @@ import Sync
 import DATAStack
 
 class AppsViewController: UITableViewController {
+    @IBOutlet var logoutButton: UIBarButtonItem!
     let CellIdentifier = "AppCell"
     var token:String?
     let dataStack: DATAStack
@@ -42,7 +43,13 @@ class AppsViewController: UITableViewController {
             let index = self.tableView.indexPathForCell(cell)
             
             controller.app = items[index!.item]
+        } else if (segue.identifier == "logout") {
+            Keychain.clearCredentials()
         }
+    }
+    
+    @IBAction func logoutClicked(sender: UIBarButtonItem) {
+        
     }
     
     @IBAction func refresh(sender: UIRefreshControl) {
