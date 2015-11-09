@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -29,14 +30,14 @@
                                     <action selector="loginPushed:" destination="BYZ-38-t0r" eventType="touchDown" id="Gez-vz-h5Q"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iAf-el-aNP" userLabel="Password Field">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iAf-el-aNP" userLabel="Password Field">
                                 <rect key="frame" x="198" y="287" width="205" height="30"/>
                                 <animations/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="CF Api" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4L3-oQ-vbE" userLabel="API Target Field">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CF Api" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4L3-oQ-vbE" userLabel="API Target Field">
                                 <rect key="frame" x="198" y="249" width="205" height="30"/>
                                 <animations/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -55,14 +56,13 @@
                                 </connections>
                             </button>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q7t-MC-dz4">
-                                <rect key="frame" x="0.0" y="61" width="600" height="128"/>
+                                <rect key="frame" x="0.0" y="59" width="600" height="130"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="mmg-qb-hJU">
-                                        <rect key="frame" x="177" y="8" width="247" height="110"/>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Zsa-W2-BVH">
+                                        <rect key="frame" x="83" y="40" width="434" height="56"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="247" id="ES1-4i-SNL"/>
-                                            <constraint firstAttribute="height" constant="110" id="U1M-1W-ToH"/>
+                                            <constraint firstAttribute="width" secondItem="Zsa-W2-BVH" secondAttribute="height" multiplier="31:4" id="EFK-oH-FAW"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
@@ -70,10 +70,14 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="1" green="0.97481899910000003" blue="0.98001719080000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="mmg-qb-hJU" firstAttribute="centerX" secondItem="q7t-MC-dz4" secondAttribute="centerX" id="nEx-6J-S9M"/>
+                                    <constraint firstItem="Zsa-W2-BVH" firstAttribute="leading" secondItem="q7t-MC-dz4" secondAttribute="leading" constant="35" id="DqU-Be-qEO"/>
+                                    <constraint firstItem="Zsa-W2-BVH" firstAttribute="centerX" secondItem="q7t-MC-dz4" secondAttribute="centerX" id="EH6-57-ngs"/>
+                                    <constraint firstItem="Zsa-W2-BVH" firstAttribute="centerY" secondItem="q7t-MC-dz4" secondAttribute="centerY" constant="3" id="PdQ-2M-JEJ"/>
+                                    <constraint firstAttribute="height" constant="130" id="blD-V0-oY0"/>
+                                    <constraint firstAttribute="trailing" secondItem="Zsa-W2-BVH" secondAttribute="trailing" constant="35" id="lcd-Jy-7vX"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Hf-qT-0xk" userLabel="Username Field">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Hf-qT-0xk" userLabel="Username Field">
                                 <rect key="frame" x="198" y="211" width="205" height="30"/>
                                 <animations/>
                                 <color key="backgroundColor" red="1" green="0.97481899910000003" blue="0.98001719080000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -564,7 +568,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo" width="508" height="367"/>
+        <image name="logo" width="1337" height="177"/>
         <image name="started" width="120" height="120"/>
     </resources>
 </document>
