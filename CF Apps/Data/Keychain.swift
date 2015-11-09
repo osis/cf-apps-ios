@@ -35,4 +35,13 @@ class Keychain {
         }
         return (nil,nil)
     }
+    
+    class func clearCredentials() -> NSError? {
+        do {
+            try Locksmith.deleteDataForUserAccount(loginAccount)
+        } catch let error as NSError {
+            return error
+        }
+        return nil
+    }
 }

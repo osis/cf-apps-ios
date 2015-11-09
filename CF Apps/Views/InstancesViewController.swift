@@ -20,9 +20,19 @@ class InstancesViewConroller: UIViewController, UITableViewDelegate, UITableView
         return instances != nil
     }
     
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Instances"
+    }
+    
+//    - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//    {
+//    return [animalSectionTitles objectAtIndex:section];
+//    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoaded() {
             return instances!.count
+//            return instances!.count + 5
         } else {
             return 1
         }
@@ -36,6 +46,7 @@ class InstancesViewConroller: UIViewController, UITableViewDelegate, UITableView
         var cell: UITableViewCell?
         if isLoaded() {
             let instance = Instance(json: instances!["\(indexPath.row)"])
+//            let instance = Instance(json: instances!["0"])
             cell = tableView.dequeueReusableCellWithIdentifier("InstanceCell") as UITableViewCell!
  
             let indexLabel = cell!.viewWithTag(1) as! UILabel

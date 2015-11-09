@@ -23,8 +23,10 @@
 		655B44401B530E1A009ED489 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B443F1B530E1A009ED489 /* LoginViewController.swift */; };
 		655B44421B532531009ED489 /* CFApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44411B532531009ED489 /* CFApi.swift */; };
 		65671C331B97D858003F4DC9 /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65671C321B97D857003F4DC9 /* AppViewController.swift */; };
-		65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65782EE91BC08A510005040F /* InstancesViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		65DBB5F81BC0D09200BD19BC /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBB5F71BC0D09200BD19BC /* Instance.swift */; settings = {ASSET_TAGS = (); }; };
+		65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65782EE91BC08A510005040F /* InstancesViewController.swift */; };
+		65DBB5F81BC0D09200BD19BC /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBB5F71BC0D09200BD19BC /* Instance.swift */; };
+		65DF28A71BEEF11F0081B834 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */; };
+		65DF28A91BEEFD4C0081B834 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DF28A81BEEFD4C0081B834 /* Service.swift */; };
 		65EE6FCC1B4712A70047519D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FCB1B4712A70047519D /* Images.xcassets */; };
 		65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE6FCD1B4712B30047519D /* AppDelegate.swift */; };
 		65EE6FDD1B4713E80047519D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FD91B4713E80047519D /* LaunchScreen.xib */; };
@@ -61,6 +63,8 @@
 		65671C321B97D857003F4DC9 /* AppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
 		65782EE91BC08A510005040F /* InstancesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstancesViewController.swift; sourceTree = "<group>"; };
 		65DBB5F71BC0D09200BD19BC /* Instance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instance.swift; sourceTree = "<group>"; };
+		65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
+		65DF28A81BEEFD4C0081B834 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		65EE6FCB1B4712A70047519D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "CF Apps/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		65EE6FCD1B4712B30047519D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "CF Apps/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		65EE6FDA1B4713E80047519D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "CF Apps/Base.lproj/LaunchScreen.xib"; sourceTree = SOURCE_ROOT; };
@@ -186,6 +190,7 @@
 				655B443F1B530E1A009ED489 /* LoginViewController.swift */,
 				65671C321B97D857003F4DC9 /* AppViewController.swift */,
 				65782EE91BC08A510005040F /* InstancesViewController.swift */,
+				65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */,
 			);
 			name = Views;
 			path = "CF Apps/Views";
@@ -215,6 +220,7 @@
 			children = (
 				655B44371B530622009ED489 /* CFApp.swift */,
 				65DBB5F71BC0D09200BD19BC /* Instance.swift */,
+				65DF28A81BEEFD4C0081B834 /* Service.swift */,
 			);
 			name = Models;
 			path = "CF Apps/Models";
@@ -395,11 +401,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				65DBB5F81BC0D09200BD19BC /* Instance.swift in Sources */,
+				65DF28A91BEEFD4C0081B834 /* Service.swift in Sources */,
 				655B442E1B5305FD009ED489 /* AppsViewController.swift in Sources */,
 				65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */,
 				655B44421B532531009ED489 /* CFApi.swift in Sources */,
 				655B443C1B530622009ED489 /* CFRequest.swift in Sources */,
 				655B443B1B530622009ED489 /* CFApp.swift in Sources */,
+				65DF28A71BEEF11F0081B834 /* ServicesViewController.swift in Sources */,
 				655B44401B530E1A009ED489 /* LoginViewController.swift in Sources */,
 				655B443A1B530622009ED489 /* CFStore.xcdatamodeld in Sources */,
 				65671C331B97D858003F4DC9 /* AppViewController.swift in Sources */,

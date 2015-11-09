@@ -65,4 +65,13 @@ class KeychainTests: XCTestCase {
         XCTAssertEqual(username!, "testUsername", "should be username when credentials have been set")
         XCTAssertEqual(password!, "testPassword", "should be password when credentials have been set")
     }
+    
+    func testClearCredentials() {
+        setCredentials()
+        Keychain.clearCredentials()
+        let (username, password) = Keychain.getCredentials()
+        
+        XCTAssertNil(username, "should be nil when credentials have been cleared")
+        XCTAssertNil(password, "should be nil when credentials have been cleared")
+    }
 }

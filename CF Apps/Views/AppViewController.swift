@@ -14,12 +14,14 @@ import Sync
 import SwiftyJSON
 
 class AppViewController: UIViewController {
-    @IBOutlet var commandLabel: UILabel!
+    @IBOutlet var servicesTableHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var instancesTableHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var stateLabel: UILabel!
     @IBOutlet var diskLabel: UILabel!
     @IBOutlet var memoryLabel: UILabel!
     @IBOutlet var buildpackLabel: UILabel!
-    @IBOutlet var stateLabel: UILabel!
-    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var commandLabel: UILabel!
     @IBOutlet var servicesTableView: UITableView!
     @IBOutlet var instancesTableView: UITableView!
     let dataStack: DATAStack
@@ -50,6 +52,18 @@ class AppViewController: UIViewController {
     }
     
     func handleSummaryResponse(data: AnyObject) {
+        let delegate = servicesTableView.delegate as! ServicesViewController
+        delegate.services = JSON(data)["services"]
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.servicesTableView.reloadData()
+            let height = self.servicesTableView.contentSize.height
+            self.servicesTableHeightConstraint.constant = height
+            
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+        })
+        
         let predicate = NSPredicate(format: "guid == ''")
         var json = JSON(data)
         Sync.changes(
@@ -58,7 +72,7 @@ class AppViewController: UIViewController {
             predicate: predicate,
             dataStack: self.dataStack,
             completion: { error in
-                self.setSummary(json["guid"].stringValue)
+                self.setSummary(self.app!.guid)
             }
         )
     }
@@ -78,23 +92,16 @@ class AppViewController: UIViewController {
     }
     
     func handleStatsResponse(data: AnyObject) {
-//       instancesTableView.delegate = InstancesViewConroller()
         let delegate = instancesTableView.delegate as! InstancesViewConroller
         delegate.instances = JSON(data)
         dispatch_async(dispatch_get_main_queue(), {
             self.instancesTableView.reloadData()
             let height = self.instancesTableView.contentSize.height
+            self.instancesTableHeightConstraint.constant = height
 
-//            [UIView animateWithDuration:0.25 animations:^{
-            var frame = self.instancesTableView.frame
-            frame.size.height = height
-            self.instancesTableView.frame = frame;
-            
-            // if you have other controls that should be resized/moved to accommodate
-            // the resized tableview, do that here, too
-//            }];
-        });
-
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+        })
     }
     
     func setSummary(guid: String) {
