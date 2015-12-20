@@ -123,7 +123,8 @@ class AppsViewController: UITableViewController {
     
     func login() {
         setRefreshTitle("Authenticating")
-        CFApi.login({ _ in 
+        let (username, password) = Keychain.getCredentials()
+        CFApi.login(username!, password: password!, success: {
             self.fetchOrganizations()
             }, error: {
                 let alert = UIAlertController(title: "Authentication Error                                                                                                                                          ", message: "Credentials are no longer valid. Please try logging in again.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -135,7 +136,7 @@ class AppsViewController: UITableViewController {
     
     func fetchOrganizations() {
         setRefreshTitle("Updating Organizations")
-        CFApi.organizations(
+        CFApi.orgs(
             { (json) in
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                     self.handleOrgsResponse(json)
@@ -202,7 +203,7 @@ class AppsViewController: UITableViewController {
     
     func fetchApplications() {
         setRefreshTitle("Updating Apps")
-        CFApi.applications(orgGuid!, page: currentPage, success: { (json) in
+        CFApi.apps(orgGuid!, page: currentPage, success: { (json) in
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                 self.handleAppsResponse(json)
             }

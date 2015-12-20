@@ -34,28 +34,39 @@ class AppViewController: UIViewController {
     
     override func viewDidLoad() {
         fetchSummary()
-        fetchStats()
-    }
-    
-    func fetchSummary() {
-        Alamofire.request(CF.AppSummary(app!.guid))
-            .validate()
-            .responseJSON { (_, _, result) in
-                if (result.isFailure) {
-                    print(result.value)
-                } else {
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                        self.handleSummaryResponse(result.value!)
-                    }
-                }
+        
+        if (app!.statusImageName() == "started") {
+            fetchStats()
+        } else {
+            hideInstancesTable()
         }
     }
     
-    func handleSummaryResponse(data: AnyObject) {
+    func hideInstancesTable() {
+        self.instancesTableView.hidden = true
+        self.instancesTableHeightConstraint.constant = 0
+    }
+    
+    func fetchSummary() {
+        servicesTableView.tableFooterView = loadingCell()
+        
+        CFApi.appSummary(app!.guid,
+            success: { (json) in
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                    self.handleSummaryResponse(json)
+                }
+            },
+            error: { (statusCode) in
+                debugPrint(statusCode)
+        })
+    }
+    
+    func handleSummaryResponse(json: JSON) {
         let delegate = servicesTableView.delegate as! ServicesViewController
-        delegate.services = JSON(data)["services"]
+        delegate.services = json["services"]
         
         dispatch_async(dispatch_get_main_queue(), {
+            self.servicesTableView.tableFooterView = nil
             self.servicesTableView.reloadData()
             let height = self.servicesTableView.contentSize.height
             self.servicesTableHeightConstraint.constant = height
@@ -65,7 +76,6 @@ class AppViewController: UIViewController {
         })
         
         let predicate = NSPredicate(format: "guid == ''")
-        var json = JSON(data)
         Sync.changes(
             [json.object],
             inEntityNamed: "CFApp",
@@ -78,23 +88,24 @@ class AppViewController: UIViewController {
     }
     
     func fetchStats() {
-        Alamofire.request(CF.AppStats(app!.guid))
-            .validate()
-            .responseJSON { (_, _, result) in
-                if (result.isFailure) {
-                    print(result.value)
-                } else {
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                        self.handleStatsResponse(result.value!)
-                    }
+        instancesTableView.tableFooterView = loadingCell()
+        
+        CFApi.appStats(app!.guid,
+            success: { (json) in
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                    self.handleStatsResponse(json)
                 }
-        }
+            },
+            error: { (statusCode) in
+                debugPrint(statusCode)
+        })
     }
     
-    func handleStatsResponse(data: AnyObject) {
+    func handleStatsResponse(json: JSON) {
         let delegate = instancesTableView.delegate as! InstancesViewConroller
-        delegate.instances = JSON(data)
+        delegate.instances = json
         dispatch_async(dispatch_get_main_queue(), {
+            self.instancesTableView.tableFooterView = nil
             self.instancesTableView.reloadData()
             let height = self.instancesTableView.contentSize.height
             self.instancesTableHeightConstraint.constant = height
@@ -123,5 +134,12 @@ class AppViewController: UIViewController {
             self.app = nil
             nameLabel.text = "Error"
         }
+    }
+    
+    func loadingCell() -> UIActivityIndicatorView {
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+        spinner.startAnimating()
+        spinner.frame = CGRectMake(0, 0, 320, 44)
+        return spinner
     }
 }
