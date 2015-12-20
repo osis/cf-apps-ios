@@ -8,6 +8,7 @@
 
 import UIKit
 import XCTest
+import CoreData
 import DATAStack
 
 class CFAppsTests: XCTestCase {
@@ -17,7 +18,7 @@ class CFAppsTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         super.setUp()
         
-        self.dataStack = DATAStack(modelName: "CFStore", bundle: nil, storeType: DATAStackStoreType.InMemoryStoreType)
+        self.dataStack = DATAStack(modelName: "CFStore", bundle: NSBundle(forClass: CFAppsTests.self), storeType: DATAStackStoreType.InMemory)
     }
     
     override func tearDown() {

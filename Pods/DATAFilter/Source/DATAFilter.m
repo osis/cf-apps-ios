@@ -10,27 +10,27 @@
       remoteKey:(NSString *)remoteKey
         context:(NSManagedObjectContext *)context
        inserted:(void (^)(NSDictionary *objectJSON))inserted
-        updated:(void (^)(NSDictionary *objectJSON, NSManagedObject *updatedObject))updated
-{
+        updated:(void (^)(NSDictionary *objectJSON, NSManagedObject *updatedObject))updated {
     return [self changes:changes
            inEntityNamed:entityName
+               predicate:nil
+              operations:DATAFilterOperationAll
                 localKey:localKey
                remoteKey:remoteKey
                  context:context
-               predicate:nil
                 inserted:inserted
                  updated:updated];
 }
 
 + (void)changes:(NSArray *)changes
   inEntityNamed:(NSString *)entityName
+      predicate:(NSPredicate *)predicate
+     operations:(DATAFilterOperation)operations
        localKey:(NSString *)localKey
       remoteKey:(NSString *)remoteKey
         context:(NSManagedObjectContext *)context
-      predicate:(NSPredicate *)predicate
        inserted:(void (^)(NSDictionary *objectJSON))inserted
-        updated:(void (^)(NSDictionary *objectJSON, NSManagedObject *updatedObject))updated;
-{
+        updated:(void (^)(NSDictionary *objectJSON, NSManagedObject *updatedObject))updated {
     NSDictionary *dictionaryIDAndObjectID = [DATAObjectIDs objectIDsInEntityNamed:entityName
                                                               withAttributesNamed:localKey
                                                                           context:context
@@ -53,30 +53,36 @@
     NSMutableArray *insertedObjectIDs = [remoteObjectIDs mutableCopy];
     [insertedObjectIDs removeObjectsInArray:fetchedObjectIDs];
 
-    for (id fetchedID in deletedObjectIDs) {
-        NSManagedObjectID *objectID = dictionaryIDAndObjectID[fetchedID];
-        if (objectID) {
-            NSManagedObject *object = [context objectWithID:objectID];
-            if (object) {
-                [context deleteObject:object];
+    if (operations & DATAFilterOperationDelete) {
+        for (id fetchedID in deletedObjectIDs) {
+            NSManagedObjectID *objectID = dictionaryIDAndObjectID[fetchedID];
+            if (objectID) {
+                NSManagedObject *object = [context objectWithID:objectID];
+                if (object) {
+                    [context deleteObject:object];
+                }
             }
         }
     }
 
-    for (id fetchedID in insertedObjectIDs) {
-        NSDictionary *objectDictionary = remoteIDAndChange[fetchedID];
-        if (inserted) {
-            inserted(objectDictionary);
+    if (operations & DATAFilterOperationInsert) {
+        for (id fetchedID in insertedObjectIDs) {
+            NSDictionary *objectDictionary = remoteIDAndChange[fetchedID];
+            if (inserted) {
+                inserted(objectDictionary);
+            }
         }
     }
 
-    for (id fetchedID in updatedObjectIDs) {
-        NSDictionary *objectDictionary = remoteIDAndChange[fetchedID];
-        NSManagedObjectID *objectID = dictionaryIDAndObjectID[fetchedID];
-        if (objectID) {
-            NSManagedObject *object = [context objectWithID:objectID];
-            if (object && updated) {
-                updated(objectDictionary, object);
+    if (operations & DATAFilterOperationUpdate) {
+        for (id fetchedID in updatedObjectIDs) {
+            NSDictionary *objectDictionary = remoteIDAndChange[fetchedID];
+            NSManagedObjectID *objectID = dictionaryIDAndObjectID[fetchedID];
+            if (objectID) {
+                NSManagedObject *object = [context objectWithID:objectID];
+                if (object && updated) {
+                    updated(objectDictionary, object);
+                }
             }
         }
     }

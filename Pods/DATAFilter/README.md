@@ -1,6 +1,5 @@
 # DATAFilter
 
-[![CI Status](http://img.shields.io/travis/3lvis/DATAFilter.svg?style=flat)](https://travis-ci.org/3lvis/DATAFilter)
 [![Version](https://img.shields.io/cocoapods/v/DATAFilter.svg?style=flat)](http://cocoadocs.org/docsets/DATAFilter)
 [![License](https://img.shields.io/cocoapods/l/DATAFilter.svg?style=flat)](http://cocoadocs.org/docsets/DATAFilter)
 [![Platform](https://img.shields.io/cocoapods/p/DATAFilter.svg?style=flat)](http://cocoadocs.org/docsets/DATAFilter)
@@ -22,14 +21,12 @@ Helps you filter insertions, deletions and updates by comparing your JSON dictio
 ## How to use
 
 ```objc
-- (void)importObjects:(NSArray *)JSON usingContext:(NSManagedObjectContext *)context error:(NSError *)error
-{
+- (void)importObjects:(NSArray *)JSON usingContext:(NSManagedObjectContext *)context error:(NSError *)error {
     [DATAFilter changes:JSON
           inEntityNamed:@"User"
                localKey:@"remoteID"
               remoteKey:@"id"
                 context:context
-              predicate:nil
                inserted:^(NSDictionary *objectJSON) {
                     ANDYUser *user = [ANDYUser insertInManagedObjectContext:context];
                     [user fillObjectWithAttributes:objectDict];
@@ -59,9 +56,28 @@ NSPredicate *predicate = [NSString stringWithFormat:@"inactive = YES"];
 
 *As a side note, you should use a [fancier property mapper](https://github.com/hyperoslo/NSManagedObject-HYPPropertyMapper/blob/master/README.md) that does the `fillObjectWithAttributes` part for you.*
 
-## Usage
+## Operations
 
-To run the example project, clone the repo, and open the `.xcodeproj` from the Demo directory.
+`DATAFilter` also provides the option to set which operations should be run when filtering, by default `DATAFilterOperationAll` is used but you could also set the option to just Insert and Update (avoiding removing items) or Update and Delete (avoiding updating items).
+
+Usage goes like this:
+
+```objc
+// No items will be deleted here
+
+[DATAFilter changes:JSON
+      inEntityNamed:@"User"
+          predicate:nil
+         operations:DATAFilterOperationInsert | DATAFilterOperationUpdate
+           localKey:@"remoteID"
+          remoteKey:@"id"
+            context:context
+           inserted:^(NSDictionary *objectJSON) {
+               // Do something with inserted items
+           } updated:^(NSDictionary *objectJSON, NSManagedObject *updatedObject) {
+               // Do something with updated items
+           }];
+```
 
 ## Requirements
 

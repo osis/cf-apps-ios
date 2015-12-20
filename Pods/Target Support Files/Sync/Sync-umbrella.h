@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 
+#import "NSArray+Sync.h"
 #import "NSEntityDescription+Sync.h"
 #import "NSManagedObject+Sync.h"
 #import "Sync.h"

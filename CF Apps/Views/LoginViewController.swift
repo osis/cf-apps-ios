@@ -78,7 +78,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginPushed(sender: UIButton) {
 //        let url = authEndpoint! + "/oauth/token"
         
-        CFApi.login(usernameField.text!, password: passwordField.text!, success: {
+        CFApi.login({
             self.performSegueWithIdentifier("loginSegue", sender: nil)
         }, error: {
             self.passwordField.layer.borderColor = UIColor.redColor().CGColor

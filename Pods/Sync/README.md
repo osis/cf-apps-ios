@@ -3,12 +3,11 @@
 [![Version](https://img.shields.io/cocoapods/v/Sync.svg?style=flat)](http://cocoadocs.org/docsets/Sync)
 [![License](https://img.shields.io/cocoapods/l/Sync.svg?style=flat)](http://cocoadocs.org/docsets/Sync)
 [![Platform](https://img.shields.io/cocoapods/p/Sync.svg?style=flat)](http://cocoadocs.org/docsets/Sync)
-[![Join the chat at https://gitter.im/hyperoslo/Sync](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/hyperoslo/Sync?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-**Sync** eases your every day job of parsing a `JSON` response and getting it into Core Data. It uses a convention over configuration paradigm to facilitate your workflow.
+**Sync** eases your everyday job of parsing a `JSON` response and getting it into Core Data. It uses a convention-over-configuration paradigm to facilitate your workflow.
 
 * Handles operations in safe background threads
-* Thread safe saving, we handle retrieving and storing objects in the right threads
+* Thread-safe saving, we handle retrieving and storing objects in the right threads
 * Diffing of changes, updated, inserted and deleted objects (which are automatically purged for you)
 * Auto-mapping of relationships (one-to-one, one-to-many and many-to-many)
 * Smart-updates, only updates your `NSManagedObject`s if the server values are different (useful when using `NSFetchedResultsController` delegates)
@@ -107,7 +106,7 @@ inEntityNamed:@"User"
     }];
 ```
 
-Alternatively if you only want to sync users that have been created in the last 24 hours, you could do this by using a `NSPredicate`.
+Alternatively, if you only want to sync users that have been created in the last 24 hours, you could do this by using a `NSPredicate`.
 
 ```objc
 NSDate *now = [NSDate date];
@@ -125,11 +124,11 @@ inEntityNamed:@"User"
 
 ### More Examples
 
-<a href="https://github.com/hyperoslo/Sync/tree/master/Examples/AppNet/README.md">
+<a href="https://github.com/hyperoslo/Sync/tree/master/AppNet/README.md">
   <img src="https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/APPNET-v3.png" />
 </a>
 
-<a href="https://github.com/hyperoslo/Sync/tree/master/Examples/DesignerNews/README.md">
+<a href="https://github.com/hyperoslo/Sync/tree/master/DesignerNews/README.md">
   <img src="https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/DN-v4.png" />
 </a>
 
@@ -163,11 +162,11 @@ Then add this to your App Delegate so everything gets persisted when you quit th
 
 ### Primary key
 
-Sync requires your entities to have a primary key, this is important for diffing otherwise Sync doesn’t know how to differentiate between entries.
+Sync requires your entities to have a primary key, this is important for diffing, otherwise Sync doesn’t know how to differentiate between entries.
 
 By default **Sync** uses `id` from the JSON and `remoteID` from Core Data as the primary key. You can mark any attribute as primary key by adding `hyper.isPrimaryKey` and the value `YES`.
 
-For example in our [Designer News](https://github.com/hyperoslo/Sync/tree/master/Examples/DesignerNews) project we have a `Comment` entity that uses `body` as the primary key.
+For example, in our [Designer News](https://github.com/hyperoslo/Sync/tree/master/DesignerNews) project we have a `Comment` entity that uses `body` as the primary key.
 
 ![Custom primary key](https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/custom-primary-key-v2.png)
 
@@ -258,7 +257,7 @@ You are free to use any networking library.
 
 * [**DATAStack**](https://github.com/3lvis/DATAStack): Core Data stack and thread safe saving
 
-* [**DATAFilter**](https://github.com/3lvis/DATAFilter): Helps you purge deleted objects, internally we use it to diff inserts, updates and deletes. Also it’s used for uniquing Core Data does this based on objectIDs, DATAFilter uses your remote keys (such as id) for this
+* [**DATAFilter**](https://github.com/3lvis/DATAFilter): Helps you purge deleted objects. Internally we use it to diff inserts, updates and deletes. Also it’s used for uniquing Core Data does this based on objectIDs, DATAFilter uses your remote keys (such as id) for this
 
 * [**NSManagedObject-HYPPropertyMapper**](https://github.com/hyperoslo/NSManagedObject-HYPPropertyMapper): Maps JSON fields with their Core Data counterparts, it does most of it’s job using the paradigm “_convention over configuration_”
 
@@ -348,6 +347,18 @@ Logging changes to Core Data is quite simple, just subscribe to changes like thi
     NSSet *deletedObjects   = [[notification userInfo] objectForKey:NSDeletedObjectsKey];
     NSSet *insertedObjects  = [[notification userInfo] objectForKey:NSInsertedObjectsKey];
 }
+```
+
+#### Crash on NSParameterAssert
+
+This means that the local primary key was not found, Sync uses `remoteID` by default, but if you have another local primary key make sure to mark it with `"hyper.isPrimaryKey" : "YES"` in your attribute's user info. For more information check the [Primary Key](https://github.com/hyperoslo/Sync#primary-key) section.
+
+```objc
+NSString *localKey = [entity sync_localKey];
+NSParameterAssert(localKey);
+
+NSString *remoteKey = [entity sync_remoteKey];
+NSParameterAssert(remoteKey);
 ```
 
 ## Credits
