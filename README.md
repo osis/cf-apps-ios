@@ -1,5 +1,5 @@
-# ![Cloud Foundry](https://cloud.githubusercontent.com/assets/347097/11919995/a4a2d908-a72f-11e5-89e2-843c1277c2c0.png)CF Apps for iOS [![Build Status](https://travis-ci.org/Osis/cf-apps-ios.svg?branch=master)](https://travis-ci.org/Osis/cf-apps-ios)
-iOS Client for Cloud Foundry
+#CF Apps for iOS [![Build Status](https://travis-ci.org/Osis/cf-apps-ios.svg?branch=master)](https://travis-ci.org/Osis/cf-apps-ios)
+[![Cloud Foundry](https://cloud.githubusercontent.com/assets/347097/11919981/2060d9d8-a72f-11e5-9d2e-a5843bdbff10.png)](https://cloudfoundry.org)iOS Client for installations of Cloud Foundry
 
 ## Current State
 
