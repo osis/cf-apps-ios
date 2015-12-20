@@ -1,6 +1,5 @@
 # DATAObjectIDs
 
-[![CI Status](http://img.shields.io/travis/NSElvis/DATAObjectIDs.svg?style=flat)](https://travis-ci.org/NSElvis/DATAObjectIDs)
 [![Version](https://img.shields.io/cocoapods/v/DATAObjectIDs.svg?style=flat)](http://cocoadocs.org/docsets/DATAObjectIDs)
 [![License](https://img.shields.io/cocoapods/l/DATAObjectIDs.svg?style=flat)](http://cocoadocs.org/docsets/DATAObjectIDs)
 [![Platform](https://img.shields.io/cocoapods/p/DATAObjectIDs.svg?style=flat)](http://cocoadocs.org/docsets/DATAObjectIDs)
@@ -9,8 +8,8 @@
 
 ```objc
 NSDictionary *dictionary = [DATAObjectIDs objectIDsInEntityNamed:@"User"
-                                       withAttributesNamed:@"remoteID"
-                                                   context:context];
+                                             withAttributesNamed:@"remoteID"
+                                                         context:context];
 ```
 
 This will be a dictionary that has as keys your primary key, such as the `remoteID`, and as value the `NSManagedObjectID`.
@@ -26,7 +25,7 @@ pod 'DATAObjectIDs'
 
 ## Author
 
-Elvis Nuñez, hello@nselvis.com
+Elvis Nuñez, [elvisnunez@me.com](mailto:elvisnunez@me.com)
 
 ## License
 

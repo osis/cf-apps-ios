@@ -19,6 +19,7 @@ class CFApp: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var packageState: String
     @NSManaged var state: String
+    @NSManaged var spaceGuid: String
     @NSManaged var diskQuota: Int32
     @NSManaged var memory: Int32
     @NSManaged var command: String
@@ -42,5 +43,18 @@ class CFApp: NSManagedObject {
         default:
             return "stopped"
         }
+    }
+    
+    func formattedMemory() -> String {
+        return byteCount(memory)
+    }
+    
+    func formattedDiskQuota() -> String {
+        return byteCount(diskQuota)
+    }
+    
+    private func byteCount(i: Int32) -> String {
+        let count = Int64.init(i) * 1048576
+        return NSByteCountFormatter.stringFromByteCount(count, countStyle: NSByteCountFormatterCountStyle.Memory)
     }
 }

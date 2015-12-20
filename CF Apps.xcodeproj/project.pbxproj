@@ -15,6 +15,8 @@
 		65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B443D1B530868009ED489 /* Keychain.swift */; };
 		6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */; };
 		6547EBB11B76D16E00C1E13E /* CFRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44391B530622009ED489 /* CFRequest.swift */; };
+		654C87991C1A40DF00C0C79C /* CFOrg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654C87981C1A40DF00C0C79C /* CFOrg.swift */; };
+		654C879B1C1A4A4500C0C79C /* OrgPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654C879A1C1A4A4500C0C79C /* OrgPicker.swift */; };
 		655B442E1B5305FD009ED489 /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B442C1B5305FD009ED489 /* AppsViewController.swift */; };
 		655B443A1B530622009ED489 /* CFStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 655B44341B530622009ED489 /* CFStore.xcdatamodeld */; };
 		655B443B1B530622009ED489 /* CFApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44371B530622009ED489 /* CFApp.swift */; };
@@ -24,6 +26,7 @@
 		655B44421B532531009ED489 /* CFApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44411B532531009ED489 /* CFApi.swift */; };
 		65671C331B97D858003F4DC9 /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65671C321B97D857003F4DC9 /* AppViewController.swift */; };
 		65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65782EE91BC08A510005040F /* InstancesViewController.swift */; };
+		65B010731C1E684000CECF07 /* CFSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B010721C1E684000CECF07 /* CFSpace.swift */; };
 		65DBB5F81BC0D09200BD19BC /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBB5F71BC0D09200BD19BC /* Instance.swift */; };
 		65DF28A71BEEF11F0081B834 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */; };
 		65DF28A91BEEFD4C0081B834 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DF28A81BEEFD4C0081B834 /* Service.swift */; };
@@ -52,6 +55,8 @@
 		651C84761B2A7FB50006DC3A /* CF Apps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CF Apps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		651C848E1B2A7FB60006DC3A /* CF Apps Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CF Apps Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFRequestTests.swift; path = "CF AppsTests/Network/CFRequestTests.swift"; sourceTree = "<group>"; };
+		654C87981C1A40DF00C0C79C /* CFOrg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFOrg.swift; sourceTree = "<group>"; };
+		654C879A1C1A4A4500C0C79C /* OrgPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrgPicker.swift; sourceTree = "<group>"; };
 		655B442C1B5305FD009ED489 /* AppsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsViewController.swift; sourceTree = "<group>"; };
 		655B44311B53060E009ED489 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		655B44351B530622009ED489 /* CFStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CFStore.xcdatamodel; sourceTree = "<group>"; };
@@ -62,6 +67,7 @@
 		655B44411B532531009ED489 /* CFApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFApi.swift; sourceTree = "<group>"; };
 		65671C321B97D857003F4DC9 /* AppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
 		65782EE91BC08A510005040F /* InstancesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstancesViewController.swift; sourceTree = "<group>"; };
+		65B010721C1E684000CECF07 /* CFSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFSpace.swift; sourceTree = "<group>"; };
 		65DBB5F71BC0D09200BD19BC /* Instance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instance.swift; sourceTree = "<group>"; };
 		65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		65DF28A81BEEFD4C0081B834 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -191,6 +197,7 @@
 				65671C321B97D857003F4DC9 /* AppViewController.swift */,
 				65782EE91BC08A510005040F /* InstancesViewController.swift */,
 				65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */,
+				654C879A1C1A4A4500C0C79C /* OrgPicker.swift */,
 			);
 			name = Views;
 			path = "CF Apps/Views";
@@ -219,6 +226,8 @@
 			isa = PBXGroup;
 			children = (
 				655B44371B530622009ED489 /* CFApp.swift */,
+				654C87981C1A40DF00C0C79C /* CFOrg.swift */,
+				65B010721C1E684000CECF07 /* CFSpace.swift */,
 				65DBB5F71BC0D09200BD19BC /* Instance.swift */,
 				65DF28A81BEEFD4C0081B834 /* Service.swift */,
 			);
@@ -412,7 +421,10 @@
 				655B443A1B530622009ED489 /* CFStore.xcdatamodeld in Sources */,
 				65671C331B97D858003F4DC9 /* AppViewController.swift in Sources */,
 				65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */,
+				654C879B1C1A4A4500C0C79C /* OrgPicker.swift in Sources */,
+				65B010731C1E684000CECF07 /* CFSpace.swift in Sources */,
 				655B443E1B530869009ED489 /* Keychain.swift in Sources */,
+				654C87991C1A40DF00C0C79C /* CFOrg.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

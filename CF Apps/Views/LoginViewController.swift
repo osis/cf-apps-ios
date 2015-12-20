@@ -20,6 +20,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var targetButton: UIButton!
     
     var authEndpoint: String?
+    var authError = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,7 @@ class LoginViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-//        showLoginForm()
+        if authError { showAuthAlert() }
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,10 +62,6 @@ class LoginViewController: UIViewController {
         loginButton.transform = CGAffineTransformMakeTranslation(0, 50)
     }
     
-    func showTargetForm() {
-//        apiTargetField.
-    }
-    
     func hideTargetForm() {
         UIView.animateWithDuration(1, animations: {
             self.apiTargetField.alpha = 0
@@ -74,10 +71,15 @@ class LoginViewController: UIViewController {
             self.targetButton.transform = CGAffineTransformMakeTranslation(0, -50)
         })
     }
+        
+    func showAuthAlert() {
+        let alert = UIAlertController(title: "Authentication Failed", message: "There was an error authenticating. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
+        alert.addAction(alertAction)
+        presentViewController(alert, animated: true) { () -> Void in }
+    }
     
     @IBAction func loginPushed(sender: UIButton) {
-//        let url = authEndpoint! + "/oauth/token"
-        
         CFApi.login(usernameField.text!, password: passwordField.text!, success: {
             self.performSegueWithIdentifier("loginSegue", sender: nil)
         }, error: {
@@ -88,7 +90,6 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func targetPushed(sender: AnyObject) {
-//        var url = apiTargetField.text! + "/v2/info"
         Alamofire.request(CF.Info())
             .validate()
             .responseJSON { (_, _, result) in

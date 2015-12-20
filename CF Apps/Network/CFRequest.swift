@@ -16,9 +16,11 @@ enum CF: URLRequestConvertible {
     case Info()
     case Login(String, String)
     case Orgs()
-    case Apps(Int)
+    case OrgApps(Int)
+    case Apps(String, Int)
     case AppSummary(String)
     case AppStats(String)
+    case Spaces([String])
     
     var baseURLString: String {
         switch self {
@@ -43,6 +45,10 @@ enum CF: URLRequestConvertible {
             return "/v2/apps/\(guid)/summary"
         case .AppStats(let guid):
             return "/v2/apps/\(guid)/stats"
+        case .Spaces:
+            return "/v2/spaces"
+        default:
+            return ""
         }
     }
     
@@ -76,14 +82,23 @@ enum CF: URLRequestConvertible {
             mutableURLRequest.setValue("Basic \(CF.loginAuthToken)", forHTTPHeaderField: "Authorization")
             
             return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: loginParams).0
-        case .Apps(let page):
+        case .Apps(let orgGuid, let page):
             let appsParams: [String : AnyObject] = [
                 "order-direction": "desc",
+                "q": "organization_guid:\(orgGuid)",
                 "results-per-page": "25",
-                "page": page,
+                "page": page
             ]
             
             return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: appsParams).0
+        case .Spaces(let appGuids):
+            let guidString = appGuids.joinWithSeparator(",")
+            let spacesParams: [String : AnyObject] = [
+                "q": "app_guid IN \(guidString)",
+                "results-per-page": "50"
+            ]
+            
+            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: spacesParams).0
         default:
             return mutableURLRequest
         }

@@ -97,15 +97,15 @@ class CFRequestTests: XCTestCase {
     
     func testAppsMember() {
         let path = "/v2/apps"
+        let orgGuid = "abc123"
         let currentPage: Int = 1
-        let request: NSURLRequest = CF.Apps(currentPage).URLRequest
+        let request: NSURLRequest = CF.Apps(orgGuid, currentPage).URLRequest
         
-        XCTAssert((CF.Apps(currentPage) as Any) is CF, "Apps is a member")
-        XCTAssertEqual(CF.Apps(currentPage).baseURLString, baseApiURL, "Apps returns api URL")
-        XCTAssertEqual(CF.Apps(currentPage).path, "/v2/apps", "Apps returns applications path")
-        XCTAssertEqual(CF.Apps(currentPage).method, Alamofire.Method.GET, "Apps request method is GET")
-        
-        XCTAssertEqual(request.URLString, baseApiURL + path + "?order-direction=desc&page=1&results-per-page=25", "Apps urlrequest returns the apps url with the right params")
+        XCTAssert((CF.Apps(orgGuid, currentPage) as Any) is CF, "Apps is a member")
+        XCTAssertEqual(CF.Apps(orgGuid, currentPage).baseURLString, baseApiURL, "Apps returns api URL")
+        XCTAssertEqual(CF.Apps(orgGuid, currentPage).path, "/v2/apps", "Apps returns applications path")
+        XCTAssertEqual(CF.Apps(orgGuid, currentPage).method, Alamofire.Method.GET, "Apps request method is GET")
+        XCTAssertEqual(request.URLString, baseApiURL + path + "?order-direction=desc&page=1&q=organization_guid%3Aabc123&results-per-page=25", "Apps urlrequest returns the apps url with the right params")
         XCTAssertNil(request.valueForHTTPHeaderField("Authorization"), "Apps doesn't use basic auth")
     }
     
