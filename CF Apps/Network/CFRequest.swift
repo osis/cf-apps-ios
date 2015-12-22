@@ -30,7 +30,10 @@ enum CF: URLRequestConvertible {
         case .Info(let url):
             return url
         default:
-            return Keychain.getApiURL()!
+            if let url = Keychain.getApiURL() {
+                return url
+            }
+            return ""
         }
     }
     

@@ -11,11 +11,11 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" misplaced="YES" image="logo_vertical_rgb" translatesAutoresizingMaskIntoConstraints="NO" id="e7R-bu-AVK">
+                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" misplaced="YES" image="launch_icon" translatesAutoresizingMaskIntoConstraints="NO" id="e7R-bu-AVK">
                     <rect key="frame" x="60" y="74" width="361" height="220"/>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.1450980392" green="0.5568627451" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="e7R-bu-AVK" secondAttribute="trailing" constant="60" id="194-Xg-GAr"/>
                 <constraint firstItem="e7R-bu-AVK" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="XIB-5A-fpt"/>
@@ -28,6 +28,6 @@
         </view>
     </objects>
     <resources>
-        <image name="logo_vertical_rgb" width="1045" height="638"/>
+        <image name="launch_icon" width="479" height="267"/>
     </resources>
 </document>

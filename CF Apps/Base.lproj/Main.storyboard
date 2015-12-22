@@ -51,42 +51,28 @@
                                     <action selector="targetPushed:" destination="BYZ-38-t0r" eventType="touchDown" id="fGI-lS-3sq"/>
                                 </connections>
                             </button>
-                            <view userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q7t-MC-dz4">
-                                <rect key="frame" x="0.0" y="59" width="600" height="130"/>
-                                <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" image="logo_horizontal_rgb" translatesAutoresizingMaskIntoConstraints="NO" id="Zsa-W2-BVH">
-                                        <rect key="frame" x="83" y="40" width="434" height="56"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="Zsa-W2-BVH" secondAttribute="height" multiplier="31:4" id="EFK-oH-FAW"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="tintColor" red="1" green="0.97481899910000003" blue="0.98001719080000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="Zsa-W2-BVH" firstAttribute="leading" secondItem="q7t-MC-dz4" secondAttribute="leading" constant="35" id="DqU-Be-qEO"/>
-                                    <constraint firstItem="Zsa-W2-BVH" firstAttribute="centerX" secondItem="q7t-MC-dz4" secondAttribute="centerX" id="EH6-57-ngs"/>
-                                    <constraint firstItem="Zsa-W2-BVH" firstAttribute="centerY" secondItem="q7t-MC-dz4" secondAttribute="centerY" constant="3" id="PdQ-2M-JEJ"/>
-                                    <constraint firstAttribute="height" constant="130" id="blD-V0-oY0"/>
-                                    <constraint firstAttribute="trailing" secondItem="Zsa-W2-BVH" secondAttribute="trailing" constant="35" id="lcd-Jy-7vX"/>
-                                </constraints>
-                            </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Hf-qT-0xk" userLabel="Username Field">
                                 <rect key="frame" x="198" y="226" width="205" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.97481899910000003" blue="0.98001719080000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" image="launch_icon" translatesAutoresizingMaskIntoConstraints="NO" id="biy-XY-d9n">
+                                <rect key="frame" x="212" y="65" width="176" height="97"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="biy-XY-d9n" secondAttribute="height" multiplier="205:113" id="AFy-oz-uwN"/>
+                                    <constraint firstAttribute="width" constant="176" id="xaL-ka-Z3j"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.14509803921568629" green="0.55686274509803924" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="4L3-oQ-vbE" secondAttribute="centerX" id="8RN-iO-jUH"/>
                             <constraint firstAttribute="centerX" secondItem="iAf-el-aNP" secondAttribute="centerX" id="K1R-34-ZCP"/>
+                            <constraint firstItem="biy-XY-d9n" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XQm-3X-Vd4"/>
                             <constraint firstAttribute="centerX" secondItem="i1c-w6-o63" secondAttribute="centerX" id="cHG-oc-K8j"/>
                             <constraint firstAttribute="centerX" secondItem="7zw-F1-vpg" secondAttribute="centerX" id="dyE-b0-5JU"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="q7t-MC-dz4" secondAttribute="trailing" constant="-20" id="e3r-7t-HKO"/>
                             <constraint firstAttribute="centerX" secondItem="5Hf-qT-0xk" secondAttribute="centerX" id="qCt-HN-iel"/>
-                            <constraint firstItem="q7t-MC-dz4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="xqY-dK-otV"/>
                         </constraints>
                     </view>
                     <connections>
@@ -543,7 +529,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo_horizontal_rgb" width="1337" height="177"/>
+        <image name="launch_icon" width="479" height="267"/>
         <image name="started" width="120" height="120"/>
     </resources>
     <inferredMetricsTieBreakers>
