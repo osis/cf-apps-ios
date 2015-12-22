@@ -1,14 +1,15 @@
 #CF Apps for iOS [![Build Status](https://travis-ci.org/Osis/cf-apps-ios.svg?branch=master)](https://travis-ci.org/Osis/cf-apps-ios)
-[![Cloud Foundry](https://cloud.githubusercontent.com/assets/347097/11958960/c0b5b4fc-a898-11e5-88bb-5ef4711d3216.png) An iOS Client for installations of Cloud Foundry
+![Cloud Foundry](https://cloud.githubusercontent.com/assets/347097/11958960/c0b5b4fc-a898-11e5-88bb-5ef4711d3216.png) An iOS Client for installations of Cloud Foundry
 
-## Current Features:
+## Features Include:
+
 - Works with any hosted (PWS, Bluemix, etc) or private Cloud Foundry installation
+- Does not use any third-party services for communication
 - Lists applications filtered by organization
 - App details includes bounded services and instance information
 
-## Goal
+## Goals:
 
-A full featured iOS client for iOS including the following:
 - View application events
 - View application logs
 - Ability to target multiple Cloud Foundry deployments
