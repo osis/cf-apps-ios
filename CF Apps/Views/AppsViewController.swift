@@ -69,9 +69,6 @@ class AppsViewController: UITableViewController {
             ], initialSelection: [currentIndex!], doneBlock: {
                 picker, values, indexes in
                 
-                print("values = \(values)")
-                print("indexes = \(indexes)")
-                print("picker = \(picker)")
                 let value = values[0] as! Int
                 self.orgGuid = self.orgPickerValues[value]
                 self.refresh()
@@ -111,7 +108,7 @@ class AppsViewController: UITableViewController {
                 }
             },
             error: { (statusCode) in
-                debugPrint(statusCode)
+                print(statusCode)
             }
         )
     }
@@ -160,8 +157,10 @@ class AppsViewController: UITableViewController {
     }
     
     func enableOrgsFilter() {
-        self.orgPickerButton.enabled = true
-        self.orgPickerButton.customView?.alpha = 1
+        dispatch_async(dispatch_get_main_queue()) {
+            self.orgPickerButton.enabled = true
+            self.orgPickerButton.customView?.alpha = 1
+        }
     }
     
     func fetchApplications() {
@@ -171,7 +170,7 @@ class AppsViewController: UITableViewController {
                 self.handleAppsResponse(json)
             }
             }, error: { (statusCode) in
-                debugPrint(statusCode)
+                print(statusCode)
             }
         )
     }
@@ -236,7 +235,7 @@ class AppsViewController: UITableViewController {
                 self.handleSpacesResponse(json)
             }
             }, error: { (statusCode) in
-                debugPrint(statusCode)
+                print(statusCode)
             }
         )
     }

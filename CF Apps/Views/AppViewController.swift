@@ -57,7 +57,7 @@ class AppViewController: UIViewController {
                 }
             },
             error: { (statusCode) in
-                debugPrint(statusCode)
+                print(statusCode)
         })
     }
     
@@ -97,7 +97,7 @@ class AppViewController: UIViewController {
                 }
             },
             error: { (statusCode) in
-                debugPrint(statusCode)
+                print(statusCode)
         })
     }
     

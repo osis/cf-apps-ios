@@ -91,7 +91,6 @@ class CFApi {
         }
     }
     
-    
     class func spaces(appGuids: [String], success: (json: JSON) -> Void, error: (statusCode: Int) -> Void) {
         if (!CFSession.isEmpty()) {
             Alamofire.request(CF.Spaces(appGuids))
