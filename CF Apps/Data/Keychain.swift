@@ -12,7 +12,7 @@ import Locksmith
 class Keychain {
     class var sessionAccount: String { return "cfSession" }
     
-    class func hasCredentials() -> BooleanType {
+    class func hasCredentials() -> Bool {
         let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
 
         if ((dictionary) != nil) {
@@ -48,6 +48,15 @@ class Keychain {
         let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
         if ((dictionary?.isEmpty) != nil) {
             let _url: String = dictionary!["apiURL"] as! String
+            return _url
+        }
+        return nil
+    }
+    
+    class func getAuthURL() -> String? {
+        let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
+        if ((dictionary?.isEmpty) != nil) {
+            let _url: String = dictionary!["authURL"] as! String
             return _url
         }
         return nil

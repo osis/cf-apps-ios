@@ -18,6 +18,7 @@ class AppsViewController: UITableViewController {
     
     @IBOutlet var orgPicker: UIPickerView!
     @IBOutlet var logoutButton: UIBarButtonItem!
+    @IBOutlet var orgPickerButton: UIBarButtonItem!
     
     let CellIdentifier = "AppCell"
     let dataStack: DATAStack
@@ -40,7 +41,7 @@ class AppsViewController: UITableViewController {
         super.viewDidLoad()
         self.refreshControl!.beginRefreshing()
         self.requestCount = 3
-        loadOrganizations()
+        fetchOrganizations()
     }
     
     func setupPicker() {
@@ -85,7 +86,7 @@ class AppsViewController: UITableViewController {
             self.currentPage = 1
             self.requestCount = 3
             self.dataStack.drop()
-            self.loadOrganizations()
+            self.fetchOrganizations()
         }
     }
     
@@ -93,41 +94,12 @@ class AppsViewController: UITableViewController {
         dispatch_async(dispatch_get_main_queue()) {
         self.currentPage = 1
         self.requestCount = 3
-        self.loadOrganizations()
+        self.fetchOrganizations()
         }
     }
     
     func setRefreshTitle(title: String) {
         self.refreshControl!.attributedTitle = NSAttributedString(string: title)
-    }
-    
-    func loadOrganizations() {
-        if (CF.oauthToken == nil) {
-            login()
-        } else {
-            fetchOrganizations()
-        }
-    }
-    
-    func loadApplications() {
-        if (CF.oauthToken == nil) {
-            login()
-        } else {
-            fetchApplications()
-        }
-    }
-    
-    func login() {
-        setRefreshTitle("Authenticating")
-        let (authURL, username, password) = Keychain.getCredentials()
-        CFApi.login(authURL!, username: username!, password: password!, success: {
-            self.fetchOrganizations()
-            }, error: {
-                let alert = UIAlertController(title: "Authentication Error                                                                                                                                          ", message: "Credentials are no longer valid. Please try logging in again.", preferredStyle: UIAlertControllerStyle.Alert)
-                let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
-                alert.addAction(alertAction)
-                self.presentViewController(alert, animated: true) { () -> Void in }
-        })
     }
     
     func fetchOrganizations() {
@@ -142,18 +114,6 @@ class AppsViewController: UITableViewController {
                 debugPrint(statusCode)
             }
         )
-    }
-    
-    func handleAPIError(statusCode: Int) {
-        switch statusCode {
-        case 401:
-            login()
-        default:
-            let alert = UIAlertController(title: "API Error", message: "The Cloud Foundry API has returned an error. Status Code: \(statusCode)", preferredStyle: UIAlertControllerStyle.Alert)
-            let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
-            alert.addAction(alertAction)
-            presentViewController(alert, animated: true) { () -> Void in }
-        }
     }
     
     func handleOrgsResponse(var json: JSON) {
@@ -179,6 +139,8 @@ class AppsViewController: UITableViewController {
             self.orgPickerLabels.append(json["resources"][index]["name"].stringValue)
         }
         
+        self.enableOrgsFilter()
+        
         if (self.orgGuid == nil) {
             self.orgGuid = json["resources"][0]["guid"].stringValue
         }
@@ -195,6 +157,11 @@ class AppsViewController: UITableViewController {
                 self.fetchCurrentObjects()
             }
         )
+    }
+    
+    func enableOrgsFilter() {
+        self.orgPickerButton.enabled = true
+        self.orgPickerButton.customView?.alpha = 1
     }
     
     func fetchApplications() {
@@ -310,7 +277,7 @@ class AppsViewController: UITableViewController {
             currentPage++
             self.tableView.tableFooterView = loadingCell()
             self.requestCount = 2
-            loadApplications()
+            fetchApplications()
         }
     }
     
@@ -343,8 +310,6 @@ class AppsViewController: UITableViewController {
         diskLabel.text = cfApp.formattedDiskQuota()
         stateView.image = UIImage(named: cfApp.statusImageName())
         buildpackLabel.text = cfApp.activeBuildpack()
-        
-        
     
         return cell
     }

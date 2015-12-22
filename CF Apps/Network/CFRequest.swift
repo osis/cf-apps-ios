@@ -12,7 +12,6 @@ import Alamofire
 enum CF: URLRequestConvertible {
     static let loginAuthToken = "Y2Y6"
     static var oauthToken: String?
-    static var apiURL: String?
     
     case Info(String)
     case Login(String, String, String)
@@ -30,10 +29,7 @@ enum CF: URLRequestConvertible {
         case .Info(let url):
             return url
         default:
-            if let url = Keychain.getApiURL() {
-                return url
-            }
-            return ""
+            return Keychain.getApiURL()!
         }
     }
     

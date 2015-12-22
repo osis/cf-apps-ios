@@ -20,8 +20,11 @@ class CFSession {
     
     class func reset() {
         Keychain.clearCredentials()
-        CF.apiURL = nil
         CF.oauthToken = nil
+    }
+    
+    class func isEmpty() -> Bool {
+        return (CF.oauthToken == nil || !Keychain.hasCredentials())
     }
 }
 

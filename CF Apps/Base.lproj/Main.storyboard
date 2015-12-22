@@ -29,17 +29,11 @@
                                     <action selector="loginPushed:" destination="BYZ-38-t0r" eventType="touchDown" id="Gez-vz-h5Q"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iAf-el-aNP" userLabel="Password Field">
-                                <rect key="frame" x="198" y="272" width="205" height="30"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CF Api" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4L3-oQ-vbE" userLabel="API Target Field">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="https://api.run.pivotal.io" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4L3-oQ-vbE" userLabel="API Target Field">
                                 <rect key="frame" x="198" y="249" width="205" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i1c-w6-o63">
                                 <rect key="frame" x="277" y="362" width="46" height="30"/>
@@ -55,7 +49,7 @@
                                 <rect key="frame" x="198" y="226" width="205" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.97481899910000003" blue="0.98001719080000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="next"/>
                             </textField>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" image="launch_icon" translatesAutoresizingMaskIntoConstraints="NO" id="biy-XY-d9n">
                                 <rect key="frame" x="212" y="65" width="176" height="97"/>
@@ -64,6 +58,12 @@
                                     <constraint firstAttribute="width" constant="176" id="xaL-ka-Z3j"/>
                                 </constraints>
                             </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iAf-el-aNP" userLabel="Password Field">
+                                <rect key="frame" x="198" y="272" width="205" height="30"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.14509803921568629" green="0.55686274509803924" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -97,6 +97,11 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" red="0.14509803921568629" green="0.55686274509803924" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="16"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="dyp-KC-V5j" kind="relationship" relationship="rootViewController" id="Ck7-5X-j0w"/>
@@ -204,6 +209,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="olq-SB-2eC">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="dR8-gx-aRG">
                             <color key="tintColor" red="1" green="0.97481899910000003" blue="0.98001719080000005" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -211,7 +217,22 @@
                                 <segue destination="BYZ-38-t0r" kind="presentation" identifier="logout" id="GEa-OP-8I1"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Orgs" id="P7O-bo-gKL">
+                        <view key="titleView" contentMode="scaleToFill" id="gnC-ra-SuD">
+                            <rect key="frame" x="180" y="6" width="240" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" misplaced="YES" image="launch_icon" translatesAutoresizingMaskIntoConstraints="NO" id="cBT-qb-Sr8">
+                                    <rect key="frame" x="88" y="-1" width="64" height="34"/>
+                                </imageView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="cBT-qb-Sr8" firstAttribute="top" secondItem="gnC-ra-SuD" secondAttribute="top" constant="5" id="3st-DP-4wZ"/>
+                                <constraint firstItem="cBT-qb-Sr8" firstAttribute="centerY" secondItem="gnC-ra-SuD" secondAttribute="centerY" id="fmT-BN-9m0"/>
+                                <constraint firstAttribute="bottom" secondItem="cBT-qb-Sr8" secondAttribute="bottom" constant="5" id="hip-sc-wrJ"/>
+                                <constraint firstItem="cBT-qb-Sr8" firstAttribute="centerX" secondItem="gnC-ra-SuD" secondAttribute="centerX" id="xGX-Zs-bYd"/>
+                            </constraints>
+                        </view>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Orgs" id="P7O-bo-gKL">
                             <connections>
                                 <action selector="filterOrgClicked:" destination="dyp-KC-V5j" id="QJp-jj-zHi"/>
                             </connections>
@@ -234,6 +255,7 @@
                     <connections>
                         <outlet property="logoutButton" destination="dR8-gx-aRG" id="ozW-or-DPV"/>
                         <outlet property="orgPicker" destination="OlI-Lu-rBW" id="YJP-gQ-NBI"/>
+                        <outlet property="orgPickerButton" destination="P7O-bo-gKL" id="dZD-wT-Cbt"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cts-dO-C5V" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -244,16 +266,16 @@
             </objects>
             <point key="canvasLocation" x="1036" y="292"/>
         </scene>
-        <!--App View Controller-->
+        <!--Summary-->
         <scene sceneID="m5i-28-AKO">
             <objects>
-                <viewController id="Gz0-Se-qP4" customClass="AppViewController" customModule="CF_Apps" sceneMemberID="viewController">
+                <viewController title="Summary" id="Gz0-Se-qP4" customClass="AppViewController" customModule="CF_Apps" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M7I-Ja-lEm"/>
                         <viewControllerLayoutGuide type="bottom" id="FZf-nF-H1u"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3BD-CR-EOj">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rb5-tk-1u7">
@@ -505,8 +527,11 @@
                         <constraints>
                             <constraint firstItem="rb5-tk-1u7" firstAttribute="height" secondItem="3BD-CR-EOj" secondAttribute="height" id="4jz-Bi-kq6"/>
                             <constraint firstItem="1B0-6K-Fic" firstAttribute="width" secondItem="3BD-CR-EOj" secondAttribute="width" id="WyO-vw-9jp"/>
+                            <constraint firstItem="rb5-tk-1u7" firstAttribute="width" secondItem="3BD-CR-EOj" secondAttribute="width" id="Y1z-vM-WEp"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <toolbarItems/>
                     <connections>
                         <outlet property="buildpackLabel" destination="5UA-73-8PU" id="mvj-PM-jBw"/>
                         <outlet property="commandLabel" destination="wCr-5F-9yF" id="XZD-Gq-XhI"/>
@@ -533,6 +558,6 @@
         <image name="started" width="120" height="120"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="GEa-OP-8I1"/>
+        <segue reference="CHD-cY-InK"/>
     </inferredMetricsTieBreakers>
 </document>
