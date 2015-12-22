@@ -11,18 +11,27 @@ import Alamofire
 import SwiftyJSON
 
 class CFApi {
-    class func login(username: String, password: String, success: () -> Void, error: () -> Void) {
-        Alamofire.request(CF.Login(username, password))
+    class func info(apiURL: String, success: (json: JSON) -> Void, error: () -> Void) {
+        Alamofire.request(CF.Info(apiURL))
+            .validate()
+            .responseJSON { (_, _, result) in
+                if (result.isSuccess) {
+                    let json = JSON(result.value!)
+                    success(json: json)
+                } else {
+                    error()
+                }
+        }
+    }
+
+    class func login(authURL: String, username: String, password: String, success: () -> Void, error: () -> Void) {
+        Alamofire.request(CF.Login(authURL, username, password))
             .validate()
             .responseJSON { (_, _, result) in
                 if (result.isSuccess) {
                     let json = JSON(result.value!)
                     let token = json["access_token"].string
                     CF.oauthToken = token
-                    Keychain.setCredentials([
-                        "username": username,
-                        "password": password
-                        ])
                     success()
                 } else {
                     error()
@@ -71,7 +80,6 @@ class CFApi {
     }
     
     
-    
     class func spaces(appGuids: [String], success: (json: JSON) -> Void, error: (statusCode: Int) -> Void) {
         Alamofire.request(CF.Spaces(appGuids))
             .validate()
@@ -91,13 +99,14 @@ class CFApi {
             success(json: json)
         } else {
             if (response.statusCode == 401) {
-                let (username, password) = Keychain.getCredentials()
-                self.login(username!, password: password!, success: refresh, error: {
+                let (authURL, username, password) = Keychain.getCredentials()
+                self.login(authURL!, username: username!, password: password!, success: refresh, error: {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let loginViewController: LoginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginView") as! LoginViewController
                     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                     loginViewController.authError = true
                     appDelegate.window!.rootViewController = loginViewController
+                    CFSession.reset()
                 })
             }
             error(statusCode: response.statusCode)

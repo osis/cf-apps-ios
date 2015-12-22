@@ -57,12 +57,8 @@ class AppsViewController: UITableViewController {
             
             controller.app = items[index!.item]
         } else if (segue.identifier == "logout") {
-            Keychain.clearCredentials()
+            CFSession.reset()
         }
-    }
-    
-    @IBAction func logoutClicked(sender: UIBarButtonItem) {
-        
     }
     
     @IBAction func filterOrgClicked(sender: UIBarButtonItem) {
@@ -123,8 +119,8 @@ class AppsViewController: UITableViewController {
     
     func login() {
         setRefreshTitle("Authenticating")
-        let (username, password) = Keychain.getCredentials()
-        CFApi.login(username!, password: password!, success: {
+        let (authURL, username, password) = Keychain.getCredentials()
+        CFApi.login(authURL!, username: username!, password: password!, success: {
             self.fetchOrganizations()
             }, error: {
                 let alert = UIAlertController(title: "Authentication Error                                                                                                                                          ", message: "Credentials are no longer valid. Please try logging in again.", preferredStyle: UIAlertControllerStyle.Alert)

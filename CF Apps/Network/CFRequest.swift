@@ -12,9 +12,10 @@ import Alamofire
 enum CF: URLRequestConvertible {
     static let loginAuthToken = "Y2Y6"
     static var oauthToken: String?
+    static var apiURL: String?
     
-    case Info()
-    case Login(String, String)
+    case Info(String)
+    case Login(String, String, String)
     case Orgs()
     case OrgApps(Int)
     case Apps(String, Int)
@@ -24,10 +25,12 @@ enum CF: URLRequestConvertible {
     
     var baseURLString: String {
         switch self {
-        case .Login:
-            return "https://login.run.pivotal.io"
+        case .Login(let url, _, _):
+            return url
+        case .Info(let url):
+            return url
         default:
-            return "https://api.run.pivotal.io"
+            return Keychain.getApiURL()!
         }
     }
     
@@ -71,7 +74,7 @@ enum CF: URLRequestConvertible {
         }
         
         switch self {
-        case .Login(let username, let password):
+        case .Login(_, let username, let password):
             let loginParams = [
                 "grant_type": "password",
                 "username": username,

@@ -19,8 +19,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var targetButton: UIButton!
     
-    var authEndpoint: String?
     var authError = false
+    var authEndpoint: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,9 @@ class LoginViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        if authError { showAuthAlert() }
+        if authError {
+            showAuthAlert()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -80,7 +82,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPushed(sender: UIButton) {
-        CFApi.login(usernameField.text!, password: passwordField.text!, success: {
+        CFApi.login(self.authEndpoint!, username: usernameField.text!, password: passwordField.text!, success: {
+            CFSession.save(self.apiTargetField.text!, authURL: self.authEndpoint!, username: self.usernameField.text!, password: self.passwordField.text!)
             self.performSegueWithIdentifier("loginSegue", sender: nil)
         }, error: {
             self.passwordField.layer.borderColor = UIColor.redColor().CGColor
@@ -90,19 +93,15 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func targetPushed(sender: AnyObject) {
-        Alamofire.request(CF.Info())
-            .validate()
-            .responseJSON { (_, _, result) in
-                if (result.isSuccess) {
-                    let json = JSON(result.value!)
-                    self.authEndpoint = json["authorization_endpoint"].string
-                    self.hideTargetForm()
-                    self.showLoginForm()
-                } else {
-                    self.apiTargetField.layer.borderColor = UIColor.redColor().CGColor
-                    self.apiTargetField.layer.borderWidth = 1
-                    self.apiTargetField.layer.masksToBounds = true
-                }
-        }
+        CFApi.info(self.apiTargetField.text!, success: { (json) in
+            self.authEndpoint = json["authorization_endpoint"].string
+            self.hideTargetForm()
+            self.showLoginForm()
+            }, error: {
+                self.apiTargetField.layer.borderColor = UIColor.redColor().CGColor
+                self.apiTargetField.layer.borderWidth = 1
+                self.apiTargetField.layer.masksToBounds = true
+                
+        })
     }
 }
