@@ -26,6 +26,11 @@ class Instance: NSManagedObject {
         return json!["stats"].dictionaryValue
     }
     
+    func state() -> String {
+        let state = json!["state"].stringValue
+        return (state == "CRASHED") ? "error" : "started"
+    }
+    
     func cpuUsagePercentage() -> Double {
         return round(usage()["cpu"]!.doubleValue * 100)
     }

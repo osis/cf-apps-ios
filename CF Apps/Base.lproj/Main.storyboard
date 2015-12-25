@@ -358,12 +358,6 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="601" height="82"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nGW-c5-nu4">
-                                                                    <rect key="frame" x="13" y="30" width="11" height="21"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
                                                                 <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mf2-C9-qgW">
                                                                     <rect key="frame" x="506" y="0.0" width="79" height="80"/>
                                                                     <subviews>
@@ -398,7 +392,7 @@
                                                                         </label>
                                                                     </subviews>
                                                                 </view>
-                                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="olV-G1-uJF">
+                                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="olV-G1-uJF">
                                                                     <rect key="frame" x="32" y="0.0" width="79" height="80"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100.0%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i3a-op-mBz">
@@ -415,11 +409,25 @@
                                                                         </label>
                                                                     </subviews>
                                                                 </view>
+                                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="5" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" image="error" translatesAutoresizingMaskIntoConstraints="NO" id="Sha-as-TsX">
+                                                                    <rect key="frame" x="0.0" y="43" width="34" height="34"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="34" id="Hd5-y7-jYf"/>
+                                                                        <constraint firstAttribute="height" constant="34" id="lhK-WF-JeV"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nGW-c5-nu4">
+                                                                    <rect key="frame" x="12" y="25" width="11" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstItem="LXo-yw-KNu" firstAttribute="centerX" secondItem="5VT-X7-Nzw" secondAttribute="centerX" id="6ir-qM-Suc"/>
+                                                                <constraint firstItem="Sha-as-TsX" firstAttribute="leading" secondItem="5VT-X7-Nzw" secondAttribute="leadingMargin" constant="-2" id="QaG-x0-6E7"/>
                                                                 <constraint firstAttribute="trailingMargin" secondItem="Mf2-C9-qgW" secondAttribute="trailing" constant="5" id="R1m-O6-e7U"/>
-                                                                <constraint firstItem="olV-G1-uJF" firstAttribute="leading" secondItem="nGW-c5-nu4" secondAttribute="trailing" constant="5" id="Vbe-aR-hJY"/>
+                                                                <constraint firstItem="nGW-c5-nu4" firstAttribute="centerX" secondItem="Sha-as-TsX" secondAttribute="centerX" id="YyW-Go-7DC"/>
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                     </tableViewCell>
@@ -554,6 +562,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="error" width="120" height="120"/>
         <image name="launch_icon" width="479" height="267"/>
         <image name="started" width="120" height="120"/>
     </resources>

@@ -25,11 +25,9 @@ class InstancesViewConroller: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell?
-        
         let instance = Instance(json: instances!["\(indexPath.row)"])
-        
-        cell = tableView.dequeueReusableCellWithIdentifier("InstanceCell") as UITableViewCell!
+
+        let cell = tableView.dequeueReusableCellWithIdentifier("InstanceCell") as UITableViewCell!
         
         let indexLabel = cell!.viewWithTag(1) as! UILabel
         indexLabel.text = String(indexPath.row)
@@ -42,6 +40,9 @@ class InstancesViewConroller: UIViewController, UITableViewDelegate, UITableView
         
         let diskLabel = cell!.viewWithTag(4) as! UILabel
         diskLabel.text = "\(instance.diskUsagePercentage())%"
+        
+        let stateView: UIImageView = cell.viewWithTag(5) as! UIImageView
+        stateView.image = UIImage(named: instance.state())
         
         return cell!
     }
