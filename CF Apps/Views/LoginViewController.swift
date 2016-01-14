@@ -80,18 +80,7 @@ class LoginViewController: UIViewController {
         presentViewController(alert, animated: true) { () -> Void in }
     }
     
-    @IBAction func loginPushed(sender: UIButton) {
-        CFApi.login(self.authEndpoint!, username: usernameField.text!, password: passwordField.text!, success: {
-            CFSession.save(self.apiTargetField.text!, authURL: self.authEndpoint!, username: self.usernameField.text!, password: self.passwordField.text!)
-            self.performSegueWithIdentifier("loginSegue", sender: nil)
-        }, error: {
-            self.passwordField.layer.borderColor = UIColor.redColor().CGColor
-            self.passwordField.layer.borderWidth = 1
-            self.passwordField.layer.masksToBounds = true
-        })
-    }
-    
-    @IBAction func targetPushed(sender: AnyObject) {
+    func target() {
         CFApi.info(self.apiTargetField.text!, success: { (json) in
             self.authEndpoint = json["authorization_endpoint"].string
             self.hideTargetForm()
@@ -102,5 +91,32 @@ class LoginViewController: UIViewController {
                 self.apiTargetField.layer.masksToBounds = true
                 
         })
+    }
+    
+    func login() {
+        CFApi.login(self.authEndpoint!, username: usernameField.text!, password: passwordField.text!, success: {
+            CFSession.save(self.apiTargetField.text!, authURL: self.authEndpoint!, username: self.usernameField.text!, password: self.passwordField.text!)
+            self.performSegueWithIdentifier("loginSegue", sender: nil)
+            }, error: {
+                self.passwordField.layer.borderColor = UIColor.redColor().CGColor
+                self.passwordField.layer.borderWidth = 1
+                self.passwordField.layer.masksToBounds = true
+        })
+    }
+    
+    @IBAction func loginPushed(sender: UIButton) {
+        login()
+    }
+    
+    @IBAction func keyboardLoginAction(sender: AnyObject) {
+        login()
+    }
+    
+    @IBAction func targetPushed(sender: AnyObject) {
+        target()
+    }
+    
+    @IBAction func keyboardTargetAction(sender: AnyObject) {
+        target()
     }
 }
