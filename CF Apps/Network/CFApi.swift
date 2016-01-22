@@ -107,7 +107,7 @@ class CFApi {
     class private func responseHandler(response: NSHTTPURLResponse, result: Result<AnyObject>, success: (json: JSON) -> Void, error: (statusCode: Int) -> Void, recover: () -> Void) {
         
         if (result.isSuccess) {
-            let json = JSON(result.value!)
+            let json = sanitizeJson(JSON(result.value!))
             success(json: json)
         } else {
             if (response.statusCode == 401) {
@@ -128,5 +128,25 @@ class CFApi {
             appDelegate.window!.rootViewController = loginViewController
             CFSession.reset()
         })
+    }
+    
+    class private func sanitizeJson(json: JSON) -> JSON {
+        var sanitizedJson = json
+        
+        for (key, subJson) in json["resources"] {
+            let index = Int(key)!
+            
+            for (entityKey, entitySubJson) in subJson["entity"] {
+                sanitizedJson["resources"][index][entityKey] = entitySubJson
+            }
+            sanitizedJson["resources"][index]["entity"] = nil
+            
+            for (metadataKey, metadataSubJson) in subJson["metadata"] {
+                sanitizedJson["resources"][index][metadataKey] = metadataSubJson
+            }
+            sanitizedJson["resources"][index]["metadata"] = nil
+        }
+        
+        return sanitizedJson
     }
 }

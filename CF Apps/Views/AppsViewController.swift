@@ -118,20 +118,8 @@ class AppsViewController: UITableViewController {
         self.orgPickerLabels = []
         self.orgPickerValues = []
         
-        for (key, subJson) in json["resources"] {
+        for (key, _) in json["resources"] {
             let index = Int(key)!
-            
-            for (entityKey, entitySubJson) in subJson["entity"] {
-                json["resources"][index][entityKey] = entitySubJson
-            }
-            json["resources"][index]["entity"] = nil
-            
-            for (metadataKey, metadataSubJson) in subJson["metadata"] {
-                json["resources"][index][metadataKey] = metadataSubJson
-            }
-            json["resources"][index]["metadata"] = nil
-            
-            
             self.orgPickerValues.append(json["resources"][index]["guid"].stringValue)
             self.orgPickerLabels.append(json["resources"][index]["name"].stringValue)
         }
@@ -194,19 +182,8 @@ class AppsViewController: UITableViewController {
     func handleAppsResponse(var json: JSON) {
         var appGuids: [String] = []
         
-        for (key, subJson) in json["resources"] {
+        for (key, _) in json["resources"] {
             let index = Int(key)!
-            
-            for (entityKey, entitySubJson) in subJson["entity"] {
-                json["resources"][index][entityKey] = entitySubJson
-            }
-            json["resources"][index]["entity"] = nil
-            
-            for (metadataKey, metadataSubJson) in subJson["metadata"] {
-                json["resources"][index][metadataKey] = metadataSubJson
-            }
-            json["resources"][index]["metadata"] = nil
-            
             appGuids.append(json["resources"][index]["guid"].stringValue)
         }
         
@@ -241,20 +218,6 @@ class AppsViewController: UITableViewController {
     }
 
     func handleSpacesResponse(var json: JSON) {
-        for (key, subJson) in json["resources"] {
-            let index = Int(key)!
-            
-            for (entityKey, entitySubJson) in subJson["entity"] {
-                json["resources"][index][entityKey] = entitySubJson
-            }
-            json["resources"][index]["entity"] = nil
-            
-            for (metadataKey, metadataSubJson) in subJson["metadata"] {
-                json["resources"][index][metadataKey] = metadataSubJson
-            }
-            json["resources"][index]["metadata"] = nil
-        }
-        
         Sync.changes(
             json["resources"].arrayObject,
             inEntityNamed: "CFSpace",
