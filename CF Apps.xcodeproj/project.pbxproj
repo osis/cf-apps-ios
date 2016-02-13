@@ -317,6 +317,11 @@
 					651C84751B2A7FB50006DC3A = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = 4CPT54BT54;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					651C848D1B2A7FB60006DC3A = {
 						CreatedOnToolsVersion = 6.3;

@@ -15,17 +15,35 @@ import Locksmith
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    lazy var dataStack: DATAStack = DATAStack()
     
+    var dataStack: DATAStack = {
+        let dataStack = DATAStack(modelName: "CFStore")
+        
+        return dataStack
+    }()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         if (Keychain.hasCredentials()) {
-            return true
-        } else {
             showLoginScreen()
         }
+        
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil))
+        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        
         // Override point for customization after application launch.
         return true
+    }
+    
+    func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        let notification = UILocalNotification()
+        notification.alertBody = "Todo Item Overdue" // text that will be displayed in the notification
+        notification.fireDate = NSDate()
+        notification.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
+        notification.soundName = UILocalNotificationDefaultSoundName // play default sound
+        notification.category = "TODO_CATEGORY"
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        
+        completionHandler(UIBackgroundFetchResult.NewData)
     }
 
     func showLoginScreen() {
@@ -44,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        dataStack.persistWithCompletion(nil)
+//        dataStack.persistWithCompletion(nil)
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -59,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
 //        self.saveContext()
-        dataStack.persistWithCompletion(nil)
+//        dataStack.persistWithCompletion(nil)
     }
 
     // MARK: - Core Data stack
