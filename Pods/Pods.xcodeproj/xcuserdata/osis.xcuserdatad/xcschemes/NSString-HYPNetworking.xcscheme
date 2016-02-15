@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0720"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "137596892A620BF7E1EB80613E0A56FC"
+               BlueprintIdentifier = "D4FF82403435D8C573D6E932108C5301"
                BuildableName = "NSString_HYPNetworking.framework"
                BlueprintName = "NSString-HYPNetworking"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "137596892A620BF7E1EB80613E0A56FC"
+            BlueprintIdentifier = "D4FF82403435D8C573D6E932108C5301"
             BuildableName = "NSString_HYPNetworking.framework"
             BlueprintName = "NSString-HYPNetworking"
             ReferencedContainer = "container:Pods.xcodeproj">

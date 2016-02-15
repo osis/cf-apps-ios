@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "927CB5CF75D91145A23163D22141BDE0"
-               BuildableName = "NSDictionary_ANDYSafeValue.framework"
-               BlueprintName = "NSDictionary-ANDYSafeValue"
+               BlueprintIdentifier = "CFB007F97EBFDFB78C69B0D386C49311"
+               BuildableName = "Pods_CF_Apps_Tests.framework"
+               BlueprintName = "Pods-CF Apps Tests"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "927CB5CF75D91145A23163D22141BDE0"
-            BuildableName = "NSDictionary_ANDYSafeValue.framework"
-            BlueprintName = "NSDictionary-ANDYSafeValue"
+            BlueprintIdentifier = "CFB007F97EBFDFB78C69B0D386C49311"
+            BuildableName = "Pods_CF_Apps_Tests.framework"
+            BlueprintName = "Pods-CF Apps Tests"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

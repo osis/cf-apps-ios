@@ -11,30 +11,30 @@ import Alamofire
 import SwiftyJSON
 
 class CFApi {
-    class func info(apiURL: String, success: (json: JSON) -> Void, error: () -> Void) {
+    class func info(apiURL: String, success: (json: JSON) -> Void, error: (message: String) -> Void) {
         Alamofire.request(CF.Info(apiURL))
             .validate()
-            .responseJSON { (_, _, result) in
+            .responseJSON { (request, response, result) in
                 if (result.isSuccess) {
                     let json = JSON(result.value!)
                     success(json: json)
                 } else {
-                    error()
+                    responseErrorHandler(request, response: response, result: result, error: error)
                 }
         }
     }
 
-    class func login(authURL: String, username: String, password: String, success: () -> Void, error: () -> Void) {
+    class func login(authURL: String, username: String, password: String, success: () -> Void, error: (message: String) -> Void) {
         Alamofire.request(CF.Login(authURL, username, password))
             .validate()
-            .responseJSON { (_, _, result) in
+            .responseJSON { (request, response, result) in
                 if (result.isSuccess) {
                     let json = JSON(result.value!)
                     let token = json["access_token"].string
                     CF.oauthToken = token
                     success()
                 } else {
-                    error()
+                    responseErrorHandler(request, response: response, result: result, error: error)
                 }
         }
     }
@@ -117,10 +117,19 @@ class CFApi {
         }
     }
     
+    class private func responseErrorHandler(request: NSURLRequest?, response: NSHTTPURLResponse?, result: Result<AnyObject>, error: (message: String) -> Void) {
+        if let statusCode = response?.statusCode {
+            let errorMessage = (statusCode == 401) ? "Incorrect credentials" : "\(statusCode) response from \(request!.URLString)"
+            error(message: errorMessage)
+        } else {
+            error(message: "Invalid URL")
+        }
+    }
+    
     class private func retryLogin(success: () -> Void) {
         let (authURL, username, password) = Keychain.getCredentials()
         
-        self.login(authURL!, username: username!, password: password!, success: success, error: {
+        self.login(authURL!, username: username!, password: password!, success: success, error: { _ in
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let loginViewController: LoginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginView") as! LoginViewController
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate

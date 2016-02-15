@@ -18,49 +18,55 @@ class Instance: NSManagedObject {
         self.json = json
     }
     
-    func usage() -> [String: JSON] {
-        return stats()["usage"]!.dictionaryValue
+    func usage() -> [String: JSON]? {
+        let usage = stats()?["usage"]
+        return (usage != nil) ? usage!.dictionaryValue : nil
     }
     
-    func stats() -> [String: JSON] {
-        return json!["stats"].dictionaryValue
+    func stats() -> [String: JSON]? {
+        let stats = json!["stats"]
+        return (stats != nil) ? stats.dictionaryValue : nil
     }
     
     func state() -> String {
         let state = json!["state"].stringValue
-        return (state == "CRASHED") ? "error" : "started"
+        return (state == "CRASHED" || state == "DOWN") ? "error" : "started"
     }
     
     func cpuUsagePercentage() -> Double {
-        return round(usage()["cpu"]!.doubleValue * 100)
+        return (usage() != nil) ? round(usage()!["cpu"]!.doubleValue * 100) : 0
     }
     
     func memoryUsage() -> Double {
-        let memory = usage()["mem"]!.doubleValue
-        return toMb(memory)
+        let memory = (usage() != nil) ? toMb(round(usage()!["mem"]!.doubleValue * 100)) : 0
+        return memory
     }
     
     func memoryQuota() -> Double {
-        let memoryQuota = stats()["mem_quota"]!.doubleValue
-        return toMb(memoryQuota)
+        let memoryQuota = (stats() != nil) ? toMb(stats()!["mem_quota"]!.doubleValue) : 0
+        return memoryQuota
     }
     
     func memoryUsagePercentage() -> Double {
-        return round((Double(memoryUsage()) / Double(memoryQuota())) * 100)
+        return toPercent(Double(memoryUsage()), quota: Double(memoryQuota()))
     }
     
     func diskUsage() -> Double {
-        let disk = usage()["disk"]!.doubleValue
-        return toMb(disk)
+        let disk = (usage() != nil) ? toMb(round(usage()!["disk"]!.doubleValue * 100)) : 0
+        return disk
     }
     
     func diskQuota() -> Double {
-        let diskQuota = stats()["disk_quota"]!.doubleValue
-        return toMb(diskQuota)
+        let diskQuota = (stats() != nil) ? toMb(stats()!["disk_quota"]!.doubleValue) : 0
+        return diskQuota
     }
     
     func diskUsagePercentage() -> Double {
-        return round((Double(diskUsage()) / Double(diskQuota())) * 100)
+        return toPercent(Double(diskUsage()), quota: Double(diskQuota()))
+    }
+    
+    private func toPercent(usage: Double, quota: Double) -> Double {
+        return (quota != 0) ? round(usage / quota) * 100 : 0
     }
     
     private func toMb(i: Double) -> Double {

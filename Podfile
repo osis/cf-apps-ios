@@ -11,5 +11,4 @@ target 'CF Apps' do
 end
 
 target 'CF Apps Tests' do
-
 end

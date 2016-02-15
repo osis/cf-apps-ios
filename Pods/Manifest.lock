@@ -23,7 +23,7 @@ PODS:
   - TestCheck (0.3.0)
 
 DEPENDENCIES:
-  - ActionSheetPicker-3.0
+  - ActionSheetPicker-3.0 (~> 2.0.4)
   - Alamofire (~> 2.0)
   - Locksmith (~> 2.0.0)
   - SwiftyJSON (~> 2.3)
@@ -44,4 +44,6 @@ SPEC CHECKSUMS:
   Sync: 1c8bda37df9ede8aaec7aadb73dc36e9038ecb8b
   TestCheck: 42c1343664986c0cbfaa20a62622d6f6fb70a407
 
-COCOAPODS: 0.39.0.beta.4
+PODFILE CHECKSUM: 8a5563196184eb280bbfa52e74dd991a6abfa091
+
+COCOAPODS: 1.0.0.beta.3
