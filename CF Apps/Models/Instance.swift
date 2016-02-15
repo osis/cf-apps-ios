@@ -66,7 +66,7 @@ class Instance: NSManagedObject {
     }
     
     private func toPercent(usage: Double, quota: Double) -> Double {
-        return (quota != 0) ? round(usage / quota) * 100 : 0
+        return (quota != 0) ? round(10*(usage / quota))/10: 0
     }
     
     private func toMb(i: Double) -> Double {
