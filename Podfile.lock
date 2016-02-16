@@ -6,7 +6,7 @@ PODS:
   - DATAObjectIDs (0.5.1)
   - DATAStack (4.0.3):
     - TestCheck (~> 0.3.0)
-  - Locksmith (2.0.1)
+  - Locksmith (2.0.7)
   - NSDictionary-ANDYSafeValue (0.3.1)
   - NSEntityDescription-SYNCPrimaryKey (0.1.1):
     - NSString-HYPNetworking (~> 0.3.3)
@@ -35,7 +35,7 @@ SPEC CHECKSUMS:
   DATAFilter: 4a1bdc065847e19d9fa1c9dd92ed2d85847967a1
   DATAObjectIDs: 33db74dd1c858c2d22a45a4013c95f1082182e4e
   DATAStack: 8622b05a7cc1dade21e105d20fdd9f8fbe63944d
-  Locksmith: 2c7bdc5c3a31a97d748791ad830310b1af4b8549
+  Locksmith: 46384a1c603836aa47a66020e289c157409c7541
   NSDictionary-ANDYSafeValue: 2d7adf339b6e302d71fec5f1d71ae00aacda993e
   NSEntityDescription-SYNCPrimaryKey: 843225bf3bd09a1d7f9d4157111204bb3fe3cb18
   NSManagedObject-HYPPropertyMapper: 9ae15488cae898d58d9aafc0ad7967ce151bf6cd
