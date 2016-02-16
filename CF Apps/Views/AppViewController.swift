@@ -65,16 +65,6 @@ class AppViewController: UIViewController {
         let delegate = servicesTableView.delegate as! ServicesViewController
         delegate.services = json["services"]
         
-        dispatch_async(dispatch_get_main_queue(), {
-            self.servicesTableView.tableFooterView = nil
-            self.servicesTableView.reloadData()
-            let height = self.servicesTableView.contentSize.height
-            self.servicesTableHeightConstraint.constant = height
-            
-            self.view.setNeedsLayout()
-            self.view.layoutIfNeeded()
-        })
-        
         let predicate = NSPredicate(format: "guid == ''")
         Sync.changes(
             [json.object],
@@ -85,6 +75,16 @@ class AppViewController: UIViewController {
                 self.setSummary(self.app!.guid)
             }
         )
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.servicesTableView.tableFooterView = nil
+            self.servicesTableView.reloadData()
+            let height = self.servicesTableView.contentSize.height
+            self.servicesTableHeightConstraint.constant = height
+            
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+        })
     }
     
     func fetchStats() {
