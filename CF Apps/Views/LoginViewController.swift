@@ -52,6 +52,7 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
         UIView.animateWithDuration(transitionSpeed, animations: {
             self.loginView.alpha = 1
             self.loginView.transform = CGAffineTransformIdentity
+            self.usernameField.becomeFirstResponder()
         })
     }
     
