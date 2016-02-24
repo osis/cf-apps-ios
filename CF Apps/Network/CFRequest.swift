@@ -64,45 +64,91 @@ enum CF: URLRequestConvertible {
     }
     
     var URLRequest: NSMutableURLRequest {
+        switch self {
+        case .Login(_, let username, let password):
+            return loginURLRequest(username, password: password)
+        case .Apps(let orgGuid, let page):
+            return appsURLRequest(orgGuid, page: page)
+        case .Spaces(let appGuids):
+            return spacesURLRequest(appGuids)
+        default:
+            return cfURLRequest()
+        }
+    }
+    
+    func cfURLRequest() -> NSMutableURLRequest {
         let URL = NSURL(string: baseURLString)!
         let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
+        
         mutableURLRequest.HTTPMethod = method.rawValue
         
         if let token = CF.oauthToken {
             mutableURLRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
-        switch self {
-        case .Login(_, let username, let password):
-            let loginParams = [
-                "grant_type": "password",
-                "username": username,
-                "password": password,
-                "scope": ""
-            ]
-            
-            mutableURLRequest.setValue("Basic \(CF.loginAuthToken)", forHTTPHeaderField: "Authorization")
-            
-            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: loginParams).0
-        case .Apps(let orgGuid, let page):
-            let appsParams: [String : AnyObject] = [
-                "order-direction": "desc",
-                "q": "organization_guid:\(orgGuid)",
-                "results-per-page": "25",
-                "page": page
-            ]
-            
-            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: appsParams).0
-        case .Spaces(let appGuids):
-            let guidString = appGuids.joinWithSeparator(",")
-            let spacesParams: [String : AnyObject] = [
-                "q": "app_guid IN \(guidString)",
-                "results-per-page": "50"
-            ]
-            
-            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: spacesParams).0
-        default:
-            return mutableURLRequest
-        }
+        return mutableURLRequest
+    }
+    
+//    class LoginRequest: NSMutableURLRequest {
+//        var params: [String: AnyObject]?
+//        convenience init(url: NSURL?, token: String?, username: String, password: String) {
+//            self.init(URL: url)
+//            setToken(token)
+//            self.params = createParams(username, password: password)
+//        }
+//        
+//        func createParams(username: String, password: String) -> [String: AnyObject] {
+//            return [
+//                "grant_type": "password",
+//                "username": username,
+//                "password": password,
+//                "scope": ""
+//            ]
+//        }
+//        
+//        func setToken(token: String?) {
+//            setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
+//        }
+//        
+//        func encode() -> NSMutableURLRequest {
+//            return Alamofire.ParameterEncoding.URL.encode(self, parameters: self.params).0
+//        }
+//    }
+    
+    func loginURLRequest(username: String, password: String) -> NSMutableURLRequest {
+        let mutableURLRequest = cfURLRequest()
+        let loginParams = [
+            "grant_type": "password",
+            "username": username,
+            "password": password,
+            "scope": ""
+        ]
+        
+        mutableURLRequest.setValue("Basic \(CF.loginAuthToken)", forHTTPHeaderField: "Authorization")
+        
+        return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: loginParams).0
+    }
+    
+    func appsURLRequest(orgGuid: String, page: Int) -> NSMutableURLRequest{
+        let mutableURLRequest = cfURLRequest()
+        let appsParams: [String : AnyObject] = [
+            "order-direction": "desc",
+            "q": "organization_guid:\(orgGuid)",
+            "results-per-page": "25",
+            "page": page
+        ]
+        
+        return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: appsParams).0
+    }
+    
+    func spacesURLRequest(appGuids: [String]) -> NSMutableURLRequest {
+        let mutableURLRequest = cfURLRequest()
+        let guidString = appGuids.joinWithSeparator(",")
+        let spacesParams: [String : AnyObject] = [
+            "q": "app_guid IN \(guidString)",
+            "results-per-page": "50"
+        ]
+        
+        return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: spacesParams).0
     }
 }

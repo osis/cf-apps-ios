@@ -10,31 +10,46 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+class CFResponse: NSHTTPURLResponse {
+    static func stringForStatusCode(statusCode: Int?, url: NSURL?) -> String {
+        if let c = statusCode, let u = url {
+            let statusString = super.localizedStringForStatusCode(c)
+            return "\(c) \((statusString)) response from \(u)"
+        } else {
+            return "Invalid URL"
+        }
+    }
+    
+    static func stringForLoginStatusCode(statusCode: Int?, url: NSURL?) -> String {
+        return (statusCode == 401) ? "Incorrect credentials" : stringForStatusCode(statusCode, url: url)
+    }
+}
+
 class CFApi {
-    class func info(apiURL: String, success: (json: JSON) -> Void, error: (message: String) -> Void) {
+    class func info(apiURL: String, success: (json: JSON) -> Void, error: (statusCode: Int?, url: NSURL?) -> Void) {
         Alamofire.request(CF.Info(apiURL))
             .validate()
-            .responseJSON { (request, response, result) in
-                if (result.isSuccess) {
-                    let json = JSON(result.value!)
+            .responseJSON { response in
+                if (response.result.isSuccess) {
+                    let json = JSON(response.result.value!)
                     success(json: json)
                 } else {
-                    responseErrorHandler(request, response: response, result: result, error: error)
+                    error(statusCode: response.response?.statusCode, url: response.request?.URL)
                 }
         }
     }
 
-    class func login(authURL: String, username: String, password: String, success: () -> Void, error: (message: String) -> Void) {
+    class func login(authURL: String, username: String, password: String, success: () -> Void, error: (statusCode: Int?, url: NSURL?) -> Void) {
         Alamofire.request(CF.Login(authURL, username, password))
             .validate()
-            .responseJSON { (request, response, result) in
-                if (result.isSuccess) {
-                    let json = JSON(result.value!)
+            .responseJSON { response in
+                if (response.result.isSuccess) {
+                    let json = JSON(response.result.value!)
                     let token = json["access_token"].string
                     CF.oauthToken = token
                     success()
                 } else {
-                    responseErrorHandler(request, response: response, result: result, error: error)
+                    error(statusCode: response.response?.statusCode, url: response.request?.URL)
                 }
         }
     }
@@ -43,8 +58,8 @@ class CFApi {
         if (!CFSession.isEmpty()) {
             Alamofire.request(CF.Orgs())
                 .validate()
-                .responseJSON { (_, response, result) in
-                    responseHandler(response!, result: result, success: success, error: error, recover: {
+                .responseJSON { response in
+                    responseHandler(response, success: success, error: error, recover: {
                         self.orgs(success, error: error)
                     })
             }
@@ -59,8 +74,8 @@ class CFApi {
         if (!CFSession.isEmpty()) {
             Alamofire.request(CF.Apps(orgGuid, page))
                 .validate()
-                .responseJSON { (_, response, result) in
-                    responseHandler(response!, result: result, success: success, error: error, recover: {
+                .responseJSON { response in
+                    responseHandler(response, success: success, error: error, recover: {
                         self.apps(orgGuid, page: page, success: success, error: error)
                     })
             }
@@ -71,8 +86,8 @@ class CFApi {
         if (!CFSession.isEmpty()) {
             Alamofire.request(CF.AppSummary(appGuid))
                 .validate()
-                .responseJSON { (_, response, result) in
-                    responseHandler(response!, result: result, success: success, error: error, recover: {
+                .responseJSON { response in
+                    responseHandler(response, success: success, error: error, recover: {
                         self.appSummary(appGuid, success: success, error: error)
                     })
             }
@@ -83,8 +98,8 @@ class CFApi {
         if (!CFSession.isEmpty()) {
             Alamofire.request(CF.AppStats(appGuid))
                 .validate()
-                .responseJSON { (_, response, result) in
-                    responseHandler(response!, result: result, success: success, error: error, recover: {
+                .responseJSON { response in
+                    responseHandler(response, success: success, error: error, recover: {
                         self.appStats(appGuid, success: success, error: error)
                     })
             }
@@ -95,8 +110,8 @@ class CFApi {
         if (!CFSession.isEmpty()) {
             Alamofire.request(CF.Spaces(appGuids))
                 .validate()
-                .responseJSON  { (req, response, result) in
-                    responseHandler(response!, result: result, success: success, error: error, recover: {
+                .responseJSON  { response in
+                    responseHandler(response, success: success, error: error, recover: {
                         self.spaces(appGuids, success: success, error: error)
                     })
                     
@@ -104,25 +119,16 @@ class CFApi {
         }
     }
     
-    class private func responseHandler(response: NSHTTPURLResponse, result: Result<AnyObject>, success: (json: JSON) -> Void, error: (statusCode: Int) -> Void, recover: () -> Void) {
+    class private func responseHandler(response: Response<AnyObject, NSError>, success: (json: JSON) -> Void, error: (statusCode: Int) -> Void, recover: () -> Void) {
         
-        if (result.isSuccess) {
-            let json = sanitizeJson(JSON(result.value!))
+        if (response.result.isSuccess) {
+            let json = sanitizeJson(JSON(response.result.value!))
             success(json: json)
         } else {
-            if (response.statusCode == 401) {
+            if (response.response!.statusCode == 401) {
                 self.retryLogin(recover)
             }
-            error(statusCode: response.statusCode)
-        }
-    }
-    
-    class private func responseErrorHandler(request: NSURLRequest?, response: NSHTTPURLResponse?, result: Result<AnyObject>, error: (message: String) -> Void) {
-        if let statusCode = response?.statusCode {
-            let errorMessage = (statusCode == 401) ? "Incorrect credentials" : "\(statusCode) response from \(request!.URLString)"
-            error(message: errorMessage)
-        } else {
-            error(message: "Invalid URL")
+            error(statusCode: response.response!.statusCode)
         }
     }
     

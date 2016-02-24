@@ -84,6 +84,7 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-CF Apps/SwiftyJSON.framework"
   install_framework "Pods-CF Apps/ActionSheetPicker_3_0.framework"
   install_framework "Pods-CF Apps/Alamofire.framework"
   install_framework "Pods-CF Apps/DATAFilter.framework"
@@ -94,11 +95,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-CF Apps/NSEntityDescription_SYNCPrimaryKey.framework"
   install_framework "Pods-CF Apps/NSManagedObject_HYPPropertyMapper.framework"
   install_framework "Pods-CF Apps/NSString_HYPNetworking.framework"
-  install_framework "Pods-CF Apps/SwiftyJSON.framework"
   install_framework "Pods-CF Apps/Sync.framework"
   install_framework "Pods-CF Apps/TestCheck.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-CF Apps/SwiftyJSON.framework"
   install_framework "Pods-CF Apps/ActionSheetPicker_3_0.framework"
   install_framework "Pods-CF Apps/Alamofire.framework"
   install_framework "Pods-CF Apps/DATAFilter.framework"
@@ -109,7 +110,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-CF Apps/NSEntityDescription_SYNCPrimaryKey.framework"
   install_framework "Pods-CF Apps/NSManagedObject_HYPPropertyMapper.framework"
   install_framework "Pods-CF Apps/NSString_HYPNetworking.framework"
-  install_framework "Pods-CF Apps/SwiftyJSON.framework"
   install_framework "Pods-CF Apps/Sync.framework"
   install_framework "Pods-CF Apps/TestCheck.framework"
 fi

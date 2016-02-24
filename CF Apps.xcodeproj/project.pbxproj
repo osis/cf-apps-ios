@@ -43,6 +43,8 @@
 		65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE6FCD1B4712B30047519D /* AppDelegate.swift */; };
 		65EE6FDD1B4713E80047519D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FD91B4713E80047519D /* LaunchScreen.xib */; };
 		65EE6FDE1B4713E80047519D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FDB1B4713E80047519D /* Main.storyboard */; };
+		D8C516B61C73F21E00D15187 /* CFApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C516B51C73F21E00D15187 /* CFApiTests.swift */; };
+		D8C516BB1C73F69E00D15187 /* info.json in Resources */ = {isa = PBXBuildFile; fileRef = D8C516BA1C73F69E00D15187 /* info.json */; };
 		E9152A21BED99B4AF5DD16E6 /* Pods_CF_Apps_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E21BB8FBBD04AC0F74A2F75 /* Pods_CF_Apps_Tests.framework */; };
 		EE85259DDB9B3D6F3FCF43C8 /* Pods_CF_Apps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B4CF2776DCC7B25A08373C /* Pods_CF_Apps.framework */; };
 /* End PBXBuildFile section */
@@ -94,6 +96,8 @@
 		AD3D490D99F61E61CB04E2A9 /* Pods-CF Apps.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CF Apps.release.xcconfig"; path = "Pods/Target Support Files/Pods-CF Apps/Pods-CF Apps.release.xcconfig"; sourceTree = "<group>"; };
 		AF43FF454AC1D33CA8274022 /* Pods-CF Apps Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CF Apps Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CF Apps Tests/Pods-CF Apps Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C238CDD466EFC53FC735BE4E /* Pods-CF Apps Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CF Apps Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CF Apps Tests/Pods-CF Apps Tests.release.xcconfig"; sourceTree = "<group>"; };
+		D8C516B51C73F21E00D15187 /* CFApiTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFApiTests.swift; path = "CF AppsTests/Network/CFApiTests.swift"; sourceTree = "<group>"; };
+		D8C516BA1C73F69E00D15187 /* info.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = info.json; path = "CF AppsTests/Network/json/info.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,8 +205,10 @@
 		6547EBA91B76CFCC00C1E13E /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				D8C516B71C73F64300D15187 /* json */,
 				6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */,
 				652DE5FF1C29B10700411438 /* CFSessionTests.swift */,
+				D8C516B51C73F21E00D15187 /* CFApiTests.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -284,6 +290,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D8C516B71C73F64300D15187 /* json */ = {
+			isa = PBXGroup;
+			children = (
+				D8C516BA1C73F69E00D15187 /* info.json */,
+			);
+			name = json;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -344,7 +358,6 @@
 					};
 					651C848D1B2A7FB60006DC3A = {
 						CreatedOnToolsVersion = 6.3;
-						TestTargetID = 651C84751B2A7FB50006DC3A;
 					};
 				};
 			};
@@ -383,6 +396,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65C6FE471C7048930083C4A1 /* Main.storyboard in Resources */,
+				D8C516BB1C73F69E00D15187 /* info.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,6 +528,7 @@
 				6547EBB11B76D16E00C1E13E /* CFRequest.swift in Sources */,
 				65032FE71B61D8FA007E7DA3 /* CFApp.swift in Sources */,
 				65C6FE441C7046710083C4A1 /* EndpointPicker.swift in Sources */,
+				D8C516B61C73F21E00D15187 /* CFApiTests.swift in Sources */,
 				65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */,
 				65C6FE461C70469D0083C4A1 /* AppDelegate.swift in Sources */,
 				65032FE91B74507D007E7DA3 /* CFStore.xcdatamodeld in Sources */,
@@ -695,7 +710,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CF Apps.app/CF Apps";
 			};
 			name = Debug;
 		};
@@ -713,7 +727,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dwayneforde.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CF Apps.app/CF Apps";
 			};
 			name = Release;
 		};

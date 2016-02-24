@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0720"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2910ADD3F508F72A1F045E4812026398"
-               BuildableName = "NSObject_HYPTesting.framework"
-               BlueprintName = "NSObject-HYPTesting"
+               BlueprintIdentifier = "C56B731F87EB19CAC52B3FEB65619C49"
+               BuildableName = "Pods_CF_Apps_Tests.framework"
+               BlueprintName = "Pods-CF Apps Tests"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2910ADD3F508F72A1F045E4812026398"
-            BuildableName = "NSObject_HYPTesting.framework"
-            BlueprintName = "NSObject-HYPTesting"
+            BlueprintIdentifier = "C56B731F87EB19CAC52B3FEB65619C49"
+            BuildableName = "Pods_CF_Apps_Tests.framework"
+            BlueprintName = "Pods-CF Apps Tests"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -60,15 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2910ADD3F508F72A1F045E4812026398"
-            BuildableName = "NSObject_HYPTesting.framework"
-            BlueprintName = "NSObject-HYPTesting"
-            ReferencedContainer = "container:Pods.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

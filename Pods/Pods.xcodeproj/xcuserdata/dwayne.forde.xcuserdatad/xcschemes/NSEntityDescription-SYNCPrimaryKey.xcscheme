@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0720"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7969302A8E35DC2D693719F5699AF3E1"
+               BlueprintIdentifier = "4ED67E68655AEB2DAAA07DFC26293E31"
                BuildableName = "NSEntityDescription_SYNCPrimaryKey.framework"
                BlueprintName = "NSEntityDescription-SYNCPrimaryKey"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7969302A8E35DC2D693719F5699AF3E1"
+            BlueprintIdentifier = "4ED67E68655AEB2DAAA07DFC26293E31"
             BuildableName = "NSEntityDescription_SYNCPrimaryKey.framework"
             BlueprintName = "NSEntityDescription-SYNCPrimaryKey"
             ReferencedContainer = "container:Pods.xcodeproj">
@@ -60,15 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7969302A8E35DC2D693719F5699AF3E1"
-            BuildableName = "NSEntityDescription_SYNCPrimaryKey.framework"
-            BlueprintName = "NSEntityDescription-SYNCPrimaryKey"
-            ReferencedContainer = "container:Pods.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

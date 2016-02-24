@@ -121,8 +121,8 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
             self.hideTargetForm()
             self.showLoginForm()
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
-            }, error: { errorMessage in
-                self.showAlert("Error", message: errorMessage)
+            }, error: { statusCode, url in
+                self.showAlert("Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
                 self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
         })
     }
@@ -133,8 +133,8 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
             CFSession.save(self.apiTargetField.text!, authURL: self.authEndpoint!, username: self.usernameField.text!, password: self.passwordField.text!)
             self.performSegueWithIdentifier("loginSegue", sender: nil)
             self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
-            }, error: { errorMessage in
-                self.showAlert("Error", message: errorMessage)
+            }, error: { statusCode, url in
+                self.showAlert("Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
                 self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
         })
     }

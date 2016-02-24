@@ -11,8 +11,8 @@ import XCTest
 import Alamofire
 
 class CFRequestTests: XCTestCase {
-    let baseApiURL = "https://api.run.pivotal.io"
-    let baseLoginURL = "https://login.run.pivotal.io"
+    let baseApiURL = "https://api.test.com"
+    let baseLoginURL = "https://login.test.com"
     
     override func setUp() {
         super.setUp()

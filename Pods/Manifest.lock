@@ -1,12 +1,19 @@
 PODS:
   - ActionSheetPicker-3.0 (2.0.4)
-  - Alamofire (2.0.1)
+  - Alamofire (3.2.0)
   - DATAFilter (0.9.1):
     - DATAObjectIDs (~> 0.5.1)
   - DATAObjectIDs (0.5.1)
   - DATAStack (4.0.3):
     - TestCheck (~> 0.3.0)
   - Locksmith (2.0.7)
+  - Mockingjay (1.1.1):
+    - Mockingjay/Core (= 1.1.1)
+    - Mockingjay/XCTest (= 1.1.1)
+  - Mockingjay/Core (1.1.1):
+    - URITemplate (~> 1.3)
+  - Mockingjay/XCTest (1.1.1):
+    - Mockingjay/Core
   - NSDictionary-ANDYSafeValue (0.3.1)
   - NSEntityDescription-SYNCPrimaryKey (0.1.1):
     - NSString-HYPNetworking (~> 0.3.3)
@@ -21,21 +28,24 @@ PODS:
     - NSEntityDescription-SYNCPrimaryKey (~> 0.1.1)
     - NSManagedObject-HYPPropertyMapper (~> 3.3.3)
   - TestCheck (0.3.0)
+  - URITemplate (1.3.1)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0 (~> 2.0.4)
-  - Alamofire (~> 2.0)
+  - Alamofire (~> 3.0)
   - Locksmith (~> 2.0.0)
+  - Mockingjay
   - SwiftyJSON (~> 2.3)
   - Sync (~> 1.2)
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: 860466cb4a66854e6acb590071ecee404b48f49d
-  Alamofire: 1d8e208d616fbbfd2391b15eae766d07c96cdc49
+  Alamofire: 4da478599fccddff361205c8929333d7fe18dceb
   DATAFilter: 4a1bdc065847e19d9fa1c9dd92ed2d85847967a1
   DATAObjectIDs: 33db74dd1c858c2d22a45a4013c95f1082182e4e
   DATAStack: 8622b05a7cc1dade21e105d20fdd9f8fbe63944d
   Locksmith: 46384a1c603836aa47a66020e289c157409c7541
+  Mockingjay: 757f80abc947b5ec2918b1bb14f3066574720430
   NSDictionary-ANDYSafeValue: 2d7adf339b6e302d71fec5f1d71ae00aacda993e
   NSEntityDescription-SYNCPrimaryKey: 843225bf3bd09a1d7f9d4157111204bb3fe3cb18
   NSManagedObject-HYPPropertyMapper: 9ae15488cae898d58d9aafc0ad7967ce151bf6cd
@@ -43,7 +53,8 @@ SPEC CHECKSUMS:
   SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
   Sync: 1c8bda37df9ede8aaec7aadb73dc36e9038ecb8b
   TestCheck: 42c1343664986c0cbfaa20a62622d6f6fb70a407
+  URITemplate: 398a48d6559e23b77bd41176b675b017ad1fc959
 
-PODFILE CHECKSUM: 8a5563196184eb280bbfa52e74dd991a6abfa091
+PODFILE CHECKSUM: 43faa4132d58f165734f86c01874de823e148649
 
 COCOAPODS: 1.0.0.beta.3
