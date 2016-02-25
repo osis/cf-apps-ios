@@ -358,6 +358,7 @@
 					};
 					651C848D1B2A7FB60006DC3A = {
 						CreatedOnToolsVersion = 6.3;
+						TestTargetID = 651C84751B2A7FB50006DC3A;
 					};
 				};
 			};
@@ -710,6 +711,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CF Apps.app/CF Apps";
 			};
 			name = Debug;
 		};
@@ -727,6 +729,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dwayneforde.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CF Apps.app/CF Apps";
 			};
 			name = Release;
 		};
