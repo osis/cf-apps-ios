@@ -9,6 +9,10 @@
 import Foundation
 import Locksmith
 
+enum KeychainError: ErrorType {
+    case NotFound
+}
+
 class Keychain {
     class var sessionAccount: String { return "cfSession" }
     
@@ -33,7 +37,7 @@ class Keychain {
         return nil
     }
     
-    class func getCredentials() -> (authUrl: String?, username: String?, password: String?) {
+    class func getCredentials() throws -> (authUrl: String, username: String, password: String) {
         let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
         if ((dictionary?.isEmpty) != nil) {
             let _authURL: String = dictionary!["authURL"] as! String
@@ -41,25 +45,25 @@ class Keychain {
             let _password: String = dictionary!["password"] as! String
             return (_authURL, _username, _password)
         }
-        return (nil,nil,nil)
+        throw KeychainError.NotFound
     }
     
-    class func getApiURL() -> String? {
+    class func getApiURL() throws -> String {
         let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
         if ((dictionary?.isEmpty) != nil) {
             let _url: String = dictionary!["apiURL"] as! String
             return _url
         }
-        return nil
+        throw KeychainError.NotFound
     }
     
-    class func getAuthURL() -> String? {
+    class func getAuthURL() throws -> String {
         let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
         if ((dictionary?.isEmpty) != nil) {
             let _url: String = dictionary!["authURL"] as! String
             return _url
         }
-        return nil
+        throw KeychainError.NotFound
     }
     
     class func clearCredentials() -> NSError? {

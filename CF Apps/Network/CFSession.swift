@@ -9,6 +9,17 @@
 import Foundation
 
 class CFSession {
+    static let loginAuthToken = "Y2Y6"
+    
+    static var oauthToken: String?
+    static var baseURLString: String {
+        do {
+            return try Keychain.getApiURL()
+        } catch {
+            return ""
+        }
+    }
+    
     class func save(apiURL: String, authURL: String, username: String, password: String) {
         Keychain.setCredentials([
             "apiURL": apiURL,
@@ -20,11 +31,11 @@ class CFSession {
     
     class func reset() {
         Keychain.clearCredentials()
-        CF.oauthToken = nil
+        CFSession.oauthToken = nil
     }
     
     class func isEmpty() -> Bool {
-        return (CF.oauthToken == nil || !Keychain.hasCredentials())
+        return (CFSession.oauthToken == nil || !Keychain.hasCredentials())
     }
 }
 

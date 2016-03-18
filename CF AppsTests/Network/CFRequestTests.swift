@@ -10,6 +10,8 @@ import Foundation
 import XCTest
 import Alamofire
 
+@testable import CF_Apps
+
 class CFRequestTests: XCTestCase {
     let baseApiURL = "https://api.test.com"
     let baseLoginURL = "https://login.test.com"
@@ -17,7 +19,7 @@ class CFRequestTests: XCTestCase {
     override func setUp() {
         super.setUp()
         Keychain.clearCredentials()
-        CF.oauthToken = nil
+        CFSession.oauthToken = nil
         Keychain.setCredentials([
             "apiURL": baseApiURL,
             "authURL": baseLoginURL,
@@ -32,48 +34,48 @@ class CFRequestTests: XCTestCase {
     }
     
     func testLoginAuthToken() {
-        XCTAssertEqual(CF.loginAuthToken, "Y2Y6", "Login auth token is Y2Y6")
+        XCTAssertEqual(CFSession.loginAuthToken, "Y2Y6", "Login auth token is Y2Y6")
     }
     
     func testNilOAuthToken() {
-        let oauthHeaderValue = CF.Info(baseApiURL).URLRequest.valueForHTTPHeaderField("Authorization")
+        let oauthHeaderValue = CFRequest.Info(baseApiURL).URLRequest.valueForHTTPHeaderField("Authorization")
         
-        XCTAssertNil(CF.oauthToken, "OAuth token initializes as nil")
+        XCTAssertNil(CFSession.oauthToken, "OAuth token initializes as nil")
         XCTAssertNil(oauthHeaderValue, "OAuth header should be nil")
     }
     
     func testOAuthToken() {
-        CF.oauthToken = "testToken"
-        let oauthHeaderValue = CF.Info(baseApiURL).URLRequest.valueForHTTPHeaderField("Authorization")
+        CFSession.oauthToken = "testToken"
+        let oauthHeaderValue = CFRequest.Info(baseApiURL).URLRequest.valueForHTTPHeaderField("Authorization")
         
-        XCTAssertEqual(CF.oauthToken!, "testToken", "token should not be nil when set")
+        XCTAssertEqual(CFSession.oauthToken!, "testToken", "token should not be nil when set")
         XCTAssertEqual(oauthHeaderValue!, "Bearer testToken", "token should be entered into header when not nil")
     }
     
     func testInfoMember() {
         let path = "/v2/info"
-        let request: NSURLRequest = CF.Info(baseApiURL).URLRequest
+        let request: NSURLRequest = CFRequest.Info(baseApiURL).URLRequest
         
-        XCTAssert((CF.Info(baseApiURL) as Any) is CF, "Info is a member")
-        XCTAssertEqual(CF.Info(baseApiURL).baseURLString, baseApiURL, "Info returns api URL")
-        XCTAssertEqual(CF.Info(baseApiURL).path, path, "Info returns info path")
-        XCTAssertEqual(CF.Info(baseApiURL).method, Alamofire.Method.GET, "Info request method is GET")
+        XCTAssert((CFRequest.Info(baseApiURL) as Any) is CFRequest, "Info is a member")
+        XCTAssertEqual(CFRequest.Info(baseApiURL).baseURLString, baseApiURL, "Info returns api URL")
+        XCTAssertEqual(CFRequest.Info(baseApiURL).path, path, "Info returns info path")
+        XCTAssertEqual(CFRequest.Info(baseApiURL).method, Alamofire.Method.GET, "Info request method is GET")
         
-        XCTAssertEqual(CF.Info(baseApiURL).URLRequest.URLString, baseApiURL + path, "Info urlrequest returns the info url")
+        XCTAssertEqual(CFRequest.Info(baseApiURL).URLRequest.URLString, baseApiURL + path, "Info urlrequest returns the info url")
         XCTAssertNil(request.valueForHTTPHeaderField("Authorization"), "Info doesn't use basic auth")
     }
     
     func testLoginMember() {
         let path = "/oauth/token"
-        let request: NSURLRequest = CF.Login(baseLoginURL, "testUser", "testPassword").URLRequest
+        let request: NSURLRequest = CFRequest.Login(baseLoginURL, "testUser", "testPassword").URLRequest
         
-        XCTAssert((CF.Login(baseLoginURL, "", "") as Any) is CF, "Login is a member")
-        XCTAssertEqual(CF.Login(baseLoginURL, "", "").baseURLString, baseLoginURL, "Login returns login URL")
-        XCTAssertEqual(CF.Login(baseLoginURL, "", "").path, path, "Login returns login path")
-        XCTAssertEqual(CF.Login(baseLoginURL, "", "").method, Alamofire.Method.POST, "Login request method is POST")
+        XCTAssert((CFRequest.Login(baseLoginURL, "", "") as Any) is CFRequest, "Login is a member")
+        XCTAssertEqual(CFRequest.Login(baseLoginURL, "", "").baseURLString, baseLoginURL, "Login returns login URL")
+        XCTAssertEqual(CFRequest.Login(baseLoginURL, "", "").path, path, "Login returns login path")
+        XCTAssertEqual(CFRequest.Login(baseLoginURL, "", "").method, Alamofire.Method.POST, "Login request method is POST")
         
         XCTAssertEqual(request.URLString, baseLoginURL + path, "Login urlrequest returns the login URL")
-        XCTAssertEqual(request.valueForHTTPHeaderField("Authorization")!, "Basic \(CF.loginAuthToken)", "URLRequest returns the login URL")
+        XCTAssertEqual(request.valueForHTTPHeaderField("Authorization")!, "Basic \(CFSession.loginAuthToken)", "URLRequest returns the login URL")
 
         let requestBody = NSString(data: request.HTTPBody!, encoding: NSUTF8StringEncoding)
         
@@ -92,12 +94,12 @@ class CFRequestTests: XCTestCase {
     
     func testOrgsMember() {
         let path = "/v2/organizations"
-        let request: NSURLRequest = CF.Orgs().URLRequest
+        let request: NSURLRequest = CFRequest.Orgs().URLRequest
         
-        XCTAssert((CF.Orgs() as Any) is CF, "Orgs is a member")
-        XCTAssertEqual(CF.Orgs().baseURLString, baseApiURL, "Orgs returns api URL")
-        XCTAssertEqual(CF.Orgs().path, path, "Orgs returns organizations path")
-        XCTAssertEqual(CF.Orgs().method, Alamofire.Method.GET, "Orgs urlrequest method is GET")
+        XCTAssert((CFRequest.Orgs() as Any) is CFRequest, "Orgs is a member")
+        XCTAssertEqual(CFRequest.Orgs().baseURLString, baseApiURL, "Orgs returns api URL")
+        XCTAssertEqual(CFRequest.Orgs().path, path, "Orgs returns organizations path")
+        XCTAssertEqual(CFRequest.Orgs().method, Alamofire.Method.GET, "Orgs urlrequest method is GET")
         
         XCTAssertEqual(request.URLString, baseApiURL + path, "URLRequest returns the orgs url")
         XCTAssertNil(request.valueForHTTPHeaderField("Authorization"), "Orgs doesn't use basic auth")
@@ -107,18 +109,18 @@ class CFRequestTests: XCTestCase {
         let path = "/v2/apps"
         let orgGuid = "abc123"
         let currentPage: Int = 1
-        let request: NSURLRequest = CF.Apps(orgGuid, currentPage).URLRequest
+        let request: NSURLRequest = CFRequest.Apps(orgGuid, currentPage).URLRequest
         
-        XCTAssert((CF.Apps(orgGuid, currentPage) as Any) is CF, "Apps is a member")
-        XCTAssertEqual(CF.Apps(orgGuid, currentPage).baseURLString, baseApiURL, "Apps returns api URL")
-        XCTAssertEqual(CF.Apps(orgGuid, currentPage).path, "/v2/apps", "Apps returns applications path")
-        XCTAssertEqual(CF.Apps(orgGuid, currentPage).method, Alamofire.Method.GET, "Apps request method is GET")
+        XCTAssert((CFRequest.Apps(orgGuid, currentPage) as Any) is CFRequest, "Apps is a member")
+        XCTAssertEqual(CFRequest.Apps(orgGuid, currentPage).baseURLString, baseApiURL, "Apps returns api URL")
+        XCTAssertEqual(CFRequest.Apps(orgGuid, currentPage).path, "/v2/apps", "Apps returns applications path")
+        XCTAssertEqual(CFRequest.Apps(orgGuid, currentPage).method, Alamofire.Method.GET, "Apps request method is GET")
         XCTAssertEqual(request.URLString, baseApiURL + path + "?order-direction=desc&page=1&q=organization_guid%3Aabc123&results-per-page=25", "Apps urlrequest returns the apps url with the right params")
         XCTAssertNil(request.valueForHTTPHeaderField("Authorization"), "Apps doesn't use basic auth")
     }
     
     func testURLRequestMethod() {
-        let request = CF.Login(baseLoginURL, "", "").URLRequest
+        let request = CFRequest.Login(baseLoginURL, "", "").URLRequest
         XCTAssertEqual(request.HTTPMethod, "POST", "URLRequest method should be set")
     }
 }

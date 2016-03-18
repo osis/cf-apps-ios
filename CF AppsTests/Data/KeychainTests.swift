@@ -10,6 +10,8 @@ import Foundation
 import XCTest
 import Locksmith
 
+@testable import CF_Apps
+
 class KeychainTests: XCTestCase {
     let userAccount = Keychain.sessionAccount
     
@@ -63,38 +65,58 @@ class KeychainTests: XCTestCase {
     }
     
     func testGetNoCredentials() {
-        let (authURL, username, password) = Keychain.getCredentials()
-        
-        XCTAssertNil(authURL, "should be nil when credentials have not been set")
-        XCTAssertNil(username, "should be nil when credentials have not been set")
-        XCTAssertNil(password, "should be nil when credentials have not been set")
+        do {
+            try Keychain.getCredentials()
+            XCTFail()
+        } catch KeychainError.NotFound {
+            // Pass case
+        } catch {
+            XCTFail()
+        }
     }
     
     func testGetCredentials() {
         setCredentials()
-        let (authURL, username, password) = Keychain.getCredentials()
-        
-        XCTAssertEqual(authURL!, "https://auth.io", "should be authURL when credentials have been set")
-        XCTAssertEqual(username!, "testUsername", "should be username when credentials have been set")
-        XCTAssertEqual(password!, "testPassword", "should be password when credentials have been set")
+        do {
+            let (authURL, username, password) = try Keychain.getCredentials()
+            
+            XCTAssertEqual(authURL, "https://auth.io", "should be authURL when credentials have been set")
+            XCTAssertEqual(username, "testUsername", "should be username when credentials have been set")
+            XCTAssertEqual(password, "testPassword", "should be password when credentials have been set")
+        } catch {
+            XCTFail()
+        }
     }
     
     func testGetApiURL() {
         setCredentials()
-        let apiURL = Keychain.getApiURL()
-        
-        XCTAssertEqual(apiURL!, "https://api.io", "should be authURL when credentials have been set")
+        do {
+            let apiURL = try Keychain.getApiURL()
+            
+            XCTAssertEqual(apiURL, "https://api.io", "should be authURL when credentials have been set")
+        } catch {
+            XCTFail()
+        }
     }
     
     func testClearCredentials() {
         setCredentials()
         Keychain.clearCredentials()
-        let (authURL, username, password) = Keychain.getCredentials()
-        let apiURL = Keychain.getApiURL()
         
-        XCTAssertNil(apiURL, "should be nil when credentials have been cleared")
-        XCTAssertNil(authURL, "should be nil when credentials have been cleared")
-        XCTAssertNil(username, "should be nil when credentials have been cleared")
-        XCTAssertNil(password, "should be nil when credentials have been cleared")
+        do {
+            try Keychain.getCredentials()
+        } catch KeychainError.NotFound {
+            // Pass case
+        } catch {
+            XCTFail()
+        }
+        
+        do {
+            try Keychain.getApiURL()
+        } catch KeychainError.NotFound {
+            // Pass case
+        } catch {
+            XCTFail()
+        }
     }
 }

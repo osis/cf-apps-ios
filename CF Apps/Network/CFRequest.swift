@@ -9,10 +9,7 @@
 import Foundation
 import Alamofire
 
-enum CF: URLRequestConvertible {
-    static let loginAuthToken = "Y2Y6"
-    static var oauthToken: String?
-    
+enum CFRequest: URLRequestConvertible {
     case Info(String)
     case Login(String, String, String)
     case Orgs()
@@ -29,7 +26,7 @@ enum CF: URLRequestConvertible {
         case .Info(let url):
             return url
         default:
-            return Keychain.getApiURL()!
+            return CFSession.baseURLString
         }
     }
     
@@ -82,38 +79,12 @@ enum CF: URLRequestConvertible {
         
         mutableURLRequest.HTTPMethod = method.rawValue
         
-        if let token = CF.oauthToken {
+        if let token = CFSession.oauthToken {
             mutableURLRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
         return mutableURLRequest
     }
-    
-//    class LoginRequest: NSMutableURLRequest {
-//        var params: [String: AnyObject]?
-//        convenience init(url: NSURL?, token: String?, username: String, password: String) {
-//            self.init(URL: url)
-//            setToken(token)
-//            self.params = createParams(username, password: password)
-//        }
-//        
-//        func createParams(username: String, password: String) -> [String: AnyObject] {
-//            return [
-//                "grant_type": "password",
-//                "username": username,
-//                "password": password,
-//                "scope": ""
-//            ]
-//        }
-//        
-//        func setToken(token: String?) {
-//            setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
-//        }
-//        
-//        func encode() -> NSMutableURLRequest {
-//            return Alamofire.ParameterEncoding.URL.encode(self, parameters: self.params).0
-//        }
-//    }
     
     func loginURLRequest(username: String, password: String) -> NSMutableURLRequest {
         let mutableURLRequest = cfURLRequest()
@@ -124,7 +95,7 @@ enum CF: URLRequestConvertible {
             "scope": ""
         ]
         
-        mutableURLRequest.setValue("Basic \(CF.loginAuthToken)", forHTTPHeaderField: "Authorization")
+        mutableURLRequest.setValue("Basic \(CFSession.loginAuthToken)", forHTTPHeaderField: "Authorization")
         
         return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: loginParams).0
     }

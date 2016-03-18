@@ -11,6 +11,8 @@ import XCTest
 import CoreData
 import DATAStack
 
+@testable import CF_Apps
+
 class CFAppsTests: XCTestCase {
     var dataStack: DATAStack?
     

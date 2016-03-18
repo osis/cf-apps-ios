@@ -49,8 +49,8 @@ class AppViewController: UIViewController {
     
     func fetchSummary() {
         servicesTableView.tableFooterView = loadingCell()
-        
-        CFApi.appSummary(app!.guid,
+        let urlRequest = CFRequest.AppSummary(app!.guid)
+        CFApi().request(urlRequest,
             success: { (json) in
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                     self.handleSummaryResponse(json)
@@ -90,7 +90,8 @@ class AppViewController: UIViewController {
     func fetchStats() {
         instancesTableView.tableFooterView = loadingCell()
         
-        CFApi.appStats(app!.guid,
+        let urlRequest = CFRequest.AppStats(app!.guid)
+        CFApi().request(urlRequest,
             success: { (json) in
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                     self.handleStatsResponse(json)

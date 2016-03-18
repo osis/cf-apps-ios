@@ -101,8 +101,8 @@ class AppsViewController: UITableViewController {
     
     func fetchOrganizations() {
         setRefreshTitle("Updating Organizations")
-        CFApi.orgs(
-            { (json) in
+        CFApi().request(CFRequest.Orgs(),
+            success: { (json) in
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                     self.handleOrgsResponse(json)
                 }
@@ -113,7 +113,7 @@ class AppsViewController: UITableViewController {
         )
     }
     
-    func handleOrgsResponse(var json: JSON) {
+    func handleOrgsResponse(json: JSON) {
         dataStack.drop()
         self.orgPickerLabels = []
         self.orgPickerValues = []
@@ -153,7 +153,8 @@ class AppsViewController: UITableViewController {
     
     func fetchApplications() {
         setRefreshTitle("Updating Apps")
-        CFApi.apps(orgGuid!, page: currentPage, success: { (json) in
+        let urlRequest = CFRequest.Apps(orgGuid!, currentPage)
+        CFApi().request(urlRequest, success: { (json) in
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                 self.handleAppsResponse(json)
             }
@@ -207,7 +208,8 @@ class AppsViewController: UITableViewController {
     
     func fetchSpaces(appGuids: [String]) {
         setRefreshTitle("Updating Spaces")
-        CFApi.spaces(appGuids, success: { (json) in
+        let urlRequest = CFRequest.Spaces(appGuids)
+        CFApi().request(urlRequest, success: { (json) in
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                 self.handleSpacesResponse(json)
             }
