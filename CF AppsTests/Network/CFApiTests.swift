@@ -203,10 +203,10 @@ class CFResponseHandlerTests: XCTestCase {
         let sanitizedJson = CFResponseHandler().sanitizeJson(json)
         let resource = sanitizedJson["resources"][0]
         
-        XCTAssertTrue(resource["guid"] == "16a825a0-0cb0-4ad4-b5d1-d7e1b09a70af")
+        XCTAssertTrue(resource["guid"] == "12f830d7-2ec9-4c66-ad0a-dc5d32affb1f")
         XCTAssertTrue(resource["metadata"] == nil)
         
-        XCTAssertTrue(resource["name"] == "name-223")
+        XCTAssertTrue(resource["name"] == "name-1568")
         XCTAssertTrue(resource["entity"] == nil)
     }
 }

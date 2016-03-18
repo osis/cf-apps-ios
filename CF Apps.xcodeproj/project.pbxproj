@@ -11,6 +11,7 @@
 		65032FE91B74507D007E7DA3 /* CFStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 655B44341B530622009ED489 /* CFStore.xcdatamodeld */; };
 		65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65032FED1B75B01A007E7DA3 /* KeychainTests.swift */; };
 		65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B443D1B530868009ED489 /* Keychain.swift */; };
+		6503CC611C9BAF9B000BA838 /* apps.json in Resources */ = {isa = PBXBuildFile; fileRef = 6503CC5E1C9BAE90000BA838 /* apps.json */; };
 		652DE6011C29B1EB00411438 /* CFSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652DE5FF1C29B10700411438 /* CFSessionTests.swift */; };
 		653E2F0C1C289A38008CFC10 /* CFSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E2F0B1C289A38008CFC10 /* CFSession.swift */; };
 		6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */; };
@@ -63,6 +64,7 @@
 		482DC6D2CB08F89E565F9137 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65032FE51B61CDED007E7DA3 /* CFAppsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFAppsTests.swift; path = "CF AppsTests/Models/CFAppsTests.swift"; sourceTree = "<group>"; };
 		65032FED1B75B01A007E7DA3 /* KeychainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainTests.swift; path = "CF AppsTests/Data/KeychainTests.swift"; sourceTree = "<group>"; };
+		6503CC5E1C9BAE90000BA838 /* apps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = apps.json; path = "CF AppsTests/Network/Fixtures/apps.json"; sourceTree = "<group>"; };
 		651C84761B2A7FB50006DC3A /* CF Apps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CF Apps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		651C848E1B2A7FB60006DC3A /* CF Apps Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CF Apps Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		652DE5FF1C29B10700411438 /* CFSessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFSessionTests.swift; path = "CF AppsTests/Network/CFSessionTests.swift"; sourceTree = "<group>"; };
@@ -157,6 +159,14 @@
 			name = Data;
 			sourceTree = "<group>";
 		};
+		6503CC601C9BAEB9000BA838 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				6503CC5E1C9BAE90000BA838 /* apps.json */,
+			);
+			name = Fixtures;
+			sourceTree = "<group>";
+		};
 		651C846D1B2A7FB50006DC3A = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +215,7 @@
 		6547EBA91B76CFCC00C1E13E /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				6503CC601C9BAEB9000BA838 /* Fixtures */,
 				6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */,
 				652DE5FF1C29B10700411438 /* CFSessionTests.swift */,
 				D8C516B51C73F21E00D15187 /* CFApiTests.swift */,
@@ -389,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				654C1D8F1C8D473C001F2002 /* Main.storyboard in Resources */,
+				6503CC611C9BAF9B000BA838 /* apps.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
