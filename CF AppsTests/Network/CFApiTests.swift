@@ -171,14 +171,18 @@ class CFResponseHandlerTests: XCTestCase {
     }
 
     func testAuthRefreshSuccessWithToken() {
-//        stub(everything, builder: json([], status: 200))
+        stub(everything, builder: json([], status: 200))
         
         let handler = CFResponseHandler()
         let request = NSMutableURLRequest(URL: NSURL(string: "https://test.io")!)
+        let expectation = expectationWithDescription("Auth Recovery Success Callback")
        
         CFSession.oauthToken = "TestToken"
-        handler.authRefreshSuccess(request, success: { _ in })
+        handler.authRefreshSuccess(request, success: { _ in
+            expectation.fulfill()
+        })
         
+        waitForExpectationsWithTimeout(1.0, handler: nil)
         let authHeaderToken = request.valueForHTTPHeaderField("Authorization")
         XCTAssertEqual(authHeaderToken, "Bearer TestToken")
     }
