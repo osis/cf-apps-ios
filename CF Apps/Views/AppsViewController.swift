@@ -27,7 +27,6 @@ class AppsViewController: UITableViewController {
     var items = [CFApp]()
     var requestCount = 0
     var currentPage = 1
-    var orgGuid:String?
     var totalPages:Int?
     var orgPickerLabels = [String]()
     var orgPickerValues = [String]()
@@ -63,14 +62,14 @@ class AppsViewController: UITableViewController {
     }
     
     @IBAction func filterOrgClicked(sender: UIBarButtonItem) {
-        let currentIndex = self.orgPickerValues.indexOf(self.orgGuid!)
+        let currentIndex = self.orgPickerValues.indexOf(CFSession.getOrg()!)
         ActionSheetMultipleStringPicker.showPickerWithTitle("Filter by Org", rows: [
             self.orgPickerLabels
             ], initialSelection: [currentIndex!], doneBlock: {
                 picker, values, indexes in
                 
                 let value = values[0] as! Int
-                self.orgGuid = self.orgPickerValues[value]
+                CFSession.setOrg(self.orgPickerValues[value])
                 self.refresh()
                 return
             }, cancelBlock: { ActionMultipleStringCancelBlock in return }, origin: sender)
@@ -117,19 +116,23 @@ class AppsViewController: UITableViewController {
         dataStack.drop()
         self.orgPickerLabels = []
         self.orgPickerValues = []
+        var orgGuids: [String] = []
         
         for (key, _) in json["resources"] {
             let index = Int(key)!
-            self.orgPickerValues.append(json["resources"][index]["guid"].stringValue)
-            self.orgPickerLabels.append(json["resources"][index]["name"].stringValue)
+            let resource = json["resources"][index]
+            
+            self.orgPickerValues.append(resource["guid"].stringValue)
+            self.orgPickerLabels.append(resource["name"].stringValue)
+            orgGuids.append(resource["guid"].stringValue)
         }
         
         self.enableOrgsFilter()
         
-        if (self.orgGuid == nil) {
-            self.orgGuid = json["resources"][0]["guid"].stringValue
+        if CFSession.isOrgStale(orgGuids) {
+            CFSession.setOrg(orgGuids[0])
         }
-        
+    
         self.fetchApplications()
         
         Sync.changes(
@@ -153,7 +156,7 @@ class AppsViewController: UITableViewController {
     
     func fetchApplications() {
         setRefreshTitle("Updating Apps")
-        let urlRequest = CFRequest.Apps(orgGuid!, currentPage)
+        let urlRequest = CFRequest.Apps(CFSession.getOrg()!, currentPage)
         CFApi().request(urlRequest, success: { (json) in
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                 self.handleAppsResponse(json)

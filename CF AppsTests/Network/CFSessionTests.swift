@@ -19,7 +19,15 @@ class CFSessionTests: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
+        let domain = NSBundle.mainBundle().bundleIdentifier
+        
         Keychain.clearCredentials()
+        NSUserDefaults.standardUserDefaults().removePersistentDomainForName(domain!)
+    }
+    
+    func testConstants() {
+        XCTAssertEqual(CFSession.loginAuthToken, "Y2Y6")
+        XCTAssertEqual(CFSession.orgKey, "currentOrg")
     }
     
     func testIsEmpty() {
@@ -39,6 +47,7 @@ class CFSessionTests: XCTestCase {
     
     func testReset() {
         CFSession.oauthToken = ""
+        CFSession.setOrg("guid")
         Keychain.setCredentials([
             "apiURL": "",
             "authURL": "",
@@ -48,7 +57,35 @@ class CFSessionTests: XCTestCase {
         
         CFSession.reset()
         
+        XCTAssertNil(CFSession.getOrg())
         XCTAssertNil(CFSession.oauthToken)
         XCTAssertFalse(Keychain.hasCredentials())
+    }
+    
+    func testSetOrg() {
+        CFSession.setOrg("guid")
+        
+        let guid = NSUserDefaults.standardUserDefaults().objectForKey(CFSession.orgKey) as! String
+        XCTAssertEqual(guid, "guid")
+    }
+    
+    func testGetOrgNil() {
+        let guid = CFSession.getOrg()
+        
+        XCTAssertNil(guid)
+    }
+    
+    func testGetOrg() {
+        CFSession.setOrg("guid")
+        
+        XCTAssertEqual(CFSession.getOrg(), "guid")
+    }
+    
+    func testIsOrgStale() {
+        XCTAssertTrue(CFSession.isOrgStale([]))
+        
+        CFSession.setOrg("guid")
+        XCTAssertTrue(CFSession.isOrgStale([]))
+        XCTAssertFalse(CFSession.isOrgStale(["guid"]))
     }
 }
