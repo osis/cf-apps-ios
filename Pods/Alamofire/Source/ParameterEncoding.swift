@@ -1,6 +1,6 @@
 // ParameterEncoding.swift
 //
-// Copyright (c) 2014–2015 Alamofire Software Foundation (http://alamofire.org/)
+// Copyright (c) 2014–2016 Alamofire Software Foundation (http://alamofire.org/)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -82,9 +82,7 @@ public enum ParameterEncoding {
     {
         var mutableURLRequest = URLRequest.URLRequest
 
-        guard let parameters = parameters else {
-            return (mutableURLRequest, nil)
-        }
+        guard let parameters = parameters else { return (mutableURLRequest, nil) }
 
         var encodingError: NSError? = nil
 
@@ -92,7 +90,8 @@ public enum ParameterEncoding {
         case .URL, .URLEncodedInURL:
             func query(parameters: [String: AnyObject]) -> String {
                 var components: [(String, String)] = []
-                for key in Array(parameters.keys).sort(<) {
+
+                for key in parameters.keys.sort(<) {
                     let value = parameters[key]!
                     components += queryComponents(key, value)
                 }
@@ -117,7 +116,10 @@ public enum ParameterEncoding {
             }
 
             if let method = Method(rawValue: mutableURLRequest.HTTPMethod) where encodesParametersInURL(method) {
-                if let URLComponents = NSURLComponents(URL: mutableURLRequest.URL!, resolvingAgainstBaseURL: false) {
+                if let
+                    URLComponents = NSURLComponents(URL: mutableURLRequest.URL!, resolvingAgainstBaseURL: false)
+                    where !parameters.isEmpty
+                {
                     let percentEncodedQuery = (URLComponents.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters)
                     URLComponents.percentEncodedQuery = percentEncodedQuery
                     mutableURLRequest.URL = URLComponents.URL
@@ -174,6 +176,7 @@ public enum ParameterEncoding {
     */
     public func queryComponents(key: String, _ value: AnyObject) -> [(String, String)] {
         var components: [(String, String)] = []
+
         if let dictionary = value as? [String: AnyObject] {
             for (nestedKey, value) in dictionary {
                 components += queryComponents("\(key)[\(nestedKey)]", value)
@@ -212,6 +215,38 @@ public enum ParameterEncoding {
         let allowedCharacterSet = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
         allowedCharacterSet.removeCharactersInString(generalDelimitersToEncode + subDelimitersToEncode)
 
-        return string.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet) ?? ""
+        var escaped = ""
+
+        //==========================================================================================================
+        //
+        //  Batching is required for escaping due to an internal bug in iOS 8.1 and 8.2. Encoding more than a few
+        //  hundred Chinense characters causes various malloc error crashes. To avoid this issue until iOS 8 is no
+        //  longer supported, batching MUST be used for encoding. This introduces roughly a 20% overhead. For more
+        //  info, please refer to:
+        //
+        //      - https://github.com/Alamofire/Alamofire/issues/206
+        //
+        //==========================================================================================================
+
+        if #available(iOS 8.3, OSX 10.10, *) {
+            escaped = string.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet) ?? string
+        } else {
+            let batchSize = 50
+            var index = string.startIndex
+
+            while index != string.endIndex {
+                let startIndex = index
+                let endIndex = index.advancedBy(batchSize, limit: string.endIndex)
+                let range = Range(start: startIndex, end: endIndex)
+
+                let substring = string.substringWithRange(range)
+
+                escaped += substring.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet) ?? substring
+
+                index = endIndex
+            }
+        }
+
+        return escaped
     }
 }

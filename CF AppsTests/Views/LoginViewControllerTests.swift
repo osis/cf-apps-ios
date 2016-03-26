@@ -8,6 +8,8 @@
 
 import XCTest
 
+@testable import CF_Apps
+
 class LoginViewControllerTests: XCTestCase {
     
     var vc : LoginViewController!

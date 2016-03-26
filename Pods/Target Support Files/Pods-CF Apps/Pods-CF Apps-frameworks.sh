@@ -84,7 +84,6 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-CF Apps/ActionSheetPicker_3_0.framework"
   install_framework "Pods-CF Apps/Alamofire.framework"
   install_framework "Pods-CF Apps/DATAFilter.framework"
   install_framework "Pods-CF Apps/DATAObjectIDs.framework"
@@ -97,9 +96,9 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-CF Apps/SwiftyJSON.framework"
   install_framework "Pods-CF Apps/Sync.framework"
   install_framework "Pods-CF Apps/TestCheck.framework"
+  install_framework "Pods-CF Apps/ActionSheetPicker_3_0.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-CF Apps/ActionSheetPicker_3_0.framework"
   install_framework "Pods-CF Apps/Alamofire.framework"
   install_framework "Pods-CF Apps/DATAFilter.framework"
   install_framework "Pods-CF Apps/DATAObjectIDs.framework"
@@ -112,4 +111,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-CF Apps/SwiftyJSON.framework"
   install_framework "Pods-CF Apps/Sync.framework"
   install_framework "Pods-CF Apps/TestCheck.framework"
+  install_framework "Pods-CF Apps/ActionSheetPicker_3_0.framework"
 fi

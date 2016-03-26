@@ -82,3 +82,36 @@ strip_invalid_archs() {
   fi
 }
 
+
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-CF Apps Tests/Alamofire.framework"
+  install_framework "Pods-CF Apps Tests/DATAFilter.framework"
+  install_framework "Pods-CF Apps Tests/DATAObjectIDs.framework"
+  install_framework "Pods-CF Apps Tests/DATAStack.framework"
+  install_framework "Pods-CF Apps Tests/Locksmith.framework"
+  install_framework "Pods-CF Apps Tests/NSDictionary_ANDYSafeValue.framework"
+  install_framework "Pods-CF Apps Tests/NSEntityDescription_SYNCPrimaryKey.framework"
+  install_framework "Pods-CF Apps Tests/NSManagedObject_HYPPropertyMapper.framework"
+  install_framework "Pods-CF Apps Tests/NSString_HYPNetworking.framework"
+  install_framework "Pods-CF Apps Tests/SwiftyJSON.framework"
+  install_framework "Pods-CF Apps Tests/Sync.framework"
+  install_framework "Pods-CF Apps Tests/TestCheck.framework"
+  install_framework "Pods-CF Apps Tests/Mockingjay.framework"
+  install_framework "Pods-CF Apps Tests/URITemplate.framework"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-CF Apps Tests/Alamofire.framework"
+  install_framework "Pods-CF Apps Tests/DATAFilter.framework"
+  install_framework "Pods-CF Apps Tests/DATAObjectIDs.framework"
+  install_framework "Pods-CF Apps Tests/DATAStack.framework"
+  install_framework "Pods-CF Apps Tests/Locksmith.framework"
+  install_framework "Pods-CF Apps Tests/NSDictionary_ANDYSafeValue.framework"
+  install_framework "Pods-CF Apps Tests/NSEntityDescription_SYNCPrimaryKey.framework"
+  install_framework "Pods-CF Apps Tests/NSManagedObject_HYPPropertyMapper.framework"
+  install_framework "Pods-CF Apps Tests/NSString_HYPNetworking.framework"
+  install_framework "Pods-CF Apps Tests/SwiftyJSON.framework"
+  install_framework "Pods-CF Apps Tests/Sync.framework"
+  install_framework "Pods-CF Apps Tests/TestCheck.framework"
+  install_framework "Pods-CF Apps Tests/Mockingjay.framework"
+  install_framework "Pods-CF Apps Tests/URITemplate.framework"
+fi

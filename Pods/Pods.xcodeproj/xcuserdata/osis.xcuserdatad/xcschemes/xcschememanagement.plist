@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Mockingjay.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>NSDictionary-ANDYSafeValue.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -79,6 +84,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>URITemplate.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -107,7 +117,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4B2F30D90D85A544E9EFE2A49D392C25</key>
+		<key>4A1DDF0AE41F6B17F9F3EDDCA1186843</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -117,7 +127,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>500610E8EB8D9A8F10FED42B51A6C7CC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>67D4B61B3695BCBB85018530E3206C3C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -142,7 +162,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CFB007F97EBFDFB78C69B0D386C49311</key>
+		<key>B68DE40B836E4875D08FF7109BCF75F0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

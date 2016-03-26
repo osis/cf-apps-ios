@@ -2,13 +2,15 @@
 platform :ios, '8.0'
 use_frameworks!
 
+pod 'Alamofire', '~> 3.0'
+pod 'Locksmith', '~> 2.0.0'
+pod 'SwiftyJSON', '~> 2.3'
+pod 'Sync', '~> 1.2'
+
 target 'CF Apps' do
-  pod 'Alamofire', '~> 2.0'
-  pod 'SwiftyJSON', '~> 2.3'
-  pod 'Sync', '~> 1.2'
-  pod 'Locksmith', '~> 2.0.0'
   pod 'ActionSheetPicker-3.0', '~> 2.0.4'
 end
 
 target 'CF Apps Tests' do
+  pod 'Mockingjay'
 end

@@ -43,6 +43,7 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
     }
     
     func setup() {
+        CFSession.reset()
         endpointPicker.endpointPickerDelegate = self
         hideLoginForm()
         hideTargetField()
@@ -116,26 +117,28 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
     
     func target() {
         startButtonSpinner(targetButton, spinner: apiTargetSpinner)
-        CFApi.info(self.apiTargetField.text!, success: { (json) in
+        let urlRequest = CFRequest.Info(self.apiTargetField.text!)
+        CFApi().request(urlRequest, success: { (json) in
             self.authEndpoint = json["authorization_endpoint"].string
             self.hideTargetForm()
             self.showLoginForm()
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
-            }, error: { errorMessage in
-                self.showAlert("Error", message: errorMessage)
-                self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
+        }, error: { statusCode, url in
+            self.showAlert("Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
+            self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
         })
     }
     
     func login() {
         self.startButtonSpinner(self.loginButton, spinner: self.loginSpinner)
-        CFApi.login(self.authEndpoint!, username: usernameField.text!, password: passwordField.text!, success: {
+        let urlRequest = CFRequest.Login(self.authEndpoint!, usernameField.text!, passwordField.text!)
+        CFApi().request(urlRequest, success: { json in
             CFSession.save(self.apiTargetField.text!, authURL: self.authEndpoint!, username: self.usernameField.text!, password: self.passwordField.text!)
             self.performSegueWithIdentifier("loginSegue", sender: nil)
             self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
-            }, error: { errorMessage in
-                self.showAlert("Error", message: errorMessage)
-                self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
+        }, error: { statusCode, url in
+            self.showAlert("Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
+            self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
         })
     }
     

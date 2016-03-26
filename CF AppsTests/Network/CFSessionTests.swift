@@ -9,6 +9,8 @@
 import Foundation
 import XCTest
 
+@testable import CF_Apps
+
 class CFSessionTests: XCTestCase {
     
     override func setUp() {
@@ -23,7 +25,7 @@ class CFSessionTests: XCTestCase {
     func testIsEmpty() {
         XCTAssertTrue(CFSession.isEmpty())
         
-        CF.oauthToken = ""
+        CFSession.oauthToken = ""
         XCTAssertTrue(CFSession.isEmpty())
         
         Keychain.setCredentials([
@@ -36,7 +38,7 @@ class CFSessionTests: XCTestCase {
     }
     
     func testReset() {
-        CF.oauthToken = ""
+        CFSession.oauthToken = ""
         Keychain.setCredentials([
             "apiURL": "",
             "authURL": "",
@@ -46,7 +48,7 @@ class CFSessionTests: XCTestCase {
         
         CFSession.reset()
         
-        XCTAssertNil(CF.oauthToken)
+        XCTAssertNil(CFSession.oauthToken)
         XCTAssertFalse(Keychain.hasCredentials())
     }
 }
