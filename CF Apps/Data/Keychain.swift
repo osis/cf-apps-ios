@@ -39,7 +39,7 @@ class Keychain {
     
     class func getCredentials() throws -> (authUrl: String, loggingURL: String, username: String, password: String) {
         let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
-        if ((dictionary?.isEmpty) != nil) {
+        if (hasCredentials()) {
             let _authURL: String = dictionary!["authURL"] as! String
             let _loggingURL: String = dictionary!["loggingURL"] as! String
             let _username: String = dictionary!["username"] as! String
@@ -51,7 +51,7 @@ class Keychain {
     
     class func getApiURL() throws -> String {
         let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
-        if ((dictionary?.isEmpty) != nil) {
+        if (hasCredentials()) {
             let _url: String = dictionary!["apiURL"] as! String
             return _url
         }
@@ -60,7 +60,7 @@ class Keychain {
     
     class func getAuthURL() throws -> String {
         let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
-        if ((dictionary?.isEmpty) != nil) {
+        if (hasCredentials()) {
             let _url: String = dictionary!["authURL"] as! String
             return _url
         }
@@ -69,7 +69,7 @@ class Keychain {
     
     class func getLoggingURL() throws -> String {
         let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
-        if ((dictionary?.isEmpty) != nil) {
+        if (hasCredentials()) {
             let _url: String = dictionary!["loggingURL"] as! String
             return _url
         }

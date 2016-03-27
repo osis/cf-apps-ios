@@ -13,8 +13,9 @@ import Alamofire
 @testable import CF_Apps
 
 class CFRequestTests: XCTestCase {
-    let baseApiURL = "https://api.test.com"
-    let baseLoginURL = "https://login.test.com"
+    let baseApiURL = "https://api.capi.test"
+    let baseLoginURL = "https://login.capi.test"
+    let baseLoggingURL = "wss://loggregator.capi.test"
     
     override func setUp() {
         super.setUp()
@@ -23,6 +24,7 @@ class CFRequestTests: XCTestCase {
         Keychain.setCredentials([
             "apiURL": baseApiURL,
             "authURL": baseLoginURL,
+            "loggingURL": baseLoggingURL,
             "username": "testUsername",
             "password": "testPassword"
             ])
