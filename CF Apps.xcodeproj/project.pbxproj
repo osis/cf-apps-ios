@@ -14,6 +14,7 @@
 		6503CC611C9BAF9B000BA838 /* apps.json in Resources */ = {isa = PBXBuildFile; fileRef = 6503CC5E1C9BAE90000BA838 /* apps.json */; };
 		652DE6011C29B1EB00411438 /* CFSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652DE5FF1C29B10700411438 /* CFSessionTests.swift */; };
 		653E2F0C1C289A38008CFC10 /* CFSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E2F0B1C289A38008CFC10 /* CFSession.swift */; };
+		65414EA61CA7610900B17589 /* LogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65414EA51CA7610900B17589 /* LogsViewController.swift */; };
 		6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */; };
 		654C1D881C8D4697001F2002 /* CFRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44391B530622009ED489 /* CFRequest.swift */; };
 		654C1D891C8D4699001F2002 /* CFApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44411B532531009ED489 /* CFApi.swift */; };
@@ -69,6 +70,7 @@
 		651C848E1B2A7FB60006DC3A /* CF Apps Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CF Apps Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		652DE5FF1C29B10700411438 /* CFSessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFSessionTests.swift; path = "CF AppsTests/Network/CFSessionTests.swift"; sourceTree = "<group>"; };
 		653E2F0B1C289A38008CFC10 /* CFSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFSession.swift; sourceTree = "<group>"; };
+		65414EA51CA7610900B17589 /* LogsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogsViewController.swift; sourceTree = "<group>"; };
 		6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFRequestTests.swift; path = "CF AppsTests/Network/CFRequestTests.swift"; sourceTree = "<group>"; };
 		654C87981C1A40DF00C0C79C /* CFOrg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFOrg.swift; sourceTree = "<group>"; };
 		654C879A1C1A4A4500C0C79C /* OrgPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrgPicker.swift; sourceTree = "<group>"; };
@@ -227,12 +229,13 @@
 			isa = PBXGroup;
 			children = (
 				655B442C1B5305FD009ED489 /* AppsViewController.swift */,
-				655B443F1B530E1A009ED489 /* LoginViewController.swift */,
 				65671C321B97D857003F4DC9 /* AppViewController.swift */,
-				65782EE91BC08A510005040F /* InstancesViewController.swift */,
-				65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */,
-				654C879A1C1A4A4500C0C79C /* OrgPicker.swift */,
 				65C6FE3A1C6F9EEA0083C4A1 /* EndpointPicker.swift */,
+				65782EE91BC08A510005040F /* InstancesViewController.swift */,
+				655B443F1B530E1A009ED489 /* LoginViewController.swift */,
+				65414EA51CA7610900B17589 /* LogsViewController.swift */,
+				654C879A1C1A4A4500C0C79C /* OrgPicker.swift */,
+				65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */,
 			);
 			name = Views;
 			path = "CF Apps/Views";
@@ -273,10 +276,10 @@
 		655B44381B530622009ED489 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				655B44391B530622009ED489 /* CFRequest.swift */,
 				655B44411B532531009ED489 /* CFApi.swift */,
-				653E2F0B1C289A38008CFC10 /* CFSession.swift */,
+				655B44391B530622009ED489 /* CFRequest.swift */,
 				65D050C21C83E0F5009C913E /* CFResponse.swift */,
+				653E2F0B1C289A38008CFC10 /* CFSession.swift */,
 			);
 			name = Network;
 			path = "CF Apps/Network";
@@ -519,6 +522,7 @@
 				65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */,
 				654C879B1C1A4A4500C0C79C /* OrgPicker.swift in Sources */,
 				65C6FE431C70463D0083C4A1 /* CFApi.swift in Sources */,
+				65414EA61CA7610900B17589 /* LogsViewController.swift in Sources */,
 				65B010731C1E684000CECF07 /* CFSpace.swift in Sources */,
 				655B443E1B530869009ED489 /* Keychain.swift in Sources */,
 				653E2F0C1C289A38008CFC10 /* CFSession.swift in Sources */,

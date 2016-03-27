@@ -42,6 +42,13 @@ class AppViewController: UIViewController {
         }
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "logs") {
+            let controller = segue.destinationViewController as! LogsViewController
+            controller.appGuid = self.app!.guid
+        }
+    }
+    
     func hideInstancesTable() {
         self.instancesTableView.hidden = true
         self.instancesTableHeightConstraint.constant = 0

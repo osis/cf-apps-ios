@@ -21,7 +21,7 @@ class Keychain {
 
         if ((dictionary) != nil) {
             let keys = dictionary?.keys.sort().joinWithSeparator("")
-            let params = ["apiURL", "authURL", "username", "password"].sort().joinWithSeparator("")
+            let params = ["loggingURL", "apiURL", "authURL", "username", "password"].sort().joinWithSeparator("")
             return (keys == params)
         }
         
@@ -37,13 +37,14 @@ class Keychain {
         return nil
     }
     
-    class func getCredentials() throws -> (authUrl: String, username: String, password: String) {
+    class func getCredentials() throws -> (authUrl: String, loggingURL: String, username: String, password: String) {
         let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
         if ((dictionary?.isEmpty) != nil) {
             let _authURL: String = dictionary!["authURL"] as! String
+            let _loggingURL: String = dictionary!["loggingURL"] as! String
             let _username: String = dictionary!["username"] as! String
             let _password: String = dictionary!["password"] as! String
-            return (_authURL, _username, _password)
+            return (_authURL, _loggingURL, _username, _password)
         }
         throw KeychainError.NotFound
     }
@@ -61,6 +62,15 @@ class Keychain {
         let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
         if ((dictionary?.isEmpty) != nil) {
             let _url: String = dictionary!["authURL"] as! String
+            return _url
+        }
+        throw KeychainError.NotFound
+    }
+    
+    class func getLoggingURL() throws -> String {
+        let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
+        if ((dictionary?.isEmpty) != nil) {
+            let _url: String = dictionary!["loggingURL"] as! String
             return _url
         }
         throw KeychainError.NotFound

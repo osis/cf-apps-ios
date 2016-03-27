@@ -37,6 +37,7 @@ class KeychainTests: XCTestCase {
         return Keychain.setCredentials([
             "apiURL": "https://api.io",
             "authURL": "https://auth.io",
+            "loggingURL": "wss://logging.io",
             "username": "testUsername",
             "password": "testPassword"
             ])
@@ -78,7 +79,7 @@ class KeychainTests: XCTestCase {
     func testGetCredentials() {
         setCredentials()
         do {
-            let (authURL, username, password) = try Keychain.getCredentials()
+            let (authURL, loggingURL, username, password) = try Keychain.getCredentials()
             
             XCTAssertEqual(authURL, "https://auth.io", "should be authURL when credentials have been set")
             XCTAssertEqual(username, "testUsername", "should be username when credentials have been set")

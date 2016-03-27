@@ -42,7 +42,7 @@ class CFResponseHandler: ResponseHandler {
         do {
             self.retryLogin = false
             
-            let (authURL, username, password) = try Keychain.getCredentials()
+            let (authURL, _, username, password) = try Keychain.getCredentials()
             let loginURLRequest = CFRequest.Login(authURL, username, password)
             
             CFApi(responseHandler: self).refreshToken(loginURLRequest, originalURLRequest: originalURLRequest, success: success)

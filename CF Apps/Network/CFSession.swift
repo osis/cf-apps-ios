@@ -21,10 +21,11 @@ class CFSession {
         }
     }
     
-    class func save(apiURL: String, authURL: String, username: String, password: String) {
+    class func save(apiURL: String, authURL: String, loggingURL: String, username: String, password: String) {
         Keychain.setCredentials([
             "apiURL": apiURL,
             "authURL": authURL,
+            "loggingURL": loggingURL,
             "username": username,
             "password": password
             ])

@@ -6,6 +6,7 @@ pod 'Alamofire', '~> 3.0'
 pod 'Locksmith', '~> 2.0.0'
 pod 'SwiftyJSON', '~> 2.3'
 pod 'Sync', '~> 1.2'
+pod 'SwiftWebSocket'
 
 target 'CF Apps' do
   pod 'ActionSheetPicker-3.0', '~> 2.0.4'
