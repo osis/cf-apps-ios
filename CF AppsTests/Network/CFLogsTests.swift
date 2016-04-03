@@ -53,6 +53,10 @@ class CFLogsTests: XCTestCase {
         XCTAssertEqual(logs.appGuid, testAppGuid)
     }
     
+    func testTail() {
+        // TODO: Injest and test
+    }
+    
     func testCreateSocket() {
         let logs = CFLogs(appGuid: testAppGuid)
         
@@ -92,7 +96,7 @@ class CFLogsTests: XCTestCase {
     }
     
     func testClosed() {
-       //Nothing
+       // TODO: Nothing Happens.
     }
     
     func testLogsError() {
@@ -138,8 +142,5 @@ class CFLogsTests: XCTestCase {
         let msgColor = msgAttributes["NSColor"] as! UIColor
         
         XCTAssertEqual(msgColor, logs.errColor)
-    }
-    
-    func testTail() {
     }
 }

@@ -190,6 +190,7 @@ class CFResponseHandlerTests: XCTestCase {
         XCTAssertEqual(authHeaderToken, "Bearer TestToken")
     }
     
+    // TODO: Auth refresh storyboard loading issues. Something ain't right.
     //    func testAuthRefreshFailure() {
     //        CFApi.handleAuthFailure()
     //
