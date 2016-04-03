@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class CFSession {
     static let loginAuthToken = "Y2Y6"
@@ -53,5 +54,14 @@ class CFSession {
     
     class func isOrgStale(currentOrgs: [String]) -> Bool {
         return CFSession.getOrg() == nil || !currentOrgs.contains(CFSession.getOrg()!)
+    }
+    
+    class func logout(hadAuthError: Bool = false) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let loginViewController: LoginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginView") as! LoginViewController
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        loginViewController.authError = hadAuthError
+        appDelegate.window!.rootViewController = loginViewController
+        CFSession.reset()
     }
 }

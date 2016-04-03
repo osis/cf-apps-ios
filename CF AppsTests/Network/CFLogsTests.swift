@@ -9,6 +9,7 @@
 import Foundation
 import XCTest
 import SwiftWebSocket
+import Mockingjay
 
 @testable import CF_Apps
 
@@ -23,6 +24,10 @@ class CFLogsTests: XCTestCase {
             self.appGuid = appGuid
             self.expectation = expectation
             super.init()
+        }
+        
+        func tail() {
+            expectation.fulfill()
         }
         
         func logsConnected() {
@@ -45,6 +50,7 @@ class CFLogsTests: XCTestCase {
     
     override func tearDown() {
         CFSession.reset()
+        removeAllStubs()
     }
     
     func testInit() {
@@ -105,6 +111,55 @@ class CFLogsTests: XCTestCase {
         
         logs.delegate = FakeLogger(appGuid: testAppGuid, expectation: expectation)
         logs.error(WebSocketError.Network("test websocket error"))
+        waitForExpectationsWithTimeout(1.0, handler: nil)
+    }
+    
+    func testLogsAuthRecovery() {
+        stub(everything, builder: json([], status: 200))
+        class FakeCFLogs: CFLogs {
+            let expectation: XCTestExpectation
+            
+            init(expectation: XCTestExpectation) {
+                self.expectation = expectation
+                super.init(appGuid: "")
+            }
+            
+            override func tail() {
+                expectation.fulfill()
+            }
+        }
+        
+        KeychainTests.setCredentials()
+        let expectation = expectationWithDescription("Logs Error")
+        let logs = FakeCFLogs(expectation: expectation)
+        
+        logs.error(WebSocketError.InvalidResponse("HTTP/1.1 401 Unauthorized"))
+        waitForExpectationsWithTimeout(1.0, handler: nil)
+    }
+
+    func testLogsAuthFail() {
+        stub(everything, builder: json([], status: 500))
+        class FakeCFLogs: CFLogs {
+            let expectation: XCTestExpectation
+            
+            init(expectation: XCTestExpectation) {
+                self.expectation = expectation
+                super.init(appGuid: "")
+            }
+            
+            override func handleAuthFail() {
+                expectation.fulfill()
+            }
+        }
+        
+        KeychainTests.setCredentials()
+        CFSession.oauthToken = ""
+        XCTAssertFalse(CFSession.isEmpty())
+        
+        let expectation = expectationWithDescription("Logs Error")
+        let logs = FakeCFLogs(expectation: expectation)
+        logs.error(WebSocketError.InvalidResponse("HTTP/1.1 401 Unauthorized"))
+        
         waitForExpectationsWithTimeout(1.0, handler: nil)
     }
     

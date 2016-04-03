@@ -189,19 +189,6 @@ class CFResponseHandlerTests: XCTestCase {
         let authHeaderToken = request.valueForHTTPHeaderField("Authorization")
         XCTAssertEqual(authHeaderToken, "Bearer TestToken")
     }
-    
-    // TODO: Auth refresh storyboard loading issues. Something ain't right.
-    //    func testAuthRefreshFailure() {
-    //        CFApi.handleAuthFailure()
-    //
-    //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //        let loginViewController: LoginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginView") as! LoginViewController
-    //        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    //
-    //        XCTAssertEqual(loginViewController.authError, true)
-    //        XCTAssertEqual(appDelegate.window!.rootViewController, loginViewController)
-    //        XCTAssertTrue(CFSession.isEmpty())
-    //    }
 
     func testSanitizeJson() {
         let path = NSBundle(forClass: self.dynamicType).pathForResource("apps", ofType: "json")!

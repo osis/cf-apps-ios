@@ -70,10 +70,15 @@ class CFLogs: NSObject {
     }
     
     func error(error: ErrorType) {
-        print("--- Logs \(error)")
-        dispatch_async(dispatch_get_main_queue(),{
-            self.delegate?.logsError(String(error))
-        })
+        let errorString = String(error)
+        if (errorString == "InvalidResponse(HTTP/1.1 401 Unauthorized)") {
+            handleAuthError()
+        } else {
+            print("--- Logs \(error)")
+            dispatch_async(dispatch_get_main_queue(),{
+                self.delegate?.logsError(errorString)
+            })
+        }
     }
     
     func message(bytes: Any) {
@@ -111,5 +116,24 @@ class CFLogs: NSObject {
     
     func disconnect() {
         self.ws?.close()
+    }
+    
+    private func handleAuthError() {
+        do {
+            let (authURL, _, username, password) = try Keychain.getCredentials()
+            let loginURLRequest = CFRequest.Login(authURL, username, password)
+            
+            CFApi().request(loginURLRequest, success: { _ in
+                self.tail()
+            }, error: { _, _ in
+                self.handleAuthFail()
+            })
+        } catch {
+            self.handleAuthFail()
+        }
+    }
+    
+    func handleAuthFail() {
+        CFSession.logout()
     }
 }
