@@ -16,13 +16,8 @@
 		653E2F0C1C289A38008CFC10 /* CFSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E2F0B1C289A38008CFC10 /* CFSession.swift */; };
 		65414EA61CA7610900B17589 /* LogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65414EA51CA7610900B17589 /* LogsViewController.swift */; };
 		6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */; };
-		654C1D881C8D4697001F2002 /* CFRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44391B530622009ED489 /* CFRequest.swift */; };
-		654C1D891C8D4699001F2002 /* CFApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44411B532531009ED489 /* CFApi.swift */; };
-		654C1D8A1C8D469C001F2002 /* CFSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E2F0B1C289A38008CFC10 /* CFSession.swift */; };
-		654C1D8C1C8D46DA001F2002 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B443F1B530E1A009ED489 /* LoginViewController.swift */; };
 		654C1D8D1C8D46F9001F2002 /* EndpointPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6FE3A1C6F9EEA0083C4A1 /* EndpointPicker.swift */; };
 		654C1D8E1C8D4702001F2002 /* CFResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D050C21C83E0F5009C913E /* CFResponse.swift */; };
-		654C1D8F1C8D473C001F2002 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FDB1B4713E80047519D /* Main.storyboard */; };
 		654C87991C1A40DF00C0C79C /* CFOrg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654C87981C1A40DF00C0C79C /* CFOrg.swift */; };
 		654C879B1C1A4A4500C0C79C /* OrgPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654C879A1C1A4A4500C0C79C /* OrgPicker.swift */; };
 		655B442E1B5305FD009ED489 /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B442C1B5305FD009ED489 /* AppsViewController.swift */; };
@@ -35,13 +30,17 @@
 		65A310D01C8BE0A50058C8C4 /* CFResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D050C21C83E0F5009C913E /* CFResponse.swift */; };
 		65B010731C1E684000CECF07 /* CFSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B010721C1E684000CECF07 /* CFSpace.swift */; };
 		65C6FE3B1C6F9EEA0083C4A1 /* EndpointPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6FE3A1C6F9EEA0083C4A1 /* EndpointPicker.swift */; };
-		65C6FE411C7043D80083C4A1 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */; };
 		65C6FE431C70463D0083C4A1 /* CFApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44411B532531009ED489 /* CFApi.swift */; };
 		65C6FE461C70469D0083C4A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE6FCD1B4712B30047519D /* AppDelegate.swift */; };
+		65C7A8B61CAB957700BA1ADC /* LogMessage.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C7A8B41CAB957700BA1ADC /* LogMessage.proto.swift */; };
+		65C8E1E81CB06401004FD199 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */; };
+		65C8E1FB1CB089E1004FD199 /* LogsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C8E1F91CB0895D004FD199 /* LogsViewControllerTests.swift */; };
 		65D5DBA11C9B47FE00AF8EF1 /* CFApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44371B530622009ED489 /* CFApp.swift */; };
 		65DBB5F81BC0D09200BD19BC /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBB5F71BC0D09200BD19BC /* Instance.swift */; };
 		65DF28A71BEEF11F0081B834 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */; };
 		65DF28A91BEEFD4C0081B834 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DF28A81BEEFD4C0081B834 /* Service.swift */; };
+		65E2D0071CA856010038396A /* CFLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E2D0061CA856010038396A /* CFLogs.swift */; };
+		65E2D00C1CA8700F0038396A /* CFLogsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E2D0081CA868C00038396A /* CFLogsTests.swift */; };
 		65EE6FCC1B4712A70047519D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FCB1B4712A70047519D /* Images.xcassets */; };
 		65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE6FCD1B4712B30047519D /* AppDelegate.swift */; };
 		65EE6FDD1B4713E80047519D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FD91B4713E80047519D /* LaunchScreen.xib */; };
@@ -87,10 +86,15 @@
 		65B010721C1E684000CECF07 /* CFSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFSpace.swift; sourceTree = "<group>"; };
 		65C6FE3A1C6F9EEA0083C4A1 /* EndpointPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointPicker.swift; sourceTree = "<group>"; };
 		65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewControllerTests.swift; path = "CF AppsTests/Views/LoginViewControllerTests.swift"; sourceTree = "<group>"; };
+		65C7A8B41CAB957700BA1ADC /* LogMessage.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogMessage.proto.swift; sourceTree = "<group>"; };
+		65C7A8B71CAB959700BA1ADC /* LogMessage.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LogMessage.proto; sourceTree = "<group>"; };
+		65C8E1F91CB0895D004FD199 /* LogsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogsViewControllerTests.swift; sourceTree = "<group>"; };
 		65D050C21C83E0F5009C913E /* CFResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFResponse.swift; sourceTree = "<group>"; };
 		65DBB5F71BC0D09200BD19BC /* Instance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instance.swift; sourceTree = "<group>"; };
 		65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		65DF28A81BEEFD4C0081B834 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		65E2D0061CA856010038396A /* CFLogs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFLogs.swift; sourceTree = "<group>"; };
+		65E2D0081CA868C00038396A /* CFLogsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFLogsTests.swift; path = "CF AppsTests/Network/CFLogsTests.swift"; sourceTree = "<group>"; };
 		65EE6FCB1B4712A70047519D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "CF Apps/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		65EE6FCD1B4712B30047519D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "CF Apps/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		65EE6FDA1B4713E80047519D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "CF Apps/Base.lproj/LaunchScreen.xib"; sourceTree = SOURCE_ROOT; };
@@ -221,6 +225,7 @@
 				6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */,
 				652DE5FF1C29B10700411438 /* CFSessionTests.swift */,
 				D8C516B51C73F21E00D15187 /* CFApiTests.swift */,
+				65E2D0081CA868C00038396A /* CFLogsTests.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -267,6 +272,8 @@
 				654C87981C1A40DF00C0C79C /* CFOrg.swift */,
 				65B010721C1E684000CECF07 /* CFSpace.swift */,
 				65DBB5F71BC0D09200BD19BC /* Instance.swift */,
+				65C7A8B71CAB959700BA1ADC /* LogMessage.proto */,
+				65C7A8B41CAB957700BA1ADC /* LogMessage.proto.swift */,
 				65DF28A81BEEFD4C0081B834 /* Service.swift */,
 			);
 			name = Models;
@@ -280,6 +287,7 @@
 				655B44391B530622009ED489 /* CFRequest.swift */,
 				65D050C21C83E0F5009C913E /* CFResponse.swift */,
 				653E2F0B1C289A38008CFC10 /* CFSession.swift */,
+				65E2D0061CA856010038396A /* CFLogs.swift */,
 			);
 			name = Network;
 			path = "CF Apps/Network";
@@ -289,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */,
+				65C8E1F91CB0895D004FD199 /* LogsViewControllerTests.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -354,7 +363,7 @@
 		651C846E1B2A7FB50006DC3A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Dwayne Forde";
 				TargetAttributes = {
@@ -402,7 +411,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				654C1D8F1C8D473C001F2002 /* Main.storyboard in Resources */,
 				6503CC611C9BAF9B000BA838 /* apps.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -513,6 +521,7 @@
 				65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */,
 				655B443C1B530622009ED489 /* CFRequest.swift in Sources */,
 				65DF28A71BEEF11F0081B834 /* ServicesViewController.swift in Sources */,
+				65E2D0071CA856010038396A /* CFLogs.swift in Sources */,
 				65C6FE3B1C6F9EEA0083C4A1 /* EndpointPicker.swift in Sources */,
 				655B44401B530E1A009ED489 /* LoginViewController.swift in Sources */,
 				655B443A1B530622009ED489 /* CFStore.xcdatamodeld in Sources */,
@@ -522,6 +531,7 @@
 				65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */,
 				654C879B1C1A4A4500C0C79C /* OrgPicker.swift in Sources */,
 				65C6FE431C70463D0083C4A1 /* CFApi.swift in Sources */,
+				65C7A8B61CAB957700BA1ADC /* LogMessage.proto.swift in Sources */,
 				65414EA61CA7610900B17589 /* LogsViewController.swift in Sources */,
 				65B010731C1E684000CECF07 /* CFSpace.swift in Sources */,
 				655B443E1B530869009ED489 /* Keychain.swift in Sources */,
@@ -534,20 +544,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				654C1D8C1C8D46DA001F2002 /* LoginViewController.swift in Sources */,
+				65C8E1E81CB06401004FD199 /* LoginViewControllerTests.swift in Sources */,
 				D8C516B61C73F21E00D15187 /* CFApiTests.swift in Sources */,
 				654C1D8E1C8D4702001F2002 /* CFResponse.swift in Sources */,
 				65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */,
 				65C6FE461C70469D0083C4A1 /* AppDelegate.swift in Sources */,
 				65032FE91B74507D007E7DA3 /* CFStore.xcdatamodeld in Sources */,
-				654C1D8A1C8D469C001F2002 /* CFSession.swift in Sources */,
-				654C1D891C8D4699001F2002 /* CFApi.swift in Sources */,
-				654C1D881C8D4697001F2002 /* CFRequest.swift in Sources */,
+				65E2D00C1CA8700F0038396A /* CFLogsTests.swift in Sources */,
 				65032FE61B61CDED007E7DA3 /* CFAppsTests.swift in Sources */,
 				6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */,
 				654C1D8D1C8D46F9001F2002 /* EndpointPicker.swift in Sources */,
 				65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */,
-				65C6FE411C7043D80083C4A1 /* LoginViewControllerTests.swift in Sources */,
+				65C8E1FB1CB089E1004FD199 /* LogsViewControllerTests.swift in Sources */,
 				652DE6011C29B1EB00411438 /* CFSessionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

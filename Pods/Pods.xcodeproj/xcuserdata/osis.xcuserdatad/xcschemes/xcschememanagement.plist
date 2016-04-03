@@ -69,6 +69,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ProtocolBuffers-Swift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SwiftWebSocket.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -102,12 +107,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0D9C61BFDA31397E9FBCF5BF95E6E6D0</key>
+		<key>169EA598790B9EFDA94A104BCCD4C7C0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>169EA598790B9EFDA94A104BCCD4C7C0</key>
+		<key>2C72FB3DDD5814A283C07D0EE0530F46</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -137,12 +142,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>7827DD8AEEFFE12D635C5405F57178B4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>7E5D35E9F54F5F8A362ADDA84091BD16</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8B4B9E0E2F07D4DE8E00466C3E568D55</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9078E3FB692331AB737DF2407BBC3961</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -162,27 +182,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BDB071D4F3C6A32CA7F599EFBA6CE4D8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C9E6ABA1C31F75787F0109D124BF55B0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>D4FF82403435D8C573D6E932108C5301</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E2889E6FC070BA2748D5975286D5E916</key>
+		<key>D935EAA9D561DC69DA3FFDEFA14B07EB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F7E6CD95EE7C9C368DC6A6379BFEE084</key>
+		<key>FBE8D32BC0927D4A256900F26B53F6BA</key>
 		<dict>
 			<key>primary</key>
 			<true/>

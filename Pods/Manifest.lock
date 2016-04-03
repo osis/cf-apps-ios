@@ -20,6 +20,7 @@ PODS:
   - NSManagedObject-HYPPropertyMapper (3.3.3):
     - NSString-HYPNetworking (~> 0.3.3)
   - NSString-HYPNetworking (0.3.3)
+  - ProtocolBuffers-Swift (2.4.3)
   - SwiftWebSocket (2.6.0)
   - SwiftyJSON (2.3.0)
   - Sync (1.2.2):
@@ -36,7 +37,8 @@ DEPENDENCIES:
   - Alamofire (~> 3.0)
   - Locksmith (~> 2.0.0)
   - Mockingjay
-  - SwiftWebSocket
+  - ProtocolBuffers-Swift
+  - SwiftWebSocket (~> 2.6.0)
   - SwiftyJSON (~> 2.3)
   - Sync (~> 1.2)
 
@@ -52,12 +54,13 @@ SPEC CHECKSUMS:
   NSEntityDescription-SYNCPrimaryKey: 843225bf3bd09a1d7f9d4157111204bb3fe3cb18
   NSManagedObject-HYPPropertyMapper: 9ae15488cae898d58d9aafc0ad7967ce151bf6cd
   NSString-HYPNetworking: 3b07da48f9f65a33d26e0467da8155bbb18d52bd
+  ProtocolBuffers-Swift: afbdde78be3c6af8a610d2c257d6bc88e8c7c5d4
   SwiftWebSocket: c24c0dde0b33852f478ffb54226408bfe703b26b
   SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
   Sync: 1c8bda37df9ede8aaec7aadb73dc36e9038ecb8b
   TestCheck: 42c1343664986c0cbfaa20a62622d6f6fb70a407
   URITemplate: 398a48d6559e23b77bd41176b675b017ad1fc959
 
-PODFILE CHECKSUM: e8263cb685a2c2e16507b86123877f3cc022279f
+PODFILE CHECKSUM: 4febf40bb305a1d9d0943f42c6f12f2edd9f8784
 
 COCOAPODS: 1.0.0.beta.3

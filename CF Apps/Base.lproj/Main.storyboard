@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="iI1-7F-l9p">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -699,7 +700,7 @@
         <!--Logs View Controller-->
         <scene sceneID="f7u-4R-nHZ">
             <objects>
-                <viewController id="bnK-7Y-JBh" customClass="LogsViewController" customModule="CF_Apps" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LogsView" automaticallyAdjustsScrollViewInsets="NO" id="bnK-7Y-JBh" customClass="LogsViewController" customModule="CF_Apps" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="f6J-6r-6a4"/>
                         <viewControllerLayoutGuide type="bottom" id="sQU-wc-Mfq"/>
@@ -708,18 +709,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" editable="NO" text="Connecting..." translatesAutoresizingMaskIntoConstraints="NO" id="ygs-wR-HF1">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ygs-wR-HF1">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="11"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Connecting...">
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="11" name="Courier"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="0.097668672168014836" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="sQU-wc-Mfq" firstAttribute="top" secondItem="ygs-wR-HF1" secondAttribute="bottom" id="FRr-r7-NCp"/>
+                            <constraint firstItem="sQU-wc-Mfq" firstAttribute="top" secondItem="ygs-wR-HF1" secondAttribute="bottom" id="DQR-GL-TSG"/>
+                            <constraint firstItem="ygs-wR-HF1" firstAttribute="top" secondItem="f6J-6r-6a4" secondAttribute="bottom" id="cIV-fJ-yof"/>
                             <constraint firstItem="ygs-wR-HF1" firstAttribute="leading" secondItem="raV-7G-Qmv" secondAttribute="leadingMargin" constant="-20" id="gI6-nr-GwC"/>
-                            <constraint firstItem="ygs-wR-HF1" firstAttribute="top" secondItem="f6J-6r-6a4" secondAttribute="bottom" id="ino-Qr-BDb"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ygs-wR-HF1" secondAttribute="trailing" constant="-20" id="vAz-hv-Z8J"/>
                         </constraints>
                     </view>

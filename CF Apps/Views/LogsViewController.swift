@@ -8,15 +8,15 @@
 
 import Foundation
 import UIKit
-import SwiftWebSocket
 
-class LogsViewController: UIViewController {
+class LogsViewController: UIViewController, CFLogger {
     @IBOutlet var logView: UITextView!
     
     var appGuid: String?
-    var ws: WebSocket?
-    
+    var logs: CFLogs?
+
     override func viewDidLoad() {
+        self.logs = CFLogs(appGuid: self.appGuid!)
         startLogging()
     }
     
@@ -25,55 +25,26 @@ class LogsViewController: UIViewController {
     }
     
     func startLogging() {
-        do {
-            let ws = try createSocket()
-            
-            ws.event.open = logsOpened
-            ws.event.close = logsClosed
-            ws.event.error = logsError
-            ws.event.message = logReceived
-        } catch {
-            print("--- Logs Connection Failed")
-            self.logView.text = "Logs connection failed. Please try again"
-        }
+        self.logs!.delegate = self
+        self.logs!.tail()
     }
     
-    func logsOpened() {
-        print("--- Logs Connection Opened")
+    func logsConnected() {
         self.logView.text = ""
     }
     
-    func logsClosed(code: Int, reason: String, wasClean: Bool) {
-        print("--- Logs Connection Closed")
+    func logsError(description: String) {
+        self.logView.text = description
     }
     
-    func logsError(error: ErrorType) {
-        print("--- Logs \(error)")
-        self.logView.text = String(error)
-    }
-    
-    func logReceived(message: Any) {
-        print("--- Log Received")
-        let data = message as! NSData
-        let text = String(data: data, encoding: NSASCIIStringEncoding)
-        
-        self.logView.text = self.logView.text.stringByAppendingString("\n\(text!)")
+    func logsMessage(text: NSMutableAttributedString) {
+        let logs = self.logView.attributedText.mutableCopy() as! NSMutableAttributedString
+        logs.appendAttributedString(text)
+        self.logView.attributedText = logs
         self.logView.scrollRangeToVisible(self.logView.selectedRange)
     }
     
     func stopLogging() {
-        self.ws?.close()
-    }
-    
-    func createSocket() throws -> WebSocket {
-        let endpoint = try Keychain.getLoggingURL()
-        let url = NSURL(string: "\(endpoint)/tail/?app=\(self.appGuid!)")
-        let request = NSMutableURLRequest(URL: url!)
-        
-        request.addValue("bearer \(CFSession.oauthToken!)", forHTTPHeaderField: "Authorization")
-        
-        self.ws = WebSocket(request: request)
-        self.ws!.binaryType = WebSocketBinaryType.NSData
-        return self.ws!
+        self.logs?.disconnect()
     }
 }

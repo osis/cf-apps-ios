@@ -33,7 +33,7 @@ class KeychainTests: XCTestCase {
         clearKeychain()
     }
     
-    func setCredentials() -> NSError? {
+    static func setCredentials() -> NSError? {
         return Keychain.setCredentials([
             "apiURL": "https://api.capi.test",
             "authURL": "https://auth.capi.test",
@@ -44,7 +44,7 @@ class KeychainTests: XCTestCase {
     }
     
     func testSetCredentials() {
-        XCTAssertNil(setCredentials(), "should be nil when credentials have been set")
+        XCTAssertNil(KeychainTests.setCredentials(), "should be nil when credentials have been set")
     }
     
     func testNoCredentials() {
@@ -52,7 +52,7 @@ class KeychainTests: XCTestCase {
     }
     
     func testHasCredentials() {
-        setCredentials()
+        KeychainTests.setCredentials()
         XCTAssertTrue(Keychain.hasCredentials(), "should return true when there are credentials")
     }
     
@@ -77,7 +77,7 @@ class KeychainTests: XCTestCase {
     }
     
     func testGetCredentials() {
-        setCredentials()
+        KeychainTests.setCredentials()
         do {
             let (authURL, loggingURL, username, password) = try Keychain.getCredentials()
             
@@ -91,7 +91,7 @@ class KeychainTests: XCTestCase {
     }
     
     func testGetApiURL() {
-        setCredentials()
+        KeychainTests.setCredentials()
         do {
             let apiURL = try Keychain.getApiURL()
             
@@ -102,7 +102,7 @@ class KeychainTests: XCTestCase {
     }
     
     func testClearCredentials() {
-        setCredentials()
+        KeychainTests.setCredentials()
         Keychain.clearCredentials()
         
         do {
