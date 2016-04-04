@@ -1,11 +1,3 @@
-//
-//  CFResponse.swift
-//  CF Apps
-//
-//  Created by Dwayne Forde on 2016-02-28.
-//  Copyright © 2016 Dwayne Forde. All rights reserved.
-//
-
 import Foundation
 import Alamofire
 import SwiftyJSON

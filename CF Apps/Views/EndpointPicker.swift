@@ -1,11 +1,3 @@
-//
-//  EndpointPicker.swift
-//  CF Apps
-//
-//  Created by Dwayne Forde on 2016-02-13.
-//  Copyright © 2016 Dwayne Forde. All rights reserved.
-//
-
 import Foundation
 import UIKit
 

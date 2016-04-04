@@ -1,11 +1,3 @@
-//
-//  CFAppsTests.swift
-//  CF Apps
-//
-//  Created by Dwayne Forde on 2015-07-23.
-//  Copyright (c) 2015 Dwayne Forde. All rights reserved.
-//
-
 import UIKit
 import XCTest
 import CoreData

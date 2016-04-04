@@ -1,11 +1,3 @@
-//
-//  LogsViewController.swift
-//  CF Apps
-//
-//  Created by Dwayne Forde on 2016-03-26.
-//  Copyright © 2016 Dwayne Forde. All rights reserved.
-//
-
 import Foundation
 import UIKit
 

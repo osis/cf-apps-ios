@@ -1,11 +1,3 @@
-//
-//  LogsViewControllerTests.swift
-//  CF Apps
-//
-//  Created by Dwayne Forde on 2016-04-02.
-//  Copyright © 2016 Dwayne Forde. All rights reserved.
-//
-
 import XCTest
 
 @testable import CF_Apps
