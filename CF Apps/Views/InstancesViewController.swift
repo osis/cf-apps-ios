@@ -1,11 +1,3 @@
-//
-//  InstancesViewController.swift
-//  CF Apps
-//
-//  Created by Dwayne Forde on 2015-10-03.
-//  Copyright © 2015 Dwayne Forde. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import SwiftyJSON

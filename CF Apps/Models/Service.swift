@@ -1,11 +1,3 @@
-//
-//  Service.swift
-//  CF Apps
-//
-//  Created by Dwayne Forde on 2015-11-07.
-//  Copyright © 2015 Dwayne Forde. All rights reserved.
-//
-
 import Foundation
 
 import Foundation

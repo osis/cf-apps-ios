@@ -1,11 +1,3 @@
-//
-//  AppViewController.swift
-//  CF Apps
-//
-//  Created by Dwayne Forde on 2015-09-02.
-//  Copyright (c) 2015 Dwayne Forde. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import Alamofire

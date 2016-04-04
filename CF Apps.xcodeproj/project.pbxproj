@@ -12,6 +12,7 @@
 		65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65032FED1B75B01A007E7DA3 /* KeychainTests.swift */; };
 		65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B443D1B530868009ED489 /* Keychain.swift */; };
 		6503CC611C9BAF9B000BA838 /* apps.json in Resources */ = {isa = PBXBuildFile; fileRef = 6503CC5E1C9BAE90000BA838 /* apps.json */; };
+		652CA1C31CB200E3004B714A /* LogsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652CA1C11CB1FF37004B714A /* LogsViewControllerTests.swift */; };
 		652DE6011C29B1EB00411438 /* CFSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652DE5FF1C29B10700411438 /* CFSessionTests.swift */; };
 		653E2F0C1C289A38008CFC10 /* CFSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E2F0B1C289A38008CFC10 /* CFSession.swift */; };
 		65414EA61CA7610900B17589 /* LogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65414EA51CA7610900B17589 /* LogsViewController.swift */; };
@@ -34,7 +35,6 @@
 		65C6FE461C70469D0083C4A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE6FCD1B4712B30047519D /* AppDelegate.swift */; };
 		65C7A8B61CAB957700BA1ADC /* LogMessage.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C7A8B41CAB957700BA1ADC /* LogMessage.proto.swift */; };
 		65C8E1E81CB06401004FD199 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */; };
-		65C8E1FB1CB089E1004FD199 /* LogsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C8E1F91CB0895D004FD199 /* LogsViewControllerTests.swift */; };
 		65D5DBA11C9B47FE00AF8EF1 /* CFApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44371B530622009ED489 /* CFApp.swift */; };
 		65DBB5F81BC0D09200BD19BC /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBB5F71BC0D09200BD19BC /* Instance.swift */; };
 		65DF28A71BEEF11F0081B834 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */; };
@@ -67,6 +67,7 @@
 		6503CC5E1C9BAE90000BA838 /* apps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = apps.json; path = "CF AppsTests/Network/Fixtures/apps.json"; sourceTree = "<group>"; };
 		651C84761B2A7FB50006DC3A /* CF Apps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CF Apps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		651C848E1B2A7FB60006DC3A /* CF Apps Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CF Apps Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		652CA1C11CB1FF37004B714A /* LogsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogsViewControllerTests.swift; path = "CF AppsTests/Views/LogsViewControllerTests.swift"; sourceTree = "<group>"; };
 		652DE5FF1C29B10700411438 /* CFSessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFSessionTests.swift; path = "CF AppsTests/Network/CFSessionTests.swift"; sourceTree = "<group>"; };
 		653E2F0B1C289A38008CFC10 /* CFSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFSession.swift; sourceTree = "<group>"; };
 		65414EA51CA7610900B17589 /* LogsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogsViewController.swift; sourceTree = "<group>"; };
@@ -88,7 +89,6 @@
 		65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewControllerTests.swift; path = "CF AppsTests/Views/LoginViewControllerTests.swift"; sourceTree = "<group>"; };
 		65C7A8B41CAB957700BA1ADC /* LogMessage.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogMessage.proto.swift; sourceTree = "<group>"; };
 		65C7A8B71CAB959700BA1ADC /* LogMessage.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LogMessage.proto; sourceTree = "<group>"; };
-		65C8E1F91CB0895D004FD199 /* LogsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogsViewControllerTests.swift; sourceTree = "<group>"; };
 		65D050C21C83E0F5009C913E /* CFResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFResponse.swift; sourceTree = "<group>"; };
 		65DBB5F71BC0D09200BD19BC /* Instance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instance.swift; sourceTree = "<group>"; };
 		65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
@@ -141,10 +141,10 @@
 		65032FE11B61CD12007E7DA3 /* CF Apps Tests */ = {
 			isa = PBXGroup;
 			children = (
-				65C6FE3C1C7043240083C4A1 /* Views */,
 				65032FEA1B75ADC9007E7DA3 /* Data */,
 				65032FE21B61CD39007E7DA3 /* Models */,
 				6547EBA91B76CFCC00C1E13E /* Network */,
+				65C6FE3C1C7043240083C4A1 /* Views */,
 			);
 			name = "CF Apps Tests";
 			sourceTree = "<group>";
@@ -178,9 +178,9 @@
 			children = (
 				651C84781B2A7FB50006DC3A /* CF Apps */,
 				65032FE11B61CD12007E7DA3 /* CF Apps Tests */,
-				651C84771B2A7FB50006DC3A /* Products */,
 				4EC2FBA25392327415D172CB /* Frameworks */,
 				790EF5E54A50AA1FC283D8EE /* Pods */,
+				651C84771B2A7FB50006DC3A /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -221,11 +221,11 @@
 		6547EBA91B76CFCC00C1E13E /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				6503CC601C9BAEB9000BA838 /* Fixtures */,
-				6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */,
-				652DE5FF1C29B10700411438 /* CFSessionTests.swift */,
 				D8C516B51C73F21E00D15187 /* CFApiTests.swift */,
 				65E2D0081CA868C00038396A /* CFLogsTests.swift */,
+				6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */,
+				652DE5FF1C29B10700411438 /* CFSessionTests.swift */,
+				6503CC601C9BAEB9000BA838 /* Fixtures */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -284,10 +284,10 @@
 			isa = PBXGroup;
 			children = (
 				655B44411B532531009ED489 /* CFApi.swift */,
+				65E2D0061CA856010038396A /* CFLogs.swift */,
 				655B44391B530622009ED489 /* CFRequest.swift */,
 				65D050C21C83E0F5009C913E /* CFResponse.swift */,
 				653E2F0B1C289A38008CFC10 /* CFSession.swift */,
-				65E2D0061CA856010038396A /* CFLogs.swift */,
 			);
 			name = Network;
 			path = "CF Apps/Network";
@@ -297,7 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */,
-				65C8E1F91CB0895D004FD199 /* LogsViewControllerTests.swift */,
+				652CA1C11CB1FF37004B714A /* LogsViewControllerTests.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -555,7 +555,7 @@
 				6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */,
 				654C1D8D1C8D46F9001F2002 /* EndpointPicker.swift in Sources */,
 				65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */,
-				65C8E1FB1CB089E1004FD199 /* LogsViewControllerTests.swift in Sources */,
+				652CA1C31CB200E3004B714A /* LogsViewControllerTests.swift in Sources */,
 				652DE6011C29B1EB00411438 /* CFSessionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

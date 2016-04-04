@@ -1,11 +1,3 @@
-//
-//  CFApiTests.swift
-//  CF Apps
-//
-//  Created by Dwayne Forde on 2016-02-16.
-//  Copyright © 2016 Dwayne Forde. All rights reserved.
-//
-
 import Foundation
 import XCTest
 import Alamofire
