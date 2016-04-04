@@ -87,9 +87,11 @@ class CFResponseHandlerTests: XCTestCase {
         }
         
         Keychain.setCredentials([
-            "authURL": "https://test.io/authorize",
-            "username":"testUser",
-            "password":"testPass"
+            "apiURL": "https://api.capi.test",
+            "authURL": "https://auth.capi.test",
+            "loggingURL": "wss://loggregator.capi.test",
+            "username": "testUser",
+            "password": "testPass"
         ])
 
         let expectation = expectationWithDescription("Auth Refresh Success Callback")
@@ -117,6 +119,7 @@ class CFResponseHandlerTests: XCTestCase {
         
         Keychain.setCredentials([
             "authURL": "http://test.io/authorize",
+            "loggingURL": "http://test.io/authorize",
             "username":"testUser",
             "password":"testPass"
             ])
@@ -186,18 +189,6 @@ class CFResponseHandlerTests: XCTestCase {
         let authHeaderToken = request.valueForHTTPHeaderField("Authorization")
         XCTAssertEqual(authHeaderToken, "Bearer TestToken")
     }
-    
-    //    func testAuthRefreshFailure() {
-    //        CFApi.handleAuthFailure()
-    //
-    //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //        let loginViewController: LoginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginView") as! LoginViewController
-    //        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    //
-    //        XCTAssertEqual(loginViewController.authError, true)
-    //        XCTAssertEqual(appDelegate.window!.rootViewController, loginViewController)
-    //        XCTAssertTrue(CFSession.isEmpty())
-    //    }
 
     func testSanitizeJson() {
         let path = NSBundle(forClass: self.dynamicType).pathForResource("apps", ofType: "json")!

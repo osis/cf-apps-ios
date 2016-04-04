@@ -33,17 +33,18 @@ class KeychainTests: XCTestCase {
         clearKeychain()
     }
     
-    func setCredentials() -> NSError? {
+    static func setCredentials() -> NSError? {
         return Keychain.setCredentials([
-            "apiURL": "https://api.io",
-            "authURL": "https://auth.io",
+            "apiURL": "https://api.capi.test",
+            "authURL": "https://auth.capi.test",
+            "loggingURL": "wss://loggregator.capi.test",
             "username": "testUsername",
             "password": "testPassword"
             ])
     }
     
     func testSetCredentials() {
-        XCTAssertNil(setCredentials(), "should be nil when credentials have been set")
+        XCTAssertNil(KeychainTests.setCredentials(), "should be nil when credentials have been set")
     }
     
     func testNoCredentials() {
@@ -51,7 +52,7 @@ class KeychainTests: XCTestCase {
     }
     
     func testHasCredentials() {
-        setCredentials()
+        KeychainTests.setCredentials()
         XCTAssertTrue(Keychain.hasCredentials(), "should return true when there are credentials")
     }
     
@@ -76,11 +77,12 @@ class KeychainTests: XCTestCase {
     }
     
     func testGetCredentials() {
-        setCredentials()
+        KeychainTests.setCredentials()
         do {
-            let (authURL, username, password) = try Keychain.getCredentials()
+            let (authURL, loggingURL, username, password) = try Keychain.getCredentials()
             
-            XCTAssertEqual(authURL, "https://auth.io", "should be authURL when credentials have been set")
+            XCTAssertEqual(authURL, "https://auth.capi.test", "should be authURL when credentials have been set")
+            XCTAssertEqual(loggingURL, "wss://loggregator.capi.test", "should be loggingURL when credentials have been set")
             XCTAssertEqual(username, "testUsername", "should be username when credentials have been set")
             XCTAssertEqual(password, "testPassword", "should be password when credentials have been set")
         } catch {
@@ -89,18 +91,18 @@ class KeychainTests: XCTestCase {
     }
     
     func testGetApiURL() {
-        setCredentials()
+        KeychainTests.setCredentials()
         do {
             let apiURL = try Keychain.getApiURL()
             
-            XCTAssertEqual(apiURL, "https://api.io", "should be authURL when credentials have been set")
+            XCTAssertEqual(apiURL, "https://api.capi.test", "should be authURL when credentials have been set")
         } catch {
             XCTFail()
         }
     }
     
     func testClearCredentials() {
-        setCredentials()
+        KeychainTests.setCredentials()
         Keychain.clearCredentials()
         
         do {

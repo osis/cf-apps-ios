@@ -11,17 +11,17 @@ import XCTest
 @testable import CF_Apps
 
 class LoginViewControllerTests: XCTestCase {
-    
+
     var vc : LoginViewController!
     
     override func setUp() {
         super.setUp()
         
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: NSBundle(forClass: self.dynamicType))
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         vc = storyboard.instantiateViewControllerWithIdentifier("LoginView") as! LoginViewController
         vc.loadView()
     }
-    
+
     func testSetup() {
         vc.setup()
         
@@ -30,14 +30,14 @@ class LoginViewControllerTests: XCTestCase {
         XCTAssertEqual(vc.apiTargetField.alpha, 0)
         XCTAssertEqual(vc.apiTargetView.alpha, 1)
     }
-    
+
     func testShowLoginForm() {
         vc.showLoginForm()
         
         XCTAssertEqual(vc.loginView.alpha, 1)
         XCTAssertEqual(vc.loginView.transform.ty, CGAffineTransformIdentity.ty)
     }
-    
+
     func testHideLoginForm() {
         vc.hideLoginForm()
         

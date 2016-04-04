@@ -39,6 +39,7 @@ class CFSessionTests: XCTestCase {
         Keychain.setCredentials([
             "apiURL": "",
             "authURL": "",
+            "loggingURL": "",
             "username": "",
             "password": ""
             ])

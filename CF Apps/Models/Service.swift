@@ -12,11 +12,12 @@ import Foundation
 import CoreData
 import SwiftyJSON
 
-class Service: NSManagedObject {
+class Service: NSObject {
     
     var json: JSON?
     
-    required init(json: JSON) {
+    init(json: JSON) {
+        super.init()
         self.json = json
     }
     

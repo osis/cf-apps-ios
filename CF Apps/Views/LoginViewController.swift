@@ -28,6 +28,7 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
     
     var authError = false
     var authEndpoint: String?
+    var loggingEndpoint: String?
     var pickerData: [String] = [String]()
     let transitionSpeed = 0.5
     
@@ -120,6 +121,7 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
         let urlRequest = CFRequest.Info(self.apiTargetField.text!)
         CFApi().request(urlRequest, success: { (json) in
             self.authEndpoint = json["authorization_endpoint"].string
+            self.loggingEndpoint = json["logging_endpoint"].string
             self.hideTargetForm()
             self.showLoginForm()
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
@@ -133,7 +135,7 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
         self.startButtonSpinner(self.loginButton, spinner: self.loginSpinner)
         let urlRequest = CFRequest.Login(self.authEndpoint!, usernameField.text!, passwordField.text!)
         CFApi().request(urlRequest, success: { json in
-            CFSession.save(self.apiTargetField.text!, authURL: self.authEndpoint!, username: self.usernameField.text!, password: self.passwordField.text!)
+            CFSession.save(self.apiTargetField.text!, authURL: self.authEndpoint!, loggingURL: self.loggingEndpoint!, username: self.usernameField.text!, password: self.passwordField.text!)
             self.performSegueWithIdentifier("loginSegue", sender: nil)
             self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
         }, error: { statusCode, url in

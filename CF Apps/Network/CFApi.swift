@@ -42,7 +42,7 @@ class CFResponseHandler: ResponseHandler {
         do {
             self.retryLogin = false
             
-            let (authURL, username, password) = try Keychain.getCredentials()
+            let (authURL, _, username, password) = try Keychain.getCredentials()
             let loginURLRequest = CFRequest.Login(authURL, username, password)
             
             CFApi(responseHandler: self).refreshToken(loginURLRequest, originalURLRequest: originalURLRequest, success: success)
@@ -64,12 +64,7 @@ class CFResponseHandler: ResponseHandler {
     }
     
     func authRefreshFailure() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginViewController: LoginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginView") as! LoginViewController
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        loginViewController.authError = true
-        appDelegate.window!.rootViewController = loginViewController
-        CFSession.reset()
+        CFSession.logout()
     }
     
     func sanitizeJson(json: JSON) -> JSON {
@@ -111,7 +106,7 @@ class CFApi {
             self.request(loginURLRequest, success: { _ in
                 self.responseHandler.authRefreshSuccess(originalURLRequest, success: success)
             }, error: { (_, _) in
-                self.responseHandler.authRefreshFailure()
+                CFSession.logout()
         })
     }
     
