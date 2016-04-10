@@ -14,6 +14,7 @@
 		6503CC611C9BAF9B000BA838 /* apps.json in Resources */ = {isa = PBXBuildFile; fileRef = 6503CC5E1C9BAE90000BA838 /* apps.json */; };
 		652CA1C31CB200E3004B714A /* LogsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652CA1C11CB1FF37004B714A /* LogsViewControllerTests.swift */; };
 		652DE6011C29B1EB00411438 /* CFSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652DE5FF1C29B10700411438 /* CFSessionTests.swift */; };
+		653CC9751CBAD5A700315E22 /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CC9731CBAD5A300315E22 /* AppDelegateTests.swift */; };
 		653E2F0C1C289A38008CFC10 /* CFSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E2F0B1C289A38008CFC10 /* CFSession.swift */; };
 		65414EA61CA7610900B17589 /* LogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65414EA51CA7610900B17589 /* LogsViewController.swift */; };
 		6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */; };
@@ -32,7 +33,6 @@
 		65B010731C1E684000CECF07 /* CFSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B010721C1E684000CECF07 /* CFSpace.swift */; };
 		65C6FE3B1C6F9EEA0083C4A1 /* EndpointPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6FE3A1C6F9EEA0083C4A1 /* EndpointPicker.swift */; };
 		65C6FE431C70463D0083C4A1 /* CFApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44411B532531009ED489 /* CFApi.swift */; };
-		65C6FE461C70469D0083C4A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE6FCD1B4712B30047519D /* AppDelegate.swift */; };
 		65C7A8B61CAB957700BA1ADC /* LogMessage.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C7A8B41CAB957700BA1ADC /* LogMessage.proto.swift */; };
 		65C8E1E81CB06401004FD199 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */; };
 		65D5DBA11C9B47FE00AF8EF1 /* CFApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44371B530622009ED489 /* CFApp.swift */; };
@@ -69,6 +69,7 @@
 		651C848E1B2A7FB60006DC3A /* CF Apps Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CF Apps Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		652CA1C11CB1FF37004B714A /* LogsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogsViewControllerTests.swift; path = "CF AppsTests/Views/LogsViewControllerTests.swift"; sourceTree = "<group>"; };
 		652DE5FF1C29B10700411438 /* CFSessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFSessionTests.swift; path = "CF AppsTests/Network/CFSessionTests.swift"; sourceTree = "<group>"; };
+		653CC9731CBAD5A300315E22 /* AppDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegateTests.swift; path = "CF AppsTests/AppDelegateTests.swift"; sourceTree = "<group>"; };
 		653E2F0B1C289A38008CFC10 /* CFSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFSession.swift; sourceTree = "<group>"; };
 		65414EA51CA7610900B17589 /* LogsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogsViewController.swift; sourceTree = "<group>"; };
 		6547EBAE1B76D06B00C1E13E /* CFRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFRequestTests.swift; path = "CF AppsTests/Network/CFRequestTests.swift"; sourceTree = "<group>"; };
@@ -145,6 +146,7 @@
 				65032FE21B61CD39007E7DA3 /* Models */,
 				6547EBA91B76CFCC00C1E13E /* Network */,
 				65C6FE3C1C7043240083C4A1 /* Views */,
+				653CC9731CBAD5A300315E22 /* AppDelegateTests.swift */,
 			);
 			name = "CF Apps Tests";
 			sourceTree = "<group>";
@@ -548,7 +550,6 @@
 				D8C516B61C73F21E00D15187 /* CFApiTests.swift in Sources */,
 				654C1D8E1C8D4702001F2002 /* CFResponse.swift in Sources */,
 				65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */,
-				65C6FE461C70469D0083C4A1 /* AppDelegate.swift in Sources */,
 				65032FE91B74507D007E7DA3 /* CFStore.xcdatamodeld in Sources */,
 				65E2D00C1CA8700F0038396A /* CFLogsTests.swift in Sources */,
 				65032FE61B61CDED007E7DA3 /* CFAppsTests.swift in Sources */,
@@ -557,6 +558,7 @@
 				65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */,
 				652CA1C31CB200E3004B714A /* LogsViewControllerTests.swift in Sources */,
 				652DE6011C29B1EB00411438 /* CFSessionTests.swift in Sources */,
+				653CC9751CBAD5A700315E22 /* AppDelegateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

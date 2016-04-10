@@ -1,4 +1,3 @@
-import UIKit
 import CoreData
 import DATAStack
 import Locksmith
@@ -7,25 +6,27 @@ import Locksmith
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    lazy var dataStack: DATAStack = DATAStack()
+    var dataStack: DATAStack = {
+        let dataStack = DATAStack(modelName: "CFStore")
+        return dataStack
+    }()
     
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         if (Keychain.hasCredentials()) {
-            return true
-        } else {
-            showLoginScreen()
+            showAppsScreen()
         }
-        // Override point for customization after application launch.
+        
         return true
     }
 
-    func showLoginScreen() {
+    private func showAppsScreen() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let nav = self.window!.rootViewController as! UINavigationController
+        let controller = storyboard.instantiateViewControllerWithIdentifier("AppsView") as! AppsViewController
+        controller.dataStack = dataStack
         
-        let rootController = storyboard.instantiateViewControllerWithIdentifier("LoginView")
-        
-        self.window?.rootViewController = rootController
+        nav.pushViewController(controller, animated: false)
     }
 
     func applicationWillResignActive(application: UIApplication) {
