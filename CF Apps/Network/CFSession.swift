@@ -49,11 +49,10 @@ class CFSession {
     }
     
     class func logout(hadAuthError: Bool = false) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginViewController: LoginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginView") as! LoginViewController
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        loginViewController.authError = hadAuthError
-        appDelegate.window!.rootViewController = loginViewController
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let nav = delegate.window?.rootViewController as! UINavigationController
+
+        nav.popToRootViewControllerAnimated(true)
         CFSession.reset()
     }
 }

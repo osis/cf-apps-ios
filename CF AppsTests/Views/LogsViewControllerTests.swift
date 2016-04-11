@@ -12,7 +12,11 @@ class LogsViewControllerTests: XCTestCase {
             super.init(appGuid: "")
         }
         
-        override func tail() {
+        override func connect() {
+            expectation.fulfill()
+        }
+        
+        override func reconnect() {
             expectation.fulfill()
         }
         
@@ -33,7 +37,7 @@ class LogsViewControllerTests: XCTestCase {
     }
     
     func testInit() {
-        XCTAssertEqual(vc.logView.text, "Connecting...")
+        XCTAssertEqual(vc.logView.text, "")
     }
     
     func testStartLogging() {
@@ -45,17 +49,6 @@ class LogsViewControllerTests: XCTestCase {
         
         XCTAssertTrue(vc.logs!.delegate === vc)
         waitForExpectationsWithTimeout(1.0, handler: nil)
-    }
-    
-    func testLogsConnected() {
-        vc.logsConnected()
-        XCTAssertEqual(vc.logView.text, "")
-    }
-    
-    func testLogsError() {
-        let description = "Test Error"
-        vc.logsError(description)
-        XCTAssertEqual(vc.logView.text, description)
     }
     
     func testLogsMessage() {

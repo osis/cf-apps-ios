@@ -16,11 +16,11 @@ class AppViewController: UIViewController {
     @IBOutlet var commandLabel: UILabel!
     @IBOutlet var servicesTableView: UITableView!
     @IBOutlet var instancesTableView: UITableView!
-    let dataStack: DATAStack
+    
+    var dataStack: DATAStack?
     var app: CFApp?
     
     required init(coder aDecoder: NSCoder) {
-                dataStack = DATAStack(modelName: "CFStore")
         super.init(coder: aDecoder)!
     }
     
@@ -121,7 +121,7 @@ class AppViewController: UIViewController {
         request.predicate = predicate
         
         do {
-            let apps = try dataStack.mainContext.executeFetchRequest(request) as! [CFApp]
+            let apps = try dataStack!.mainContext.executeFetchRequest(request) as! [CFApp]
             self.app = apps[0]
             
             nameLabel.text = app!.name
