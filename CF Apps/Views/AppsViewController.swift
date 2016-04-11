@@ -13,8 +13,8 @@ class AppsViewController: UITableViewController {
     @IBOutlet var orgPickerButton: UIBarButtonItem!
     
     let CellIdentifier = "AppCell"
-    let dataStack: DATAStack
     
+    var dataStack: DATAStack?
     var token:String?
     var items = [CFApp]()
     var requestCount = 0
@@ -24,7 +24,6 @@ class AppsViewController: UITableViewController {
     var orgPickerValues = [String]()
 
     required init!(coder aDecoder: NSCoder) {
-        dataStack = DATAStack(modelName: "CFStore")
         super.init(coder: aDecoder)
     }
     
@@ -48,8 +47,7 @@ class AppsViewController: UITableViewController {
             let index = self.tableView.indexPathForCell(cell)
             
             controller.app = items[index!.item]
-        } else if (segue.identifier == "logout") {
-            CFSession.reset()
+            controller.dataStack = self.dataStack!
         }
     }
     
@@ -73,7 +71,7 @@ class AppsViewController: UITableViewController {
             self.tableView.setContentOffset(CGPointMake(0, self.tableView.contentOffset.y-self.refreshControl!.frame.size.height), animated: true)
             self.currentPage = 1
             self.requestCount = 3
-            self.dataStack.drop()
+            self.dataStack!.drop()
             self.fetchOrganizations()
         }
     }
@@ -105,7 +103,7 @@ class AppsViewController: UITableViewController {
     }
     
     func handleOrgsResponse(json: JSON) {
-        dataStack.drop()
+        dataStack!.drop()
         self.orgPickerLabels = []
         self.orgPickerValues = []
         var orgGuids: [String] = []
@@ -165,7 +163,7 @@ class AppsViewController: UITableViewController {
             let request = NSFetchRequest(entityName: "CFApp")
             request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
             
-            try! items = dataStack.mainContext.executeFetchRequest(request) as! [CFApp]
+            try! items = dataStack!.mainContext.executeFetchRequest(request) as! [CFApp]
             
             tableView.reloadData()
             
@@ -258,7 +256,7 @@ class AppsViewController: UITableViewController {
         let request = NSFetchRequest(entityName: "CFSpace")
         request.predicate = NSPredicate(format: "guid == %@", cfApp.spaceGuid)
         do {
-            let spaces = try dataStack.mainContext.executeFetchRequest(request)
+            let spaces = try dataStack!.mainContext.executeFetchRequest(request)
             if spaces.count != 0 { spaceLabel.text = spaces[0].name }
         } catch {
             spaceLabel.text = "N/A"
@@ -278,5 +276,9 @@ class AppsViewController: UITableViewController {
         spinner.startAnimating()
         spinner.frame = CGRectMake(0, 0, 320, 44)
         return spinner
+    }
+    
+    @IBAction func logoutClicked(sender: UIBarButtonItem) {
+        CFSession.logout()
     }
 }

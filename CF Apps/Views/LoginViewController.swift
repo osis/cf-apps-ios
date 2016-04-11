@@ -24,6 +24,16 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
     var pickerData: [String] = [String]()
     let transitionSpeed = 0.5
     
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: animated);
+        super.viewWillDisappear(animated)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -128,12 +138,21 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
         let urlRequest = CFRequest.Login(self.authEndpoint!, usernameField.text!, passwordField.text!)
         CFApi().request(urlRequest, success: { json in
             CFSession.save(self.apiTargetField.text!, authURL: self.authEndpoint!, loggingURL: self.loggingEndpoint!, username: self.usernameField.text!, password: self.passwordField.text!)
-            self.performSegueWithIdentifier("loginSegue", sender: nil)
+            self.performSegueWithIdentifier("apps", sender: nil)
             self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
         }, error: { statusCode, url in
             self.showAlert("Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
             self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
         })
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "apps") {
+            let controller = segue.destinationViewController as! AppsViewController
+            let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            
+            controller.dataStack = delegate.dataStack
+        }
     }
     
     @IBAction func usernameNextPressed(sender: AnyObject) {

@@ -10,6 +10,7 @@ class CFLogsTests: XCTestCase {
     
     class FakeLogger: NSObject, CFLogger {
         var appGuid: String
+        var assertString: String?
         var expectation: XCTestExpectation
         
         init(appGuid: String, expectation: XCTestExpectation) {
@@ -18,21 +19,21 @@ class CFLogsTests: XCTestCase {
             super.init()
         }
         
-        func tail() {
+        convenience init(appGuid: String, assertString: String, expectation: XCTestExpectation) {
+            self.init(appGuid: appGuid, expectation: expectation)
+            self.assertString = assertString
+        }
+        
+        func connect() {
             expectation.fulfill()
         }
         
-        func logsConnected() {
-            expectation.fulfill()
-        }
-        
-        func logsError(description: String) {
-            XCTAssertEqual(description, "Network(test websocket error)")
+        func reconnect() {
             expectation.fulfill()
         }
         
         func logsMessage(text: NSMutableAttributedString) {
-            XCTAssertEqual(text, "test message")
+            XCTAssertEqual(text.string, assertString!)
             expectation.fulfill()
         }
     }
@@ -88,21 +89,17 @@ class CFLogsTests: XCTestCase {
         let expectation = expectationWithDescription("Logs Connected")
         let logs = CFLogs(appGuid: testAppGuid)
         
-        logs.delegate = FakeLogger(appGuid: testAppGuid, expectation: expectation)
+        logs.delegate = FakeLogger(appGuid: testAppGuid, assertString: "[]: Connected\n\n", expectation: expectation)
         logs.opened()
         waitForExpectationsWithTimeout(1.0, handler: nil)
-    }
-    
-    func testClosed() {
-       // TODO: Nothing Happens.
     }
     
     func testLogsError() {
         let expectation = expectationWithDescription("Logs Error")
         let logs = CFLogs(appGuid: testAppGuid)
         
-        logs.delegate = FakeLogger(appGuid: testAppGuid, expectation: expectation)
-        logs.error(WebSocketError.Network("test websocket error"))
+        logs.delegate = FakeLogger(appGuid: testAppGuid, assertString: "[]: Network(test error)\n\n", expectation: expectation)
+        logs.error(WebSocketError.Network("test error"))
         waitForExpectationsWithTimeout(1.0, handler: nil)
     }
     
@@ -153,41 +150,5 @@ class CFLogsTests: XCTestCase {
         logs.error(WebSocketError.InvalidResponse("HTTP/1.1 401 Unauthorized"))
         
         waitForExpectationsWithTimeout(1.0, handler: nil)
-    }
-    
-    func testMessageFormat() {
-        let logs = CFLogs(appGuid: testAppGuid)
-        let message = logs.formatMessage("SRC", sourceID: "0", message: "Message", type: LogMessage.MessageType.Out)
-        
-        XCTAssertEqual(message.string, "\n\nSRC[0]: Message")
-
-        var srcRange = NSString(string: message.string).rangeOfString("SRC[0]:")
-        
-        let srcAttributes = message.attributesAtIndex(0, effectiveRange: &srcRange)
-        let srcFont = srcAttributes["NSFont"] as! UIFont
-        let srcColor = srcAttributes["NSColor"] as! UIColor
-
-        XCTAssertEqual(srcFont, logs.font)
-        XCTAssertEqual(srcColor, logs.prefixColor)
-        
-        var msgRange = NSString(string: message.string).rangeOfString("Message")
-        let msgAttributes = message.attributesAtIndex(10, effectiveRange: &msgRange)
-        let msgFont = msgAttributes["NSFont"] as! UIFont
-        let msgColor = msgAttributes["NSColor"] as! UIColor
-        
-        XCTAssertEqual(msgFont, logs.font)
-        XCTAssertEqual(msgColor, logs.outColor)
-    }
-    
-    func testMessageErrorFormat() {
-        let logs = CFLogs(appGuid: testAppGuid)
-        let message = logs.formatMessage("SRC", sourceID: "0", message: "Message", type: LogMessage.MessageType.Err)
-        
-        var msgRange = NSString(string: message.string).rangeOfString("Message")
-        let msgAttributes = message.attributesAtIndex(10, effectiveRange: &msgRange)
-        
-        let msgColor = msgAttributes["NSColor"] as! UIColor
-        
-        XCTAssertEqual(msgColor, logs.errColor)
     }
 }

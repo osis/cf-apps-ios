@@ -6,27 +6,29 @@ class LogsViewController: UIViewController, CFLogger {
     
     var appGuid: String?
     var logs: CFLogs?
+    
+    let notificationCenter = NSNotificationCenter.defaultCenter()
 
     override func viewDidLoad() {
         self.logs = CFLogs(appGuid: self.appGuid!)
         startLogging()
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(applicationBecameActive(_:)),
+                                                         name: UIApplicationDidBecomeActiveNotification,
+                                                         object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
         stopLogging()
     }
     
+    func applicationBecameActive(notification: NSNotification) {
+        self.logs!.reconnect()
+    }
+    
     func startLogging() {
         self.logs!.delegate = self
-        self.logs!.tail()
-    }
-    
-    func logsConnected() {
-        self.logView.text = ""
-    }
-    
-    func logsError(description: String) {
-        self.logView.text = description
+        self.logs!.connect()
     }
     
     func logsMessage(text: NSMutableAttributedString) {

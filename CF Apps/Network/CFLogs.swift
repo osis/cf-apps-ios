@@ -3,8 +3,6 @@ import SwiftWebSocket
 import ProtocolBuffers
 
 protocol CFLogger: NSObjectProtocol {
-    func logsConnected()
-    func logsError(description: String)
     func logsMessage(text: NSMutableAttributedString)
 }
 
@@ -23,6 +21,16 @@ class CFLogs: NSObject {
         super.init()
     }
     
+    func connect() {
+        logMessage(LogMessageString.out("Connecting"))
+        tail()
+    }
+    
+    func reconnect() {
+        logMessage(LogMessageString.out("Reconnecting"))
+        tail()
+    }
+    
     func tail() {
         do {
             let ws = try createSocket()
@@ -33,7 +41,7 @@ class CFLogs: NSObject {
             ws.event.message = message
         } catch {
             print("--- Logs Connection Failed")
-            self.delegate?.logsError("Logs connection failed. Please try again")
+            logMessage(LogMessageString.out("Logs connection failed. Please try again"))
         }
     }
     
@@ -54,11 +62,11 @@ class CFLogs: NSObject {
     }
     
     func opened() {
-        self.delegate?.logsConnected()
+        logMessage(LogMessageString.out("Connected"))
     }
     
     func closed(code: Int, reason: String, wasClean: Bool) {
-        print("--- Logs Connection Closed")
+        logMessage(LogMessageString.out("Disconnected"))
     }
     
     func error(error: ErrorType) {
@@ -68,7 +76,7 @@ class CFLogs: NSObject {
         } else {
             print("--- Logs \(error)")
             dispatch_async(dispatch_get_main_queue(),{
-                self.delegate?.logsError(errorString)
+                self.logMessage(LogMessageString.err(errorString))
             })
         }
     }
@@ -82,28 +90,17 @@ class CFLogs: NSObject {
             let logm = try LogMessage.parseFromData(data)
             let message = String(data: logm.message_, encoding: NSASCIIStringEncoding)!
             
-            text = formatMessage(logm.sourceName, sourceID: logm.sourceId, message: message, type: logm.messageType)
+            text = LogMessageString.message(logm.sourceName, sourceID: logm.sourceId, message: message, type: logm.messageType)
         } catch {
             print("Message parsing failed")
             text = NSMutableAttributedString(string: String(data: data, encoding: NSASCIIStringEncoding)!)
         }
         
-        self.delegate?.logsMessage(text!)
+        logMessage(text!)
     }
     
-    func formatMessage(sourceName: String, sourceID: String, message: String, type: LogMessage.MessageType) -> NSMutableAttributedString {
-        let prefix = "\n\n\(sourceName)[\(sourceID)]:"
-        let text = NSMutableAttributedString(string: "\(prefix) \(message)", attributes: [NSFontAttributeName: font])
-        
-        let textString = NSString(string: text.string)
-        let prefixRange = textString.rangeOfString(prefix)
-        let messageRange = textString.rangeOfString(message)
-        let messageColor = (type == LogMessage.MessageType.Out) ? outColor : errColor
-        
-        text.addAttribute(NSForegroundColorAttributeName, value: prefixColor, range: prefixRange)
-        text.addAttribute(NSForegroundColorAttributeName, value: messageColor, range: messageRange)
-        
-        return text
+    func logMessage(message: NSMutableAttributedString) {
+        self.delegate?.logsMessage(message)
     }
     
     func disconnect() {

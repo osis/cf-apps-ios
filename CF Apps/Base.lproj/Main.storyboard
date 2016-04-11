@@ -211,17 +211,17 @@
                         <outlet property="passwordField" destination="iAf-el-aNP" id="QcS-8i-R3y"/>
                         <outlet property="targetButton" destination="i1c-w6-o63" id="WJk-DL-zx7"/>
                         <outlet property="usernameField" destination="5Hf-qT-0xk" id="Fer-ZC-pls"/>
-                        <segue destination="iI1-7F-l9p" kind="presentation" identifier="loginSegue" id="lqv-b6-eLh"/>
+                        <segue destination="dyp-KC-V5j" kind="show" identifier="apps" id="IwT-bU-GCf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-317" y="292"/>
+            <point key="canvasLocation" x="348" y="292"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="k3s-2c-sw9">
             <objects>
-                <navigationController id="iI1-7F-l9p" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavController" id="iI1-7F-l9p" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Wxu-e4-61o">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -234,17 +234,17 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="dyp-KC-V5j" kind="relationship" relationship="rootViewController" id="Ck7-5X-j0w"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Cjh-de-nCs"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q2b-3F-KRA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="388" y="292"/>
+            <point key="canvasLocation" x="-355" y="291"/>
         </scene>
         <!--Apps View Controller-->
         <scene sceneID="6hu-hm-rEV">
             <objects>
-                <tableViewController id="dyp-KC-V5j" customClass="AppsViewController" customModule="CF_Apps" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AppsView" id="dyp-KC-V5j" customClass="AppsViewController" customModule="CF_Apps" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="87" sectionHeaderHeight="22" sectionFooterHeight="22" id="OgS-Lj-tWT">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -343,8 +343,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="dR8-gx-aRG">
                             <color key="tintColor" red="1" green="0.97481899910000003" blue="0.98001719080000005" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="logoutClicked:" destination="dyp-KC-V5j" id="7qb-OG-ejf"/>
-                                <segue destination="BYZ-38-t0r" kind="presentation" identifier="logout" id="GEa-OP-8I1"/>
+                                <action selector="logoutClicked:" destination="dyp-KC-V5j" id="Xe1-Ds-7pb"/>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="gnC-ra-SuD">
@@ -399,7 +398,7 @@
         <!--Summary-->
         <scene sceneID="m5i-28-AKO">
             <objects>
-                <viewController title="Summary" id="Gz0-Se-qP4" customClass="AppViewController" customModule="CF_Apps" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SummaryView" title="Summary" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Gz0-Se-qP4" customClass="AppViewController" customModule="CF_Apps" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M7I-Ja-lEm"/>
                         <viewControllerLayoutGuide type="bottom" id="FZf-nF-H1u"/>
@@ -409,7 +408,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rb5-tk-1u7">
-                                <rect key="frame" x="0.0" y="0.0" width="321" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="321" height="536"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" placeholderIntrinsicWidth="601" placeholderIntrinsicHeight="600" translatesAutoresizingMaskIntoConstraints="NO" id="1B0-6K-Fic">
                                         <rect key="frame" x="0.0" y="0.0" width="601" height="600"/>
@@ -688,7 +687,6 @@
                         <outlet property="servicesTableHeightConstraint" destination="pIH-ek-J8Y" id="rxU-tn-3WB"/>
                         <outlet property="servicesTableView" destination="hfw-sl-7cH" id="ae2-43-YLj"/>
                         <outlet property="stateLabel" destination="xyq-l0-xFD" id="Eat-Z1-RDF"/>
-                        <segue destination="BYZ-38-t0r" kind="show" id="CHD-cY-InK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="se9-9u-rsR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -711,15 +709,7 @@
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ygs-wR-HF1">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Connecting...">
-                                        <attributes>
-                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <font key="NSFont" size="11" name="Courier"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                                <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
                         </subviews>
@@ -745,7 +735,4 @@
         <image name="launch_icon" width="479" height="267"/>
         <image name="started" width="120" height="120"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="CHD-cY-InK"/>
-    </inferredMetricsTieBreakers>
 </document>
