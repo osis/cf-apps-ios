@@ -158,7 +158,7 @@ class AppsViewController: UITableViewController {
     }
     
     func fetchCurrentObjects() {
-        self.requestCount--
+        self.requestCount -= 1
         if self.requestCount == 0 {
             let request = NSFetchRequest(entityName: "CFApp")
             request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
@@ -173,7 +173,7 @@ class AppsViewController: UITableViewController {
         }
     }
     
-    func handleAppsResponse(var json: JSON) {
+    func handleAppsResponse(json: JSON) {
         var appGuids: [String] = []
         
         for (key, _) in json["resources"] {
@@ -212,7 +212,7 @@ class AppsViewController: UITableViewController {
         )
     }
 
-    func handleSpacesResponse(var json: JSON) {
+    func handleSpacesResponse(json: JSON) {
         Sync.changes(
             json["resources"].arrayObject,
             inEntityNamed: "CFSpace",
@@ -231,7 +231,7 @@ class AppsViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if (items.count > 1 && indexPath.row == items.count-1 && currentPage < totalPages) {
-            currentPage++
+            currentPage += 1
             self.tableView.tableFooterView = loadingCell()
             self.requestCount = 2
             fetchApplications()
