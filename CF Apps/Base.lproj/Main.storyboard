@@ -10,7 +10,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="LoginView" id="BYZ-38-t0r" userLabel="Login View Controller" customClass="LoginViewController" customModule="CF_Apps" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginView" title="Login" id="BYZ-38-t0r" userLabel="Login View Controller" customClass="LoginViewController" customModule="CF_Apps" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -218,10 +218,10 @@
             </objects>
             <point key="canvasLocation" x="348" y="292"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigation-->
         <scene sceneID="k3s-2c-sw9">
             <objects>
-                <navigationController storyboardIdentifier="NavController" id="iI1-7F-l9p" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavController" title="Navigation" id="iI1-7F-l9p" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Wxu-e4-61o">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -241,10 +241,10 @@
             </objects>
             <point key="canvasLocation" x="-355" y="291"/>
         </scene>
-        <!--Apps View Controller-->
+        <!--Apps-->
         <scene sceneID="6hu-hm-rEV">
             <objects>
-                <tableViewController storyboardIdentifier="AppsView" id="dyp-KC-V5j" customClass="AppsViewController" customModule="CF_Apps" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AppsView" title="Apps" id="dyp-KC-V5j" customClass="AppsViewController" customModule="CF_Apps" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="87" sectionHeaderHeight="22" sectionFooterHeight="22" id="OgS-Lj-tWT">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -586,11 +586,9 @@
                                                                 <constraint firstItem="Mf2-C9-qgW" firstAttribute="centerY" secondItem="5VT-X7-Nzw" secondAttribute="centerY" id="5gd-G7-qSH"/>
                                                                 <constraint firstItem="LXo-yw-KNu" firstAttribute="centerX" secondItem="5VT-X7-Nzw" secondAttribute="centerX" id="6ir-qM-Suc"/>
                                                                 <constraint firstItem="Sha-as-TsX" firstAttribute="top" secondItem="nGW-c5-nu4" secondAttribute="bottom" constant="-3" id="Jcc-7E-Y0R"/>
-                                                                <constraint firstItem="olV-G1-uJF" firstAttribute="top" secondItem="5VT-X7-Nzw" secondAttribute="topMargin" constant="-7" id="PGs-HT-X7a"/>
                                                                 <constraint firstItem="Sha-as-TsX" firstAttribute="leading" secondItem="5VT-X7-Nzw" secondAttribute="leadingMargin" constant="-2" id="QaG-x0-6E7"/>
                                                                 <constraint firstItem="nGW-c5-nu4" firstAttribute="centerX" secondItem="Sha-as-TsX" secondAttribute="centerX" id="YyW-Go-7DC"/>
                                                                 <constraint firstItem="olV-G1-uJF" firstAttribute="centerY" secondItem="5VT-X7-Nzw" secondAttribute="centerY" id="Z6P-um-xhs"/>
-                                                                <constraint firstItem="LXo-yw-KNu" firstAttribute="top" secondItem="5VT-X7-Nzw" secondAttribute="topMargin" constant="-7" id="du7-Ru-dCz"/>
                                                                 <constraint firstAttribute="trailingMargin" secondItem="Mf2-C9-qgW" secondAttribute="trailing" constant="9" id="hs9-3N-Czy"/>
                                                                 <constraint firstItem="LXo-yw-KNu" firstAttribute="centerY" secondItem="5VT-X7-Nzw" secondAttribute="centerY" id="kuT-rB-cBt"/>
                                                                 <constraint firstItem="nGW-c5-nu4" firstAttribute="top" secondItem="5VT-X7-Nzw" secondAttribute="topMargin" constant="17" id="rX9-Xf-cq0"/>
@@ -691,6 +689,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="rb5-tk-1u7" firstAttribute="height" secondItem="3BD-CR-EOj" secondAttribute="height" id="4jz-Bi-kq6"/>
                             <constraint firstItem="FZf-nF-H1u" firstAttribute="top" secondItem="rb5-tk-1u7" secondAttribute="bottom" id="66S-xV-S9P"/>
                             <constraint firstItem="rb5-tk-1u7" firstAttribute="leading" secondItem="3BD-CR-EOj" secondAttribute="leadingMargin" constant="-20" id="DHi-H7-Fnv"/>
                             <constraint firstItem="rb5-tk-1u7" firstAttribute="top" secondItem="M7I-Ja-lEm" secondAttribute="bottom" id="GJA-wB-ioM"/>
@@ -700,7 +699,7 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="vIy-6Y-VWX">
+                    <navigationItem key="navigationItem" title="Summary" id="vIy-6Y-VWX">
                         <barButtonItem key="rightBarButtonItem" title="Logs" id="utS-dn-cY3">
                             <connections>
                                 <segue destination="bnK-7Y-JBh" kind="show" identifier="logs" id="26I-g0-OJO"/>
@@ -726,10 +725,10 @@
             </objects>
             <point key="canvasLocation" x="1715" y="292"/>
         </scene>
-        <!--Logs View Controller-->
+        <!--Logs-->
         <scene sceneID="f7u-4R-nHZ">
             <objects>
-                <viewController storyboardIdentifier="LogsView" automaticallyAdjustsScrollViewInsets="NO" id="bnK-7Y-JBh" customClass="LogsViewController" customModule="CF_Apps" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LogsView" title="Logs" automaticallyAdjustsScrollViewInsets="NO" id="bnK-7Y-JBh" customClass="LogsViewController" customModule="CF_Apps" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="f6J-6r-6a4"/>
                         <viewControllerLayoutGuide type="bottom" id="sQU-wc-Mfq"/>
