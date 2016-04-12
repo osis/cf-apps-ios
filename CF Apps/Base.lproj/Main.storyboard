@@ -691,13 +691,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="rb5-tk-1u7" firstAttribute="height" secondItem="3BD-CR-EOj" secondAttribute="height" id="4jz-Bi-kq6"/>
                             <constraint firstItem="FZf-nF-H1u" firstAttribute="top" secondItem="rb5-tk-1u7" secondAttribute="bottom" id="66S-xV-S9P"/>
-                            <constraint firstItem="rb5-tk-1u7" firstAttribute="top" secondItem="M7I-Ja-lEm" secondAttribute="bottom" id="SYP-Ob-V0o"/>
+                            <constraint firstItem="rb5-tk-1u7" firstAttribute="leading" secondItem="3BD-CR-EOj" secondAttribute="leadingMargin" constant="-20" id="DHi-H7-Fnv"/>
+                            <constraint firstItem="rb5-tk-1u7" firstAttribute="top" secondItem="M7I-Ja-lEm" secondAttribute="bottom" id="GJA-wB-ioM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="rb5-tk-1u7" secondAttribute="trailing" constant="-20" id="PIs-oM-dSi"/>
                             <constraint firstItem="1B0-6K-Fic" firstAttribute="width" secondItem="3BD-CR-EOj" secondAttribute="width" id="WyO-vw-9jp"/>
-                            <constraint firstItem="rb5-tk-1u7" firstAttribute="width" secondItem="3BD-CR-EOj" secondAttribute="width" id="Y1z-vM-WEp"/>
-                            <constraint firstItem="rb5-tk-1u7" firstAttribute="centerY" secondItem="3BD-CR-EOj" secondAttribute="centerY" id="o6d-Dc-rbk"/>
-                            <constraint firstItem="rb5-tk-1u7" firstAttribute="centerX" secondItem="3BD-CR-EOj" secondAttribute="centerX" id="xGD-cF-azr"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
