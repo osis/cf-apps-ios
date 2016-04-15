@@ -244,10 +244,10 @@
 				65C6FE3A1C6F9EEA0083C4A1 /* EndpointPicker.swift */,
 				65782EE91BC08A510005040F /* InstancesViewController.swift */,
 				655B443F1B530E1A009ED489 /* LoginViewController.swift */,
+				653CC9761CBB2EC600315E22 /* LogMessageString.swift */,
 				65414EA51CA7610900B17589 /* LogsViewController.swift */,
 				654C879A1C1A4A4500C0C79C /* OrgPicker.swift */,
 				65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */,
-				653CC9761CBB2EC600315E22 /* LogMessageString.swift */,
 			);
 			name = Views;
 			path = "CF Apps/Views";

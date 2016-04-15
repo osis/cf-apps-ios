@@ -48,6 +48,7 @@ class LogsViewControllerTests: XCTestCase {
         vc.startLogging()
         
         XCTAssertTrue(vc.logs!.delegate === vc)
+        XCTAssertTrue(UIApplication.sharedApplication().idleTimerDisabled)
         waitForExpectationsWithTimeout(1.0, handler: nil)
     }
     
@@ -63,6 +64,7 @@ class LogsViewControllerTests: XCTestCase {
         vc.logs = FakeCFLogs(expectation: expectation)
         vc.stopLogging()
         
+        XCTAssertFalse(UIApplication.sharedApplication().idleTimerDisabled)
         waitForExpectationsWithTimeout(1.0, handler: nil)
     }
 }
