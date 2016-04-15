@@ -10,12 +10,12 @@ class LogsViewController: UIViewController, CFLogger {
     let notificationCenter = NSNotificationCenter.defaultCenter()
 
     override func viewDidLoad() {
-        self.logs = CFLogs(appGuid: self.appGuid!)
-        startLogging()
         NSNotificationCenter.defaultCenter().addObserver(self,
                                                          selector: #selector(applicationBecameActive(_:)),
                                                          name: UIApplicationDidBecomeActiveNotification,
                                                          object: nil)
+        self.logs = CFLogs(appGuid: self.appGuid!)
+        startLogging()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -27,6 +27,7 @@ class LogsViewController: UIViewController, CFLogger {
     }
     
     func startLogging() {
+        UIApplication.sharedApplication().idleTimerDisabled = true
         self.logs!.delegate = self
         self.logs!.connect()
     }
@@ -39,6 +40,7 @@ class LogsViewController: UIViewController, CFLogger {
     }
     
     func stopLogging() {
+        UIApplication.sharedApplication().idleTimerDisabled = false
         self.logs?.disconnect()
     }
 }
