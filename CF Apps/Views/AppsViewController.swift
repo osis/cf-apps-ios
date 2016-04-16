@@ -78,9 +78,9 @@ class AppsViewController: UITableViewController {
     
     @IBAction func refresh(sender: UIRefreshControl) {
         dispatch_async(dispatch_get_main_queue()) {
-            self.currentPage = 1
-            self.requestCount = 3
-            self.fetchOrganizations()
+        self.currentPage = 1
+        self.requestCount = 3
+        self.fetchOrganizations()
         }
     }
     
@@ -168,8 +168,8 @@ class AppsViewController: UITableViewController {
             tableView.reloadData()
             
             self.refreshControl!.endRefreshing()
-            setRefreshTitle("Refresh Apps")
             self.tableView.tableFooterView = nil
+            setRefreshTitle("Refresh Apps")
         }
     }
     

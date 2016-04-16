@@ -714,7 +714,6 @@
                         <outlet property="instancesTableView" destination="R8N-xn-1GA" id="or9-ah-zDZ"/>
                         <outlet property="memoryLabel" destination="JpP-tr-sDd" id="p0X-u7-7rl"/>
                         <outlet property="nameLabel" destination="zAu-mf-wrX" id="n4e-HS-U4l"/>
-                        <outlet property="scrollView" destination="rb5-tk-1u7" id="eh3-sw-Glt"/>
                         <outlet property="servicesTableHeightConstraint" destination="pIH-ek-J8Y" id="rxU-tn-3WB"/>
                         <outlet property="servicesTableView" destination="hfw-sl-7cH" id="ae2-43-YLj"/>
                         <outlet property="stateLabel" destination="xyq-l0-xFD" id="Eat-Z1-RDF"/>
