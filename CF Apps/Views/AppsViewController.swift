@@ -61,21 +61,17 @@ class AppsViewController: UITableViewController {
                 let value = values[0] as! Int
                 CFSession.setOrg(self.orgPickerValues[value])
                 self.refresh()
+                
                 return
             }, cancelBlock: { ActionMultipleStringCancelBlock in return }, origin: sender)
     }
     
     func refresh() {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.refreshControl!.beginRefreshing()
-            self.tableView.setContentOffset(CGPointMake(0, self.tableView.contentOffset.y-self.refreshControl!.frame.size.height), animated: true)
-            self.currentPage = 1
-            self.requestCount = 3
-            self.dataStack!.drop()
-            self.fetchOrganizations()
-        }
+        self.tableView.contentOffset.y -= self.refreshControl!.frame.size.height
+        self.refreshControl!.beginRefreshing()
+        self.refreshControl!.sendActionsForControlEvents(UIControlEvents.ValueChanged)
     }
-    
+
     @IBAction func refresh(sender: UIRefreshControl) {
         dispatch_async(dispatch_get_main_queue()) {
             self.currentPage = 1
@@ -85,7 +81,9 @@ class AppsViewController: UITableViewController {
     }
     
     func setRefreshTitle(title: String) {
-        self.refreshControl!.attributedTitle = NSAttributedString(string: title)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.refreshControl!.attributedTitle = NSAttributedString(string: title)
+        }
     }
     
     func fetchOrganizations() {
