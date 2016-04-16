@@ -16,28 +16,35 @@ class AppViewController: UIViewController {
     @IBOutlet var commandLabel: UILabel!
     @IBOutlet var servicesTableView: UITableView!
     @IBOutlet var instancesTableView: UITableView!
+    @IBOutlet var scrollView: UIScrollView!
     
     var dataStack: DATAStack?
     var app: CFApp?
+    var refreshControl: UIRefreshControl!
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
     
     override func viewDidLoad() {
-        fetchSummary()
-        
-        if (app!.statusImageName() == "started") {
-            fetchStats()
-        } else {
-            hideInstancesTable()
-        }
+        addRefreshControl()
+        loadData()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "logs") {
             let controller = segue.destinationViewController as! LogsViewController
             controller.appGuid = self.app!.guid
+        }
+    }
+    
+    func loadData() {
+        fetchSummary()
+        
+        if (app!.statusImageName() == "started") {
+            fetchStats()
+        } else {
+            hideInstancesTable()
         }
     }
     
@@ -53,11 +60,19 @@ class AppViewController: UIViewController {
             success: { (json) in
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                     self.handleSummaryResponse(json)
+                    self.refreshControl.endRefreshing()
                 }
             },
             error: { (statusCode) in
                 print(statusCode)
         })
+    }
+    
+    func addRefreshControl() {
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Refresh Summary")
+        self.refreshControl.addTarget(self, action: #selector(AppViewController.loadData), forControlEvents: UIControlEvents.ValueChanged)
+        self.scrollView.addSubview(self.refreshControl)
     }
     
     func handleSummaryResponse(json: JSON) {
