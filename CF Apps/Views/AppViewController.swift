@@ -72,7 +72,7 @@ class AppViewController: UIViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Refresh Summary")
         self.refreshControl.addTarget(self, action: #selector(AppViewController.loadData), forControlEvents: UIControlEvents.ValueChanged)
-        self.scrollView.addSubview(self.refreshControl)
+        self.scrollView.insertSubview(self.refreshControl, atIndex: 0)
     }
     
     func handleSummaryResponse(json: JSON) {
