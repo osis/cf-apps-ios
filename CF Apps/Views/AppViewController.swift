@@ -4,6 +4,7 @@ import Alamofire
 import DATAStack
 import Sync
 import SwiftyJSON
+import SafariServices
 
 class AppViewController: UIViewController {
     @IBOutlet var servicesTableHeightConstraint: NSLayoutConstraint!
@@ -17,16 +18,19 @@ class AppViewController: UIViewController {
     @IBOutlet var servicesTableView: UITableView!
     @IBOutlet var instancesTableView: UITableView!
     @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var browseButton: UIBarButtonItem!
     
     var dataStack: DATAStack?
     var app: CFApp?
     var refreshControl: UIRefreshControl!
+    var url: NSURL?
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
     
     override func viewDidLoad() {
+        self.browseButton.enabled = false
         addRefreshControl()
         loadData()
     }
@@ -117,6 +121,11 @@ class AppViewController: UIViewController {
     }
     
     func handleStatsResponse(json: JSON) {
+        showInstances(json)
+        toggleBrowsing(json)
+    }
+    
+    func showInstances(json: JSON) {
         let delegate = instancesTableView.delegate as! InstancesViewConroller
         delegate.instances = json
         dispatch_async(dispatch_get_main_queue(), {
@@ -124,10 +133,22 @@ class AppViewController: UIViewController {
             self.instancesTableView.reloadData()
             let height = self.instancesTableView.contentSize.height
             self.instancesTableHeightConstraint.constant = height
-
+            
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
         })
+    }
+    
+    func toggleBrowsing(json: JSON) {
+        if let urlString = Instance(json: json["0"]).uri() {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.url = NSURL(string: urlString)
+                self.browseButton.enabled = true
+                self.browseButton.customView?.alpha = 1
+            }
+        } else {
+            self.browseButton.enabled = false
+        }
     }
     
     func setSummary(guid: String) {
@@ -156,5 +177,10 @@ class AppViewController: UIViewController {
         spinner.startAnimating()
         spinner.frame = CGRectMake(0, 0, 320, 44)
         return spinner
+    }
+    
+    @IBAction func browseButtonPushed(sender: UIBarButtonItem) {
+        let safariController = SFSafariViewController(URL: self.url!)
+        presentViewController(safariController, animated: true, completion: nil)
     }
 }

@@ -11,6 +11,11 @@ class Instance: NSObject {
         self.json = json
     }
     
+    func uri() -> String? {
+        let uris = stats()!["uris"]
+        return (uris != nil && uris!.arrayValue.count > 0) ? "https://" + uris!.arrayValue[0].stringValue : nil
+    }
+    
     func usage() -> [String: JSON]? {
         let usage = stats()?["usage"]
         return (usage != nil) ? usage!.dictionaryValue : nil
