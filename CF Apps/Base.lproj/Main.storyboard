@@ -233,6 +233,10 @@
                             <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
                         </textAttributes>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="dOw-Qe-yl0">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Cjh-de-nCs"/>
                     </connections>
@@ -414,7 +418,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rb5-tk-1u7">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" placeholderIntrinsicWidth="601" placeholderIntrinsicHeight="600" translatesAutoresizingMaskIntoConstraints="NO" id="1B0-6K-Fic">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -640,6 +644,7 @@
                                                 </connections>
                                             </tableView>
                                         </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="R8N-xn-1GA" secondAttribute="trailing" id="2AN-H3-qCf"/>
                                             <constraint firstItem="6IM-uN-4GM" firstAttribute="top" secondItem="zAu-mf-wrX" secondAttribute="bottom" constant="13" id="36t-q9-QDh"/>
@@ -686,27 +691,43 @@
                                     <constraint firstItem="1B0-6K-Fic" firstAttribute="top" secondItem="rb5-tk-1u7" secondAttribute="top" id="qLL-xR-H2C"/>
                                 </constraints>
                             </scrollView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tr2-sG-pMz">
+                                <rect key="frame" x="0.0" y="492" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="RTX-UW-jIZ"/>
+                                    <barButtonItem title="Logs" id="Nj1-rF-9Wv">
+                                        <connections>
+                                            <segue destination="bnK-7Y-JBh" kind="show" identifier="logs" id="SSq-YK-9F5"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="jED-bg-hZE"/>
+                                </items>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="rb5-tk-1u7" firstAttribute="height" secondItem="3BD-CR-EOj" secondAttribute="height" id="4jz-Bi-kq6"/>
-                            <constraint firstItem="FZf-nF-H1u" firstAttribute="top" secondItem="rb5-tk-1u7" secondAttribute="bottom" id="66S-xV-S9P"/>
+                            <constraint firstItem="FZf-nF-H1u" firstAttribute="top" secondItem="Tr2-sG-pMz" secondAttribute="bottom" id="1QZ-Sa-dQp"/>
                             <constraint firstItem="rb5-tk-1u7" firstAttribute="leading" secondItem="3BD-CR-EOj" secondAttribute="leadingMargin" constant="-20" id="DHi-H7-Fnv"/>
                             <constraint firstItem="rb5-tk-1u7" firstAttribute="top" secondItem="M7I-Ja-lEm" secondAttribute="bottom" id="GJA-wB-ioM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="rb5-tk-1u7" secondAttribute="trailing" constant="-20" id="PIs-oM-dSi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Tr2-sG-pMz" secondAttribute="trailing" constant="-20" id="WFo-D1-2GC"/>
                             <constraint firstItem="1B0-6K-Fic" firstAttribute="width" secondItem="3BD-CR-EOj" secondAttribute="width" id="WyO-vw-9jp"/>
+                            <constraint firstItem="Tr2-sG-pMz" firstAttribute="top" secondItem="rb5-tk-1u7" secondAttribute="bottom" id="a7e-M9-xRd"/>
+                            <constraint firstItem="Tr2-sG-pMz" firstAttribute="leading" secondItem="3BD-CR-EOj" secondAttribute="leadingMargin" constant="-20" id="aIm-wG-pUD"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Summary" id="vIy-6Y-VWX">
-                        <barButtonItem key="rightBarButtonItem" title="Logs" id="utS-dn-cY3">
+                        <barButtonItem key="rightBarButtonItem" image="web" id="utS-dn-cY3">
                             <connections>
-                                <segue destination="bnK-7Y-JBh" kind="show" identifier="logs" id="26I-g0-OJO"/>
+                                <action selector="browseButtonPushed:" destination="Gz0-Se-qP4" id="hju-tV-Hof"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="browseButton" destination="utS-dn-cY3" id="sDs-i8-9oS"/>
                         <outlet property="buildpackLabel" destination="5UA-73-8PU" id="mvj-PM-jBw"/>
                         <outlet property="commandLabel" destination="wCr-5F-9yF" id="XZD-Gq-XhI"/>
                         <outlet property="diskLabel" destination="LEc-nq-laK" id="4JO-fA-1P2"/>
@@ -765,5 +786,6 @@
         <image name="error" width="120" height="120"/>
         <image name="launch_icon" width="479" height="267"/>
         <image name="started" width="120" height="120"/>
+        <image name="web" width="22" height="22"/>
     </resources>
 </document>
