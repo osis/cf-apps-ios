@@ -1,0 +1,278 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "Instance"
+provides-nominal:
+- "C7CF_Apps8Instance"
+provides-member:
+- ["C7CF_Apps8Instance", ""]
+provides-dynamic-lookup:
+- "uri"
+- "memoryUsage"
+- "diskUsagePercentage"
+- "diskQuota"
+- "cpuUsagePercentage"
+- "memoryQuota"
+- "memoryUsagePercentage"
+- "diskUsage"
+- "state"
+depends-top-level:
+- !private "StringLiteralType"
+- !private "+"
+- "Instance"
+- !private "&&"
+- !private "=="
+- "String"
+- !private "round"
+- !private "!="
+- "JSON"
+- !private "/"
+- "Double"
+- !private "||"
+- !private "pow"
+- "NSObject"
+- !private ">"
+- !private "*"
+depends-member:
+- !private ["Ps16AbsoluteValuable", "init"]
+- !private ["Ps9AnyObject", "Double"]
+- ["Ps9AnyObject", "cpuUsagePercentage"]
+- ["Ps9AnyObject", "diskQuota"]
+- ["Ps9AnyObject", "diskUsage"]
+- ["Ps9AnyObject", "diskUsagePercentage"]
+- ["Ps9AnyObject", "init"]
+- !private ["Ps9AnyObject", "json"]
+- ["Ps9AnyObject", "memoryQuota"]
+- ["Ps9AnyObject", "memoryUsage"]
+- ["Ps9AnyObject", "memoryUsagePercentage"]
+- !private ["Ps9AnyObject", "pow"]
+- !private ["Ps9AnyObject", "round"]
+- ["Ps9AnyObject", "state"]
+- !private ["Ps9AnyObject", "stats"]
+- ["Ps9AnyObject", "toMb"]
+- ["Ps9AnyObject", "toPercent"]
+- ["Ps9AnyObject", "uri"]
+- !private ["Ps9AnyObject", "usage"]
+- ["Ps9AnyObject", ""]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["Ps25BooleanLiteralConvertible", "_getBuiltinLogicValue"]
+- !private ["Ps11BooleanType", "_getBuiltinLogicValue"]
+- !private ["Ps11CVarArgType", "Double"]
+- ["Ps11CVarArgType", "cpuUsagePercentage"]
+- ["Ps11CVarArgType", "diskQuota"]
+- ["Ps11CVarArgType", "diskUsage"]
+- ["Ps11CVarArgType", "diskUsagePercentage"]
+- ["Ps11CVarArgType", "init"]
+- !private ["Ps11CVarArgType", "json"]
+- ["Ps11CVarArgType", "memoryQuota"]
+- ["Ps11CVarArgType", "memoryUsage"]
+- ["Ps11CVarArgType", "memoryUsagePercentage"]
+- !private ["Ps11CVarArgType", "pow"]
+- !private ["Ps11CVarArgType", "round"]
+- ["Ps11CVarArgType", "state"]
+- !private ["Ps11CVarArgType", "stats"]
+- ["Ps11CVarArgType", "toMb"]
+- ["Ps11CVarArgType", "toPercent"]
+- ["Ps11CVarArgType", "uri"]
+- !private ["Ps11CVarArgType", "usage"]
+- ["Ps11CVarArgType", ""]
+- !private ["Ps10Comparable", "init"]
+- !private ["Ps28CustomDebugStringConvertible", "Double"]
+- ["Ps28CustomDebugStringConvertible", "cpuUsagePercentage"]
+- ["Ps28CustomDebugStringConvertible", "diskQuota"]
+- ["Ps28CustomDebugStringConvertible", "diskUsage"]
+- ["Ps28CustomDebugStringConvertible", "diskUsagePercentage"]
+- ["Ps28CustomDebugStringConvertible", "init"]
+- !private ["Ps28CustomDebugStringConvertible", "json"]
+- ["Ps28CustomDebugStringConvertible", "memoryQuota"]
+- ["Ps28CustomDebugStringConvertible", "memoryUsage"]
+- ["Ps28CustomDebugStringConvertible", "memoryUsagePercentage"]
+- !private ["Ps28CustomDebugStringConvertible", "pow"]
+- !private ["Ps28CustomDebugStringConvertible", "round"]
+- ["Ps28CustomDebugStringConvertible", "state"]
+- !private ["Ps28CustomDebugStringConvertible", "stats"]
+- ["Ps28CustomDebugStringConvertible", "toMb"]
+- ["Ps28CustomDebugStringConvertible", "toPercent"]
+- ["Ps28CustomDebugStringConvertible", "uri"]
+- !private ["Ps28CustomDebugStringConvertible", "usage"]
+- ["Ps28CustomDebugStringConvertible", ""]
+- !private ["Ps23CustomStringConvertible", "Double"]
+- !private ["Ps23CustomStringConvertible", "_getBuiltinLogicValue"]
+- ["Ps23CustomStringConvertible", "cpuUsagePercentage"]
+- ["Ps23CustomStringConvertible", "diskQuota"]
+- ["Ps23CustomStringConvertible", "diskUsage"]
+- ["Ps23CustomStringConvertible", "diskUsagePercentage"]
+- ["Ps23CustomStringConvertible", "init"]
+- !private ["Ps23CustomStringConvertible", "json"]
+- ["Ps23CustomStringConvertible", "memoryQuota"]
+- ["Ps23CustomStringConvertible", "memoryUsage"]
+- ["Ps23CustomStringConvertible", "memoryUsagePercentage"]
+- !private ["Ps23CustomStringConvertible", "pow"]
+- !private ["Ps23CustomStringConvertible", "round"]
+- ["Ps23CustomStringConvertible", "state"]
+- !private ["Ps23CustomStringConvertible", "stats"]
+- ["Ps23CustomStringConvertible", "toMb"]
+- ["Ps23CustomStringConvertible", "toPercent"]
+- ["Ps23CustomStringConvertible", "uri"]
+- !private ["Ps23CustomStringConvertible", "usage"]
+- ["Ps23CustomStringConvertible", ""]
+- !private ["Sd", "deinit"]
+- !private ["Sd", "init"]
+- !private ["Ps9Equatable", "Double"]
+- !private ["Ps9Equatable", "_getBuiltinLogicValue"]
+- ["Ps9Equatable", "cpuUsagePercentage"]
+- ["Ps9Equatable", "diskQuota"]
+- ["Ps9Equatable", "diskUsage"]
+- ["Ps9Equatable", "diskUsagePercentage"]
+- ["Ps9Equatable", "init"]
+- !private ["Ps9Equatable", "json"]
+- ["Ps9Equatable", "memoryQuota"]
+- ["Ps9Equatable", "memoryUsage"]
+- ["Ps9Equatable", "memoryUsagePercentage"]
+- !private ["Ps9Equatable", "pow"]
+- !private ["Ps9Equatable", "round"]
+- ["Ps9Equatable", "state"]
+- !private ["Ps9Equatable", "stats"]
+- ["Ps9Equatable", "toMb"]
+- ["Ps9Equatable", "toPercent"]
+- ["Ps9Equatable", "uri"]
+- !private ["Ps9Equatable", "usage"]
+- ["Ps9Equatable", ""]
+- !private ["Sf", "deinit"]
+- !private ["Ps23FloatLiteralConvertible", "init"]
+- !private ["Ps17FloatingPointType", "init"]
+- !private ["Ps8Hashable", "Double"]
+- !private ["Ps8Hashable", "_getBuiltinLogicValue"]
+- ["Ps8Hashable", "cpuUsagePercentage"]
+- ["Ps8Hashable", "diskQuota"]
+- ["Ps8Hashable", "diskUsage"]
+- ["Ps8Hashable", "diskUsagePercentage"]
+- ["Ps8Hashable", "init"]
+- !private ["Ps8Hashable", "json"]
+- ["Ps8Hashable", "memoryQuota"]
+- ["Ps8Hashable", "memoryUsage"]
+- ["Ps8Hashable", "memoryUsagePercentage"]
+- !private ["Ps8Hashable", "pow"]
+- !private ["Ps8Hashable", "round"]
+- ["Ps8Hashable", "state"]
+- !private ["Ps8Hashable", "stats"]
+- ["Ps8Hashable", "toMb"]
+- ["Ps8Hashable", "toPercent"]
+- ["Ps8Hashable", "uri"]
+- !private ["Ps8Hashable", "usage"]
+- ["Ps8Hashable", ""]
+- ["C7CF_Apps8Instance", "Double"]
+- ["C7CF_Apps8Instance", "JSON"]
+- ["C7CF_Apps8Instance", "String"]
+- ["C7CF_Apps8Instance", "cpuUsagePercentage"]
+- ["C7CF_Apps8Instance", "deinit"]
+- ["C7CF_Apps8Instance", "diskQuota"]
+- ["C7CF_Apps8Instance", "diskUsage"]
+- ["C7CF_Apps8Instance", "diskUsagePercentage"]
+- ["C7CF_Apps8Instance", "init"]
+- !private ["C7CF_Apps8Instance", "json"]
+- ["C7CF_Apps8Instance", "memoryQuota"]
+- ["C7CF_Apps8Instance", "memoryUsage"]
+- ["C7CF_Apps8Instance", "memoryUsagePercentage"]
+- !private ["C7CF_Apps8Instance", "pow"]
+- !private ["C7CF_Apps8Instance", "round"]
+- ["C7CF_Apps8Instance", "state"]
+- !private ["C7CF_Apps8Instance", "stats"]
+- !private ["C7CF_Apps8Instance", "toMb"]
+- !private ["C7CF_Apps8Instance", "toPercent"]
+- ["C7CF_Apps8Instance", "uri"]
+- !private ["C7CF_Apps8Instance", "usage"]
+- !private ["Ps25IntegerLiteralConvertible", "init"]
+- ["CSo8NSObject", "Double"]
+- ["CSo8NSObject", "JSON"]
+- ["CSo8NSObject", "String"]
+- ["CSo8NSObject", "cpuUsagePercentage"]
+- ["CSo8NSObject", "diskQuota"]
+- ["CSo8NSObject", "diskUsage"]
+- ["CSo8NSObject", "diskUsagePercentage"]
+- ["CSo8NSObject", "init"]
+- !private ["CSo8NSObject", "json"]
+- ["CSo8NSObject", "memoryQuota"]
+- ["CSo8NSObject", "memoryUsage"]
+- ["CSo8NSObject", "memoryUsagePercentage"]
+- !private ["CSo8NSObject", "pow"]
+- !private ["CSo8NSObject", "round"]
+- ["CSo8NSObject", "state"]
+- !private ["CSo8NSObject", "stats"]
+- ["CSo8NSObject", "toMb"]
+- ["CSo8NSObject", "toPercent"]
+- ["CSo8NSObject", "uri"]
+- !private ["CSo8NSObject", "usage"]
+- ["CSo8NSObject", ""]
+- !private ["PSo16NSObjectProtocol", "Double"]
+- ["PSo16NSObjectProtocol", "cpuUsagePercentage"]
+- ["PSo16NSObjectProtocol", "diskQuota"]
+- ["PSo16NSObjectProtocol", "diskUsage"]
+- ["PSo16NSObjectProtocol", "diskUsagePercentage"]
+- ["PSo16NSObjectProtocol", "init"]
+- !private ["PSo16NSObjectProtocol", "json"]
+- ["PSo16NSObjectProtocol", "memoryQuota"]
+- ["PSo16NSObjectProtocol", "memoryUsage"]
+- ["PSo16NSObjectProtocol", "memoryUsagePercentage"]
+- !private ["PSo16NSObjectProtocol", "pow"]
+- !private ["PSo16NSObjectProtocol", "round"]
+- ["PSo16NSObjectProtocol", "state"]
+- !private ["PSo16NSObjectProtocol", "stats"]
+- ["PSo16NSObjectProtocol", "toMb"]
+- ["PSo16NSObjectProtocol", "toPercent"]
+- ["PSo16NSObjectProtocol", "uri"]
+- !private ["PSo16NSObjectProtocol", "usage"]
+- ["PSo16NSObjectProtocol", ""]
+- !private ["Ps16SignedNumberType", "init"]
+- !private ["Vs12StaticString", "deinit"]
+- !private ["Ps10Strideable", "init"]
+- !private ["Ps33_BuiltinBooleanLiteralConvertible", "_getBuiltinLogicValue"]
+- !private ["Ps31_BuiltinFloatLiteralConvertible", "init"]
+- !private ["Ps33_BuiltinIntegerLiteralConvertible", "init"]
+- !private ["Ps19_CVarArgAlignedType", "init"]
+- !private ["Ps22_CVarArgPassedAsDouble", "init"]
+- !private ["Ps21_ObjectiveCBridgeable", "_getBuiltinLogicValue"]
+- !private ["Ps21_ObjectiveCBridgeable", "init"]
+- !private ["Ps12_Reflectable", "_getBuiltinLogicValue"]
+- !private ["Ps12_Reflectable", "init"]
+depends-nominal:
+- !private "Ps16AbsoluteValuable"
+- "Ps9AnyObject"
+- !private "Sb"
+- !private "Ps25BooleanLiteralConvertible"
+- !private "Ps11BooleanType"
+- "Ps11CVarArgType"
+- !private "Ps10Comparable"
+- "Ps28CustomDebugStringConvertible"
+- "Ps23CustomStringConvertible"
+- !private "Sd"
+- "Ps9Equatable"
+- !private "Sf"
+- !private "Ps23FloatLiteralConvertible"
+- !private "Ps17FloatingPointType"
+- "Ps8Hashable"
+- "C7CF_Apps8Instance"
+- !private "Ps25IntegerLiteralConvertible"
+- "CSo8NSObject"
+- "PSo16NSObjectProtocol"
+- !private "Ps16SignedNumberType"
+- !private "Vs12StaticString"
+- !private "Ps10Strideable"
+- !private "Ps33_BuiltinBooleanLiteralConvertible"
+- !private "Ps31_BuiltinFloatLiteralConvertible"
+- !private "Ps33_BuiltinIntegerLiteralConvertible"
+- !private "Ps19_CVarArgAlignedType"
+- !private "Ps22_CVarArgPassedAsDouble"
+- !private "Ps21_ObjectiveCBridgeable"
+- !private "Ps12_Reflectable"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/UIKit.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreImage.swiftmodule"
+interface-hash: "3df19af2ee70e06dfed17c009ae43cd0"

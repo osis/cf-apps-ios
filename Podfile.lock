@@ -37,7 +37,7 @@ DEPENDENCIES:
   - Alamofire (~> 3.0)
   - Locksmith (~> 2.0.0)
   - Mockingjay
-  - ProtocolBuffers-Swift
+  - ProtocolBuffers-Swift (~> 2.4.3)
   - SwiftWebSocket (~> 2.6.0)
   - SwiftyJSON (~> 2.3)
   - Sync (~> 1.2)
@@ -61,6 +61,6 @@ SPEC CHECKSUMS:
   TestCheck: 42c1343664986c0cbfaa20a62622d6f6fb70a407
   URITemplate: 398a48d6559e23b77bd41176b675b017ad1fc959
 
-PODFILE CHECKSUM: 4febf40bb305a1d9d0943f42c6f12f2edd9f8784
+PODFILE CHECKSUM: f628050c24a43e87f3b6ea3f1dfd9c88b703d196
 
 COCOAPODS: 1.0.0.beta.3

@@ -1,12 +1,10 @@
 language: objective-c
-
 osx_image: xcode7.3
+
 xcode_sdk: iphonesimulator9.3
+xcode_scheme: CF Apps
+xcode_workspace: CF Apps.xcworkspace
 
 before_install:
     - brew update
-    - brew uninstall xctool && brew install --HEAD xctool
-install: true
- 
-xcode_workspace: CF Apps.xcworkspace
-xcode_scheme: CF Apps
+    - brew uninstall --force xctool && brew install --HEAD xctool
