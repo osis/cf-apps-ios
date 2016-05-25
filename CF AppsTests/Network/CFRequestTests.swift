@@ -113,6 +113,19 @@ class CFRequestTests: XCTestCase {
         XCTAssertNil(request.valueForHTTPHeaderField("Authorization"), "Apps doesn't use basic auth")
     }
     
+    func testEventsMember() {
+        let path = "/v2/events"
+        let appGuid = "abc123"
+        let request: NSURLRequest = CFRequest.Events(appGuid).URLRequest
+        
+        XCTAssert((CFRequest.Events(appGuid) as Any) is CFRequest, "Events is a member")
+        XCTAssertEqual(CFRequest.Events(appGuid).baseURLString, baseApiURL, "Events returns api URL")
+        XCTAssertEqual(CFRequest.Events(appGuid).path, path, "Events returns applications path")
+        XCTAssertEqual(CFRequest.Events(appGuid).method, Alamofire.Method.GET, "Events request method is GET")
+        XCTAssertEqual(request.URLString, baseApiURL + path + "?order-direction=desc&q=actee%3Aabc123&results-per-page=50")
+        XCTAssertNil(request.valueForHTTPHeaderField("Authorization"), "Events doesn't use basic auth")
+    }
+    
     func testURLRequestMethod() {
         let request = CFRequest.Login(baseLoginURL, "", "").URLRequest
         XCTAssertEqual(request.HTTPMethod, "POST", "URLRequest method should be set")
