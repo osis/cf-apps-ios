@@ -95,7 +95,7 @@ class AppsViewController: UITableViewController {
                 }
             },
             error: { (statusCode) in
-                print(statusCode)
+                print([statusCode])
             }
         )
     }
@@ -150,7 +150,7 @@ class AppsViewController: UITableViewController {
                 self.handleAppsResponse(json)
             }
             }, error: { (statusCode) in
-                print(statusCode)
+                print([statusCode])
             }
         )
     }
@@ -205,7 +205,7 @@ class AppsViewController: UITableViewController {
                 self.handleSpacesResponse(json)
             }
             }, error: { (statusCode) in
-                print(statusCode)
+                print([statusCode])
             }
         )
     }

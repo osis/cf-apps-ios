@@ -47,6 +47,10 @@
 		65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE6FCD1B4712B30047519D /* AppDelegate.swift */; };
 		65EE6FDD1B4713E80047519D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FD91B4713E80047519D /* LaunchScreen.xib */; };
 		65EE6FDE1B4713E80047519D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FDB1B4713E80047519D /* Main.storyboard */; };
+		D81CB45E1CF6C4050038ADC1 /* CFEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81CB45D1CF6C4050038ADC1 /* CFEventTests.swift */; };
+		D821273F1CF2787E0053E6B2 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D821273E1CF2787E0053E6B2 /* EventsViewController.swift */; };
+		D821274C1CF2A21D0053E6B2 /* CFEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82127491CF280890053E6B2 /* CFEvent.swift */; };
+		D821274E1CF4C55B0053E6B2 /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = D82127471CF280030053E6B2 /* events.json */; };
 		D8C516B61C73F21E00D15187 /* CFApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C516B51C73F21E00D15187 /* CFApiTests.swift */; };
 		E9152A21BED99B4AF5DD16E6 /* Pods_CF_Apps_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E21BB8FBBD04AC0F74A2F75 /* Pods_CF_Apps_Tests.framework */; };
 		EE85259DDB9B3D6F3FCF43C8 /* Pods_CF_Apps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B4CF2776DCC7B25A08373C /* Pods_CF_Apps.framework */; };
@@ -110,6 +114,10 @@
 		AD3D490D99F61E61CB04E2A9 /* Pods-CF Apps.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CF Apps.release.xcconfig"; path = "Pods/Target Support Files/Pods-CF Apps/Pods-CF Apps.release.xcconfig"; sourceTree = "<group>"; };
 		AF43FF454AC1D33CA8274022 /* Pods-CF Apps Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CF Apps Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CF Apps Tests/Pods-CF Apps Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C238CDD466EFC53FC735BE4E /* Pods-CF Apps Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CF Apps Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CF Apps Tests/Pods-CF Apps Tests.release.xcconfig"; sourceTree = "<group>"; };
+		D81CB45D1CF6C4050038ADC1 /* CFEventTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFEventTests.swift; path = "CF AppsTests/Models/CFEventTests.swift"; sourceTree = "<group>"; };
+		D821273E1CF2787E0053E6B2 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
+		D82127471CF280030053E6B2 /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = events.json; path = "CF AppsTests/Network/Fixtures/events.json"; sourceTree = "<group>"; };
+		D82127491CF280890053E6B2 /* CFEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFEvent.swift; sourceTree = "<group>"; };
 		D8C516B51C73F21E00D15187 /* CFApiTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFApiTests.swift; path = "CF AppsTests/Network/CFApiTests.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,11 +154,11 @@
 		65032FE11B61CD12007E7DA3 /* CF Apps Tests */ = {
 			isa = PBXGroup;
 			children = (
+				653CC9731CBAD5A300315E22 /* AppDelegateTests.swift */,
 				65032FEA1B75ADC9007E7DA3 /* Data */,
 				65032FE21B61CD39007E7DA3 /* Models */,
 				6547EBA91B76CFCC00C1E13E /* Network */,
 				65C6FE3C1C7043240083C4A1 /* Views */,
-				653CC9731CBAD5A300315E22 /* AppDelegateTests.swift */,
 			);
 			name = "CF Apps Tests";
 			sourceTree = "<group>";
@@ -159,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				65032FE51B61CDED007E7DA3 /* CFAppsTests.swift */,
+				D81CB45D1CF6C4050038ADC1 /* CFEventTests.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -174,6 +183,7 @@
 		6503CC601C9BAEB9000BA838 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				D82127471CF280030053E6B2 /* events.json */,
 				6503CC5E1C9BAE90000BA838 /* apps.json */,
 			);
 			name = Fixtures;
@@ -242,6 +252,7 @@
 				655B442C1B5305FD009ED489 /* AppsViewController.swift */,
 				65671C321B97D857003F4DC9 /* AppViewController.swift */,
 				65C6FE3A1C6F9EEA0083C4A1 /* EndpointPicker.swift */,
+				D821273E1CF2787E0053E6B2 /* EventsViewController.swift */,
 				65782EE91BC08A510005040F /* InstancesViewController.swift */,
 				655B443F1B530E1A009ED489 /* LoginViewController.swift */,
 				653CC9761CBB2EC600315E22 /* LogMessageString.swift */,
@@ -276,6 +287,7 @@
 			isa = PBXGroup;
 			children = (
 				655B44371B530622009ED489 /* CFApp.swift */,
+				D82127491CF280890053E6B2 /* CFEvent.swift */,
 				654C87981C1A40DF00C0C79C /* CFOrg.swift */,
 				65B010721C1E684000CECF07 /* CFSpace.swift */,
 				65DBB5F71BC0D09200BD19BC /* Instance.swift */,
@@ -304,8 +316,8 @@
 			isa = PBXGroup;
 			children = (
 				65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */,
-				652CA1C11CB1FF37004B714A /* LogsViewControllerTests.swift */,
 				653CC97B1CBB391400315E22 /* LogMessageStringTests.swift */,
+				652CA1C11CB1FF37004B714A /* LogsViewControllerTests.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -381,6 +393,7 @@
 					};
 					651C848D1B2A7FB60006DC3A = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = 4CPT54BT54;
 						TestTargetID = 651C84751B2A7FB50006DC3A;
 					};
 				};
@@ -419,6 +432,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D821274E1CF4C55B0053E6B2 /* events.json in Resources */,
 				6503CC611C9BAF9B000BA838 /* apps.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -524,6 +538,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65DBB5F81BC0D09200BD19BC /* Instance.swift in Sources */,
+				D821274C1CF2A21D0053E6B2 /* CFEvent.swift in Sources */,
 				65DF28A91BEEFD4C0081B834 /* Service.swift in Sources */,
 				655B442E1B5305FD009ED489 /* AppsViewController.swift in Sources */,
 				65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */,
@@ -540,6 +555,7 @@
 				65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */,
 				654C879B1C1A4A4500C0C79C /* OrgPicker.swift in Sources */,
 				65C6FE431C70463D0083C4A1 /* CFApi.swift in Sources */,
+				D821273F1CF2787E0053E6B2 /* EventsViewController.swift in Sources */,
 				65C7A8B61CAB957700BA1ADC /* LogMessage.proto.swift in Sources */,
 				65414EA61CA7610900B17589 /* LogsViewController.swift in Sources */,
 				65B010731C1E684000CECF07 /* CFSpace.swift in Sources */,
@@ -565,6 +581,7 @@
 				654C1D8D1C8D46F9001F2002 /* EndpointPicker.swift in Sources */,
 				65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */,
 				652CA1C31CB200E3004B714A /* LogsViewControllerTests.swift in Sources */,
+				D81CB45E1CF6C4050038ADC1 /* CFEventTests.swift in Sources */,
 				652DE6011C29B1EB00411438 /* CFSessionTests.swift in Sources */,
 				653CC9751CBAD5A700315E22 /* AppDelegateTests.swift in Sources */,
 			);
@@ -724,6 +741,8 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -732,6 +751,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dwayneforde.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CF Apps.app/CF Apps";
@@ -744,10 +764,13 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "CF AppsTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dwayneforde.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CF Apps.app/CF Apps";
 			};

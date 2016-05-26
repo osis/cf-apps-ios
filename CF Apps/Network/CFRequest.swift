@@ -10,6 +10,7 @@ enum CFRequest: URLRequestConvertible {
     case AppSummary(String)
     case AppStats(String)
     case Spaces([String])
+    case Events(String)
     
     var baseURLString: String {
         switch self {
@@ -38,6 +39,8 @@ enum CFRequest: URLRequestConvertible {
             return "/v2/apps/\(guid)/stats"
         case .Spaces:
             return "/v2/spaces"
+        case .Events:
+            return "/v2/events"
         default:
             return ""
         }
@@ -60,6 +63,8 @@ enum CFRequest: URLRequestConvertible {
             return appsURLRequest(orgGuid, page: page)
         case .Spaces(let appGuids):
             return spacesURLRequest(appGuids)
+        case .Events(let appGuid):
+            return eventsURLRequest(appGuid)
         default:
             return cfURLRequest()
         }
@@ -113,5 +118,16 @@ enum CFRequest: URLRequestConvertible {
         ]
         
         return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: spacesParams).0
+    }
+    
+    func eventsURLRequest(appGuid: String) -> NSMutableURLRequest {
+        let mutableURLRequest = cfURLRequest()
+        let eventParams: [String : AnyObject] = [
+            "order-direction": "desc",
+            "q": "actee:\(appGuid)",
+            "results-per-page": "50"
+        ]
+        
+        return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: eventParams).0
     }
 }
