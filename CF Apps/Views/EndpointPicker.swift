@@ -6,8 +6,8 @@ protocol EndpointPickerDelegate: NSObjectProtocol {
 }
 
 class EndpointPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
-    var pickerData: [String] = [ "IBM BlueMix", "Pivotal Web Services", "Other" ]
-    var pickerValues: [String?] = [ "https://api.ng.bluemix.net", "https://api.run.pivotal.io", nil ]
+    var pickerData: [String] = [ "IBM BlueMix", "Pivotal Web Services", "Predix", "Other" ]
+    var pickerValues: [String?] = [ "https://api.ng.bluemix.net", "https://api.run.pivotal.io", "https://api.system.aws-usw02-pr.ice.predix.io", nil ]
     var endpointPickerDelegate: EndpointPickerDelegate?
 
     required init?(coder aDecoder: NSCoder) {
