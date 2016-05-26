@@ -8,10 +8,10 @@
 - Lists applications filtered by organization
 - App details includes bounded services and instance information
 - Live application logs
+- View application events
 
 ## Goals
 
-- View application events
 - Ability to target multiple Cloud Foundry deployments
 - Application monitoring/alerts
 - Deploy an application from a repo
