@@ -39,6 +39,9 @@ class AppViewController: UIViewController {
         if (segue.identifier == "logs") {
             let controller = segue.destinationViewController as! LogsViewController
             controller.appGuid = self.app!.guid
+        } else if (segue.identifier == "events") {
+            let controller = segue.destinationViewController as! EventsViewController
+            controller.appGuid = self.app!.guid
         }
     }
     
@@ -68,7 +71,7 @@ class AppViewController: UIViewController {
                 }
             },
             error: { (statusCode) in
-                print(statusCode)
+                print([statusCode])
         })
     }
     
@@ -116,7 +119,7 @@ class AppViewController: UIViewController {
                 }
             },
             error: { (statusCode) in
-                print(statusCode)
+                print([statusCode])
         })
     }
     

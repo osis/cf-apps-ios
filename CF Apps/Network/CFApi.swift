@@ -65,15 +65,15 @@ class CFResponseHandler: ResponseHandler {
         for (key, subJson) in json["resources"] {
             let index = Int(key)!
             
+            for (metadataKey, metadataSubJson) in subJson["metadata"] {
+                sanitizedJson["resources"][index][metadataKey] = metadataSubJson
+            }
+//            sanitizedJson["resources"][index]["metadata"] = nil
+            
             for (entityKey, entitySubJson) in subJson["entity"] {
                 sanitizedJson["resources"][index][entityKey] = entitySubJson
             }
             sanitizedJson["resources"][index]["entity"] = nil
-            
-            for (metadataKey, metadataSubJson) in subJson["metadata"] {
-                sanitizedJson["resources"][index][metadataKey] = metadataSubJson
-            }
-            sanitizedJson["resources"][index]["metadata"] = nil
         }
         
         return sanitizedJson
@@ -103,7 +103,6 @@ class CFApi {
     }
     
     func handleResponse(response: Response<AnyObject, NSError>, success: (json: JSON) -> Void, error: (statusCode: Int?, url: NSURL?) -> Void) {
-        
         if (response.result.isSuccess) {
             responseHandler.success(response, success: success)
         } else if (response.response?.statusCode == 401 && Keychain.hasCredentials() && responseHandler.retryLogin) {
