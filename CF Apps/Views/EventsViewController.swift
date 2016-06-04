@@ -8,10 +8,15 @@ class EventsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.contentOffset.y -= self.refreshControl!.frame.size.height
+        self.refreshControl!.beginRefreshing()
+        self.refreshControl!.sendActionsForControlEvents(UIControlEvents.ValueChanged)
         fetchEvents()
     }
     
     func fetchEvents() {
+        setRefreshTitle("Fetching Events")
+        
         let request = CFRequest.Events(self.appGuid!)
         CFApi().request(request, success: { (json) in
             self.handleEventsRequest(json)
@@ -29,7 +34,20 @@ class EventsViewController: UITableViewController {
                 events.append(event)
             }
         }
+        
+        self.refreshControl!.endRefreshing()
         tableView.reloadData()
+        setRefreshTitle("Refresh Events")
+    }
+    
+    @IBAction func refresh(sender: AnyObject) {
+        fetchEvents()
+    }
+    
+    func setRefreshTitle(title: String) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.refreshControl!.attributedTitle = NSAttributedString(string: title)
+        }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
