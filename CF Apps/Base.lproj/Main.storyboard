@@ -929,6 +929,20 @@
                     <navigationItem key="navigationItem" title="Events" id="Wiz-qz-gcG">
                         <barButtonItem key="backBarButtonItem" title="Back" id="iY5-HE-4Ef"/>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Gia-Ib-8Sz">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Fetching Events">
+                                <attributes>
+                                    <font key="NSFont" metaFont="controlContent" size="11"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <connections>
+                            <action selector="refresh:" destination="E93-IP-TeA" eventType="valueChanged" id="chJ-dw-Tvm"/>
+                        </connections>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iCw-bx-aFi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
