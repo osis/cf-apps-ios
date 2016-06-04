@@ -31,7 +31,7 @@ class CFApp: NSManagedObject {
     func statusImageName() -> String {
         switch state {
         case "STARTED":
-            return (packageState == "FAILED") ? "error" : "started"
+            return (packageState == "FAILED") ? "errored" : "started"
         default:
             return "stopped"
         }
