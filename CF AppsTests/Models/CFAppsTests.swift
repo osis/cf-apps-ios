@@ -103,7 +103,7 @@ class CFAppsTests: XCTestCase {
         cfApp.state = "STARTED"
         cfApp.packageState = "FAILED"
         
-        XCTAssertEqual(cfApp.statusImageName(), "error", "Status name should be error if app state started and the package state is failed.")
+        XCTAssertEqual(cfApp.statusImageName(), "errored", "Status name should be error if app state started and the package state is failed.")
     }
     
     func testStatusImageNameStarted() {

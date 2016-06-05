@@ -79,7 +79,9 @@ class EventsViewController: UITableViewController {
         
         let stateLabel = cell!.viewWithTag(2) as! UILabel
         stateLabel.text = event.state()
-
+        
+        let stateImg = cell!.viewWithTag(3) as! UIImageView
+        stateImg.image = UIImage(named: event.state()!.localizedLowercaseString)
         
         return cell!
     }
