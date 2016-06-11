@@ -32,6 +32,7 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        setup()
     }
     
     override func viewDidLoad() {
