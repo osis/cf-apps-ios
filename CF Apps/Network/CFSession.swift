@@ -53,6 +53,7 @@ class CFSession {
         let nav = delegate.window?.rootViewController as! UINavigationController
 
         nav.popToRootViewControllerAnimated(true)
+        
         CFSession.reset()
     }
 }

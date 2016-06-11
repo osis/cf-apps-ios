@@ -28,7 +28,7 @@ class Instance: NSObject {
     
     func state() -> String {
         let state = json!["state"].stringValue
-        return (state == "CRASHED" || state == "DOWN") ? "error" : "started"
+        return (state == "CRASHED" || state == "DOWN") ? "errored" : "started"
     }
     
     func cpuUsagePercentage() -> Double {
