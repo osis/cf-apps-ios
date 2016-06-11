@@ -48,6 +48,7 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
     func setup() {
         CFSession.reset()
         endpointPicker.endpointPickerDelegate = self
+        showTargetForm()
         hideLoginForm()
         hideTargetField()
     }
@@ -63,6 +64,8 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
     func hideLoginForm() {
         loginView.alpha = 0
         loginView.transform = CGAffineTransformMakeTranslation(0, 50)
+        usernameField.text = ""
+        passwordField.text = ""
     }
     
     func showTargetField() {
@@ -88,6 +91,13 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
             apiTargetField.text = "https://"
             showTargetField()
         }
+    }
+    
+    func showTargetForm() {
+        UIView.animateWithDuration(transitionSpeed, animations: {
+            self.apiTargetView.alpha = 1
+            self.apiTargetView.transform = CGAffineTransformMakeTranslation(0, 0)
+        })
     }
     
     func hideTargetForm() {
