@@ -54,9 +54,6 @@ class CFSession {
 
         nav.popToRootViewControllerAnimated(true)
         
-        let loginController = nav.topViewController as! LoginViewController
-        loginController.setup()
-        
         CFSession.reset()
     }
 }
