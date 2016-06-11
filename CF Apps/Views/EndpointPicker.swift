@@ -6,8 +6,12 @@ protocol EndpointPickerDelegate: NSObjectProtocol {
 }
 
 class EndpointPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
-    var pickerData: [String] = [ "IBM BlueMix", "Pivotal Web Services", "Predix", "Other" ]
-    var pickerValues: [String?] = [ "https://api.ng.bluemix.net", "https://api.run.pivotal.io", "https://api.system.aws-usw02-pr.ice.predix.io", nil ]
+    var pickerData: [String] = [
+        "Atos", "IBM BlueMix", "Pivotal Web Services", "Predix", "Other"
+    ]
+    var pickerValues: [String?] = [
+        "https://api.sys.eu01.cf.canopy-cloud.com", "https://api.ng.bluemix.net", "https://api.run.pivotal.io", "https://api.system.aws-usw02-pr.ice.predix.io", nil
+    ]
     var endpointPickerDelegate: EndpointPickerDelegate?
 
     required init?(coder aDecoder: NSCoder) {
@@ -18,7 +22,7 @@ class EndpointPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource
     func setup() {
         delegate = self
         dataSource = self
-        self.selectRow(1, inComponent: 0, animated: false)
+        self.selectRow(2, inComponent: 0, animated: false)
     }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
