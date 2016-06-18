@@ -19,7 +19,11 @@ class CFAppsTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
         
-        self.dataStack?.drop()
+        do {
+            try self.dataStack?.drop()
+        } catch {
+            debugPrint("Cannot drop DB")
+        }
     }
     
     func makeApp() -> CFApp {

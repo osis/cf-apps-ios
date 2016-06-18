@@ -11,11 +11,11 @@ Helps you filter insertions, deletions and updates by comparing your JSON dictio
 ```objc
 + (void)changes:(NSArray *)changes
   inEntityNamed:(NSString *)entityName
-       localKey:(NSString *)localKey
-      remoteKey:(NSString *)remoteKey
+localPrimaryKey:(NSString *)localPrimaryKey
+remotePrimaryKey:(NSString *)remotePrimaryKey
         context:(NSManagedObjectContext *)context
-       inserted:(void (^)(NSDictionary *objectJSON))inserted
-        updated:(void (^)(NSDictionary *objectJSON, NSManagedObject *updatedObject))updated;
+       inserted:(void (^)(NSDictionary *JSON))inserted
+        updated:(void (^)(NSDictionary *JSON, NSManagedObject *updatedObject))updated;
 ```
 
 ## How to use
@@ -24,25 +24,25 @@ Helps you filter insertions, deletions and updates by comparing your JSON dictio
 - (void)importObjects:(NSArray *)JSON usingContext:(NSManagedObjectContext *)context error:(NSError *)error {
     [DATAFilter changes:JSON
           inEntityNamed:@"User"
-               localKey:@"remoteID"
-              remoteKey:@"id"
+        localPrimaryKey:@"remoteID"
+       remotePrimaryKey:@"id"
                 context:context
-               inserted:^(NSDictionary *objectJSON) {
+               inserted:^(NSDictionary *JSON) {
                     ANDYUser *user = [ANDYUser insertInManagedObjectContext:context];
-                    [user fillObjectWithAttributes:objectDict];
-              } updated:^(NSDictionary *objectJSON, NSManagedObject *updatedObject) {
+                    [user fillObjectWithAttributes:JSON];
+              } updated:^(NSDictionary *JSON, NSManagedObject *updatedObject) {
                     ANDYUser *user = (ANDYUser *)object;
-                    [user fillObjectWithAttributes:objectDict];
+                    [user fillObjectWithAttributes:JSON];
               }];
 
     [context save:&error];
 }
 ```
 
-## Local and Remote keys
+## Local and remote primary keys
 
-`localKey` is the name of the local primaryKey, for example `remoteID`.  
-`remoteKey` is the name of the key from JSON, for example `id`.
+`localPrimaryKey` is the name of the local primary key, for example `id` or `remoteKey`.
+`remotePrimaryKey` is the name of the key from JSON, for example `id`.
 
 ## Predicate
 
@@ -52,7 +52,7 @@ Use the predicate to filter out mapped changes. For example if the JSON response
 NSPredicate *predicate = [NSString stringWithFormat:@"inactive = YES"];
 ```
 
-***
+---------------
 
 *As a side note, you should use a [fancier property mapper](https://github.com/hyperoslo/NSManagedObject-HYPPropertyMapper/blob/master/README.md) that does the `fillObjectWithAttributes` part for you.*
 
@@ -69,12 +69,12 @@ Usage goes like this:
       inEntityNamed:@"User"
           predicate:nil
          operations:DATAFilterOperationInsert | DATAFilterOperationUpdate
-           localKey:@"remoteID"
-          remoteKey:@"id"
+    localPrimaryKey:@"remoteID"
+   remotePrimaryKey:@"id"
             context:context
-           inserted:^(NSDictionary *objectJSON) {
+           inserted:^(NSDictionary *JSON) {
                // Do something with inserted items
-           } updated:^(NSDictionary *objectJSON, NSManagedObject *updatedObject) {
+           } updated:^(NSDictionary *JSON, NSManagedObject *updatedObject) {
                // Do something with updated items
            }];
 ```
@@ -99,4 +99,3 @@ Elvis Nuñez, [elvisnunez@me.com](mailto:elvisnunez@me.com)
 ## License
 
 **DATAFilter** is available under the MIT license. See the [LICENSE](https://github.com/3lvis/DATAFilter/blob/master/LICENSE.md) file for more info.
-

@@ -1,5 +1,41 @@
 #import "NSString+HYPNetworking.h"
 
+@interface HYPNetworkingStringStorage : NSObject
+
+@property (nonatomic, strong) NSMutableDictionary *storage;
+@property (nonatomic, strong) NSLock *lock;
+
+@end
+
+@implementation HYPNetworkingStringStorage
+
++ (instancetype)sharedInstance {
+    static dispatch_once_t once;
+    static HYPNetworkingStringStorage *sharedInstance;
+    dispatch_once(&once, ^{
+        sharedInstance = [self new];
+    });
+    return sharedInstance;
+}
+
+- (NSMutableDictionary *)storage {
+    if (!_storage) {
+        _storage = [NSMutableDictionary new];
+    }
+
+    return _storage;
+}
+
+- (NSLock *)lock {
+    if (!_lock) {
+        _lock = [NSLock new];
+    }
+
+    return _lock;
+}
+
+@end
+
 @interface NSString (PrivateInflections)
 
 - (BOOL)hyp_containsWord:(NSString *)word;
@@ -12,26 +48,45 @@
 
 #pragma mark - Private methods
 
-- (NSString *)hyp_remoteString
-{
-    NSString *processedString = [self hyp_replaceIdentifierWithString:@"_"];
+- (nonnull NSString *)hyp_remoteString {
+    [[[HYPNetworkingStringStorage sharedInstance] lock] lock];
+    NSString *storedResult = [[[HYPNetworkingStringStorage sharedInstance] storage] objectForKey:self];
+    [[[HYPNetworkingStringStorage sharedInstance] lock] unlock];
+    if (storedResult) {
+        return storedResult;
+    } else {
+        NSString *processedString = [self hyp_replaceIdentifierWithString:@"_"];
+        NSString *result = [processedString hyp_lowerCaseFirstLetter];
 
-    return [processedString hyp_lowerCaseFirstLetter];
+        [[[HYPNetworkingStringStorage sharedInstance] lock] lock];
+        [[[HYPNetworkingStringStorage sharedInstance] storage] setObject:result forKey:self];
+        [[[HYPNetworkingStringStorage sharedInstance] lock] unlock];
+
+        return result;
+    }
 }
 
-- (NSString *)hyp_localString
-{
-    NSString *processedString = self;
+- (nonnull NSString *)hyp_localString {
+    [[[HYPNetworkingStringStorage sharedInstance] lock] lock];
+    NSString *storedResult = [[[HYPNetworkingStringStorage sharedInstance] storage] objectForKey:self];
+    [[[HYPNetworkingStringStorage sharedInstance] lock] unlock];
+    if (storedResult) {
+        return storedResult;
+    } else {
+        NSString *processedString = self;
+        processedString = [processedString hyp_replaceIdentifierWithString:@""];
+        BOOL remoteStringIsAnAcronym = ([[NSString acronyms] containsObject:[processedString lowercaseString]]);
+        NSString *result = (remoteStringIsAnAcronym) ? [processedString lowercaseString] : [processedString hyp_lowerCaseFirstLetter];
 
-    processedString = [processedString hyp_replaceIdentifierWithString:@""];
+        [[[HYPNetworkingStringStorage sharedInstance] lock] lock];
+        [[[HYPNetworkingStringStorage sharedInstance] storage] setObject:result forKey:self];
+        [[[HYPNetworkingStringStorage sharedInstance] lock] unlock];
 
-    BOOL remoteStringIsAnAcronym = ([[NSString acronyms] containsObject:[processedString lowercaseString]]);
-
-    return (remoteStringIsAnAcronym) ? [processedString lowercaseString] : [processedString hyp_lowerCaseFirstLetter];
+        return result;
+    }
 }
 
-- (BOOL)hyp_containsWord:(NSString *)word
-{
+- (BOOL)hyp_containsWord:(NSString *)word {
     BOOL found = NO;
 
     NSArray *components = [self componentsSeparatedByString:@"_"];
@@ -46,8 +101,7 @@
     return found;
 }
 
-- (NSString *)hyp_lowerCaseFirstLetter
-{
+- (nonnull NSString *)hyp_lowerCaseFirstLetter {
     NSMutableString *mutableString = [[NSMutableString alloc] initWithString:self];
     NSString *firstLetter = [[mutableString substringToIndex:1] lowercaseString];
     [mutableString replaceCharactersInRange:NSMakeRange(0,1)
@@ -56,15 +110,20 @@
     return [mutableString copy];
 }
 
-- (NSString *)hyp_replaceIdentifierWithString:(NSString *)replacementString
-{
+- (nonnull NSString *)hyp_replaceIdentifierWithString:(NSString *)replacementString {
     NSScanner *scanner = [NSScanner scannerWithString:self];
     scanner.caseSensitive = YES;
 
     NSCharacterSet *identifierSet = [NSCharacterSet characterSetWithCharactersInString:@"_- "];
     NSCharacterSet *alphanumericSet = [NSCharacterSet alphanumericCharacterSet];
     NSCharacterSet *uppercaseSet = [NSCharacterSet uppercaseLetterCharacterSet];
-    NSCharacterSet *lowercaseSet = [NSCharacterSet lowercaseLetterCharacterSet];
+
+    NSCharacterSet *lowercaseLettersSet = [NSCharacterSet lowercaseLetterCharacterSet];
+    NSCharacterSet *decimalDigitSet = [NSCharacterSet decimalDigitCharacterSet];
+    NSMutableCharacterSet *mutableLowercaseSet = [[NSMutableCharacterSet alloc] init];
+    [mutableLowercaseSet formUnionWithCharacterSet:lowercaseLettersSet];
+    [mutableLowercaseSet formUnionWithCharacterSet:decimalDigitSet];
+    NSCharacterSet *lowercaseSet = [mutableLowercaseSet copy];
 
     NSString *buffer = nil;
     NSMutableString *output = [NSMutableString string];
@@ -75,9 +134,7 @@
 
         if ([replacementString length] > 0) {
             BOOL isUppercaseCharacter = [scanner scanCharactersFromSet:uppercaseSet intoString:&buffer];
-
             if (isUppercaseCharacter) {
-
                 for (NSString *string in [NSString acronyms]) {
                     BOOL containsString = ([[buffer lowercaseString] rangeOfString:string].location != NSNotFound);
                     if (containsString) {
@@ -89,7 +146,6 @@
                         break;
                     }
                 }
-
                 [output appendString:replacementString];
                 [output appendString:[buffer lowercaseString]];
             }
@@ -98,7 +154,6 @@
             if (isLowercaseCharacter) {
                 [output appendString:[buffer lowercaseString]];
             }
-
         } else if ([scanner scanCharactersFromSet:alphanumericSet intoString:&buffer]) {
             if ([[NSString acronyms] containsObject:buffer]) {
                 [output appendString:[buffer uppercaseString]];
@@ -114,8 +169,7 @@
     return output;
 }
 
-+ (NSArray *)acronyms
-{
++ (nonnull NSArray *)acronyms {
     return @[@"id", @"pdf", @"url", @"png", @"jpg", @"uri", @"json", @"xml"];
 }
 

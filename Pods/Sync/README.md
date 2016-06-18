@@ -1,29 +1,28 @@
 ![Hyper Sync™](https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/logo-v2.png)
 
-[![Version](https://img.shields.io/cocoapods/v/Sync.svg?style=flat)](http://cocoadocs.org/docsets/Sync)
-[![License](https://img.shields.io/cocoapods/l/Sync.svg?style=flat)](http://cocoadocs.org/docsets/Sync)
-[![Platform](https://img.shields.io/cocoapods/p/Sync.svg?style=flat)](http://cocoadocs.org/docsets/Sync)
+[![Version](https://img.shields.io/cocoapods/v/Sync.svg?style=flat)](https://cocoapods.org/pods/Sync)
+[![License](https://img.shields.io/cocoapods/l/Sync.svg?style=flat)](https://cocoapods.org/pods/Sync)
+[![Platform](https://img.shields.io/cocoapods/p/Sync.svg?style=flat)](https://cocoapods.org/pods/Sync)
 
 **Sync** eases your everyday job of parsing a `JSON` response and getting it into Core Data. It uses a convention-over-configuration paradigm to facilitate your workflow.
 
+* Automatic mapping of CamelCase or snake_case JSON into Core Data
 * Handles operations in safe background threads
 * Thread-safe saving, we handle retrieving and storing objects in the right threads
 * Diffing of changes, updated, inserted and deleted objects (which are automatically purged for you)
 * Auto-mapping of relationships (one-to-one, one-to-many and many-to-many)
 * Smart-updates, only updates your `NSManagedObject`s if the server values are different (useful when using `NSFetchedResultsController` delegates)
-* Uniquing, Core Data does this based on `objectID`s, we use your remote key (such as `id`) for this
-
+* Uniquing, Core Data does this based on `objectID`s, we use your primary key (such as `id`) for this
+* `NSOperation` subclass, any Sync process can be queued and cancelled at any time!
 
 ## Table of Contents
 
 * [Interface](#interface)
   * [Swift](#swift)
   * [Objective-C](#objective-c)
-* [Example](#example)
-  * [Model](#model)
-  * [JSON](#json)
-  * [Sync](#sync)
-  * [More examples](#more-examples)
+* [Example using snake_case in Swift](#example-with-snake_case-in-swift)
+* [Example using CamelCase in Objective-C](#example-with-camelcase-in-objective-c)
+* [More examples](#more-examples)
 * [Getting Started](#getting-started)
   * [Installation](#installation)
 * [Requisites](#requisites)
@@ -31,8 +30,13 @@
   * [Primary Key](#primary-key)
   * [Attribute Mapping](#attribute-mapping)
   * [Attribute Types](#attribute-types)
+  * [Relationship Mapping](#relationship-mapping)
+    * [One-to-many](#one-to-many)
+    * [One-to-many (simplified)](#one-to-many-simplified)
+    * [One-to-one](#one-to-one)
+    * [One-to-one (simplified)](#one-to-one-simplified)
   * [Networking](#networking)
-  * [Supported iOS Versions](#supported-ios-versions)
+  * [Supported iOS, OS X, watchOS and tvOS Versions](#supported-ios-os-x-watchos-and-tvos-versions)
 * [Components](#components)
 * [FAQ](#faq)
 * [Credits](#credits)
@@ -45,10 +49,10 @@
 
 ```swift
 Sync.changes(
-  changes: [AnyObject]!,
-  inEntityNamed: String!,
-  dataStack: DATAStack!,
-  completion: ((NSError!) -> Void)!)
+  changes: [[String : AnyObject]],
+  inEntityNamed: String,
+  dataStack: DATAStack,
+  completion: ((NSError?) -> Void)?)
 ```
 
 ### Objective-C
@@ -64,12 +68,11 @@ Sync.changes(
 * `entityName`: Core Data’s Model Entity Name (such as User, Note, Task)
 * `dataStack`: Your [DATAStack](https://github.com/3lvis/DATAStack)
 
-
-## Example
+## Example with snake_case in Swift
 
 ### Model
 
-![Model](https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/sync-model.png)
+![Model](https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/one-to-many-swift.png)
 
 ### JSON
 
@@ -95,11 +98,68 @@ Sync.changes(
 
 ### Sync
 
+```swift
+Sync.changes(
+  changes: JSON,
+  inEntityNamed: "User",
+  dataStack: dataStack) { error in
+    // New objects have been inserted
+    // Existing objects have been updated
+    // And not found objects have been deleted
+}
+```
+
+Alternatively, if you only want to sync users that have been created in the last 24 hours, you could do this by using a `NSPredicate`.
+
+```swift
+let now = NSDate()
+let yesterday = now.dateByAddingTimeInterval(-24*60*60)
+let predicate = NSPredicate(format:@"createdAt > %@", yesterday)
+
+Sync.changes(
+  changes: JSON,
+  inEntityNamed: "User",
+  predicate: predicate
+  dataStack: dataStack) { error in
+    //..
+}
+```
+
+## Example with CamelCase in Objective-C
+
+### Model
+
+![Model](https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/one-to-many-objc.png)
+
+### JSON
+
+```json
+[
+  {
+    "id": 6,
+    "name": "Shawn Merrill",
+    "email": "shawn@ovium.com",
+    "createdAt": "2014-02-14T04:30:10+00:00",
+    "updatedAt": "2014-02-17T10:01:12+00:00",
+    "notes": [
+      {
+        "id": 0,
+        "text": "Shawn Merril's diary, episode 1",
+        "createdAt": "2014-03-11T19:11:00+00:00",
+        "updatedAt": "2014-04-18T22:01:00+00:00"
+      }
+    ]
+  }
+]
+```
+
+### Sync
+
 ```objc
 [Sync changes:JSON
 inEntityNamed:@"User"
     dataStack:dataStack
-   completion:^{
+   completion:^(NSError *error) {
        // New objects have been inserted
        // Existing objects have been updated
        // And not found objects have been deleted
@@ -122,13 +182,13 @@ inEntityNamed:@"User"
     }];
 ```
 
-### More Examples
+## More Examples
 
-<a href="https://github.com/hyperoslo/Sync/tree/master/AppNet/README.md">
+<a href="https://github.com/3lvis/SyncAppNetDemo">
   <img src="https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/APPNET-v3.png" />
 </a>
 
-<a href="https://github.com/hyperoslo/Sync/tree/master/DesignerNews/README.md">
+<a href="https://github.com/3lvis/SyncDesignerNewsDemo">
   <img src="https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/DN-v4.png" />
 </a>
 
@@ -140,6 +200,8 @@ inEntityNamed:@"User"
 **Sync** is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
+use_frameworks!
+
 pod 'Sync'
 ```
 
@@ -149,34 +211,26 @@ pod 'Sync'
 
 Replace your Core Data stack with an instance of [DATAStack](https://github.com/3lvis/DATAStack).
 
-```objc
-self.dataStack = [[DATAStack alloc] initWithModelName:@"Demo"];
-```
-
-Then add this to your App Delegate so everything gets persisted when you quit the app.
-```objc
-- (void)applicationWillTerminate:(UIApplication *)application {
-    [self.dataStack persistWithCompletion:nil];
-}
+```swift
+self.dataStack = DATAStack(modelName: "Demo")
 ```
 
 ### Primary key
 
 Sync requires your entities to have a primary key, this is important for diffing, otherwise Sync doesn’t know how to differentiate between entries.
 
-By default **Sync** uses `id` from the JSON and `remoteID` from Core Data as the primary key. You can mark any attribute as primary key by adding `hyper.isPrimaryKey` and the value `YES`.
+By default **Sync** uses `id` from the JSON and `id` (or `remoteID`) from Core Data as the primary key.
 
-For example, in our [Designer News](https://github.com/hyperoslo/Sync/tree/master/DesignerNews) project we have a `Comment` entity that uses `body` as the primary key.
+You can mark any attribute as primary key by adding `hyper.isPrimaryKey` and the value `true` (or `YES`). For example, in our [Designer News](https://github.com/hyperoslo/Sync/tree/master/DesignerNews) project we have a `Comment` entity that uses `body` as the primary key.
 
-![Custom primary key](https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/custom-primary-key-v2.png)
+![Custom primary key](https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/custom-primary-key-v3.png)
 
 ### Attribute Mapping
 
 Your attributes should match their JSON counterparts in `camelCase` notation instead of `snake_case`. For example `first_name` in the JSON maps to `firstName` in Core Data and `address` in the JSON maps to `address` in Core Data.
 
-There are two exceptions to this rule:
+There is an exception to this rule:
 
-* `id`s should match `remoteID`
 * Reserved attributes should be prefixed with the `entityName` (`type` becomes `userType`, `description` becomes `userDescription` and so on). In the JSON they don't need to change, you can keep `type` and `description` for example. A full list of reserved attributes can be found [here](https://github.com/hyperoslo/NSManagedObject-HYPPropertyMapper/blob/master/Source/NSManagedObject%2BHYPPropertyMapper.m#L265)
 
 If you want to map your Core Data attribute with a JSON attribute that has different naming, you can do by adding `hyper.remoteKey` in the user info box with the value you want to map.
@@ -191,7 +245,8 @@ To map **arrays** or **dictionaries** just set attributes as `Binary Data` on th
 
 ![screen shot 2015-04-02 at 11 10 11 pm](https://cloud.githubusercontent.com/assets/1088217/6973785/7d3767dc-d98d-11e4-8add-9c9421b5ed47.png)
 
-#### Retreiving mapped arrays
+#### Retrieving mapped arrays
+
 ```json
 {
   "hobbies": [
@@ -202,9 +257,9 @@ To map **arrays** or **dictionaries** just set attributes as `Binary Data` on th
 }
 ```
 
-```objc
-NSArray *hobbies = [NSKeyedUnarchiver unarchiveObjectWithData:managedObject.hobbies];
-// ==> "football", "soccer", "code" 
+```swift
+let hobbies = NSKeyedUnarchiver.unarchiveObjectWithData(managedObject.hobbies)
+// ==> "football", "soccer", "code"
 ```
 
 #### Retreiving mapped dictionaries
@@ -217,39 +272,129 @@ NSArray *hobbies = [NSKeyedUnarchiver unarchiveObjectWithData:managedObject.hobb
 }
 ```
 
-```objc
-NSDictionary *expenses = [NSKeyedUnarchiver unarchiveObjectWithData:managedObject.expenses];
+```swift
+let expenses = NSKeyedUnarchiver.unarchiveObjectWithData(managedObject.expenses)
 // ==> "cake" : 12.50, "juice" : 0.50
 ```
 
 #### Dates
 
-We went for just supporting [ISO8601](http://en.wikipedia.org/wiki/ISO_8601) out of the box because that's the most common format when parsing dates, also we have a [quite performant way to parse this strings](https://github.com/hyperoslo/NSManagedObject-HYPPropertyMapper/blob/master/Source/NSManagedObject%2BHYPPropertyMapper.m#L272-L319) which overcomes the [performance issues of using `NSDateFormatter`](http://blog.soff.es/how-to-drastically-improve-your-app-with-an-afternoon-and-instruments/).
+We went for supporting [ISO8601](http://en.wikipedia.org/wiki/ISO_8601) and unix timestamp out of the box because those are the most common formats when parsing dates, also we have a [quite performant way to parse this strings](https://github.com/hyperoslo/NSManagedObject-HYPPropertyMapper/blob/master/Source/NSManagedObject%2BHYPPropertyMapper.m#L272-L319) which overcomes the [performance issues of using `NSDateFormatter`](http://blog.soff.es/how-to-drastically-improve-your-app-with-an-afternoon-and-instruments/).
 
-```json
-{
-  "created_at": "2014-01-01T00:00:00+00:00",
-  "updated_at": "2014-01-02",
-  "number_of_attendes": 20
-}
+```swift
+let values = ["created_at" : "2014-01-01T00:00:00+00:00",
+              "updated_at" : "2014-01-02",
+              "published_at": "1441843200"
+              "number_of_attendes": 20]
+
+managedObject.hyp_fillWithDictionary(values)
+
+let createdAt = managedObject.valueForKey("createdAt")
+// ==> "2014-01-01 00:00:00 +00:00"
+
+let updatedAt = managedObject.valueForKey("updatedAt")
+// ==> "2014-01-02 00:00:00 +00:00"
+
+let publishedAt = managedObject.valueForKey("publishedAt")
+// ==> "2015-09-10 00:00:00 +00:00"
 ```
 
-```objc
-NSDate *createdAt = [managedObject valueForKey:@"createdAt"];
-// ==> "2014-01-01 00:00:00 +00:00" 
+#### JSON representation from a NSManagedObject
 
-NSDate *updatedAt = [managedObject valueForKey:@"updatedAt"];
-// ==> "2014-01-02 00:00:00 +00:00" 
+**Sync**'s dependency [**NSManagedObject-HYPPropertyMapper**](https://github.com/hyperoslo/NSManagedObject-HYPPropertyMapper) provides a method to generate a JSON object from any NSManagedObject instance. [More information here.](https://github.com/hyperoslo/NSManagedObject-HYPPropertyMapper#json-representation-from-a-nsmanagedobject)
+
+### Relationship mapping
+
+**Sync** will map your relationships to their JSON counterparts. In the [Example](#example-with-snake_case-in-swift) presented at the beginning of this document you can see a very basic example of relationship mapping.
+
+#### One-to-many
+
+Lets consider the following Core Data model.
+
+![One-to-many](https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/one-to-many-swift.png)
+
+This model has a one-to-many relationship between `User` and `Note`, so in other words a user has many notes. Here can also find an inverse relationship to user on the Note model. This is required for Sync to have more context on how your models are presented. Finally, in the Core Data model there is a cascade relationship between user and note, so when a user is deleted all the notes linked to that user are also removed (you can specify any delete rule).
+
+So when Sync, looks into the following JSON, it will sync all the notes for that specific user, doing the necessary inverse relationship dance.
+
+```json
+[
+  {
+    "id": 6,
+    "name": "Shawn Merrill",
+    "notes": [
+      {
+        "id": 0,
+        "text": "Shawn Merril's diary, episode 1",
+      }
+    ]
+  }
+]
+```
+
+#### One-to-many Simplified
+
+As you can see this procedures require the full JSON object to be included, but when working with APIs, sometimes you already have synced all the required items. Sync supports this too.
+
+For example, in the one-to-many example, you have a user, that has many notes. If you already have synced all the notes then your JSON would only need the `notes_ids`, this can be an array of strings or integers. As a sidenote only do this if you are 100% sure that all the required items (notes) have been synced, otherwise this relationships will get ignored and an error will be logged. Also if you want to remove all the notes from a user, just provide `"notes_ids": null` and **Sync** will do the clean up for you.
+
+```json
+[
+  {
+    "id": 6,
+    "name": "Shawn Merrill",
+    "notes_ids": [0, 1, 2]
+  }
+]
+```
+
+#### One-to-one
+
+A similar procedure is applied to one-to-one relationships. For example lets say you have the following model:
+
+![one-to-one](https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/one-to-one-v2.png)
+
+This model is simple, a user as a company. A compatible JSON would look like this:
+
+```json
+[
+  {
+    "id": 6,
+    "name": "Shawn Merrill",
+    "company": {
+      "id": 0,
+      "text": "Facebook",
+    }
+  }
+]
+```
+
+#### One-to-one Simplified
+
+As you can see this procedures require the full JSON object to be included, but when working with APIs, sometimes you already have synced all the required items. Sync supports this too.
+
+For example, in the one-to-one example, you have a user, that has one company. If you already have synced all the companies then your JSON would only need the `company_id`. As a sidenote only do this if you are 100% sure that all the required items (companies) have been synced, otherwise this relationships will get ignored and an error will be logged. Also if you want to remove the company from the user, just provide `"company_id": null` and **Sync** will do the clean up for you.
+
+```json
+[
+  {
+    "id": 6,
+    "name": "Shawn Merrill",
+    "company_id": 0
+  }
+]
 ```
 
 ### Networking
 
 You are free to use any networking library.
 
-### Supported iOS Versions
+### Supported iOS, OS X, watchOS and tvOS Versions
 
-`iOS 7 or above`
-
+- iOS 8 or above
+- OS X 10.9 or above
+- watchOS 2.0 or above
+- tvOS 9.0 or above
 
 ## Components
 
@@ -263,18 +408,19 @@ You are free to use any networking library.
 
 ## FAQ
 
-#### Using `hyper.primaryKey` in addition to `hyper.remoteKey`:
+#### Using `hyper.isPrimaryKey` in addition to `hyper.remoteKey`
 
-Well, the thing is that if you add `hyper.primaryKey` it would uses the normal attribute for the local primary key, but the remote primary key is the snake_case representation of it. Some people might expect that the local keeps been the same (remoteID), or that the remote keeps been the same (id).
+If you add the flag `hyper.isPrimaryKey` to the attribute `contractID` then:
 
-For example if you add the flag `hyper.PrimaryKey` to the attribute `article_body` then:
-
-- Remote primary key: `article_body`
-- Local primary key: `articleBody`
+- Local primary key will be: `contractID`
+- Remote primary key will be: `contract_id`
 
 If you want to use `id` for the remote primary key you also have to add the flag `hyper.remoteKey` and write `id` as the value.
 
-#### How uniquing works (many-to-many, one-to-many)?:
+- Local primary key will be: `articleBody`
+- Remote primary key will be: `id`
+
+#### How uniquing works (many-to-many, one-to-many)?
 
 In a `one-to-many` relationship IDs are unique for a parent, but not between parents. For example in this example we have a list of posts where each post has many comments. When syncing posts 2 comment entries will be created:
 
@@ -322,7 +468,7 @@ For example a author can have many documents and a document can have many author
   {
     "id": 1,
     "title": "Document name 1",
-    "comments": [
+    "authors": [
       {
         "id":0,
         "body":"Michael Jackson"
@@ -332,33 +478,59 @@ For example a author can have many documents and a document can have many author
 ]
 ```
 
-#### Logging changes:
+#### Logging changes
 
 Logging changes to Core Data is quite simple, just subscribe to changes like this and print the needed elements:
 
 ```objc
-[[NSNotificationCenter defaultCenter]addObserver:self
-                                        selector:@selector(changeNotification:)
-                                            name:NSManagedObjectContextObjectsDidChangeNotification
-                                          object:self.dataStack.mainContext];
-                                          
+[[NSNotificationCenter defaultCenter] addObserver:self
+                                         selector:@selector(changeNotification:)
+                                             name:NSManagedObjectContextObjectsDidChangeNotification
+                                           object:self.dataStack.mainContext];
+
 - (void)changeNotification:(NSNotification *)notification {
-    NSSet *updatedObjects   = [[notification userInfo] objectForKey:NSUpdatedObjectsKey];
     NSSet *deletedObjects   = [[notification userInfo] objectForKey:NSDeletedObjectsKey];
     NSSet *insertedObjects  = [[notification userInfo] objectForKey:NSInsertedObjectsKey];
 }
 ```
 
+Logging updates is a bit more complicated since this changes don't get propagated to the main context. But if you want an example on how to do this, you can check the AppNet example, [the change notifications demo is in the Networking file](https://github.com/hyperoslo/Sync/blob/master/AppNet/Networking.swift#L27-L57).
+
+If you're using Swift to be able to use `NSNotificationCenter` your class should be a subclass of `NSObject` or similar.
+
 #### Crash on NSParameterAssert
 
-This means that the local primary key was not found, Sync uses `remoteID` by default, but if you have another local primary key make sure to mark it with `"hyper.isPrimaryKey" : "YES"` in your attribute's user info. For more information check the [Primary Key](https://github.com/hyperoslo/Sync#primary-key) section.
+This means that the local primary key was not found, Sync uses `id` (or `remoteID`) by default, but if you have another local primary key make sure to mark it with `"hyper.isPrimaryKey" : "true"` in your attribute's user info. For more information check the [Primary Key](https://github.com/hyperoslo/Sync#primary-key) section.
 
-```objc
-NSString *localKey = [entity sync_localKey];
-NSParameterAssert(localKey);
+```swift
+let localKey = entity.sync_localPrimaryKey()
+assert(localKey != nil, "nil value")
 
-NSString *remoteKey = [entity sync_remoteKey];
-NSParameterAssert(remoteKey);
+let remoteKey = entity.sync_remotePrimaryKey()
+assert(remoteKey != nil, "nil value")
+```
+
+#### How to map relationships that don't have IDs?
+
+There are two ways you can sync a JSON object that doesn't have an `id`. You can either set one of it's [attributes as the primary key](https://github.com/hyperoslo/Sync#primary-key), or you can store the JSON object as NSData, I have done this myself in a couple of apps works pretty well. You can find more information on how to store dictionaries using Sync [here](https://github.com/hyperoslo/Sync#arraydictionary).
+
+#### What if I only want inserts and updates?
+
+You can provide the type of operations that you want too. If you don't set this parameter, insert, updates and deletes will be done.
+
+This is how setting operations should work:
+
+```swift
+let firstImport = // First import of users
+Sync.changes(firstBatch, inEntityNamed: "User", dataStack: dataStack, operations: [.All]) {
+    // All users have been imported, they are happy 
+}
+
+let secondImport = // Second import of users
+Sync.changes(secondImport, inEntityNamed: "User", dataStack: dataStack, operations: [.Insert, .Update]) {
+    // Likely after some changes have happened, here usually Sync would remove the not found items but this time
+    // new users have been imported, existing users have been updated, and not found users have been ignored
+}
 ```
 
 ## Credits
