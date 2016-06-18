@@ -2,8 +2,8 @@
 
 @interface NSString (HYPNetworking)
 
-- (NSString *)hyp_remoteString;
+- (nonnull NSString *)hyp_remoteString;
 
-- (NSString *)hyp_localString;
+- (nonnull NSString *)hyp_localString;
 
 @end

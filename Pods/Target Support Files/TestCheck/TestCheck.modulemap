@@ -1,6 +1,0 @@
-framework module TestCheck {
-  umbrella header "TestCheck-umbrella.h"
-
-  export *
-  module * { export * }
-}

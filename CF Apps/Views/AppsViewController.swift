@@ -101,7 +101,12 @@ class AppsViewController: UITableViewController {
     }
     
     func handleOrgsResponse(json: JSON) {
-        dataStack!.drop()
+        do {
+            try dataStack!.drop()
+        } catch {
+            debugPrint("Could not drop database")
+        }
+        
         self.orgPickerLabels = []
         self.orgPickerValues = []
         var orgGuids: [String] = []
@@ -123,11 +128,12 @@ class AppsViewController: UITableViewController {
     
         self.fetchApplications()
         
+        let resources = json["resources"].arrayObject as! [[String:AnyObject]]
         Sync.changes(
-            json["resources"].arrayObject,
+            resources,
             inEntityNamed: "CFOrg",
             predicate: nil,
-            dataStack: self.dataStack,
+            dataStack: self.dataStack!,
             completion: { error in
                 print("--- Orgs Synced")
                 self.fetchCurrentObjects()
@@ -185,11 +191,12 @@ class AppsViewController: UITableViewController {
         
         self.fetchSpaces(appGuids)
         
+        let resources = json["resources"].arrayObject as! [[String:AnyObject]]
         Sync.changes(
-            json["resources"].arrayObject,
+            resources,
             inEntityNamed: "CFApp",
             predicate: predicate,
-            dataStack: self.dataStack,
+            dataStack: self.dataStack!,
             completion: { error in
                 print("--- Apps Synced")
                 self.fetchCurrentObjects()
@@ -211,11 +218,12 @@ class AppsViewController: UITableViewController {
     }
 
     func handleSpacesResponse(json: JSON) {
+        let resources = json["resources"].arrayObject as! [[String:AnyObject]]
         Sync.changes(
-            json["resources"].arrayObject,
+            resources,
             inEntityNamed: "CFSpace",
             predicate: nil,
-            dataStack: self.dataStack,
+            dataStack: self.dataStack!,
             completion: { error in
                 self.fetchCurrentObjects()
                 print("--- Spaces Synced")

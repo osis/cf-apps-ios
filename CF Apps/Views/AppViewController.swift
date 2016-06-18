@@ -88,10 +88,10 @@ class AppViewController: UIViewController {
         
         let predicate = NSPredicate(format: "guid == ''")
         Sync.changes(
-            [json.object],
+            [json.dictionaryObject!],
             inEntityNamed: "CFApp",
             predicate: predicate,
-            dataStack: self.dataStack,
+            dataStack: self.dataStack!,
             completion: { error in
                 self.setSummary(self.app!.guid)
             }

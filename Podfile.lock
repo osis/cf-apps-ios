@@ -1,11 +1,10 @@
 PODS:
   - ActionSheetPicker-3.0 (2.0.4)
   - Alamofire (3.2.0)
-  - DATAFilter (0.9.1):
+  - DATAFilter (0.10.0):
     - DATAObjectIDs (~> 0.5.1)
   - DATAObjectIDs (0.5.1)
-  - DATAStack (4.0.3):
-    - TestCheck (~> 0.3.0)
+  - DATAStack (5.2.1)
   - Locksmith (2.0.7)
   - Mockingjay (1.1.1):
     - Mockingjay/Core (= 1.1.1)
@@ -15,21 +14,21 @@ PODS:
   - Mockingjay/XCTest (1.1.1):
     - Mockingjay/Core
   - NSDictionary-ANDYSafeValue (0.3.1)
-  - NSEntityDescription-SYNCPrimaryKey (0.1.1):
-    - NSString-HYPNetworking (~> 0.3.3)
-  - NSManagedObject-HYPPropertyMapper (3.3.3):
-    - NSString-HYPNetworking (~> 0.3.3)
-  - NSString-HYPNetworking (0.3.3)
+  - NSEntityDescription-SYNCPrimaryKey (1.2.3):
+    - NSString-HYPNetworking (~> 1.0.2)
+  - NSManagedObject-HYPPropertyMapper (3.6.9):
+    - NSEntityDescription-SYNCPrimaryKey (~> 1.2.3)
+    - NSString-HYPNetworking (~> 1.0.2)
+  - NSString-HYPNetworking (1.0.2)
   - ProtocolBuffers-Swift (2.4.3)
   - SwiftWebSocket (2.6.0)
   - SwiftyJSON (2.3.0)
-  - Sync (1.2.2):
-    - DATAFilter (~> 0.9.1)
-    - DATAStack (~> 4.0.3)
+  - Sync (1.9.0):
+    - DATAFilter (~> 0.10.0)
+    - DATAStack (~> 5.2.1)
     - NSDictionary-ANDYSafeValue (~> 0.3.1)
-    - NSEntityDescription-SYNCPrimaryKey (~> 0.1.1)
-    - NSManagedObject-HYPPropertyMapper (~> 3.3.3)
-  - TestCheck (0.3.0)
+    - NSEntityDescription-SYNCPrimaryKey (~> 1.2.3)
+    - NSManagedObject-HYPPropertyMapper (~> 3.6.9)
   - URITemplate (1.3.1)
 
 DEPENDENCIES:
@@ -37,30 +36,29 @@ DEPENDENCIES:
   - Alamofire (~> 3.0)
   - Locksmith (~> 2.0.0)
   - Mockingjay
-  - ProtocolBuffers-Swift
+  - ProtocolBuffers-Swift (~> 2.4.3)
   - SwiftWebSocket (~> 2.6.0)
   - SwiftyJSON (~> 2.3)
-  - Sync (~> 1.2)
+  - Sync (~> 1.9)
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: 860466cb4a66854e6acb590071ecee404b48f49d
   Alamofire: 4da478599fccddff361205c8929333d7fe18dceb
-  DATAFilter: 4a1bdc065847e19d9fa1c9dd92ed2d85847967a1
+  DATAFilter: b6662b05dd0dcf658d526aa0f9095bb202d7b10e
   DATAObjectIDs: 33db74dd1c858c2d22a45a4013c95f1082182e4e
-  DATAStack: 8622b05a7cc1dade21e105d20fdd9f8fbe63944d
+  DATAStack: c6432c89d0bd2b1d2a17c947ca8a2c81f389f06d
   Locksmith: 46384a1c603836aa47a66020e289c157409c7541
   Mockingjay: 757f80abc947b5ec2918b1bb14f3066574720430
   NSDictionary-ANDYSafeValue: 2d7adf339b6e302d71fec5f1d71ae00aacda993e
-  NSEntityDescription-SYNCPrimaryKey: 843225bf3bd09a1d7f9d4157111204bb3fe3cb18
-  NSManagedObject-HYPPropertyMapper: 9ae15488cae898d58d9aafc0ad7967ce151bf6cd
-  NSString-HYPNetworking: 3b07da48f9f65a33d26e0467da8155bbb18d52bd
+  NSEntityDescription-SYNCPrimaryKey: 9dbb89d7cbc1bea196dd935725bfcf3c0ff4249c
+  NSManagedObject-HYPPropertyMapper: 1a34418531715f01520eb32abcd2c183952ea630
+  NSString-HYPNetworking: 7c18e44ca9529d2f74a30a1c2a7a787da76198c1
   ProtocolBuffers-Swift: afbdde78be3c6af8a610d2c257d6bc88e8c7c5d4
   SwiftWebSocket: c24c0dde0b33852f478ffb54226408bfe703b26b
   SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
-  Sync: 1c8bda37df9ede8aaec7aadb73dc36e9038ecb8b
-  TestCheck: 42c1343664986c0cbfaa20a62622d6f6fb70a407
+  Sync: f39edb4e3b931fdc387e836200c235a54750e072
   URITemplate: 398a48d6559e23b77bd41176b675b017ad1fc959
 
-PODFILE CHECKSUM: 4febf40bb305a1d9d0943f42c6f12f2edd9f8784
+PODFILE CHECKSUM: d87ed2755400e1b13929d6cffa7b7beb5f2937aa
 
-COCOAPODS: 1.0.0.beta.3
+COCOAPODS: 1.0.1

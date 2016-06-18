@@ -15,11 +15,6 @@ static NSString * const HYPPropertyMapperNestedAttributesKey = @"attributes";
 
         id value = [dictionary objectForKey:key];
 
-        BOOL isReservedKey = ([[NSManagedObject reservedAttributes] containsObject:key]);
-        if (isReservedKey) {
-            key = [self prefixedAttribute:key];
-        }
-
         NSAttributeDescription *attributeDescription = [self attributeDescriptionForRemoteKey:key];
         if (attributeDescription) {
             NSString *localKey = attributeDescription.name;
@@ -78,7 +73,7 @@ static NSString * const HYPPropertyMapperNestedAttributesKey = @"attributes";
                 NSString *relationshipName = [relationshipDescription name];
                 id relationships = [self valueForKey:relationshipName];
                 if (relationships) {
-                    BOOL isToOneRelationship = (![relationships isKindOfClass:[NSSet class]]);
+                    BOOL isToOneRelationship = (![relationships isKindOfClass:[NSSet class]] && ![relationships isKindOfClass:[NSOrderedSet class]]);
                     if (isToOneRelationship) {
                         NSDictionary *attributesForToOneRelationship = [self attributesForToOneRelationship:relationships
                                                                                            relationshipName:relationshipName

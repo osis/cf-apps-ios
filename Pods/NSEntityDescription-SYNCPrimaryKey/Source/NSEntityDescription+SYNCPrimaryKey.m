@@ -4,7 +4,7 @@
 
 @implementation NSEntityDescription (SYNCPrimaryKey)
 
-- (NSAttributeDescription *)sync_primaryKeyAttribute {
+- (nonnull NSAttributeDescription *)sync_primaryKeyAttribute {
     __block NSAttributeDescription *primaryKeyAttribute;
 
     [self.propertiesByName enumerateKeysAndObjectsUsingBlock:^(NSString *key,
@@ -12,13 +12,13 @@
                                                                BOOL *stop) {
         NSString *isPrimaryKey = attributeDescription.userInfo[SYNCCustomLocalPrimaryKey];
         BOOL hasCustomPrimaryKey = (isPrimaryKey &&
-                                    [isPrimaryKey isEqualToString:@"YES"]);
+                                    ([isPrimaryKey isEqualToString:SYNCCustomLocalPrimaryKeyValue] || [isPrimaryKey isEqualToString:SYNCCustomLocalPrimaryKeyAlternativeValue]) );
         if (hasCustomPrimaryKey) {
             primaryKeyAttribute = attributeDescription;
             *stop = YES;
         }
 
-        if ([key isEqualToString:SYNCDefaultLocalPrimaryKey]) {
+        if ([key isEqualToString:SYNCDefaultLocalPrimaryKey] || [key isEqualToString:SYNCDefaultLocalCompatiblePrimaryKey]) {
             primaryKeyAttribute = attributeDescription;
         }
     }];
@@ -26,27 +26,35 @@
     return primaryKeyAttribute;
 }
 
-- (NSString *)sync_localKey {
+- (nonnull NSString *)sync_localPrimaryKey {
     NSAttributeDescription *primaryAttribute = [self sync_primaryKeyAttribute];
     NSString *localKey = primaryAttribute.name;
 
     return localKey;
 }
 
-- (NSString *)sync_remoteKey {
-    NSAttributeDescription *primaryAttribute = [self sync_primaryKeyAttribute];
-    NSString *remoteKey = primaryAttribute.userInfo[SYNCCustomRemoteKey];
+- (nonnull NSString *)sync_remotePrimaryKey {
+    NSAttributeDescription *primaryKeyAttribute = [self sync_primaryKeyAttribute];
+    NSString *remoteKey = primaryKeyAttribute.userInfo[SYNCCustomRemoteKey];
 
     if (!remoteKey) {
-        if ([primaryAttribute.name isEqualToString:SYNCDefaultLocalPrimaryKey]) {
+        if ([primaryKeyAttribute.name isEqualToString:SYNCDefaultLocalPrimaryKey] || [primaryKeyAttribute.name isEqualToString:SYNCDefaultLocalCompatiblePrimaryKey]) {
             remoteKey = SYNCDefaultRemotePrimaryKey;
         } else {
-            remoteKey = [primaryAttribute.name hyp_remoteString];
+            remoteKey = [primaryKeyAttribute.name hyp_remoteString];
         }
 
     }
 
     return remoteKey;
+}
+
+- (nonnull NSString *)sync_localKey {
+    return [self sync_localPrimaryKey];
+}
+
+- (nonnull NSString *)sync_remoteKey {
+    return [self sync_remotePrimaryKey];
 }
 
 @end
