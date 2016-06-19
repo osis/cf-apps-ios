@@ -61,7 +61,7 @@ class AppViewController: UIViewController {
     }
     
     func fetchSummary() {
-        servicesTableView.tableFooterView = loadingCell()
+        servicesTableView.tableFooterView = LoadingIndicatorView()
         let urlRequest = CFRequest.AppSummary(app!.guid)
         CFApi().request(urlRequest,
             success: { (json) in
@@ -102,7 +102,7 @@ class AppViewController: UIViewController {
     }
     
     func fetchStats() {
-        instancesTableView.tableFooterView = loadingCell()
+        instancesTableView.tableFooterView = LoadingIndicatorView()
         
         let urlRequest = CFRequest.AppStats(app!.guid)
         CFApi().request(urlRequest,
@@ -166,13 +166,6 @@ class AppViewController: UIViewController {
             self.app = nil
             nameLabel.text = "Error"
         }
-    }
-    
-    func loadingCell() -> UIActivityIndicatorView {
-        let spinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
-        spinner.startAnimating()
-        spinner.frame = CGRectMake(0, 0, 320, 44)
-        return spinner
     }
     
     @IBAction func browseButtonPushed(sender: UIBarButtonItem) {
