@@ -7,10 +7,10 @@ protocol EndpointPickerDelegate: NSObjectProtocol {
 
 class EndpointPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
     var pickerData: [String] = [
-        "Atos", "IBM BlueMix", "Pivotal Web Services", "Predix", "Other"
+        "Atos", "IBM BlueMix", "Pivotal Web Services", "Predix", "Swisscom Application Cloud", "Other"
     ]
     var pickerValues: [String?] = [
-        "https://api.sys.eu01.cf.canopy-cloud.com", "https://api.ng.bluemix.net", "https://api.run.pivotal.io", "https://api.system.aws-usw02-pr.ice.predix.io", nil
+        "https://api.sys.eu01.cf.canopy-cloud.com", "https://api.ng.bluemix.net", "https://api.run.pivotal.io", "https://api.system.aws-usw02-pr.ice.predix.io", "https://api.lyra-836.appcloud.swisscom.com", nil
     ]
     var endpointPickerDelegate: EndpointPickerDelegate?
 
