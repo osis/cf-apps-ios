@@ -6,10 +6,7 @@ import Locksmith
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var dataStack: DATAStack = {
-        let dataStack = DATAStack(modelName: "CFStore")
-        return dataStack
-    }()
+    lazy var dataStack: DATAStack = DATAStack(modelName: "CFStore")
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         if (Keychain.hasCredentials()) {

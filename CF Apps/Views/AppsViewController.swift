@@ -17,7 +17,6 @@ class AppsViewController: UITableViewController {
     var dataStack: DATAStack?
     var token:String?
     var items = [CFApp]()
-    var requestCount = 0
     var currentPage = 1
     var totalPages:Int?
     var orgPickerLabels = [String]()
@@ -30,7 +29,6 @@ class AppsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.refreshControl!.beginRefreshing()
-        self.requestCount = 3
         fetchOrganizations()
     }
     
@@ -75,7 +73,6 @@ class AppsViewController: UITableViewController {
     @IBAction func refresh(sender: UIRefreshControl) {
         dispatch_async(dispatch_get_main_queue()) {
             self.currentPage = 1
-            self.requestCount = 3
             self.fetchOrganizations()
         }
     }
@@ -125,20 +122,12 @@ class AppsViewController: UITableViewController {
         if CFSession.isOrgStale(orgGuids) {
             CFSession.setOrg(orgGuids[0])
         }
-    
-        self.fetchApplications()
         
         let resources = json["resources"].arrayObject as! [[String:AnyObject]]
-        Sync.changes(
-            resources,
-            inEntityNamed: "CFOrg",
-            predicate: nil,
-            dataStack: self.dataStack!,
-            completion: { error in
-                print("--- Orgs Synced")
-                self.fetchCurrentObjects()
-            }
-        )
+        CFStore.Orgs(resources, self.dataStack!, { error in
+            print("--- Orgs Synced")
+            self.fetchApplications()
+        }).sync()
     }
     
     func enableOrgsFilter() {
@@ -162,19 +151,16 @@ class AppsViewController: UITableViewController {
     }
     
     func fetchCurrentObjects() {
-        self.requestCount -= 1
-        if self.requestCount == 0 {
-            let request = NSFetchRequest(entityName: "CFApp")
-            request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
-            
-            try! items = dataStack!.mainContext.executeFetchRequest(request) as! [CFApp]
-            
-            tableView.reloadData()
-            
-            self.refreshControl!.endRefreshing()
-            setRefreshTitle("Refresh Apps")
-            self.tableView.tableFooterView = nil
-        }
+        let request = NSFetchRequest(entityName: "CFApp")
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        
+        try! items = dataStack!.mainContext.executeFetchRequest(request) as! [CFApp]
+        
+        tableView.reloadData()
+        
+        self.refreshControl!.endRefreshing()
+        setRefreshTitle("Refresh Apps")
+        self.tableView.tableFooterView = nil
     }
     
     func handleAppsResponse(json: JSON) {
@@ -186,22 +172,13 @@ class AppsViewController: UITableViewController {
         }
         
         self.totalPages = json["total_pages"].intValue
-
-        let predicate: NSPredicate? = (currentPage > 1) ? NSPredicate(format: "guid == ''") : nil
-        
-        self.fetchSpaces(appGuids)
         
         let resources = json["resources"].arrayObject as! [[String:AnyObject]]
-        Sync.changes(
-            resources,
-            inEntityNamed: "CFApp",
-            predicate: predicate,
-            dataStack: self.dataStack!,
-            completion: { error in
-                print("--- Apps Synced")
-                self.fetchCurrentObjects()
-            }
-        )
+        let clear = currentPage == 1
+        CFStore.Apps(resources, self.dataStack!, clear, { error in
+            print("--- Apps Synced")
+            self.fetchSpaces(appGuids)
+        }).sync()
     }
     
     func fetchSpaces(appGuids: [String]) {
@@ -219,16 +196,10 @@ class AppsViewController: UITableViewController {
 
     func handleSpacesResponse(json: JSON) {
         let resources = json["resources"].arrayObject as! [[String:AnyObject]]
-        Sync.changes(
-            resources,
-            inEntityNamed: "CFSpace",
-            predicate: nil,
-            dataStack: self.dataStack!,
-            completion: { error in
-                self.fetchCurrentObjects()
-                print("--- Spaces Synced")
-            }
-        )
+        CFStore.Spaces(resources, self.dataStack!, { (error) in
+            print("--- Spaces Synced")
+            self.fetchCurrentObjects()
+        }).sync()
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -239,7 +210,6 @@ class AppsViewController: UITableViewController {
         if (items.count > 1 && indexPath.row == items.count-1 && currentPage < totalPages) {
             currentPage += 1
             self.tableView.tableFooterView = loadingCell()
-            self.requestCount = 2
             fetchApplications()
         }
     }
