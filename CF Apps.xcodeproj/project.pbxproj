@@ -32,6 +32,7 @@
 		65671C331B97D858003F4DC9 /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65671C321B97D857003F4DC9 /* AppViewController.swift */; };
 		65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65782EE91BC08A510005040F /* InstancesViewController.swift */; };
 		65A310D01C8BE0A50058C8C4 /* CFResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D050C21C83E0F5009C913E /* CFResponse.swift */; };
+		65ABCB161D16613000268563 /* CFStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ABCB151D16613000268563 /* CFStore.swift */; };
 		65B010731C1E684000CECF07 /* CFSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B010721C1E684000CECF07 /* CFSpace.swift */; };
 		65C6FE3B1C6F9EEA0083C4A1 /* EndpointPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6FE3A1C6F9EEA0083C4A1 /* EndpointPicker.swift */; };
 		65C6FE431C70463D0083C4A1 /* CFApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44411B532531009ED489 /* CFApi.swift */; };
@@ -93,6 +94,7 @@
 		655B44411B532531009ED489 /* CFApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFApi.swift; sourceTree = "<group>"; };
 		65671C321B97D857003F4DC9 /* AppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
 		65782EE91BC08A510005040F /* InstancesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstancesViewController.swift; sourceTree = "<group>"; };
+		65ABCB151D16613000268563 /* CFStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFStore.swift; sourceTree = "<group>"; };
 		65B010721C1E684000CECF07 /* CFSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFSpace.swift; sourceTree = "<group>"; };
 		65C6FE3A1C6F9EEA0083C4A1 /* EndpointPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointPicker.swift; sourceTree = "<group>"; };
 		65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewControllerTests.swift; path = "CF AppsTests/Views/LoginViewControllerTests.swift"; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 		655B44331B530622009ED489 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				65ABCB151D16613000268563 /* CFStore.swift */,
 				655B44341B530622009ED489 /* CFStore.xcdatamodeld */,
 				655B443D1B530868009ED489 /* Keychain.swift */,
 			);
@@ -545,6 +548,7 @@
 				655B443C1B530622009ED489 /* CFRequest.swift in Sources */,
 				65DF28A71BEEF11F0081B834 /* ServicesViewController.swift in Sources */,
 				65E2D0071CA856010038396A /* CFLogs.swift in Sources */,
+				65ABCB161D16613000268563 /* CFStore.swift in Sources */,
 				65C6FE3B1C6F9EEA0083C4A1 /* EndpointPicker.swift in Sources */,
 				653CC9771CBB2EC600315E22 /* LogMessageString.swift in Sources */,
 				655B44401B530E1A009ED489 /* LoginViewController.swift in Sources */,

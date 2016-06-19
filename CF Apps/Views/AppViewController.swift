@@ -86,16 +86,9 @@ class AppViewController: UIViewController {
         let delegate = servicesTableView.delegate as! ServicesViewController
         delegate.services = json["services"]
         
-        let predicate = NSPredicate(format: "guid == ''")
-        Sync.changes(
-            [json.dictionaryObject!],
-            inEntityNamed: "CFApp",
-            predicate: predicate,
-            dataStack: self.dataStack!,
-            completion: { error in
-                self.setSummary(self.app!.guid)
-            }
-        )
+        CFStore.App([json.dictionaryObject!], self.dataStack!, self.app!.guid, { (error) in
+            self.setSummary(self.app!.guid)
+        }).sync()
         
         dispatch_async(dispatch_get_main_queue(), {
             self.servicesTableView.tableFooterView = nil
