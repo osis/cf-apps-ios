@@ -33,6 +33,7 @@
 		65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65782EE91BC08A510005040F /* InstancesViewController.swift */; };
 		65A310D01C8BE0A50058C8C4 /* CFResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D050C21C83E0F5009C913E /* CFResponse.swift */; };
 		65ABCB161D16613000268563 /* CFStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ABCB151D16613000268563 /* CFStore.swift */; };
+		65ABCB181D17256800268563 /* AppTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ABCB171D17256800268563 /* AppTableViewCell.swift */; };
 		65B010731C1E684000CECF07 /* CFSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B010721C1E684000CECF07 /* CFSpace.swift */; };
 		65C6FE3B1C6F9EEA0083C4A1 /* EndpointPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6FE3A1C6F9EEA0083C4A1 /* EndpointPicker.swift */; };
 		65C6FE431C70463D0083C4A1 /* CFApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44411B532531009ED489 /* CFApi.swift */; };
@@ -48,6 +49,7 @@
 		65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE6FCD1B4712B30047519D /* AppDelegate.swift */; };
 		65EE6FDD1B4713E80047519D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FD91B4713E80047519D /* LaunchScreen.xib */; };
 		65EE6FDE1B4713E80047519D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FDB1B4713E80047519D /* Main.storyboard */; };
+		65F523671D17357A00EA4F0E /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F523661D17357A00EA4F0E /* LoadingIndicatorView.swift */; };
 		D81CB45E1CF6C4050038ADC1 /* CFEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81CB45D1CF6C4050038ADC1 /* CFEventTests.swift */; };
 		D821273F1CF2787E0053E6B2 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D821273E1CF2787E0053E6B2 /* EventsViewController.swift */; };
 		D821274C1CF2A21D0053E6B2 /* CFEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82127491CF280890053E6B2 /* CFEvent.swift */; };
@@ -95,6 +97,7 @@
 		65671C321B97D857003F4DC9 /* AppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
 		65782EE91BC08A510005040F /* InstancesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstancesViewController.swift; sourceTree = "<group>"; };
 		65ABCB151D16613000268563 /* CFStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFStore.swift; sourceTree = "<group>"; };
+		65ABCB171D17256800268563 /* AppTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTableViewCell.swift; sourceTree = "<group>"; };
 		65B010721C1E684000CECF07 /* CFSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFSpace.swift; sourceTree = "<group>"; };
 		65C6FE3A1C6F9EEA0083C4A1 /* EndpointPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointPicker.swift; sourceTree = "<group>"; };
 		65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewControllerTests.swift; path = "CF AppsTests/Views/LoginViewControllerTests.swift"; sourceTree = "<group>"; };
@@ -110,6 +113,7 @@
 		65EE6FCD1B4712B30047519D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "CF Apps/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		65EE6FDA1B4713E80047519D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "CF Apps/Base.lproj/LaunchScreen.xib"; sourceTree = SOURCE_ROOT; };
 		65EE6FDC1B4713E80047519D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "CF Apps/Base.lproj/Main.storyboard"; sourceTree = SOURCE_ROOT; };
+		65F523661D17357A00EA4F0E /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorView.swift; sourceTree = "<group>"; };
 		7E21BB8FBBD04AC0F74A2F75 /* Pods_CF_Apps_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CF_Apps_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6B4CF2776DCC7B25A08373C /* Pods_CF_Apps.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CF_Apps.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7392E0C72474973D2150466 /* Pods-CF Apps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CF Apps.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CF Apps/Pods-CF Apps.debug.xcconfig"; sourceTree = "<group>"; };
@@ -252,10 +256,12 @@
 			isa = PBXGroup;
 			children = (
 				655B442C1B5305FD009ED489 /* AppsViewController.swift */,
+				65ABCB171D17256800268563 /* AppTableViewCell.swift */,
 				65671C321B97D857003F4DC9 /* AppViewController.swift */,
 				65C6FE3A1C6F9EEA0083C4A1 /* EndpointPicker.swift */,
 				D821273E1CF2787E0053E6B2 /* EventsViewController.swift */,
 				65782EE91BC08A510005040F /* InstancesViewController.swift */,
+				65F523661D17357A00EA4F0E /* LoadingIndicatorView.swift */,
 				655B443F1B530E1A009ED489 /* LoginViewController.swift */,
 				653CC9761CBB2EC600315E22 /* LogMessageString.swift */,
 				65414EA51CA7610900B17589 /* LogsViewController.swift */,
@@ -562,7 +568,9 @@
 				D821273F1CF2787E0053E6B2 /* EventsViewController.swift in Sources */,
 				65C7A8B61CAB957700BA1ADC /* LogMessage.proto.swift in Sources */,
 				65414EA61CA7610900B17589 /* LogsViewController.swift in Sources */,
+				65F523671D17357A00EA4F0E /* LoadingIndicatorView.swift in Sources */,
 				65B010731C1E684000CECF07 /* CFSpace.swift in Sources */,
+				65ABCB181D17256800268563 /* AppTableViewCell.swift in Sources */,
 				655B443E1B530869009ED489 /* Keychain.swift in Sources */,
 				653E2F0C1C289A38008CFC10 /* CFSession.swift in Sources */,
 				654C87991C1A40DF00C0C79C /* CFOrg.swift in Sources */,

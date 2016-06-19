@@ -209,49 +209,17 @@ class AppsViewController: UITableViewController {
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if (items.count > 1 && indexPath.row == items.count-1 && currentPage < totalPages) {
             currentPage += 1
-            self.tableView.tableFooterView = loadingCell()
+            self.tableView.tableFooterView = LoadingIndicatorView()
             fetchApplications()
         }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return appCell(indexPath)
-    }
-    
-    func appCell(indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as UITableViewCell!
-        let cfApp = self.items[indexPath.row]
+        let cell = self.tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as! AppTableViewCell
+        let app = self.items[indexPath.row]
+        cell.render(app, dataStack: self.dataStack!)
         
-        let appNameLabel: UILabel = cell.viewWithTag(1) as! UILabel
-        let memLabel: UILabel = cell.viewWithTag(2) as! UILabel
-        let diskLabel: UILabel = cell.viewWithTag(3) as! UILabel
-        let stateView: UIImageView = cell.viewWithTag(4) as! UIImageView
-        let buildpackLabel: UILabel = cell.viewWithTag(5) as! UILabel
-        let spaceLabel: UILabel = cell.viewWithTag(6) as! UILabel
-        
-        let request = NSFetchRequest(entityName: "CFSpace")
-        request.predicate = NSPredicate(format: "guid == %@", cfApp.spaceGuid)
-        do {
-            let spaces = try dataStack!.mainContext.executeFetchRequest(request)
-            if spaces.count != 0 { spaceLabel.text = spaces[0].name }
-        } catch {
-            spaceLabel.text = "N/A"
-        }
-        
-        appNameLabel.text = cfApp.name
-        memLabel.text = cfApp.formattedMemory()
-        diskLabel.text = cfApp.formattedDiskQuota()
-        stateView.image = UIImage(named: cfApp.statusImageName())
-        buildpackLabel.text = cfApp.activeBuildpack()
-    
         return cell
-    }
-    
-    func loadingCell() -> UIActivityIndicatorView {
-        let spinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
-        spinner.startAnimating()
-        spinner.frame = CGRectMake(0, 0, 320, 44)
-        return spinner
     }
     
     @IBAction func logoutClicked(sender: UIBarButtonItem) {
