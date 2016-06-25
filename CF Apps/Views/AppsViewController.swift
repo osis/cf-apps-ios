@@ -126,7 +126,7 @@ class AppsViewController: UITableViewController {
         let resources = json["resources"].arrayObject as! [[String:AnyObject]]
         CFStore.Orgs(resources, self.dataStack!, { error in
             print("--- Orgs Synced")
-            self.fetchApplications()
+            if !CFSession.isEmpty() { self.fetchApplications() }
         }).sync()
     }
     
@@ -177,7 +177,7 @@ class AppsViewController: UITableViewController {
         let clear = currentPage == 1
         CFStore.Apps(resources, self.dataStack!, clear, { error in
             print("--- Apps Synced")
-            self.fetchSpaces(appGuids)
+            if !CFSession.isEmpty() { self.fetchSpaces(appGuids) }
         }).sync()
     }
     
@@ -198,7 +198,7 @@ class AppsViewController: UITableViewController {
         let resources = json["resources"].arrayObject as! [[String:AnyObject]]
         CFStore.Spaces(resources, self.dataStack!, { (error) in
             print("--- Spaces Synced")
-            self.fetchCurrentObjects()
+            if !CFSession.isEmpty() { self.fetchCurrentObjects() }
         }).sync()
     }
     
