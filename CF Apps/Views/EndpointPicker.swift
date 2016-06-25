@@ -6,13 +6,11 @@ protocol EndpointPickerDelegate: NSObjectProtocol {
 }
 
 class EndpointPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
-    var pickerData: [String] = [
-        "Atos", "IBM BlueMix", "Pivotal Web Services", "Predix", "Swisscom Application Cloud", "Other"
-    ]
-    var pickerValues: [String?] = [
-        "https://api.sys.eu01.cf.canopy-cloud.com", "https://api.ng.bluemix.net", "https://api.run.pivotal.io", "https://api.system.aws-usw02-pr.ice.predix.io", "https://api.lyra-836.appcloud.swisscom.com", nil
-    ]
     var endpointPickerDelegate: EndpointPickerDelegate?
+    var vendors: NSArray {
+        let list = NSBundle.mainBundle().pathForResource("Vendors", ofType: "plist")!
+        return NSArray(contentsOfFile: list)!
+    }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -22,7 +20,7 @@ class EndpointPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource
     func setup() {
         delegate = self
         dataSource = self
-        self.selectRow(2, inComponent: 0, animated: false)
+        self.selectRow(4, inComponent: 0, animated: false)
     }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
@@ -30,15 +28,18 @@ class EndpointPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
+        return vendors.count
     }
     
     func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: pickerData[row], attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        let title = vendors[row].valueForKey("Name") as! String
+        return NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if let endpointValue = pickerValues[row] {
+        let target = vendors[row].valueForKey("Target") as? String
+        debugPrint(target)
+        if let endpointValue = target {
             endpointPickerDelegate?.endpointPickerView(didSelectURL: endpointValue)
         } else {
             endpointPickerDelegate?.endpointPickerView(didSelectURL: nil)

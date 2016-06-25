@@ -45,6 +45,7 @@
 		65DF28A91BEEFD4C0081B834 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DF28A81BEEFD4C0081B834 /* Service.swift */; };
 		65E2D0071CA856010038396A /* CFLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E2D0061CA856010038396A /* CFLogs.swift */; };
 		65E2D00C1CA8700F0038396A /* CFLogsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E2D0081CA868C00038396A /* CFLogsTests.swift */; };
+		65EBCB851D1EE49100545CEF /* Vendors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65EBCB841D1EE49100545CEF /* Vendors.plist */; };
 		65EE6FCC1B4712A70047519D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FCB1B4712A70047519D /* Images.xcassets */; };
 		65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE6FCD1B4712B30047519D /* AppDelegate.swift */; };
 		65EE6FDD1B4713E80047519D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FD91B4713E80047519D /* LaunchScreen.xib */; };
@@ -109,6 +110,7 @@
 		65DF28A81BEEFD4C0081B834 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		65E2D0061CA856010038396A /* CFLogs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFLogs.swift; sourceTree = "<group>"; };
 		65E2D0081CA868C00038396A /* CFLogsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFLogsTests.swift; path = "CF AppsTests/Network/CFLogsTests.swift"; sourceTree = "<group>"; };
+		65EBCB841D1EE49100545CEF /* Vendors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Vendors.plist; path = "CF Apps/Supporting Files/Vendors.plist"; sourceTree = SOURCE_ROOT; };
 		65EE6FCB1B4712A70047519D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "CF Apps/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		65EE6FCD1B4712B30047519D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "CF Apps/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		65EE6FDA1B4713E80047519D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "CF Apps/Base.lproj/LaunchScreen.xib"; sourceTree = SOURCE_ROOT; };
@@ -275,6 +277,7 @@
 		655B44301B53060E009ED489 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				65EBCB841D1EE49100545CEF /* Vendors.plist */,
 				655B44311B53060E009ED489 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -431,6 +434,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65EBCB851D1EE49100545CEF /* Vendors.plist in Resources */,
 				65EE6FDD1B4713E80047519D /* LaunchScreen.xib in Resources */,
 				65EE6FDE1B4713E80047519D /* Main.storyboard in Resources */,
 				65EE6FCC1B4712A70047519D /* Images.xcassets in Resources */,
