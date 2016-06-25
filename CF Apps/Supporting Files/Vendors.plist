@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Name</key>
+		<string>AppFog East</string>
+		<key>Target</key>
+		<string>https://api.useast.appfog.ctl.io</string>
+		<key>URL</key>
+		<string>https://ca.ctl.io/appfog</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>AppFog West</string>
+		<key>Target</key>
+		<string>https://api.uswest.appfog.ctl.io</string>
+		<key>URL</key>
+		<string>https://ca.ctl.io/appfog</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Atos</string>
+		<key>Target</key>
+		<string>https://api.sys.eu01.cf.canopy-cloud.com</string>
+		<key>URL</key>
+		<string>https://canopy-cloud.com/application-platforms/atos-cloud-foundry</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>IBM BlueMix</string>
+		<key>Target</key>
+		<string>https://api.ng.bluemix.net</string>
+		<key>URL</key>
+		<string>http://www.ibm.com/cloud-computing/bluemix</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Pivotal Web Services</string>
+		<key>Target</key>
+		<string>https://api.run.pivotal.io</string>
+		<key>URL</key>
+		<string>http://run.pivotal.io</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Predix</string>
+		<key>Target</key>
+		<string>https://api.system.aws-usw02-pr.ice.predix.io</string>
+		<key>URL</key>
+		<string>https://www.predix.io</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Swisscom Application Cloud</string>
+		<key>Target</key>
+		<string>https://api.lyra-836.appcloud.swisscom.com</string>
+		<key>URL</key>
+		<string>https://developer.swisscom.com</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Other</string>
+	</dict>
+</array>
+</plist>
