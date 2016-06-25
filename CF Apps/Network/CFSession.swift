@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import Alamofire
 
 class CFSession {
     static let loginAuthToken = "Y2Y6"
@@ -26,7 +27,7 @@ class CFSession {
     
     class func reset() {
         let domain = NSBundle.mainBundle().bundleIdentifier
-        
+       
         Keychain.clearCredentials()
         CFSession.oauthToken = nil
         NSUserDefaults.standardUserDefaults().removePersistentDomainForName(domain!)
@@ -46,6 +47,12 @@ class CFSession {
     
     class func isOrgStale(currentOrgs: [String]) -> Bool {
         return CFSession.getOrg() == nil || !currentOrgs.contains(CFSession.getOrg()!)
+    }
+    
+    class func cancelRequests() {
+        Alamofire.Manager.sharedInstance.session.getAllTasksWithCompletionHandler { tasks in
+            tasks.forEach { $0.cancel() }
+        }
     }
     
     class func logout(hadAuthError: Bool = false) {
