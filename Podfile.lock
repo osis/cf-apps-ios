@@ -1,6 +1,6 @@
 PODS:
   - ActionSheetPicker-3.0 (2.0.4)
-  - Alamofire (3.2.0)
+  - Alamofire (3.4.1)
   - DATAFilter (0.10.0):
     - DATAObjectIDs (~> 0.5.1)
   - DATAObjectIDs (0.5.1)
@@ -33,7 +33,7 @@ PODS:
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0 (~> 2.0.4)
-  - Alamofire (~> 3.0)
+  - Alamofire (~> 3.4.0)
   - Locksmith (~> 2.0.0)
   - Mockingjay
   - ProtocolBuffers-Swift (~> 2.4.3)
@@ -43,7 +43,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: 860466cb4a66854e6acb590071ecee404b48f49d
-  Alamofire: 4da478599fccddff361205c8929333d7fe18dceb
+  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
   DATAFilter: b6662b05dd0dcf658d526aa0f9095bb202d7b10e
   DATAObjectIDs: 33db74dd1c858c2d22a45a4013c95f1082182e4e
   DATAStack: c6432c89d0bd2b1d2a17c947ca8a2c81f389f06d
@@ -59,6 +59,6 @@ SPEC CHECKSUMS:
   Sync: f39edb4e3b931fdc387e836200c235a54750e072
   URITemplate: 398a48d6559e23b77bd41176b675b017ad1fc959
 
-PODFILE CHECKSUM: d87ed2755400e1b13929d6cffa7b7beb5f2937aa
+PODFILE CHECKSUM: 4bf10a4b113b0dbae1feda78ade4478a628c48a0
 
 COCOAPODS: 1.0.1
