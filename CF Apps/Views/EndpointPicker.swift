@@ -38,7 +38,6 @@ class EndpointPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let target = vendors[row].valueForKey("Target") as? String
-        debugPrint(target)
         if let endpointValue = target {
             endpointPickerDelegate?.endpointPickerView(didSelectURL: endpointValue)
         } else {
