@@ -4,6 +4,14 @@
 <array>
 	<dict>
 		<key>Name</key>
+		<string>anynines</string>
+		<key>Target</key>
+		<string>https://api.aws.ie.a9s.eu</string>
+		<key>URL</key>
+		<string>https://paas.anynines.com</string>
+	</dict>
+	<dict>
+		<key>Name</key>
 		<string>AppFog East</string>
 		<key>Target</key>
 		<string>https://api.useast.appfog.ctl.io</string>
