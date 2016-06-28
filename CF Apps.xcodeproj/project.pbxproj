@@ -12,6 +12,7 @@
 		65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65032FED1B75B01A007E7DA3 /* KeychainTests.swift */; };
 		65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B443D1B530868009ED489 /* Keychain.swift */; };
 		6503CC611C9BAF9B000BA838 /* apps.json in Resources */ = {isa = PBXBuildFile; fileRef = 6503CC5E1C9BAE90000BA838 /* apps.json */; };
+		6512BC991D2206B000FD87EB /* VendorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6512BC971D2206A400FD87EB /* VendorsTests.swift */; };
 		652CA1C31CB200E3004B714A /* LogsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652CA1C11CB1FF37004B714A /* LogsViewControllerTests.swift */; };
 		652DE6011C29B1EB00411438 /* CFSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652DE5FF1C29B10700411438 /* CFSessionTests.swift */; };
 		653CC9751CBAD5A700315E22 /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CC9731CBAD5A300315E22 /* AppDelegateTests.swift */; };
@@ -75,6 +76,7 @@
 		65032FE51B61CDED007E7DA3 /* CFAppsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFAppsTests.swift; path = "CF AppsTests/Models/CFAppsTests.swift"; sourceTree = "<group>"; };
 		65032FED1B75B01A007E7DA3 /* KeychainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainTests.swift; path = "CF AppsTests/Data/KeychainTests.swift"; sourceTree = "<group>"; };
 		6503CC5E1C9BAE90000BA838 /* apps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = apps.json; path = "CF AppsTests/Network/Fixtures/apps.json"; sourceTree = "<group>"; };
+		6512BC971D2206A400FD87EB /* VendorsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VendorsTests.swift; path = "CF AppsTests/Supporting Files/VendorsTests.swift"; sourceTree = "<group>"; };
 		651C84761B2A7FB50006DC3A /* CF Apps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CF Apps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		651C848E1B2A7FB60006DC3A /* CF Apps Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CF Apps Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		652CA1C11CB1FF37004B714A /* LogsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogsViewControllerTests.swift; path = "CF AppsTests/Views/LogsViewControllerTests.swift"; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				65032FEA1B75ADC9007E7DA3 /* Data */,
 				65032FE21B61CD39007E7DA3 /* Models */,
 				6547EBA91B76CFCC00C1E13E /* Network */,
+				6512BC9A1D223C2700FD87EB /* Suppoting Files */,
 				65C6FE3C1C7043240083C4A1 /* Views */,
 			);
 			name = "CF Apps Tests";
@@ -195,6 +198,14 @@
 				6503CC5E1C9BAE90000BA838 /* apps.json */,
 			);
 			name = Fixtures;
+			sourceTree = "<group>";
+		};
+		6512BC9A1D223C2700FD87EB /* Suppoting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6512BC971D2206A400FD87EB /* VendorsTests.swift */,
+			);
+			name = "Suppoting Files";
 			sourceTree = "<group>";
 		};
 		651C846D1B2A7FB50006DC3A = {
@@ -277,8 +288,8 @@
 		655B44301B53060E009ED489 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				65EBCB841D1EE49100545CEF /* Vendors.plist */,
 				655B44311B53060E009ED489 /* Info.plist */,
+				65EBCB841D1EE49100545CEF /* Vendors.plist */,
 			);
 			name = "Supporting Files";
 			path = "CF Apps/Supporting Files";
@@ -586,6 +597,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65C8E1E81CB06401004FD199 /* LoginViewControllerTests.swift in Sources */,
+				6512BC991D2206B000FD87EB /* VendorsTests.swift in Sources */,
 				653CC97D1CBB391600315E22 /* LogMessageStringTests.swift in Sources */,
 				D8C516B61C73F21E00D15187 /* CFApiTests.swift in Sources */,
 				654C1D8E1C8D4702001F2002 /* CFResponse.swift in Sources */,
