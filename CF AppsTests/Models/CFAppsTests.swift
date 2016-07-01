@@ -9,21 +9,15 @@ class CFAppsTests: XCTestCase {
     var dataStack: DATAStack?
     
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
         super.setUp()
         
         self.dataStack = DATAStack(modelName: "CFStore", bundle: NSBundle(forClass: CFAppsTests.self), storeType: DATAStackStoreType.InMemory)
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
         
-        do {
-            try self.dataStack?.drop()
-        } catch {
-            debugPrint("Cannot drop DB")
-        }
+        try! self.dataStack?.drop()
     }
     
     func makeApp() -> CFApp {

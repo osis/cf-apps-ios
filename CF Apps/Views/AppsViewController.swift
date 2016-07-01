@@ -124,10 +124,10 @@ class AppsViewController: UITableViewController {
         }
         
         let resources = json["resources"].arrayObject as! [[String:AnyObject]]
-        CFStore.Orgs(resources, self.dataStack!, { error in
+        CFStore(dataStack: self.dataStack!).syncOrgs(resources, completion: { error in
             print("--- Orgs Synced")
             if !CFSession.isEmpty() { self.fetchApplications() }
-        }).sync()
+        })
     }
     
     func enableOrgsFilter() {
@@ -151,10 +151,7 @@ class AppsViewController: UITableViewController {
     }
     
     func fetchCurrentObjects() {
-        let request = NSFetchRequest(entityName: "CFApp")
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
-        
-        try! items = dataStack!.mainContext.executeFetchRequest(request) as! [CFApp]
+        items = CFStore(dataStack: self.dataStack!).fetchApps()
         
         tableView.reloadData()
         
@@ -175,10 +172,10 @@ class AppsViewController: UITableViewController {
         
         let resources = json["resources"].arrayObject as! [[String:AnyObject]]
         let clear = currentPage == 1
-        CFStore.Apps(resources, self.dataStack!, clear, { error in
+        CFStore(dataStack: self.dataStack!).syncApps(resources, clear: clear, completion: { error in
             print("--- Apps Synced")
             if !CFSession.isEmpty() { self.fetchSpaces(appGuids) }
-        }).sync()
+        })
     }
     
     func fetchSpaces(appGuids: [String]) {
@@ -196,10 +193,10 @@ class AppsViewController: UITableViewController {
 
     func handleSpacesResponse(json: JSON) {
         let resources = json["resources"].arrayObject as! [[String:AnyObject]]
-        CFStore.Spaces(resources, self.dataStack!, { (error) in
+        CFStore(dataStack: self.dataStack!).syncSpaces(resources, completion: { (error) in
             print("--- Spaces Synced")
             if !CFSession.isEmpty() { self.fetchCurrentObjects() }
-        }).sync()
+        })
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
