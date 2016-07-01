@@ -86,9 +86,9 @@ class AppViewController: UIViewController {
         let delegate = servicesTableView.delegate as! ServicesViewController
         delegate.services = json["services"]
         
-        CFStore.App([json.dictionaryObject!], self.dataStack!, self.app!.guid, { (error) in
+        CFStore(dataStack: self.dataStack!).syncApp(json.dictionaryObject!, guid: self.app!.guid, completion: { (error) in
             self.setSummary(self.app!.guid)
-        }).sync()
+        })
         
         dispatch_async(dispatch_get_main_queue(), {
             self.servicesTableView.tableFooterView = nil
@@ -148,13 +148,8 @@ class AppViewController: UIViewController {
     }
     
     func setSummary(guid: String) {
-        let request = NSFetchRequest(entityName: "CFApp")
-        let predicate = NSPredicate(format: "guid == %@", guid)
-        request.predicate = predicate
-        
         do {
-            let apps = try dataStack!.mainContext.executeFetchRequest(request) as! [CFApp]
-            self.app = apps[0]
+            self.app = try CFStore(dataStack: self.dataStack!).fetchApp(app!.guid)
             
             nameLabel.text = app!.name
             stateLabel.text = app!.state

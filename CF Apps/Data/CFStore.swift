@@ -2,60 +2,73 @@ import Foundation
 import DATAStack
 import Sync
 
-enum CFStore {
-    case App([[String : AnyObject]], DATAStack, String, (error: NSError?) -> Void)
-    case Apps([[String : AnyObject]], DATAStack, Bool, (error: NSError?) -> Void)
-    case Spaces([[String : AnyObject]], DATAStack, (error: NSError?) -> Void)
-    case Orgs([[String : AnyObject]], DATAStack, (error: NSError?) -> Void)
+struct CFStore {
+    var dataStack: DATAStack
     
-    var entityName: String {
-        switch self {
-        case .App:
-            return "CFApp"
-        case .Apps:
-            return "CFApp"
-        case .Spaces:
-            return "CFSpace"
-        case .Orgs:
-            return "CFOrg"
-        }
-    }
-    
-    func sync() {
-        var clear: Bool = true
-        var data: [[String : AnyObject]]?
-        var dataStack: DATAStack?
-        var completion: ((error: NSError?) -> Void)?
-        var predicate: NSPredicate? = nil
-        
-        switch self {
-        case .App(let _data, let _dataStack, let _guid, let _completion):
-            data = _data
-            dataStack = _dataStack
-            completion = _completion
-            predicate = NSPredicate(format: "guid == '\(_guid)'")
-        case .Apps(let _data, let _dataStack, let _clear, let _completion):
-            data = _data
-            dataStack = _dataStack
-            clear = _clear
-            completion = _completion
-            predicate = (clear) ? nil : NSPredicate(format: "guid == ''")
-        case .Spaces(let _data, let _dataStack, let _completion):
-            data = _data
-            dataStack = _dataStack
-            completion = _completion
-        case .Orgs(let _data, let _dataStack, let _completion):
-            data = _data
-            dataStack = _dataStack
-            completion = _completion
-        }
+    func syncApp(data: [String : AnyObject], guid: String, completion: (error: NSError?) -> Void) -> Void {
+        let predicate = NSPredicate(format: "guid == '\(guid)'")
         
         Sync.changes(
-            data!,
-            inEntityNamed: entityName,
+            [data],
+            inEntityNamed: "CFApp",
             predicate: predicate,
-            dataStack: dataStack!,
-            completion: completion!
+            dataStack: dataStack,
+            completion: completion
         )
+    }
+    
+    func syncApps(data: [[String : AnyObject]], clear: Bool, completion: (error: NSError?) -> Void) -> Void {
+        let predicate: NSPredicate? = (clear) ? nil : NSPredicate(format: "guid == ''")
+        
+        Sync.changes(
+            data,
+            inEntityNamed: "CFApp",
+            predicate: predicate,
+            dataStack: dataStack,
+            completion: completion
+        )
+    }
+    
+    func syncSpaces(data: [[String : AnyObject]], completion: (error: NSError?) -> Void) -> Void {
+        Sync.changes(
+            data,
+            inEntityNamed: "CFSpace",
+            predicate: nil,
+            dataStack: dataStack,
+            completion: completion
+        )
+    }
+    
+    func syncOrgs(data: [[String : AnyObject]], completion: (error: NSError?) -> Void) -> Void {
+        Sync.changes(
+            data,
+            inEntityNamed: "CFOrg",
+            predicate: nil,
+            dataStack: dataStack,
+            completion: completion
+        )
+    }
+    
+    func fetchApp(guid: String) throws -> CFApp {
+        let request = NSFetchRequest(entityName: "CFApp")
+        let predicate = NSPredicate(format: "guid == %@", guid)
+        
+        request.predicate = predicate
+        let apps = try dataStack.mainContext.executeFetchRequest(request) as! [CFApp]
+        return apps[0]
+    }
+    
+    func fetchApps() -> [CFApp] {
+        let request = NSFetchRequest(entityName: "CFApp")
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        
+        return try! dataStack.mainContext.executeFetchRequest(request) as! [CFApp]
+    }
+    
+    func fetchSpace(guid: String) throws -> AnyObject? {
+        let request = NSFetchRequest(entityName: "CFSpace")
+        request.predicate = NSPredicate(format: "guid == %@", guid)
+        let spaces = try dataStack.mainContext.executeFetchRequest(request)
+        return (spaces.isEmpty) ? nil : spaces[0]
     }
 }

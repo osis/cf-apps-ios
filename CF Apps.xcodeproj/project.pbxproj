@@ -13,6 +13,7 @@
 		65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B443D1B530868009ED489 /* Keychain.swift */; };
 		6503CC611C9BAF9B000BA838 /* apps.json in Resources */ = {isa = PBXBuildFile; fileRef = 6503CC5E1C9BAE90000BA838 /* apps.json */; };
 		6512BC991D2206B000FD87EB /* VendorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6512BC971D2206A400FD87EB /* VendorsTests.swift */; };
+		6512BC9D1D24B2C600FD87EB /* CFStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6512BC9B1D24B2C200FD87EB /* CFStoreTests.swift */; };
 		652CA1C31CB200E3004B714A /* LogsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652CA1C11CB1FF37004B714A /* LogsViewControllerTests.swift */; };
 		652DE6011C29B1EB00411438 /* CFSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652DE5FF1C29B10700411438 /* CFSessionTests.swift */; };
 		653CC9751CBAD5A700315E22 /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CC9731CBAD5A300315E22 /* AppDelegateTests.swift */; };
@@ -77,6 +78,7 @@
 		65032FED1B75B01A007E7DA3 /* KeychainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainTests.swift; path = "CF AppsTests/Data/KeychainTests.swift"; sourceTree = "<group>"; };
 		6503CC5E1C9BAE90000BA838 /* apps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = apps.json; path = "CF AppsTests/Network/Fixtures/apps.json"; sourceTree = "<group>"; };
 		6512BC971D2206A400FD87EB /* VendorsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VendorsTests.swift; path = "CF AppsTests/Supporting Files/VendorsTests.swift"; sourceTree = "<group>"; };
+		6512BC9B1D24B2C200FD87EB /* CFStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFStoreTests.swift; path = "CF AppsTests/Data/CFStoreTests.swift"; sourceTree = "<group>"; };
 		651C84761B2A7FB50006DC3A /* CF Apps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CF Apps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		651C848E1B2A7FB60006DC3A /* CF Apps Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CF Apps Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		652CA1C11CB1FF37004B714A /* LogsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogsViewControllerTests.swift; path = "CF AppsTests/Views/LogsViewControllerTests.swift"; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				65032FED1B75B01A007E7DA3 /* KeychainTests.swift */,
+				6512BC9B1D24B2C200FD87EB /* CFStoreTests.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */,
 				65032FE91B74507D007E7DA3 /* CFStore.xcdatamodeld in Sources */,
 				65E2D00C1CA8700F0038396A /* CFLogsTests.swift in Sources */,
+				6512BC9D1D24B2C600FD87EB /* CFStoreTests.swift in Sources */,
 				65032FE61B61CDED007E7DA3 /* CFAppsTests.swift in Sources */,
 				6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */,
 				654C1D8D1C8D46F9001F2002 /* EndpointPicker.swift in Sources */,

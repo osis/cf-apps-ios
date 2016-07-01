@@ -17,11 +17,11 @@ class AppTableViewCell: UITableViewCell {
         let buildpackLabel: UILabel = self.viewWithTag(5) as! UILabel
         let spaceLabel: UILabel = self.viewWithTag(6) as! UILabel
         
-        let request = NSFetchRequest(entityName: "CFSpace")
-        request.predicate = NSPredicate(format: "guid == %@", app.spaceGuid)
         do {
-            let spaces = try dataStack.mainContext.executeFetchRequest(request)
-            if spaces.count != 0 { spaceLabel.text = spaces[0].name }
+            let space = try CFStore(dataStack: dataStack).fetchSpace(app.spaceGuid)
+            if let s = space {
+                spaceLabel.text = s.name
+            }
         } catch {
             spaceLabel.text = "N/A"
         }

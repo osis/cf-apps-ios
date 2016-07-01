@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
     <entity name="CFApp" representedClassName="CFApp" syncable="YES">
         <attribute name="buildpack" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="command" optional="YES" attributeType="String" syncable="YES"/>
@@ -8,7 +8,7 @@
         <attribute name="diskQuota" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="guid" optional="YES" attributeType="String" syncable="YES">
             <userInfo>
-                <entry key="hyper.isPrimaryKey" value="YES"/>
+                <entry key="hyper.isPrimaryKey" value="true"/>
             </userInfo>
         </attribute>
         <attribute name="memory" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
