@@ -21,7 +21,8 @@ class VendorsTests: XCTestCase {
         vendors!.removeLastObject()
         
         for v in vendors! {
-            names.append(v.valueForKey("Name") as! String)
+            let name = v.valueForKey("Name") as! String
+            names.append(name.lowercaseString)
         }
         
         let sortedNames = names.sort()
