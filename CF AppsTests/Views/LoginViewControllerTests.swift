@@ -17,7 +17,7 @@ class LoginViewControllerTests: XCTestCase {
     func testSetup() {
         vc.setup()
         
-        XCTAssertNotNil(vc.endpointPicker.endpointPickerDelegate)
+        XCTAssertNotNil(vc.vendorPicker.vendorPickerDelegate)
         XCTAssertEqual(vc.loginView.alpha, 0)
         XCTAssertEqual(vc.apiTargetField.alpha, 0)
         XCTAssertEqual(vc.apiTargetView.alpha, 1)
@@ -50,25 +50,28 @@ class LoginViewControllerTests: XCTestCase {
         XCTAssertEqual(vc.apiTargetField.alpha, 0)
     }
     
-    func testEndpointPickerUrlChange() {
-        let url = "https://craw.now"
-        vc.endpointPickerView(didSelectURL: url)
+    func testVendorPickerUrlChange() {
+        let targetURL = "https://craw.now"
+        let signupURL = "https://craw.now/signup"
+        vc.vendorPickerView(didSelectVendor: targetURL, signupURL: signupURL)
         
         let field = vc.apiTargetField
         
         XCTAssertEqual(field.enabled, false)
         XCTAssertEqual(field.textColor, UIColor.lightGrayColor())
-        XCTAssertEqual(field.text, url)
+        XCTAssertEqual(field.text, targetURL)
+        XCTAssertEqual(vc.signupURL!.absoluteString, signupURL)
     }
     
-    func testEndpointPickerNilChange() {
-        vc.endpointPickerView(didSelectURL: nil)
+    func testVendorPickerNilChange() {
+        vc.vendorPickerView(didSelectVendor: nil, signupURL: nil)
         
         let field = vc.apiTargetField
         
         XCTAssertEqual(field.enabled, true)
         XCTAssertEqual(field.textColor, UIColor.darkGrayColor())
         XCTAssertEqual(field.text, "https://")
+        XCTAssertNil(vc.signupURL)
     }
     
     func testHideTargetForm() {
