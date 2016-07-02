@@ -1,16 +1,17 @@
 import Foundation
 import UIKit
 
-protocol EndpointPickerDelegate: NSObjectProtocol {
-    func endpointPickerView(didSelectURL url: String?)
+protocol VendorPickerDelegate: NSObjectProtocol {
+    func vendorPickerView(didSelectVendor target: String?, signupURL: String?)
 }
 
-class EndpointPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
-    var endpointPickerDelegate: EndpointPickerDelegate?
+class VendorPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
+    var vendorPickerDelegate: VendorPickerDelegate?
     var vendors: NSArray {
         let list = NSBundle.mainBundle().pathForResource("Vendors", ofType: "plist")!
         return NSArray(contentsOfFile: list)!
     }
+    let initialIndex = 5
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -20,7 +21,7 @@ class EndpointPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource
     func setup() {
         delegate = self
         dataSource = self
-        self.selectRow(4, inComponent: 0, animated: false)
+        self.selectRow(initialIndex, inComponent: 0, animated: false)
     }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
@@ -37,11 +38,12 @@ class EndpointPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let target = vendors[row].valueForKey("Target") as? String
-        if let endpointValue = target {
-            endpointPickerDelegate?.endpointPickerView(didSelectURL: endpointValue)
+        let api = vendors[row].valueForKey("Target") as? String
+        let url = vendors[row].valueForKey("URL") as? String
+        if let target = api {
+            vendorPickerDelegate?.vendorPickerView(didSelectVendor: target, signupURL: url!)
         } else {
-            endpointPickerDelegate?.endpointPickerView(didSelectURL: nil)
+            vendorPickerDelegate?.vendorPickerView(didSelectVendor: nil, signupURL: nil)
         }
     }
 }

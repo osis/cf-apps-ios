@@ -34,15 +34,15 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B6o-RX-erY" customClass="EndpointPicker" customModule="CF_Apps" customModuleProvider="target">
-                                        <rect key="frame" x="-1" y="21" width="241" height="86"/>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B6o-RX-erY" customClass="VendorPicker" customModule="CF_Apps" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="21" width="240" height="86"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="86" id="1EB-wM-Mwa"/>
                                             <constraint firstAttribute="height" constant="86" id="7l6-l7-W4V"/>
                                         </constraints>
                                     </pickerView>
                                     <textField opaque="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://api.run.pivotal.io" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4L3-oQ-vbE" userLabel="API Target Field">
-                                        <rect key="frame" x="18" y="110" width="205" height="30"/>
+                                        <rect key="frame" x="18" y="107" width="205" height="30"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="E7q-3v-8L2"/>
@@ -54,8 +54,24 @@
                                             <action selector="keyboardTargetAction:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="BSD-kP-gPr"/>
                                         </connections>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wfL-1W-ASW">
+                                        <rect key="frame" x="56" y="140" width="48" height="30"/>
+                                        <state key="normal" title="Signup">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="signupPushed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HVP-cF-YJE"/>
+                                        </connections>
+                                    </button>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="1Jf-WL-75B">
+                                        <rect key="frame" x="110" y="150" width="20" height="20"/>
+                                    </activityIndicatorView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i1c-w6-o63">
-                                        <rect key="frame" x="98" y="140" width="44" height="30"/>
+                                        <rect key="frame" x="138" y="140" width="44" height="30"/>
                                         <state key="normal" title="Target">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -64,46 +80,25 @@
                                             <action selector="targetPushed:" destination="BYZ-38-t0r" eventType="touchDown" id="fGI-lS-3sq"/>
                                         </connections>
                                     </button>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="1Jf-WL-75B">
-                                        <rect key="frame" x="110" y="150" width="20" height="20"/>
-                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="tintColor" red="0.12549019607843137" green="0.46666666666666667" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="vKC-fE-s9j" firstAttribute="centerX" secondItem="COn-d3-ARe" secondAttribute="centerX" id="1eC-Dk-OB7"/>
                                     <constraint firstItem="4L3-oQ-vbE" firstAttribute="centerX" secondItem="COn-d3-ARe" secondAttribute="centerX" id="1xv-6B-DlO"/>
                                     <constraint firstItem="vKC-fE-s9j" firstAttribute="top" secondItem="COn-d3-ARe" secondAttribute="top" id="25T-Pv-kzb"/>
-                                    <constraint firstItem="B6o-RX-erY" firstAttribute="leading" secondItem="COn-d3-ARe" secondAttribute="leading" id="3nY-Ff-PGK"/>
                                     <constraint firstAttribute="bottom" secondItem="i1c-w6-o63" secondAttribute="bottom" id="6pR-sX-CL6"/>
                                     <constraint firstAttribute="bottom" secondItem="1Jf-WL-75B" secondAttribute="bottom" id="AkX-a4-iX7"/>
-                                    <constraint firstAttribute="trailing" secondItem="4L3-oQ-vbE" secondAttribute="trailing" constant="20" id="Gf4-Xq-T95"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="170" id="Hl5-eY-7Xe"/>
                                     <constraint firstItem="1Jf-WL-75B" firstAttribute="centerX" secondItem="COn-d3-ARe" secondAttribute="centerX" id="JHu-Vg-uvu"/>
-                                    <constraint firstAttribute="trailing" secondItem="B6o-RX-erY" secondAttribute="trailing" id="Le1-cR-WBy"/>
-                                    <constraint firstItem="B6o-RX-erY" firstAttribute="centerX" secondItem="COn-d3-ARe" secondAttribute="centerX" id="Oho-bY-4st"/>
-                                    <constraint firstItem="4L3-oQ-vbE" firstAttribute="top" secondItem="B6o-RX-erY" secondAttribute="bottom" constant="8" symbolic="YES" id="QTI-m4-wLD"/>
-                                    <constraint firstItem="4L3-oQ-vbE" firstAttribute="leading" secondItem="COn-d3-ARe" secondAttribute="leading" constant="20" id="TqI-5T-DAo"/>
+                                    <constraint firstItem="B6o-RX-erY" firstAttribute="centerX" secondItem="COn-d3-ARe" secondAttribute="centerX" id="MG8-Zo-2xd"/>
                                     <constraint firstAttribute="width" constant="240" id="Xcr-lI-T3e"/>
-                                    <constraint firstItem="B6o-RX-erY" firstAttribute="centerX" secondItem="i1c-w6-o63" secondAttribute="centerX" id="a2X-Jo-lHT"/>
                                     <constraint firstItem="B6o-RX-erY" firstAttribute="top" secondItem="vKC-fE-s9j" secondAttribute="bottom" id="aYB-pi-Ms4"/>
-                                    <constraint firstItem="4L3-oQ-vbE" firstAttribute="centerX" secondItem="COn-d3-ARe" secondAttribute="centerX" id="kTM-Y7-IMb"/>
+                                    <constraint firstItem="4L3-oQ-vbE" firstAttribute="top" secondItem="B6o-RX-erY" secondAttribute="bottom" id="dwe-0A-jwc"/>
+                                    <constraint firstItem="wfL-1W-ASW" firstAttribute="centerX" secondItem="COn-d3-ARe" secondAttribute="centerX" constant="-40" id="lAY-8T-fhq"/>
                                     <constraint firstAttribute="trailing" secondItem="B6o-RX-erY" secondAttribute="trailing" id="ogg-YU-Ewf"/>
-                                    <constraint firstItem="i1c-w6-o63" firstAttribute="top" secondItem="4L3-oQ-vbE" secondAttribute="bottom" id="pf5-tP-vpg"/>
-                                    <constraint firstItem="4L3-oQ-vbE" firstAttribute="top" secondItem="B6o-RX-erY" secondAttribute="bottom" id="thL-mt-bcz"/>
-                                    <constraint firstItem="i1c-w6-o63" firstAttribute="centerX" secondItem="COn-d3-ARe" secondAttribute="centerX" id="zVg-35-sa8"/>
+                                    <constraint firstAttribute="bottom" secondItem="wfL-1W-ASW" secondAttribute="bottom" id="sQs-4e-nRe"/>
+                                    <constraint firstItem="i1c-w6-o63" firstAttribute="centerX" secondItem="COn-d3-ARe" secondAttribute="centerX" constant="40" id="zVg-35-sa8"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="3nY-Ff-PGK"/>
-                                        <exclude reference="Le1-cR-WBy"/>
-                                        <exclude reference="Oho-bY-4st"/>
-                                        <exclude reference="Gf4-Xq-T95"/>
-                                        <exclude reference="QTI-m4-wLD"/>
-                                        <exclude reference="TqI-5T-DAo"/>
-                                        <exclude reference="kTM-Y7-IMb"/>
-                                        <exclude reference="thL-mt-bcz"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rP1-JC-zlY">
                                 <rect key="frame" x="180" y="172" width="240" height="170"/>
@@ -203,13 +198,14 @@
                         <outlet property="apiTargetField" destination="4L3-oQ-vbE" id="40s-4Q-BZJ"/>
                         <outlet property="apiTargetSpinner" destination="1Jf-WL-75B" id="yeq-7R-DWm"/>
                         <outlet property="apiTargetView" destination="COn-d3-ARe" id="dNs-D6-YJM"/>
-                        <outlet property="endpointPicker" destination="B6o-RX-erY" id="MnW-id-YvN"/>
                         <outlet property="loginButton" destination="7zw-F1-vpg" id="hIw-Xf-JzN"/>
                         <outlet property="loginSpinner" destination="Q3c-Tq-N10" id="IsB-bv-hDP"/>
                         <outlet property="loginView" destination="rP1-JC-zlY" id="ODB-z7-Out"/>
                         <outlet property="passwordField" destination="iAf-el-aNP" id="QcS-8i-R3y"/>
+                        <outlet property="signupButton" destination="wfL-1W-ASW" id="F6Q-Sx-fhC"/>
                         <outlet property="targetButton" destination="i1c-w6-o63" id="WJk-DL-zx7"/>
                         <outlet property="usernameField" destination="5Hf-qT-0xk" id="Fer-ZC-pls"/>
+                        <outlet property="vendorPicker" destination="B6o-RX-erY" id="SZK-YU-jeN"/>
                         <segue destination="dyp-KC-V5j" kind="show" identifier="apps" id="IwT-bU-GCf"/>
                     </connections>
                 </viewController>

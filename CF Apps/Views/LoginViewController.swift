@@ -3,8 +3,9 @@ import UIKit
 import Alamofire
 import QuartzCore
 import SwiftyJSON
+import SafariServices
 
-class LoginViewController: UIViewController, EndpointPickerDelegate {
+class LoginViewController: UIViewController, VendorPickerDelegate {
     @IBOutlet var loginView: UIView!
     @IBOutlet var apiTargetView: UIView!
     @IBOutlet var usernameField: UITextField!
@@ -15,13 +16,14 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
     
 
     @IBOutlet var loginButton: UIButton!
-    @IBOutlet var endpointPicker: EndpointPicker!
+    @IBOutlet var signupButton: UIButton!
+    @IBOutlet var vendorPicker: VendorPicker!
     @IBOutlet weak var targetButton: UIButton!
     
     var authError = false
     var authEndpoint: String?
     var loggingEndpoint: String?
-    var pickerData: [String] = [String]()
+    var signupURL: NSURL?
     let transitionSpeed = 0.5
     
     override func viewWillDisappear(animated: Bool) {
@@ -48,7 +50,8 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
     
     func setup() {
         CFSession.reset()
-        endpointPicker.endpointPickerDelegate = self
+        vendorPicker.vendorPickerDelegate = self
+        vendorPicker.pickerView(vendorPicker, didSelectRow: vendorPicker.selectedRowInComponent(0), inComponent: 0)
         showTargetForm()
         hideLoginForm()
         hideTargetField()
@@ -80,16 +83,21 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
         apiTargetField.alpha = 0
     }
 
-    func endpointPickerView(didSelectURL url: String?) {
-        if let targetURL = url {
+    func vendorPickerView(didSelectVendor targetURL: String?, signupURL: String?) {
+        if let targetURL = targetURL {
             apiTargetField.enabled = false
             apiTargetField.textColor = UIColor.lightGrayColor()
             apiTargetField.text = targetURL
+            signupButton.enabled = true
+            self.signupURL = NSURL(string: signupURL!)
             hideTargetField()
         } else {
+            let urlString = "https://"
             apiTargetField.enabled = true
             apiTargetField.textColor = UIColor.darkGrayColor()
-            apiTargetField.text = "https://"
+            apiTargetField.text = urlString
+            signupButton.enabled = false
+            self.signupURL = nil
             showTargetField()
         }
     }
@@ -131,6 +139,7 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
     
     func target() {
         startButtonSpinner(targetButton, spinner: apiTargetSpinner)
+        startButtonSpinner(signupButton, spinner: loginSpinner)
         let urlRequest = CFRequest.Info(self.apiTargetField.text!)
         CFApi().request(urlRequest, success: { (json) in
             self.authEndpoint = json["authorization_endpoint"].string
@@ -138,14 +147,17 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
             self.hideTargetForm()
             self.showLoginForm()
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
+            self.stopButtonSpinner(self.signupButton, spinner: self.loginSpinner)
         }, error: { statusCode, url in
             self.showAlert("Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
+            self.stopButtonSpinner(self.signupButton, spinner: self.loginSpinner)
         })
     }
     
     func login() {
         self.startButtonSpinner(self.loginButton, spinner: self.loginSpinner)
+        
         let urlRequest = CFRequest.Login(self.authEndpoint!, usernameField.text!, passwordField.text!)
         CFApi().request(urlRequest, success: { json in
             CFSession.save(self.apiTargetField.text!, authURL: self.authEndpoint!, loggingURL: self.loggingEndpoint!, username: self.usernameField.text!, password: self.passwordField.text!)
@@ -184,5 +196,10 @@ class LoginViewController: UIViewController, EndpointPickerDelegate {
     
     @IBAction func keyboardTargetAction(sender: AnyObject) {
         target()
+    }
+    
+    @IBAction func signupPushed(sender: AnyObject) {
+        let safariController = SFSafariViewController(URL: self.signupURL!)
+            presentViewController(safariController, animated: true, completion: nil)
     }
 }
