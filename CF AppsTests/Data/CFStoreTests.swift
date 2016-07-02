@@ -9,8 +9,7 @@ class CFStoreTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        dataStack = DATAStack(modelName: "CFStore")
-        try! self.dataStack?.drop()
+        dataStack = DATAStack(modelName: "CFStore", bundle: NSBundle(forClass: CFAppsTests.self), storeType: DATAStackStoreType.InMemory)
         syncApps()
     }
     

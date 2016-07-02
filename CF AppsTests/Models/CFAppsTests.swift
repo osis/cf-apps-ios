@@ -35,42 +35,36 @@ class CFAppsTests: XCTestCase {
     
     func testGuidType() {
         let cfApp = makeApp()
-        cfApp.guid = ""
         
         XCTAssert((cfApp.guid as Any) is String, "GUID is a String")
     }
     
     func testNameType() {
         let cfApp = makeApp()
-        cfApp.name = ""
         
         XCTAssert((cfApp.name as Any?) is String, "Name is a String")
     }
     
     func testPackageStateType() {
         let cfApp = makeApp()
-        cfApp.packageState = ""
         
         XCTAssert((cfApp.packageState as Any) is String, "Package state is a String")
     }
     
     func testStateType() {
         let cfApp = makeApp()
-        cfApp.state = ""
         
         XCTAssert((cfApp.state as Any) is String, "State is a String")
     }
     
     func testDiskQuotaType() {
         let cfApp = makeApp()
-        cfApp.diskQuota = 0
-        
+
         XCTAssert((cfApp.diskQuota as Any) is Int32, "Disk quota is an Int32")
     }
     
     func testMemoryType() {
         let cfApp = makeApp()
-        cfApp.memory = 0
         
         XCTAssert((cfApp.memory as Any) is Int32, "Disk quota is an Int32")
     }

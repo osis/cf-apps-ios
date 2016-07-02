@@ -32,6 +32,7 @@
 		655B443E1B530869009ED489 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B443D1B530868009ED489 /* Keychain.swift */; };
 		655B44401B530E1A009ED489 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B443F1B530E1A009ED489 /* LoginViewController.swift */; };
 		65671C331B97D858003F4DC9 /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65671C321B97D857003F4DC9 /* AppViewController.swift */; };
+		6568AD7A1D2850AE00502051 /* CFOrgTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6568AD791D2850AE00502051 /* CFOrgTests.swift */; };
 		65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65782EE91BC08A510005040F /* InstancesViewController.swift */; };
 		65A310D01C8BE0A50058C8C4 /* CFResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D050C21C83E0F5009C913E /* CFResponse.swift */; };
 		65ABCB161D16613000268563 /* CFStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ABCB151D16613000268563 /* CFStore.swift */; };
@@ -100,6 +101,7 @@
 		655B443F1B530E1A009ED489 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		655B44411B532531009ED489 /* CFApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFApi.swift; sourceTree = "<group>"; };
 		65671C321B97D857003F4DC9 /* AppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
+		6568AD791D2850AE00502051 /* CFOrgTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFOrgTests.swift; path = "CF AppsTests/Models/CFOrgTests.swift"; sourceTree = "<group>"; };
 		65782EE91BC08A510005040F /* InstancesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstancesViewController.swift; sourceTree = "<group>"; };
 		65ABCB151D16613000268563 /* CFStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFStore.swift; sourceTree = "<group>"; };
 		65ABCB171D17256800268563 /* AppTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTableViewCell.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			children = (
 				65032FE51B61CDED007E7DA3 /* CFAppsTests.swift */,
 				D81CB45D1CF6C4050038ADC1 /* CFEventTests.swift */,
+				6568AD791D2850AE00502051 /* CFOrgTests.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -187,8 +190,8 @@
 		65032FEA1B75ADC9007E7DA3 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				65032FED1B75B01A007E7DA3 /* KeychainTests.swift */,
 				6512BC9B1D24B2C200FD87EB /* CFStoreTests.swift */,
+				65032FED1B75B01A007E7DA3 /* KeychainTests.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -196,8 +199,8 @@
 		6503CC601C9BAEB9000BA838 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
-				D82127471CF280030053E6B2 /* events.json */,
 				6503CC5E1C9BAE90000BA838 /* apps.json */,
+				D82127471CF280030053E6B2 /* events.json */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -606,6 +609,7 @@
 				65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */,
 				65032FE91B74507D007E7DA3 /* CFStore.xcdatamodeld in Sources */,
 				65E2D00C1CA8700F0038396A /* CFLogsTests.swift in Sources */,
+				6568AD7A1D2850AE00502051 /* CFOrgTests.swift in Sources */,
 				6512BC9D1D24B2C600FD87EB /* CFStoreTests.swift in Sources */,
 				65032FE61B61CDED007E7DA3 /* CFAppsTests.swift in Sources */,
 				6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */,
