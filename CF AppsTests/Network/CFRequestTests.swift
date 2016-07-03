@@ -11,6 +11,7 @@ class CFRequestTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        
         Keychain.clearCredentials()
         CFSession.oauthToken = nil
         Keychain.setCredentials([
@@ -24,6 +25,7 @@ class CFRequestTests: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
+        
         Keychain.clearCredentials()
     }
     

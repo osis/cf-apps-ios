@@ -5,12 +5,9 @@ import XCTest
 
 class CFSessionTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-    }
-    
     override func tearDown() {
         super.tearDown()
+        
         let domain = NSBundle.mainBundle().bundleIdentifier
         
         Keychain.clearCredentials()

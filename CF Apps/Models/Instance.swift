@@ -16,16 +16,6 @@ class Instance: NSObject {
         return (uris != nil && uris!.arrayValue.count > 0) ? "https://" + uris!.arrayValue[0].stringValue : nil
     }
     
-    func usage() -> [String: JSON]? {
-        let usage = stats()?["usage"]
-        return (usage != nil) ? usage!.dictionaryValue : nil
-    }
-    
-    func stats() -> [String: JSON]? {
-        let stats = json!["stats"]
-        return (stats != nil) ? stats.dictionaryValue : nil
-    }
-    
     func state() -> String {
         let state = json!["state"].stringValue
         return (state == "CRASHED" || state == "DOWN") ? "errored" : "started"
@@ -61,6 +51,16 @@ class Instance: NSObject {
     
     func diskUsagePercentage() -> Double {
         return toPercent(Double(diskUsage()), quota: Double(diskQuota()))
+    }
+    
+    private func usage() -> [String: JSON]? {
+        let usage = stats()?["usage"]
+        return (usage != nil) ? usage!.dictionaryValue : nil
+    }
+    
+    private func stats() -> [String: JSON]? {
+        let stats = json!["stats"]
+        return (stats != nil) ? stats.dictionaryValue : nil
     }
     
     private func toPercent(usage: Double, quota: Double) -> Double {

@@ -38,10 +38,9 @@ class CFLogsTests: XCTestCase {
         }
     }
     
-    override func setUp() {
-    }
-    
     override func tearDown() {
+        super.tearDown()
+        
         CFSession.reset()
         removeAllStubs()
     }
