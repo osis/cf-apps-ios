@@ -7,6 +7,8 @@ class VendorsTests: XCTestCase {
     var vendors: NSMutableArray?
     
     override func setUp() {
+        super.setUp()
+        
         let list = NSBundle.mainBundle().pathForResource("Vendors", ofType: "plist")!
         vendors = NSMutableArray(contentsOfFile: list)!
     }

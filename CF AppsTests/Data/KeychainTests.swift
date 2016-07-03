@@ -17,11 +17,13 @@ class KeychainTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        
         clearKeychain()
     }
     
     override func tearDown() {
         super.tearDown()
+        
         clearKeychain()
     }
     

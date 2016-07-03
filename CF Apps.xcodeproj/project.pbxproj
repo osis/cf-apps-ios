@@ -34,6 +34,10 @@
 		65671C331B97D858003F4DC9 /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65671C321B97D857003F4DC9 /* AppViewController.swift */; };
 		6568AD7A1D2850AE00502051 /* CFOrgTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6568AD791D2850AE00502051 /* CFOrgTests.swift */; };
 		6568AD7C1D28589700502051 /* CFSpaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6568AD7B1D28589700502051 /* CFSpaceTests.swift */; };
+		6568AD7E1D29695600502051 /* app_stats.json in Resources */ = {isa = PBXBuildFile; fileRef = 6568AD7D1D29695600502051 /* app_stats.json */; };
+		6568AD801D297AD800502051 /* InstanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6568AD7F1D297AD800502051 /* InstanceTests.swift */; };
+		6568AD841D298D1D00502051 /* ServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6568AD831D298D1D00502051 /* ServiceTests.swift */; };
+		6568AD861D298EB200502051 /* app_summary.json in Resources */ = {isa = PBXBuildFile; fileRef = 6568AD851D298EB200502051 /* app_summary.json */; };
 		65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65782EE91BC08A510005040F /* InstancesViewController.swift */; };
 		65A310D01C8BE0A50058C8C4 /* CFResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D050C21C83E0F5009C913E /* CFResponse.swift */; };
 		65ABCB161D16613000268563 /* CFStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ABCB151D16613000268563 /* CFStore.swift */; };
@@ -104,6 +108,10 @@
 		65671C321B97D857003F4DC9 /* AppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
 		6568AD791D2850AE00502051 /* CFOrgTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFOrgTests.swift; path = "CF AppsTests/Models/CFOrgTests.swift"; sourceTree = "<group>"; };
 		6568AD7B1D28589700502051 /* CFSpaceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFSpaceTests.swift; path = "CF AppsTests/Models/CFSpaceTests.swift"; sourceTree = "<group>"; };
+		6568AD7D1D29695600502051 /* app_stats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = app_stats.json; path = "CF AppsTests/Network/Fixtures/app_stats.json"; sourceTree = "<group>"; };
+		6568AD7F1D297AD800502051 /* InstanceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InstanceTests.swift; path = "CF AppsTests/Models/InstanceTests.swift"; sourceTree = "<group>"; };
+		6568AD831D298D1D00502051 /* ServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceTests.swift; path = "CF AppsTests/Models/ServiceTests.swift"; sourceTree = "<group>"; };
+		6568AD851D298EB200502051 /* app_summary.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = app_summary.json; path = "CF AppsTests/Network/Fixtures/app_summary.json"; sourceTree = "<group>"; };
 		65782EE91BC08A510005040F /* InstancesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstancesViewController.swift; sourceTree = "<group>"; };
 		65ABCB151D16613000268563 /* CFStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFStore.swift; sourceTree = "<group>"; };
 		65ABCB171D17256800268563 /* AppTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTableViewCell.swift; sourceTree = "<group>"; };
@@ -186,6 +194,8 @@
 				D81CB45D1CF6C4050038ADC1 /* CFEventTests.swift */,
 				6568AD791D2850AE00502051 /* CFOrgTests.swift */,
 				6568AD7B1D28589700502051 /* CFSpaceTests.swift */,
+				6568AD7F1D297AD800502051 /* InstanceTests.swift */,
+				6568AD831D298D1D00502051 /* ServiceTests.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -202,8 +212,10 @@
 		6503CC601C9BAEB9000BA838 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				6568AD851D298EB200502051 /* app_summary.json */,
 				6503CC5E1C9BAE90000BA838 /* apps.json */,
 				D82127471CF280030053E6B2 /* events.json */,
+				6568AD7D1D29695600502051 /* app_stats.json */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -464,7 +476,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6568AD7E1D29695600502051 /* app_stats.json in Resources */,
 				D821274E1CF4C55B0053E6B2 /* events.json in Resources */,
+				6568AD861D298EB200502051 /* app_summary.json in Resources */,
 				6503CC611C9BAF9B000BA838 /* apps.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -613,9 +627,11 @@
 				65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */,
 				65032FE91B74507D007E7DA3 /* CFStore.xcdatamodeld in Sources */,
 				65E2D00C1CA8700F0038396A /* CFLogsTests.swift in Sources */,
+				6568AD841D298D1D00502051 /* ServiceTests.swift in Sources */,
 				6568AD7A1D2850AE00502051 /* CFOrgTests.swift in Sources */,
 				6512BC9D1D24B2C600FD87EB /* CFStoreTests.swift in Sources */,
 				65032FE61B61CDED007E7DA3 /* CFAppsTests.swift in Sources */,
+				6568AD801D297AD800502051 /* InstanceTests.swift in Sources */,
 				6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */,
 				65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */,
 				652CA1C31CB200E3004B714A /* LogsViewControllerTests.swift in Sources */,

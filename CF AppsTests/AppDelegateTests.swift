@@ -9,6 +9,8 @@ class AppDelegateTests: XCTestCase {
     var controllers: [UIViewController]?
     
     override func setUp() {
+        super.setUp()
+        
         delegate = UIApplication.sharedApplication().delegate as? AppDelegate
         navController = delegate!.window!.rootViewController as? UINavigationController
         controllers = navController!.childViewControllers
