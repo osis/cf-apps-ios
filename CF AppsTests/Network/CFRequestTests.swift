@@ -5,29 +5,20 @@ import Alamofire
 @testable import CF_Apps
 
 class CFRequestTests: XCTestCase {
-    let baseApiURL = "https://api.capi.test"
-    let baseLoginURL = "https://login.capi.test"
-    let baseLoggingURL = "wss://loggregator.capi.test"
+    let baseApiURL = TestAccountFactory.target
+    let baseLoginURL = TestAccountFactory.info().loggingEndpoint
+    let baseLoggingURL = TestAccountFactory.info().loggingEndpoint
     
     override func setUp() {
         super.setUp()
-        
-        Keychain.clearCredentials()
-        CFSession.oauthToken = nil
-        Keychain.setCredentials([
-            "apiURL": baseApiURL,
-            "authURL": baseLoginURL,
-            "loggingURL": baseLoggingURL,
-            "username": "testUsername",
-            "password": "testPassword"
-            ])
+        let account = TestAccountFactory.account()
+        try! CFSession.account(account)
     }
     
     override func tearDown() {
         super.tearDown()
-        
-        Keychain.clearCredentials()
-    }
+        CFSession.logout()
+    }   
     
     func testLoginAuthToken() {
         XCTAssertEqual(CFSession.loginAuthToken, "Y2Y6", "Login auth token is Y2Y6")

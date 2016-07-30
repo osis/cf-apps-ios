@@ -38,10 +38,17 @@ class CFLogsTests: XCTestCase {
         }
     }
     
+    override func setUp() {
+        super.setUp()
+        
+        let account = TestAccountFactory.account()
+        try! CFSession.account(account)
+    }
+    
     override func tearDown() {
         super.tearDown()
         
-        CFSession.reset()
+        CFSession.logout()
         removeAllStubs()
     }
     
@@ -58,7 +65,6 @@ class CFLogsTests: XCTestCase {
     func testCreateSocket() {
         let logs = CFLogs(appGuid: testAppGuid)
         
-        KeychainTests.setCredentials()
         CFSession.oauthToken = "testToken"
         
         do {
@@ -72,12 +78,11 @@ class CFLogsTests: XCTestCase {
     func testCreateSocketRequest() {
         let logs = CFLogs(appGuid: testAppGuid)
         
-        KeychainTests.setCredentials()
         CFSession.oauthToken = "testToken"
         
         do {
             let request = try logs.createSocketRequest()
-            XCTAssertEqual(request.URLString, "wss://loggregator.capi.test/tail/?app=\(testAppGuid)")
+            XCTAssertEqual(request.URLString, "wss://loggregator.test.io:443/tail/?app=\(testAppGuid)")
             XCTAssertEqual(request.valueForHTTPHeaderField("Authorization"), "bearer testToken")
         } catch {
             XCTFail()
@@ -117,7 +122,6 @@ class CFLogsTests: XCTestCase {
             }
         }
         
-        KeychainTests.setCredentials()
         let expectation = expectationWithDescription("Logs Error")
         let logs = FakeCFLogs(expectation: expectation)
         
@@ -139,10 +143,8 @@ class CFLogsTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-        
-        KeychainTests.setCredentials()
+
         CFSession.oauthToken = ""
-        XCTAssertFalse(CFSession.isEmpty())
         
         let expectation = expectationWithDescription("Logs Error")
         let logs = FakeCFLogs(expectation: expectation)

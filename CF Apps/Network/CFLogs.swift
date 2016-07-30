@@ -54,7 +54,8 @@ class CFLogs: NSObject {
     }
     
     func createSocketRequest() throws -> NSMutableURLRequest {
-        let endpoint = try Keychain.getLoggingURL()
+        let account = CFSession.account()!
+        let endpoint = account.info.loggingEndpoint
         let url = NSURL(string: "\(endpoint)/tail/?app=\(self.appGuid)")
         let request = NSMutableURLRequest(URL: url!)
         request.addValue("bearer \(CFSession.oauthToken!)", forHTTPHeaderField: "Authorization")
@@ -108,21 +109,20 @@ class CFLogs: NSObject {
     }
     
     private func handleAuthError() {
-        do {
-            let (authURL, _, username, password) = try Keychain.getCredentials()
-            let loginURLRequest = CFRequest.Login(authURL, username, password)
-            
+        if let account = CFSession.account() {
+            let loginURLRequest = CFRequest.Login(account.info.authEndpoint, account.username, account.password)
             CFApi().request(loginURLRequest, success: { _ in
                 self.tail()
             }, error: { _, _ in
                 self.handleAuthFail()
             })
-        } catch {
+        } else {
             self.handleAuthFail()
         }
     }
     
     func handleAuthFail() {
+        // TODO: Delegate this
         CFSession.logout()
     }
 }

@@ -1,79 +1,87 @@
 import Foundation
 import Locksmith
+import SwiftyJSON
 
-enum KeychainError: ErrorType {
+// Accounts are stored in the Keychain.
+// Reference to those accounts are stored in NSUserDefaults.
+
+enum CFAccountError: ErrorType {
     case NotFound
 }
 
-class Keychain {
-    class var sessionAccount: String { return "cfSession" }
+class CFAccountStore {
+    class var accountsKey: String { return "CFAccounts" }
+    class var accountListKey: String { return "CFAccountList" }
     
-    class func hasCredentials() -> Bool {
-        let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
-
-        if ((dictionary) != nil) {
-            let keys = dictionary?.keys.sort().joinWithSeparator("")
-            let params = ["loggingURL", "apiURL", "authURL", "username", "password"].sort().joinWithSeparator("")
-            return (keys == params)
+    class func create(account: CFAccount) throws {
+        do {
+            try account.createInSecureStore()
+            saveKey(account.account)
+        } catch LocksmithError.Duplicate {
+            try account.updateInSecureStore()
+        }
+    }
+    
+    class func read(key: String) -> CFAccount? {
+        if let data = Locksmith.loadDataForUserAccount(key, inService: "CloudFoundry") {
+            let json = JSON(data["info"]!)
+            
+            return CFAccount(
+                target: data["target"] as! String,
+                username: data["username"] as! String,
+                password: data["password"] as! String,
+                info: CFInfo(json: json)
+            )
+        }
+        return nil
+    }
+    
+    class func delete(account: CFAccount) throws {
+        try account.deleteFromSecureStore()
+        removeKey(account.account)
+    }
+    
+    class func exists(username: String, target: String) -> Bool {
+        return list().contains { $0.account == "\(username)_\(target)" }
+    }
+    
+    class func list() -> [CFAccount] {
+        var accounts = [CFAccount]()
+        let keys = self.keyList()
+        
+        keys.forEach {
+            let account = read($0 as! String)
+            accounts.append(account!)
         }
         
-        return false
+        return accounts
     }
     
-    class func setCredentials(credentials: Dictionary<String, String>) -> NSError? {
-        do {
-         try Locksmith.saveData(credentials, forUserAccount: sessionAccount)
-        } catch let error as NSError {
-            return error
+    private class func keyList() -> NSMutableArray {
+        let savedKeys = NSUserDefaults
+            .standardUserDefaults()
+            .arrayForKey(accountListKey)
+        
+        if let keys = savedKeys {
+            return NSMutableArray(array: keys)
         }
-        return nil
+        
+        return NSMutableArray()
     }
     
-    class func getCredentials() throws -> (authUrl: String, loggingURL: String, username: String, password: String) {
-        let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
-        if (hasCredentials()) {
-            let _authURL: String = dictionary!["authURL"] as! String
-            let _loggingURL: String = dictionary!["loggingURL"] as! String
-            let _username: String = dictionary!["username"] as! String
-            let _password: String = dictionary!["password"] as! String
-            return (_authURL, _loggingURL, _username, _password)
-        }
-        throw KeychainError.NotFound
+    private class func saveKey(key: String) {
+        let keyList = self.keyList().arrayByAddingObject(key)
+        
+        NSUserDefaults
+            .standardUserDefaults()
+            .setObject(keyList, forKey: accountListKey)
     }
     
-    class func getApiURL() throws -> String {
-        let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
-        if (hasCredentials()) {
-            let _url: String = dictionary!["apiURL"] as! String
-            return _url
-        }
-        throw KeychainError.NotFound
-    }
-    
-    class func getAuthURL() throws -> String {
-        let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
-        if (hasCredentials()) {
-            let _url: String = dictionary!["authURL"] as! String
-            return _url
-        }
-        throw KeychainError.NotFound
-    }
-    
-    class func getLoggingURL() throws -> String {
-        let dictionary = Locksmith.loadDataForUserAccount(sessionAccount)
-        if (hasCredentials()) {
-            let _url: String = dictionary!["loggingURL"] as! String
-            return _url
-        }
-        throw KeychainError.NotFound
-    }
-    
-    class func clearCredentials() -> NSError? {
-        do {
-            try Locksmith.deleteDataForUserAccount(sessionAccount)
-        } catch let error as NSError {
-            return error
-        }
-        return nil
+    private class func removeKey(key: String) {
+        let list = self.keyList().filter { $0 as! String != key }
+        
+        NSUserDefaults
+            .standardUserDefaults()
+            .setObject(list, forKey: accountListKey)
     }
 }

@@ -4,78 +4,107 @@ import XCTest
 @testable import CF_Apps
 
 class CFSessionTests: XCTestCase {
+    var account: CFAccount {
+        return TestAccountFactory.account()
+    }
     
     override func tearDown() {
         super.tearDown()
         
-        let domain = NSBundle.mainBundle().bundleIdentifier
-        
-        Keychain.clearCredentials()
-        NSUserDefaults.standardUserDefaults().removePersistentDomainForName(domain!)
+        CFSession.logout()
+        do { try CFAccountStore.delete(account) } catch {}
     }
     
     func testConstants() {
         XCTAssertEqual(CFSession.loginAuthToken, "Y2Y6")
+        XCTAssertEqual(CFSession.accountKey, "currentAccount")
         XCTAssertEqual(CFSession.orgKey, "currentOrg")
     }
-    
-    func testIsEmpty() {
-        XCTAssertTrue(CFSession.isEmpty())
+
+
+    func testSetAccount() {
+        try! CFSession.account(account)
         
-        CFSession.oauthToken = ""
-        XCTAssertTrue(CFSession.isEmpty())
-        
-        Keychain.setCredentials([
-            "apiURL": "",
-            "authURL": "",
-            "loggingURL": "",
-            "username": "",
-            "password": ""
-            ])
-        XCTAssertFalse(CFSession.isEmpty())
+        let key = NSUserDefaults.standardUserDefaults().objectForKey(CFSession.accountKey) as! String
+        XCTAssertEqual(key, account.account)
     }
     
-    func testReset() {
+    func testAccount() {
+        XCTAssertNil(CFSession.account())
+        
+        try! CFSession.account(account)
+        
+        if let sessionAccount = CFSession.account() {
+            XCTAssertEqual(sessionAccount.account, account.account)
+        } else {
+            XCTFail()
+        }
+    }
+    
+    func testOrg() {
+        let org = "testOrg"
+        
+        XCTAssertNil(CFSession.org())
+        
+        CFSession.org(org)
+        
+        XCTAssertEqual(CFSession.org(), org)
+    }
+    
+    func testLogout() {
         CFSession.oauthToken = ""
-        CFSession.setOrg("guid")
-        Keychain.setCredentials([
-            "apiURL": "",
-            "authURL": "",
-            "username": "",
-            "password": ""
-            ])
+        CFSession.org("guid")
+        try! CFSession.account(account)
         
-        CFSession.reset()
+        CFSession.logout()
         
-        XCTAssertNil(CFSession.getOrg())
+        XCTAssertNil(CFSession.org())
+        XCTAssertNil(CFSession.account())
         XCTAssertNil(CFSession.oauthToken)
-        XCTAssertFalse(Keychain.hasCredentials())
     }
     
-    func testSetOrg() {
-        CFSession.setOrg("guid")
-        
-        let guid = NSUserDefaults.standardUserDefaults().objectForKey(CFSession.orgKey) as! String
-        XCTAssertEqual(guid, "guid")
-    }
+//    func testIsEmpty() {
+//        XCTAssertTrue(CFSession.isEmpty())
+//        
+//        CFSession.oauthToken = ""
+//        XCTAssertTrue(CFSession.isEmpty())
+//
+//// TODO: Set Credentials
+////        Keychain.setCredentials([
+////            "apiURL": "",
+////            "authURL": "",
+////            "loggingURL": "",
+////            "username": "",
+////            "password": ""
+////            ])
+//        XCTAssertFalse(CFSession.isEmpty())
+//    }
     
-    func testGetOrgNil() {
-        let guid = CFSession.getOrg()
-        
-        XCTAssertNil(guid)
-    }
     
-    func testGetOrg() {
-        CFSession.setOrg("guid")
-        
-        XCTAssertEqual(CFSession.getOrg(), "guid")
-    }
-    
-    func testIsOrgStale() {
-        XCTAssertTrue(CFSession.isOrgStale([]))
-        
-        CFSession.setOrg("guid")
-        XCTAssertTrue(CFSession.isOrgStale([]))
-        XCTAssertFalse(CFSession.isOrgStale(["guid"]))
-    }
+//    func testSetOrg() {
+//        CFSession.setOrg("guid")
+//        
+//        let guid = NSUserDefaults.standardUserDefaults().objectForKey(CFSession.orgKey) as! String
+//        XCTAssertEqual(guid, "guid")
+//    }
+//    
+//    func testGetOrgNil() {
+//        let guid = CFSession.getOrg()
+//        
+//        XCTAssertNil(guid)
+//    }
+//    
+//    func testGetOrg() {
+//        CFSession.setOrg("guid")
+//        
+//        XCTAssertEqual(CFSession.getOrg(), "guid")
+//    }
+//    
+//    func testIsOrgStale() {
+//        XCTAssertTrue(CFSession.isOrgStale([]))
+//        
+//        CFSession.setOrg("guid")
+//        XCTAssertTrue(CFSession.isOrgStale([]))
+//        XCTAssertFalse(CFSession.isOrgStale(["guid"]))
+//    }
 }

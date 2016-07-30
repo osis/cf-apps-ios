@@ -1,118 +1,100 @@
 import Foundation
 import XCTest
 import Locksmith
+import SwiftyJSON
 
 @testable import CF_Apps
 
-class KeychainTests: XCTestCase {
-    let userAccount = Keychain.sessionAccount
+class TestAccountFactory {
+    static let username = "cfUser"
+    static let password = "cfPass"
+    static let target = "https://api.test.io"
     
-    func clearKeychain() {
-        do {
-            try Locksmith.deleteDataForUserAccount(userAccount)
-        } catch {
-            // no-op
-        }
+    class func info() -> CFInfo {
+        let bundle = NSBundle.mainBundle()
+        let path = bundle.pathForResource("PlugIns/CF Apps Tests.xctest/info", ofType: "json")
+        let data = NSData(contentsOfFile: path!)
+        let json = JSON(data: data!)
+        return CFInfo(json: json)
     }
+    
+    class func account() -> CFAccount {
+        return CFAccount(
+            target: target,
+            username: username,
+            password: password,
+            info: info()
+        )
+    }
+}
+
+class CFAccountStoreTests: XCTestCase {
+    var testAccount: CFAccount?
+    let testAccountKey = "cfUser_https://api.test.io"
     
     override func setUp() {
         super.setUp()
         
-        clearKeychain()
+        testAccount = TestAccountFactory.account()
     }
     
     override func tearDown() {
         super.tearDown()
         
-        clearKeychain()
+        do {
+            try testAccount?.deleteFromSecureStore()
+        } catch let error {
+            debugPrint(error)
+        }
+        
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(CFAccountStore.accountListKey)
     }
     
-    static func setCredentials() -> NSError? {
-        return Keychain.setCredentials([
-            "apiURL": "https://api.capi.test",
-            "authURL": "https://auth.capi.test",
-            "loggingURL": "wss://loggregator.capi.test",
-            "username": "testUsername",
-            "password": "testPassword"
-            ])
+    func testAccountKeyFormat() {
+        XCTAssertEqual(testAccount!.account, testAccountKey)
     }
     
-    func testSetCredentials() {
-        XCTAssertNil(KeychainTests.setCredentials(), "should be nil when credentials have been set")
+    func testAccountCreate() {
+        try! CFAccountStore.create(testAccount!)
+        
+        let account = testAccount!.readFromSecureStore()!
+        XCTAssertNotNil(account.data)
+        
+        let list = CFAccountStore.list()
+        XCTAssertEqual(list.count, 1)
+        XCTAssertEqual(list[0].account, testAccountKey)
     }
     
-    func testNoCredentials() {
-        XCTAssertFalse(Keychain.hasCredentials(), "should return false when there are no credentials")
+    func testAccountRead() {
+        try! CFAccountStore.create(testAccount!)
+        
+        if let account = CFAccountStore.read(testAccountKey) {
+            XCTAssertEqual(account.username, TestAccountFactory.username)
+            XCTAssertEqual(account.password, TestAccountFactory.password)
+            XCTAssertEqual(account.info.authEndpoint, TestAccountFactory.info().authEndpoint)
+        } else {
+            XCTFail("Account not found.")
+        }
     }
     
     func testHasCredentials() {
-        KeychainTests.setCredentials()
-        XCTAssertTrue(Keychain.hasCredentials(), "should return true when there are credentials")
-    }
-    
-    func testHasMissingCredentialParams() {
-        Keychain.setCredentials([
-            "username": "testUsername",
-            "password": "testPassword"
-            ])
+        var result = CFAccountStore.exists(TestAccountFactory.username, target: TestAccountFactory.target)
+        XCTAssertFalse(result)
         
-        XCTAssertFalse(Keychain.hasCredentials(), "should return false when added params from new version are missing from old store")
-    }
-    
-    func testGetNoCredentials() {
-        do {
-            try Keychain.getCredentials()
-            XCTFail()
-        } catch KeychainError.NotFound {
-            // Pass case
-        } catch {
-            XCTFail()
-        }
-    }
-    
-    func testGetCredentials() {
-        KeychainTests.setCredentials()
-        do {
-            let (authURL, loggingURL, username, password) = try Keychain.getCredentials()
-            
-            XCTAssertEqual(authURL, "https://auth.capi.test", "should be authURL when credentials have been set")
-            XCTAssertEqual(loggingURL, "wss://loggregator.capi.test", "should be loggingURL when credentials have been set")
-            XCTAssertEqual(username, "testUsername", "should be username when credentials have been set")
-            XCTAssertEqual(password, "testPassword", "should be password when credentials have been set")
-        } catch {
-            XCTFail()
-        }
-    }
-    
-    func testGetApiURL() {
-        KeychainTests.setCredentials()
-        do {
-            let apiURL = try Keychain.getApiURL()
-            
-            XCTAssertEqual(apiURL, "https://api.capi.test", "should be authURL when credentials have been set")
-        } catch {
-            XCTFail()
-        }
-    }
-    
-    func testClearCredentials() {
-        KeychainTests.setCredentials()
-        Keychain.clearCredentials()
+        try! CFAccountStore.create(testAccount!)
         
-        do {
-            try Keychain.getCredentials()
-        } catch KeychainError.NotFound {
-            // Pass case
-        } catch {
-            XCTFail()
-        }
+        result = CFAccountStore.exists(TestAccountFactory.username, target: TestAccountFactory.target)
+        XCTAssertTrue(result)
+    }
+    
+    func testAccountDelete() {
+        try! CFAccountStore.create(testAccount!)
+        try! CFAccountStore.delete(testAccount!)
         
-        do {
-            try Keychain.getApiURL()
-        } catch KeychainError.NotFound {
-            // Pass case
-        } catch {
-            XCTFail()
-        }
+        let result = CFAccountStore.exists(TestAccountFactory.username, target: TestAccountFactory.target)
+        XCTAssertEqual(result, false)
+        
+        let list = CFAccountStore.list()
+        XCTAssertEqual(list.count, 0)
     }
 }

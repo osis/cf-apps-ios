@@ -21,19 +21,16 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     @IBOutlet weak var targetButton: UIButton!
     
     var authError = false
-    var authEndpoint: String?
-    var loggingEndpoint: String?
+    var apiInfo: CFInfo?
     var signupURL: NSURL?
     let transitionSpeed = 0.5
     
     override func viewWillDisappear(animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: animated);
         super.viewWillDisappear(animated)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
         setup()
     }
     
@@ -49,7 +46,6 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     }
     
     func setup() {
-        CFSession.reset()
         vendorPicker.vendorPickerDelegate = self
         vendorPicker.pickerView(vendorPicker, didSelectRow: vendorPicker.selectedRowInComponent(0), inComponent: 0)
         showTargetForm()
@@ -142,8 +138,7 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
         startButtonSpinner(signupButton, spinner: loginSpinner)
         let urlRequest = CFRequest.Info(self.apiTargetField.text!)
         CFApi().request(urlRequest, success: { (json) in
-            self.authEndpoint = json["authorization_endpoint"].string
-            self.loggingEndpoint = json["logging_endpoint"].string
+            self.apiInfo = CFInfo( json: json)
             self.hideTargetForm()
             self.showLoginForm()
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
@@ -158,11 +153,25 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     func login() {
         self.startButtonSpinner(self.loginButton, spinner: self.loginSpinner)
         
-        let urlRequest = CFRequest.Login(self.authEndpoint!, usernameField.text!, passwordField.text!)
+        let urlRequest = CFRequest.Login(apiInfo!.authEndpoint, usernameField.text!, passwordField.text!)
         CFApi().request(urlRequest, success: { json in
-            CFSession.save(self.apiTargetField.text!, authURL: self.authEndpoint!, loggingURL: self.loggingEndpoint!, username: self.usernameField.text!, password: self.passwordField.text!)
-            self.performSegueWithIdentifier("apps", sender: nil)
-            self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
+            let account = CFAccount(
+                target: self.apiTargetField.text!,
+                username: self.usernameField.text!,
+                password: self.passwordField.text!,
+                info: self.apiInfo!
+            )
+            
+            do {
+                try CFAccountStore.create(account)
+                CFSession.account(account)
+                
+                self.performSegueWithIdentifier("apps", sender: nil)
+                self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
+            } catch {
+                self.showAlert("Error", message: "Could not save account.")
+                self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
+            }
         }, error: { statusCode, url in
             self.showAlert("Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
             self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
@@ -171,10 +180,12 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "apps") {
-            let controller = segue.destinationViewController as! AppsViewController
+            let navController = segue.destinationViewController as! UINavigationController
+            let appsViewController = navController.topViewController as! AppsViewController
             let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
             
-            controller.dataStack = delegate.dataStack
+            appsViewController.dataStack = delegate.dataStack
+            self.hidesBottomBarWhenPushed = false;
         }
     }
     

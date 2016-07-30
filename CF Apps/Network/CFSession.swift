@@ -4,63 +4,57 @@ import Alamofire
 
 class CFSession {
     static let loginAuthToken = "Y2Y6"
+    static let accountKey = "currentAccount"
     static let orgKey = "currentOrg"
     
     static var oauthToken: String?
     static var baseURLString: String {
-        do {
-            return try Keychain.getApiURL()
-        } catch {
-            return ""
+        if let account = CFSession.account() {
+            return account.target
         }
+        return ""
     }
     
-    class func save(apiURL: String, authURL: String, loggingURL: String, username: String, password: String) {
-        Keychain.setCredentials([
-            "apiURL": apiURL,
-            "authURL": authURL,
-            "loggingURL": loggingURL,
-            "username": username,
-            "password": password
-            ])
+    class func account(account: CFAccount) {
+        NSUserDefaults.standardUserDefaults().setObject(account.account, forKey: accountKey)
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("AccountSwitched", object: nil)
     }
     
-    class func reset() {
-        let domain = NSBundle.mainBundle().bundleIdentifier
-       
-        Keychain.clearCredentials()
-        CFSession.oauthToken = nil
-        NSUserDefaults.standardUserDefaults().removePersistentDomainForName(domain!)
+    class func account() -> CFAccount? {
+        if let key = currentAccountKey() {
+            return CFAccountStore.read(key)
+        }
+        return nil
     }
     
-    class func isEmpty() -> Bool {
-        return (CFSession.oauthToken == nil || !Keychain.hasCredentials())
+    class func isCurrent(account: CFAccount) -> Bool {
+        if let sessionAccount = self.account() {
+            return sessionAccount.account == account.account
+        }
+        return false
     }
     
-    class func setOrg(orgGuid: String) {
+    class func org(orgGuid: String) {
         return NSUserDefaults.standardUserDefaults().setObject(orgGuid, forKey: orgKey)
     }
     
-    class func getOrg() -> String? {
+    class func org() -> String? {
         return NSUserDefaults.standardUserDefaults().objectForKey(orgKey) as! String?
     }
     
-    class func isOrgStale(currentOrgs: [String]) -> Bool {
-        return CFSession.getOrg() == nil || !currentOrgs.contains(CFSession.getOrg()!)
+    class func logout() {
+        CFSession.oauthToken = nil
+        cancelRequests()
     }
     
-    class func cancelRequests() {
+    private class func cancelRequests() {
         Alamofire.Manager.sharedInstance.session.getAllTasksWithCompletionHandler { tasks in
             tasks.forEach { $0.cancel() }
         }
     }
-    
-    class func logout(hadAuthError: Bool = false) {
-        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let nav = delegate.window?.rootViewController as! UINavigationController
 
-        nav.popToRootViewControllerAnimated(true)
-        
-        CFSession.reset()
+    private class func currentAccountKey() -> String? {
+        return NSUserDefaults.standardUserDefaults().objectForKey(accountKey) as! String?
     }
 }

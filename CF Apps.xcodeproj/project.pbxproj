@@ -10,7 +10,6 @@
 		65032FE61B61CDED007E7DA3 /* CFAppsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65032FE51B61CDED007E7DA3 /* CFAppsTests.swift */; };
 		65032FE91B74507D007E7DA3 /* CFStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 655B44341B530622009ED489 /* CFStore.xcdatamodeld */; };
 		65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65032FED1B75B01A007E7DA3 /* KeychainTests.swift */; };
-		65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B443D1B530868009ED489 /* Keychain.swift */; };
 		6503CC611C9BAF9B000BA838 /* apps.json in Resources */ = {isa = PBXBuildFile; fileRef = 6503CC5E1C9BAE90000BA838 /* apps.json */; };
 		6512BC991D2206B000FD87EB /* VendorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6512BC971D2206A400FD87EB /* VendorsTests.swift */; };
 		6512BC9D1D24B2C600FD87EB /* CFStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6512BC9B1D24B2C200FD87EB /* CFStoreTests.swift */; };
@@ -38,6 +37,11 @@
 		6568AD801D297AD800502051 /* InstanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6568AD7F1D297AD800502051 /* InstanceTests.swift */; };
 		6568AD841D298D1D00502051 /* ServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6568AD831D298D1D00502051 /* ServiceTests.swift */; };
 		6568AD861D298EB200502051 /* app_summary.json in Resources */ = {isa = PBXBuildFile; fileRef = 6568AD851D298EB200502051 /* app_summary.json */; };
+		6568AD881D2B295500502051 /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6568AD871D2B295500502051 /* AccountsViewController.swift */; };
+		6568AD8A1D2DEBEF00502051 /* CFAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6568AD891D2DEBEF00502051 /* CFAccount.swift */; };
+		6568AD8D1D2DF1AB00502051 /* CFInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6568AD8C1D2DF1AB00502051 /* CFInfo.swift */; };
+		6568AD8F1D2F358800502051 /* info.json in Resources */ = {isa = PBXBuildFile; fileRef = 6568AD8E1D2F358800502051 /* info.json */; };
+		6568AD911D2FD05400502051 /* CFInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6568AD901D2FD05400502051 /* CFInfoTests.swift */; };
 		65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65782EE91BC08A510005040F /* InstancesViewController.swift */; };
 		65A310D01C8BE0A50058C8C4 /* CFResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D050C21C83E0F5009C913E /* CFResponse.swift */; };
 		65ABCB161D16613000268563 /* CFStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ABCB151D16613000268563 /* CFStore.swift */; };
@@ -112,6 +116,11 @@
 		6568AD7F1D297AD800502051 /* InstanceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InstanceTests.swift; path = "CF AppsTests/Models/InstanceTests.swift"; sourceTree = "<group>"; };
 		6568AD831D298D1D00502051 /* ServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceTests.swift; path = "CF AppsTests/Models/ServiceTests.swift"; sourceTree = "<group>"; };
 		6568AD851D298EB200502051 /* app_summary.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = app_summary.json; path = "CF AppsTests/Network/Fixtures/app_summary.json"; sourceTree = "<group>"; };
+		6568AD871D2B295500502051 /* AccountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
+		6568AD891D2DEBEF00502051 /* CFAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFAccount.swift; sourceTree = "<group>"; };
+		6568AD8C1D2DF1AB00502051 /* CFInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFInfo.swift; sourceTree = "<group>"; };
+		6568AD8E1D2F358800502051 /* info.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = info.json; path = "CF AppsTests/Network/Fixtures/info.json"; sourceTree = "<group>"; };
+		6568AD901D2FD05400502051 /* CFInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFInfoTests.swift; path = "CF AppsTests/Models/CFInfoTests.swift"; sourceTree = "<group>"; };
 		65782EE91BC08A510005040F /* InstancesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstancesViewController.swift; sourceTree = "<group>"; };
 		65ABCB151D16613000268563 /* CFStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFStore.swift; sourceTree = "<group>"; };
 		65ABCB171D17256800268563 /* AppTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTableViewCell.swift; sourceTree = "<group>"; };
@@ -196,6 +205,7 @@
 				6568AD7B1D28589700502051 /* CFSpaceTests.swift */,
 				6568AD7F1D297AD800502051 /* InstanceTests.swift */,
 				6568AD831D298D1D00502051 /* ServiceTests.swift */,
+				6568AD901D2FD05400502051 /* CFInfoTests.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -216,6 +226,7 @@
 				6503CC5E1C9BAE90000BA838 /* apps.json */,
 				D82127471CF280030053E6B2 /* events.json */,
 				6568AD7D1D29695600502051 /* app_stats.json */,
+				6568AD8E1D2F358800502051 /* info.json */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -288,6 +299,7 @@
 		655B442B1B5305FD009ED489 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6568AD871D2B295500502051 /* AccountsViewController.swift */,
 				655B442C1B5305FD009ED489 /* AppsViewController.swift */,
 				65ABCB171D17256800268563 /* AppTableViewCell.swift */,
 				65671C321B97D857003F4DC9 /* AppViewController.swift */,
@@ -318,6 +330,7 @@
 		655B44331B530622009ED489 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				6568AD891D2DEBEF00502051 /* CFAccount.swift */,
 				65ABCB151D16613000268563 /* CFStore.swift */,
 				655B44341B530622009ED489 /* CFStore.xcdatamodeld */,
 				655B443D1B530868009ED489 /* Keychain.swift */,
@@ -337,6 +350,7 @@
 				65C7A8B71CAB959700BA1ADC /* LogMessage.proto */,
 				65C7A8B41CAB957700BA1ADC /* LogMessage.proto.swift */,
 				65DF28A81BEEFD4C0081B834 /* Service.swift */,
+				6568AD8C1D2DF1AB00502051 /* CFInfo.swift */,
 			);
 			name = Models;
 			path = "CF Apps/Models";
@@ -478,6 +492,7 @@
 			files = (
 				6568AD7E1D29695600502051 /* app_stats.json in Resources */,
 				D821274E1CF4C55B0053E6B2 /* events.json in Resources */,
+				6568AD8F1D2F358800502051 /* info.json in Resources */,
 				6568AD861D298EB200502051 /* app_summary.json in Resources */,
 				6503CC611C9BAF9B000BA838 /* apps.json in Resources */,
 			);
@@ -585,6 +600,7 @@
 			files = (
 				65DBB5F81BC0D09200BD19BC /* Instance.swift in Sources */,
 				D821274C1CF2A21D0053E6B2 /* CFEvent.swift in Sources */,
+				6568AD8D1D2DF1AB00502051 /* CFInfo.swift in Sources */,
 				65DF28A91BEEFD4C0081B834 /* Service.swift in Sources */,
 				655B442E1B5305FD009ED489 /* AppsViewController.swift in Sources */,
 				65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */,
@@ -595,6 +611,7 @@
 				65ABCB161D16613000268563 /* CFStore.swift in Sources */,
 				653CC9771CBB2EC600315E22 /* LogMessageString.swift in Sources */,
 				655B44401B530E1A009ED489 /* LoginViewController.swift in Sources */,
+				6568AD8A1D2DEBEF00502051 /* CFAccount.swift in Sources */,
 				655B443A1B530622009ED489 /* CFStore.xcdatamodeld in Sources */,
 				65671C331B97D858003F4DC9 /* AppViewController.swift in Sources */,
 				65D5DBA11C9B47FE00AF8EF1 /* CFApp.swift in Sources */,
@@ -603,6 +620,7 @@
 				654C879B1C1A4A4500C0C79C /* OrgPicker.swift in Sources */,
 				65C6FE431C70463D0083C4A1 /* CFApi.swift in Sources */,
 				D821273F1CF2787E0053E6B2 /* EventsViewController.swift in Sources */,
+				6568AD881D2B295500502051 /* AccountsViewController.swift in Sources */,
 				65C7A8B61CAB957700BA1ADC /* LogMessage.proto.swift in Sources */,
 				65414EA61CA7610900B17589 /* LogsViewController.swift in Sources */,
 				65F523671D17357A00EA4F0E /* LoadingIndicatorView.swift in Sources */,
@@ -633,8 +651,8 @@
 				65032FE61B61CDED007E7DA3 /* CFAppsTests.swift in Sources */,
 				6568AD801D297AD800502051 /* InstanceTests.swift in Sources */,
 				6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */,
-				65032FEF1B75B114007E7DA3 /* Keychain.swift in Sources */,
 				652CA1C31CB200E3004B714A /* LogsViewControllerTests.swift in Sources */,
+				6568AD911D2FD05400502051 /* CFInfoTests.swift in Sources */,
 				D81CB45E1CF6C4050038ADC1 /* CFEventTests.swift in Sources */,
 				652DE6011C29B1EB00411438 /* CFSessionTests.swift in Sources */,
 				653CC9751CBAD5A700315E22 /* AppDelegateTests.swift in Sources */,

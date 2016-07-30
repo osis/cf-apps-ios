@@ -1,4 +1,4 @@
-import Foundation
+//import Foundation
 import Alamofire
 import SwiftyJSON
 
@@ -31,14 +31,16 @@ class CFResponseHandler: ResponseHandler {
     func unauthorized(originalURLRequest: NSMutableURLRequest, success: (json: JSON) -> Void) {
         CFSession.oauthToken = nil
         
-        do {
-            self.retryLogin = false
-            
-            let (authURL, _, username, password) = try Keychain.getCredentials()
-            let loginURLRequest = CFRequest.Login(authURL, username, password)
+        self.retryLogin = false
+        if let account = CFSession.account() {
+            let loginURLRequest = CFRequest.Login(
+                account.info.authEndpoint,
+                account.username,
+                account.password
+            )
             
             CFApi(responseHandler: self).refreshToken(loginURLRequest, originalURLRequest: originalURLRequest, success: success)
-        } catch {
+        } else {
             self.authRefreshFailure()
         }
     }
@@ -56,6 +58,7 @@ class CFResponseHandler: ResponseHandler {
     }
     
     func authRefreshFailure() {
+        // TODO: Delegate this
         CFSession.logout()
     }
     
@@ -98,14 +101,14 @@ class CFApi {
             self.request(loginURLRequest, success: { _ in
                 self.responseHandler.authRefreshSuccess(originalURLRequest, success: success)
             }, error: { (_, _) in
-                CFSession.logout()
+                self.responseHandler.authRefreshFailure()
         })
     }
     
     func handleResponse(response: Response<AnyObject, NSError>, success: (json: JSON) -> Void, error: (statusCode: Int?, url: NSURL?) -> Void) {
         if (response.result.isSuccess) {
             responseHandler.success(response, success: success)
-        } else if (response.response?.statusCode == 401 && Keychain.hasCredentials() && responseHandler.retryLogin) {
+        } else if (response.response?.statusCode == 401 && CFSession.account() != nil && responseHandler.retryLogin) {
             responseHandler.unauthorized(response.request!.URLRequest, success: success)
         } else if (response.result.isFailure) {
             responseHandler.error(response, error: error)
