@@ -9,15 +9,21 @@ class CFRequestTests: XCTestCase {
     let baseLoginURL = TestAccountFactory.info().loggingEndpoint
     let baseLoggingURL = TestAccountFactory.info().loggingEndpoint
     
+    var account: CFAccount?
+    
     override func setUp() {
         super.setUp()
-        let account = TestAccountFactory.account()
-        try! CFSession.account(account)
+        
+        account = TestAccountFactory.account()
+        CFSession.account(account!)
+        try! CFAccountStore.create(account!)
     }
     
     override func tearDown() {
         super.tearDown()
+        
         CFSession.logout()
+        try! CFAccountStore.delete(account!)
     }   
     
     func testLoginAuthToken() {

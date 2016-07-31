@@ -75,7 +75,8 @@ class CFResponseHandlerTests: XCTestCase {
         }
         
         let account = TestAccountFactory.account()
-        try! CFSession.account(account)
+        CFSession.account(account)
+        try! CFAccountStore.create(account)
 
         let expectation = expectationWithDescription("Auth Refresh Success Callback")
         let handler = FakeCFResponseHandler(expectation: expectation)
@@ -103,7 +104,8 @@ class CFResponseHandlerTests: XCTestCase {
         }
         
         let account = TestAccountFactory.account()
-        try! CFSession.account(account)
+        CFSession.account(account)
+        try! CFAccountStore.create(account)
         
         let expectation = expectationWithDescription("Auth Refresh Success Callback")
         let handler = FakeCFResponseHandler(expectation: expectation)

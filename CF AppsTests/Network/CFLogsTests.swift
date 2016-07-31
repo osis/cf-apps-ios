@@ -7,6 +7,7 @@ import Mockingjay
 
 class CFLogsTests: XCTestCase {
     let testAppGuid = "50e5b89b-83a7-46c2-ba8b-7be656029238"
+    var account: CFAccount?
     
     class FakeLogger: NSObject, CFLogger {
         var appGuid: String
@@ -41,14 +42,16 @@ class CFLogsTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        let account = TestAccountFactory.account()
-        try! CFSession.account(account)
+        account = TestAccountFactory.account()
+        try! CFAccountStore.create(account!)
+        CFSession.account(account!)
     }
     
     override func tearDown() {
         super.tearDown()
         
         CFSession.logout()
+        try! CFAccountStore.delete(account!)
         removeAllStubs()
     }
     

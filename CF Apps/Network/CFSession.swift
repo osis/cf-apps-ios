@@ -46,6 +46,9 @@ class CFSession {
     class func logout() {
         CFSession.oauthToken = nil
         cancelRequests()
+        
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(accountKey)
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(orgKey)
     }
     
     private class func cancelRequests() {

@@ -23,7 +23,7 @@ class CFSessionTests: XCTestCase {
 
 
     func testSetAccount() {
-        try! CFSession.account(account)
+        CFSession.account(account)
         
         let key = NSUserDefaults.standardUserDefaults().objectForKey(CFSession.accountKey) as! String
         XCTAssertEqual(key, account.account)
@@ -32,13 +32,16 @@ class CFSessionTests: XCTestCase {
     func testAccount() {
         XCTAssertNil(CFSession.account())
         
-        try! CFSession.account(account)
+        try! CFAccountStore.create(account)
+        CFSession.account(account)
         
         if let sessionAccount = CFSession.account() {
             XCTAssertEqual(sessionAccount.account, account.account)
         } else {
             XCTFail()
         }
+        
+        try! CFAccountStore.delete(account)
     }
     
     func testOrg() {
