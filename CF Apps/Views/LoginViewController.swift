@@ -79,13 +79,13 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
         apiTargetField.alpha = 0
     }
 
-    func vendorPickerView(didSelectVendor targetURL: String?, signupURL: String?) {
-        if let targetURL = targetURL {
+    func vendorPickerView(didSelectVendor targetURL: String, signupURL: String) {
+        if signupURL != "" {
             apiTargetField.enabled = false
             apiTargetField.textColor = UIColor.lightGrayColor()
             apiTargetField.text = targetURL
             signupButton.enabled = true
-            self.signupURL = NSURL(string: signupURL!)
+            self.signupURL = NSURL(string: signupURL)
             hideTargetField()
         } else {
             let urlString = "https://"

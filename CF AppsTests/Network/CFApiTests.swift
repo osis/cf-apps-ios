@@ -74,7 +74,7 @@ class CFResponseHandlerTests: XCTestCase {
             }
         }
         
-        let account = TestAccountFactory.account()
+        let account = CFAccountFactory.account()
         CFSession.account(account)
         try! CFAccountStore.create(account)
 
@@ -103,7 +103,7 @@ class CFResponseHandlerTests: XCTestCase {
             }
         }
         
-        let account = TestAccountFactory.account()
+        let account = CFAccountFactory.account()
         CFSession.account(account)
         try! CFAccountStore.create(account)
         

@@ -66,9 +66,5 @@
 		<key>URL</key>
 		<string>https://developer.swisscom.com</string>
 	</dict>
-	<dict>
-		<key>Name</key>
-		<string>Other</string>
-	</dict>
 </array>
 </plist>

@@ -9,9 +9,7 @@
 /* Begin PBXBuildFile section */
 		65032FE61B61CDED007E7DA3 /* CFAppsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65032FE51B61CDED007E7DA3 /* CFAppsTests.swift */; };
 		65032FE91B74507D007E7DA3 /* CFStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 655B44341B530622009ED489 /* CFStore.xcdatamodeld */; };
-		65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65032FED1B75B01A007E7DA3 /* KeychainTests.swift */; };
 		6503CC611C9BAF9B000BA838 /* apps.json in Resources */ = {isa = PBXBuildFile; fileRef = 6503CC5E1C9BAE90000BA838 /* apps.json */; };
-		6512BC991D2206B000FD87EB /* VendorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6512BC971D2206A400FD87EB /* VendorsTests.swift */; };
 		6512BC9D1D24B2C600FD87EB /* CFStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6512BC9B1D24B2C200FD87EB /* CFStoreTests.swift */; };
 		6512BC9F1D27355500FD87EB /* VendorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6512BC9E1D27355500FD87EB /* VendorPicker.swift */; };
 		652CA1C31CB200E3004B714A /* LogsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652CA1C11CB1FF37004B714A /* LogsViewControllerTests.swift */; };
@@ -56,7 +54,7 @@
 		65DF28A91BEEFD4C0081B834 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DF28A81BEEFD4C0081B834 /* Service.swift */; };
 		65E2D0071CA856010038396A /* CFLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E2D0061CA856010038396A /* CFLogs.swift */; };
 		65E2D00C1CA8700F0038396A /* CFLogsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E2D0081CA868C00038396A /* CFLogsTests.swift */; };
-		65EBCB851D1EE49100545CEF /* Vendors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65EBCB841D1EE49100545CEF /* Vendors.plist */; };
+		65EBCB851D1EE49100545CEF /* vendors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65EBCB841D1EE49100545CEF /* vendors.plist */; };
 		65EE6FCC1B4712A70047519D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FCB1B4712A70047519D /* Images.xcassets */; };
 		65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE6FCD1B4712B30047519D /* AppDelegate.swift */; };
 		65EE6FDD1B4713E80047519D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FD91B4713E80047519D /* LaunchScreen.xib */; };
@@ -66,6 +64,10 @@
 		D821273F1CF2787E0053E6B2 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D821273E1CF2787E0053E6B2 /* EventsViewController.swift */; };
 		D821274C1CF2A21D0053E6B2 /* CFEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82127491CF280890053E6B2 /* CFEvent.swift */; };
 		D821274E1CF4C55B0053E6B2 /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = D82127471CF280030053E6B2 /* events.json */; };
+		D85E45551D4E56A60084FCD3 /* CFAccountFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85E45541D4E56A60084FCD3 /* CFAccountFactory.swift */; };
+		D85E45561D4E56FB0084FCD3 /* KeychainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65032FED1B75B01A007E7DA3 /* KeychainTests.swift */; };
+		D85E455A1D4E68A70084FCD3 /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85E45581D4E66000084FCD3 /* Vendor.swift */; };
+		D85E455C1D4E6EAD0084FCD3 /* VendorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85E455B1D4E6EAD0084FCD3 /* VendorsTests.swift */; };
 		D8C516B61C73F21E00D15187 /* CFApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C516B51C73F21E00D15187 /* CFApiTests.swift */; };
 		E9152A21BED99B4AF5DD16E6 /* Pods_CF_Apps_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E21BB8FBBD04AC0F74A2F75 /* Pods_CF_Apps_Tests.framework */; };
 		EE85259DDB9B3D6F3FCF43C8 /* Pods_CF_Apps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B4CF2776DCC7B25A08373C /* Pods_CF_Apps.framework */; };
@@ -86,7 +88,6 @@
 		65032FE51B61CDED007E7DA3 /* CFAppsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFAppsTests.swift; path = "CF AppsTests/Models/CFAppsTests.swift"; sourceTree = "<group>"; };
 		65032FED1B75B01A007E7DA3 /* KeychainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainTests.swift; path = "CF AppsTests/Data/KeychainTests.swift"; sourceTree = "<group>"; };
 		6503CC5E1C9BAE90000BA838 /* apps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = apps.json; path = "CF AppsTests/Network/Fixtures/apps.json"; sourceTree = "<group>"; };
-		6512BC971D2206A400FD87EB /* VendorsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VendorsTests.swift; path = "CF AppsTests/Supporting Files/VendorsTests.swift"; sourceTree = "<group>"; };
 		6512BC9B1D24B2C200FD87EB /* CFStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFStoreTests.swift; path = "CF AppsTests/Data/CFStoreTests.swift"; sourceTree = "<group>"; };
 		6512BC9E1D27355500FD87EB /* VendorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VendorPicker.swift; sourceTree = "<group>"; };
 		651C84761B2A7FB50006DC3A /* CF Apps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CF Apps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,7 +135,7 @@
 		65DF28A81BEEFD4C0081B834 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		65E2D0061CA856010038396A /* CFLogs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFLogs.swift; sourceTree = "<group>"; };
 		65E2D0081CA868C00038396A /* CFLogsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFLogsTests.swift; path = "CF AppsTests/Network/CFLogsTests.swift"; sourceTree = "<group>"; };
-		65EBCB841D1EE49100545CEF /* Vendors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Vendors.plist; path = "CF Apps/Supporting Files/Vendors.plist"; sourceTree = SOURCE_ROOT; };
+		65EBCB841D1EE49100545CEF /* vendors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = vendors.plist; path = "CF Apps/Supporting Files/vendors.plist"; sourceTree = SOURCE_ROOT; };
 		65EE6FCB1B4712A70047519D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "CF Apps/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		65EE6FCD1B4712B30047519D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "CF Apps/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		65EE6FDA1B4713E80047519D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "CF Apps/Base.lproj/LaunchScreen.xib"; sourceTree = SOURCE_ROOT; };
@@ -150,6 +151,9 @@
 		D821273E1CF2787E0053E6B2 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		D82127471CF280030053E6B2 /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = events.json; path = "CF AppsTests/Network/Fixtures/events.json"; sourceTree = "<group>"; };
 		D82127491CF280890053E6B2 /* CFEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFEvent.swift; sourceTree = "<group>"; };
+		D85E45541D4E56A60084FCD3 /* CFAccountFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFAccountFactory.swift; path = "CF AppsTests/CFAccountFactory.swift"; sourceTree = "<group>"; };
+		D85E45581D4E66000084FCD3 /* Vendor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
+		D85E455B1D4E6EAD0084FCD3 /* VendorsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VendorsTests.swift; path = "CF AppsTests/Models/VendorsTests.swift"; sourceTree = "<group>"; };
 		D8C516B51C73F21E00D15187 /* CFApiTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFApiTests.swift; path = "CF AppsTests/Network/CFApiTests.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -201,11 +205,12 @@
 			children = (
 				65032FE51B61CDED007E7DA3 /* CFAppsTests.swift */,
 				D81CB45D1CF6C4050038ADC1 /* CFEventTests.swift */,
+				6568AD901D2FD05400502051 /* CFInfoTests.swift */,
 				6568AD791D2850AE00502051 /* CFOrgTests.swift */,
 				6568AD7B1D28589700502051 /* CFSpaceTests.swift */,
 				6568AD7F1D297AD800502051 /* InstanceTests.swift */,
 				6568AD831D298D1D00502051 /* ServiceTests.swift */,
-				6568AD901D2FD05400502051 /* CFInfoTests.swift */,
+				D85E455B1D4E6EAD0084FCD3 /* VendorsTests.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -213,6 +218,7 @@
 		65032FEA1B75ADC9007E7DA3 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D85E45541D4E56A60084FCD3 /* CFAccountFactory.swift */,
 				6512BC9B1D24B2C200FD87EB /* CFStoreTests.swift */,
 				65032FED1B75B01A007E7DA3 /* KeychainTests.swift */,
 			);
@@ -222,10 +228,10 @@
 		6503CC601C9BAEB9000BA838 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				6568AD7D1D29695600502051 /* app_stats.json */,
 				6568AD851D298EB200502051 /* app_summary.json */,
 				6503CC5E1C9BAE90000BA838 /* apps.json */,
 				D82127471CF280030053E6B2 /* events.json */,
-				6568AD7D1D29695600502051 /* app_stats.json */,
 				6568AD8E1D2F358800502051 /* info.json */,
 			);
 			name = Fixtures;
@@ -234,7 +240,6 @@
 		6512BC9A1D223C2700FD87EB /* Suppoting Files */ = {
 			isa = PBXGroup;
 			children = (
-				6512BC971D2206A400FD87EB /* VendorsTests.swift */,
 			);
 			name = "Suppoting Files";
 			sourceTree = "<group>";
@@ -321,7 +326,7 @@
 			isa = PBXGroup;
 			children = (
 				655B44311B53060E009ED489 /* Info.plist */,
-				65EBCB841D1EE49100545CEF /* Vendors.plist */,
+				65EBCB841D1EE49100545CEF /* vendors.plist */,
 			);
 			name = "Supporting Files";
 			path = "CF Apps/Supporting Files";
@@ -344,13 +349,14 @@
 			children = (
 				655B44371B530622009ED489 /* CFApp.swift */,
 				D82127491CF280890053E6B2 /* CFEvent.swift */,
+				6568AD8C1D2DF1AB00502051 /* CFInfo.swift */,
 				654C87981C1A40DF00C0C79C /* CFOrg.swift */,
 				65B010721C1E684000CECF07 /* CFSpace.swift */,
 				65DBB5F71BC0D09200BD19BC /* Instance.swift */,
 				65C7A8B71CAB959700BA1ADC /* LogMessage.proto */,
 				65C7A8B41CAB957700BA1ADC /* LogMessage.proto.swift */,
 				65DF28A81BEEFD4C0081B834 /* Service.swift */,
-				6568AD8C1D2DF1AB00502051 /* CFInfo.swift */,
+				D85E45581D4E66000084FCD3 /* Vendor.swift */,
 			);
 			name = Models;
 			path = "CF Apps/Models";
@@ -479,7 +485,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65EBCB851D1EE49100545CEF /* Vendors.plist in Resources */,
+				65EBCB851D1EE49100545CEF /* vendors.plist in Resources */,
 				65EE6FDD1B4713E80047519D /* LaunchScreen.xib in Resources */,
 				65EE6FDE1B4713E80047519D /* Main.storyboard in Resources */,
 				65EE6FCC1B4712A70047519D /* Images.xcassets in Resources */,
@@ -616,6 +622,7 @@
 				65671C331B97D858003F4DC9 /* AppViewController.swift in Sources */,
 				65D5DBA11C9B47FE00AF8EF1 /* CFApp.swift in Sources */,
 				65A310D01C8BE0A50058C8C4 /* CFResponse.swift in Sources */,
+				D85E455A1D4E68A70084FCD3 /* Vendor.swift in Sources */,
 				65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */,
 				654C879B1C1A4A4500C0C79C /* OrgPicker.swift in Sources */,
 				65C6FE431C70463D0083C4A1 /* CFApi.swift in Sources */,
@@ -637,13 +644,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				65C8E1E81CB06401004FD199 /* LoginViewControllerTests.swift in Sources */,
-				6512BC991D2206B000FD87EB /* VendorsTests.swift in Sources */,
 				653CC97D1CBB391600315E22 /* LogMessageStringTests.swift in Sources */,
 				6568AD7C1D28589700502051 /* CFSpaceTests.swift in Sources */,
 				D8C516B61C73F21E00D15187 /* CFApiTests.swift in Sources */,
+				D85E45561D4E56FB0084FCD3 /* KeychainTests.swift in Sources */,
 				654C1D8E1C8D4702001F2002 /* CFResponse.swift in Sources */,
-				65032FEE1B75B01A007E7DA3 /* KeychainTests.swift in Sources */,
 				65032FE91B74507D007E7DA3 /* CFStore.xcdatamodeld in Sources */,
+				D85E45551D4E56A60084FCD3 /* CFAccountFactory.swift in Sources */,
 				65E2D00C1CA8700F0038396A /* CFLogsTests.swift in Sources */,
 				6568AD841D298D1D00502051 /* ServiceTests.swift in Sources */,
 				6568AD7A1D2850AE00502051 /* CFOrgTests.swift in Sources */,
@@ -652,6 +659,7 @@
 				6568AD801D297AD800502051 /* InstanceTests.swift in Sources */,
 				6547EBB01B76D0C100C1E13E /* CFRequestTests.swift in Sources */,
 				652CA1C31CB200E3004B714A /* LogsViewControllerTests.swift in Sources */,
+				D85E455C1D4E6EAD0084FCD3 /* VendorsTests.swift in Sources */,
 				6568AD911D2FD05400502051 /* CFInfoTests.swift in Sources */,
 				D81CB45E1CF6C4050038ADC1 /* CFEventTests.swift in Sources */,
 				652DE6011C29B1EB00411438 /* CFSessionTests.swift in Sources */,

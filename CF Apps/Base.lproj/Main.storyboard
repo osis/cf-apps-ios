@@ -418,25 +418,41 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cgp-pf-ztF">
-                                            <rect key="frame" x="8" y="34" width="483" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pivotal Web Services" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngj-3n-ORk">
+                                            <rect key="frame" x="479" y="8" width="113" height="14"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="user@test.io" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aol-Hb-0lh">
+                                            <rect key="frame" x="16" y="25" width="568" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vendor Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFF-36-HHJ">
-                                            <rect key="frame" x="8" y="8" width="494" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="https://api.target.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CL8-uM-k87">
-                                            <rect key="frame" x="8" y="61" width="467" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="https://api.test.io" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGd-tb-jqB">
+                                            <rect key="frame" x="16" y="48" width="568" height="15"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="cGd-tb-jqB" firstAttribute="centerY" secondItem="MM1-E9-7gV" secondAttribute="centerY" constant="10" id="7jA-4j-cSK"/>
+                                        <constraint firstItem="ngj-3n-ORk" firstAttribute="top" secondItem="MM1-E9-7gV" secondAttribute="topMargin" id="HcJ-eL-3LT"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="cGd-tb-jqB" secondAttribute="trailing" constant="8" id="Nfa-5a-fo0"/>
+                                        <constraint firstItem="cGd-tb-jqB" firstAttribute="leading" secondItem="MM1-E9-7gV" secondAttribute="leadingMargin" constant="8" id="a5W-B5-p5w"/>
+                                        <constraint firstItem="ngj-3n-ORk" firstAttribute="trailing" secondItem="MM1-E9-7gV" secondAttribute="trailingMargin" id="b5N-7A-BXB"/>
+                                        <constraint firstItem="Aol-Hb-0lh" firstAttribute="centerY" secondItem="MM1-E9-7gV" secondAttribute="centerY" constant="-10" id="lAQ-Ho-P2H"/>
+                                        <constraint firstItem="ngj-3n-ORk" firstAttribute="trailing" secondItem="MM1-E9-7gV" secondAttribute="trailingMargin" id="nrQ-1a-fw7"/>
+                                        <constraint firstItem="Aol-Hb-0lh" firstAttribute="leading" secondItem="MM1-E9-7gV" secondAttribute="leadingMargin" constant="8" id="qt5-fJ-atr"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Aol-Hb-0lh" secondAttribute="trailing" constant="8" id="ujP-bg-ryR"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="nrQ-1a-fw7"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -1021,7 +1037,7 @@
                         <attributedString key="attributedTitle">
                             <fragment content="Fetching Events">
                                 <attributes>
-                                    <font key="NSFont" metaFont="controlContent" size="11"/>
+                                    <font key="NSFont" metaFont="smallSystem"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>

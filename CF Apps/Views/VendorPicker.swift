@@ -2,16 +2,13 @@ import Foundation
 import UIKit
 
 protocol VendorPickerDelegate: NSObjectProtocol {
-    func vendorPickerView(didSelectVendor target: String?, signupURL: String?)
+    func vendorPickerView(didSelectVendor target: String, signupURL: String)
 }
 
 class VendorPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
     var vendorPickerDelegate: VendorPickerDelegate?
-    var vendors: NSArray {
-        let list = NSBundle.mainBundle().pathForResource("Vendors", ofType: "plist")!
-        return NSArray(contentsOfFile: list)!
-    }
     let initialIndex = 5
+    let vendors = Vendor.options
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -21,6 +18,7 @@ class VendorPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
     func setup() {
         delegate = self
         dataSource = self
+        
         self.selectRow(initialIndex, inComponent: 0, animated: false)
     }
     
@@ -38,12 +36,9 @@ class VendorPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let api = vendors[row].valueForKey("Target") as? String
-        let url = vendors[row].valueForKey("URL") as? String
-        if let target = api {
-            vendorPickerDelegate?.vendorPickerView(didSelectVendor: target, signupURL: url!)
-        } else {
-            vendorPickerDelegate?.vendorPickerView(didSelectVendor: nil, signupURL: nil)
-        }
+        let target = vendors[row].valueForKey("Target") as! String
+        let url = vendors[row].valueForKey("URL") as! String
+        
+        vendorPickerDelegate?.vendorPickerView(didSelectVendor: target, signupURL: url)
     }
 }

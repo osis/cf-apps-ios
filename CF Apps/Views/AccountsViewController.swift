@@ -3,11 +3,7 @@ import UIKit
 
 class AccountsViewController: UITableViewController {
     var accounts = [CFAccount]()
-    var vendors: NSArray {
-        let list = NSBundle.mainBundle().pathForResource("Vendors", ofType: "plist")!
-        return NSArray(contentsOfFile: list)!
-    }
-    
+    let vendors = Vendor.list
     override func viewDidLoad() {
         accounts = CFAccountStore.list()
     }
@@ -38,12 +34,12 @@ class AccountsViewController: UITableViewController {
         let nameLabel = cell?.viewWithTag(1) as! UILabel
         nameLabel.text = vendorName(account.target)
         
-        if CFSession.isCurrent(account) {
-            nameLabel.textColor = UIColor.redColor()
-        }
-        
         let userLabel = cell?.viewWithTag(2) as! UILabel
         userLabel.text = account.username
+        
+        if CFSession.isCurrent(account) {
+            userLabel.text = "\(userLabel.text!) (Current)"
+        }
         
         let targetLabel = cell?.viewWithTag(3) as! UILabel
         targetLabel.text = account.target
@@ -72,14 +68,12 @@ class AccountsViewController: UITableViewController {
     
     private func vendorName(target: String) -> String {
         let vendor = vendors.filter { v in
-            if let t = v.valueForKey("Target") as? String {
-                return t == target
-            }
-            return false
+            let t = v.valueForKey("Target") as! String
+            return t == target
         }
         if vendor.count > 0 {
             return vendor[0].valueForKey("Name") as! String
         }
-        return "Custom"
+        return "Other"
     }
 }

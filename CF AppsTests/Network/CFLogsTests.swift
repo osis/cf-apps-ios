@@ -42,7 +42,7 @@ class CFLogsTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        account = TestAccountFactory.account()
+        account = CFAccountFactory.account()
         try! CFAccountStore.create(account!)
         CFSession.account(account!)
     }

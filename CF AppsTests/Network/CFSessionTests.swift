@@ -5,7 +5,7 @@ import XCTest
 
 class CFSessionTests: XCTestCase {
     var account: CFAccount {
-        return TestAccountFactory.account()
+        return CFAccountFactory.account()
     }
     
     override func tearDown() {

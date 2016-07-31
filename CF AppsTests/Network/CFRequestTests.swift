@@ -5,16 +5,16 @@ import Alamofire
 @testable import CF_Apps
 
 class CFRequestTests: XCTestCase {
-    let baseApiURL = TestAccountFactory.target
-    let baseLoginURL = TestAccountFactory.info().loggingEndpoint
-    let baseLoggingURL = TestAccountFactory.info().loggingEndpoint
+    let baseApiURL = CFAccountFactory.target
+    let baseLoginURL = CFAccountFactory.info().loggingEndpoint
+    let baseLoggingURL = CFAccountFactory.info().loggingEndpoint
     
     var account: CFAccount?
     
     override func setUp() {
         super.setUp()
         
-        account = TestAccountFactory.account()
+        account = CFAccountFactory.account()
         CFSession.account(account!)
         try! CFAccountStore.create(account!)
     }

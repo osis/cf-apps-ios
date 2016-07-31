@@ -1,32 +1,7 @@
 import Foundation
 import XCTest
-import Locksmith
-import SwiftyJSON
 
 @testable import CF_Apps
-
-class TestAccountFactory {
-    static let username = "cfUser"
-    static let password = "cfPass"
-    static let target = "https://api.test.io"
-    
-    class func info() -> CFInfo {
-        let bundle = NSBundle.mainBundle()
-        let path = bundle.pathForResource("PlugIns/CF Apps Tests.xctest/info", ofType: "json")
-        let data = NSData(contentsOfFile: path!)
-        let json = JSON(data: data!)
-        return CFInfo(json: json)
-    }
-    
-    class func account() -> CFAccount {
-        return CFAccount(
-            target: target,
-            username: username,
-            password: password,
-            info: info()
-        )
-    }
-}
 
 class CFAccountStoreTests: XCTestCase {
     var testAccount: CFAccount?
@@ -35,7 +10,7 @@ class CFAccountStoreTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        testAccount = TestAccountFactory.account()
+        testAccount = CFAccountFactory.account()
     }
     
     override func tearDown() {
@@ -69,21 +44,21 @@ class CFAccountStoreTests: XCTestCase {
         try! CFAccountStore.create(testAccount!)
         
         if let account = CFAccountStore.read(testAccountKey) {
-            XCTAssertEqual(account.username, TestAccountFactory.username)
-            XCTAssertEqual(account.password, TestAccountFactory.password)
-            XCTAssertEqual(account.info.authEndpoint, TestAccountFactory.info().authEndpoint)
+            XCTAssertEqual(account.username, CFAccountFactory.username)
+            XCTAssertEqual(account.password, CFAccountFactory.password)
+            XCTAssertEqual(account.info.authEndpoint, CFAccountFactory.info().authEndpoint)
         } else {
             XCTFail("Account not found.")
         }
     }
     
     func testHasCredentials() {
-        var result = CFAccountStore.exists(TestAccountFactory.username, target: TestAccountFactory.target)
+        var result = CFAccountStore.exists(CFAccountFactory.username, target: CFAccountFactory.target)
         XCTAssertFalse(result)
         
         try! CFAccountStore.create(testAccount!)
         
-        result = CFAccountStore.exists(TestAccountFactory.username, target: TestAccountFactory.target)
+        result = CFAccountStore.exists(CFAccountFactory.username, target: CFAccountFactory.target)
         XCTAssertTrue(result)
     }
     
@@ -91,7 +66,7 @@ class CFAccountStoreTests: XCTestCase {
         try! CFAccountStore.create(testAccount!)
         try! CFAccountStore.delete(testAccount!)
         
-        let result = CFAccountStore.exists(TestAccountFactory.username, target: TestAccountFactory.target)
+        let result = CFAccountStore.exists(CFAccountFactory.username, target: CFAccountFactory.target)
         XCTAssertEqual(result, false)
         
         let list = CFAccountStore.list()
