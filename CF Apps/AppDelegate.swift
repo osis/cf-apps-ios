@@ -9,8 +9,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var dataStack: DATAStack = DATAStack(modelName: "CFStore")
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let account = CFAccountFactory.account()
-        try! CFAccountStore.create(account)
         
         if CFSession.account() != nil {
             showAppsScreen()
