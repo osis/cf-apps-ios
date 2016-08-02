@@ -6,7 +6,7 @@ import SwiftyJSON
 class CFAccountFactory {
     static let username = "cfUser"
     static let password = "cfPass"
-    static let target = "https://api.lyra-836.appcloud.swisscom.com"
+    static let target = "https://api.test.io"
     
     class func info() -> CFInfo {
         let bundle = NSBundle.mainBundle()
