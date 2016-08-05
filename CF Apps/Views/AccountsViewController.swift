@@ -37,12 +37,12 @@ class AccountsViewController: UITableViewController {
         let userLabel = cell?.viewWithTag(2) as! UILabel
         userLabel.text = account.username
         
-        if CFSession.isCurrent(account) {
-            userLabel.text = "\(userLabel.text!) (Current)"
-        }
-        
         let targetLabel = cell?.viewWithTag(3) as! UILabel
         targetLabel.text = account.target
+        
+        if CFSession.isCurrent(account) {
+            userLabel.textColor = UIColor(red: 0.27, green: 0.62, blue: 0.97, alpha: 1)
+        }
         
         return cell!
     }
