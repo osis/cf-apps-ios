@@ -22,7 +22,7 @@ class CFRequestTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         
-        CFSession.logout()
+        CFSession.reset()
         try! CFAccountStore.delete(account!)
     }   
     
@@ -68,7 +68,16 @@ class CFRequestTests: XCTestCase {
         XCTAssertEqual(CFRequest.Login(baseLoginURL, "", "").method, Alamofire.Method.POST, "Login request method is POST")
         
         XCTAssertEqual(request.URLString, baseLoginURL + path, "Login urlrequest returns the login URL")
-        XCTAssertEqual(request.valueForHTTPHeaderField("Authorization")!, "Basic \(CFSession.loginAuthToken)", "URLRequest returns the login URL")
+        
+        let authHeader = request.valueForHTTPHeaderField("Authorization")!
+        XCTAssertEqual(authHeader, "Basic \(CFSession.loginAuthToken)")
+        
+        let contentTypeHeader = request.valueForHTTPHeaderField("Content-Type")!
+        XCTAssertEqual(contentTypeHeader, "application/x-www-form-urlencoded")
+        
+        let acceptHeader = request.valueForHTTPHeaderField("Accept")!
+        XCTAssertEqual(acceptHeader, "application/json")
+
 
         let requestBody = NSString(data: request.HTTPBody!, encoding: NSUTF8StringEncoding)
         

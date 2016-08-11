@@ -93,6 +93,8 @@ enum CFRequest: URLRequestConvertible {
         ]
         
         mutableURLRequest.setValue("Basic \(CFSession.loginAuthToken)", forHTTPHeaderField: "Authorization")
+        mutableURLRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Accept")
         
         return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: loginParams).0
     }
