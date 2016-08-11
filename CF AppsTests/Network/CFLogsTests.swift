@@ -50,7 +50,7 @@ class CFLogsTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         
-        CFSession.logout()
+        CFSession.reset()
         try! CFAccountStore.delete(account!)
         removeAllStubs()
     }

@@ -11,7 +11,7 @@ class CFSessionTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         
-        CFSession.logout()
+        CFSession.reset()
         do { try CFAccountStore.delete(account) } catch {}
     }
     
@@ -54,60 +54,31 @@ class CFSessionTests: XCTestCase {
         XCTAssertEqual(CFSession.org(), org)
     }
     
-    func testLogout() {
+    func testReset() {
         CFSession.oauthToken = ""
         CFSession.org("guid")
         try! CFSession.account(account)
         
-        CFSession.logout()
+        CFSession.reset()
         
         XCTAssertNil(CFSession.org())
         XCTAssertNil(CFSession.account())
         XCTAssertNil(CFSession.oauthToken)
     }
     
-//    func testIsEmpty() {
-//        XCTAssertTrue(CFSession.isEmpty())
-//        
-//        CFSession.oauthToken = ""
-//        XCTAssertTrue(CFSession.isEmpty())
-//
-//// TODO: Set Credentials
-////        Keychain.setCredentials([
-////            "apiURL": "",
-////            "authURL": "",
-////            "loggingURL": "",
-////            "username": "",
-////            "password": ""
-////            ])
-//        XCTAssertFalse(CFSession.isEmpty())
-//    }
-    
-    
-//    func testSetOrg() {
-//        CFSession.setOrg("guid")
-//        
-//        let guid = NSUserDefaults.standardUserDefaults().objectForKey(CFSession.orgKey) as! String
-//        XCTAssertEqual(guid, "guid")
-//    }
-//    
-//    func testGetOrgNil() {
-//        let guid = CFSession.getOrg()
-//        
-//        XCTAssertNil(guid)
-//    }
-//    
-//    func testGetOrg() {
-//        CFSession.setOrg("guid")
-//        
-//        XCTAssertEqual(CFSession.getOrg(), "guid")
-//    }
-//    
-//    func testIsOrgStale() {
-//        XCTAssertTrue(CFSession.isOrgStale([]))
-//        
-//        CFSession.setOrg("guid")
-//        XCTAssertTrue(CFSession.isOrgStale([]))
-//        XCTAssertFalse(CFSession.isOrgStale(["guid"]))
-//    }
+    func testLogout() {
+        try! CFAccountStore.create(account)
+        CFSession.account(account)
+        
+        CFSession.logout(true)
+        
+        XCTAssertTrue(CFAccountStore.isEmpty())
+        XCTAssertNil(CFSession.org())
+        XCTAssertNil(CFSession.account())
+        XCTAssertNil(CFSession.oauthToken)
+        
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let controller = delegate.window?.rootViewController as! LoginViewController
+        XCTAssertTrue(controller.authError)
+    }
 }

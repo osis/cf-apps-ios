@@ -123,6 +123,6 @@ class CFLogs: NSObject {
     
     func handleAuthFail() {
         // TODO: Delegate this
-        CFSession.logout()
+        CFSession.logout(true)
     }
 }

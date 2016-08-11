@@ -1,4 +1,4 @@
-//import Foundation
+import Foundation
 import Alamofire
 import SwiftyJSON
 
@@ -59,7 +59,7 @@ class CFResponseHandler: ResponseHandler {
     
     func authRefreshFailure() {
         // TODO: Delegate this
-        CFSession.logout()
+        CFSession.logout(true)
     }
     
     func sanitizeJson(json: JSON) -> JSON {
@@ -71,7 +71,6 @@ class CFResponseHandler: ResponseHandler {
             for (metadataKey, metadataSubJson) in subJson["metadata"] {
                 sanitizedJson["resources"][index][metadataKey] = metadataSubJson
             }
-//            sanitizedJson["resources"][index]["metadata"] = nil
             
             for (entityKey, entitySubJson) in subJson["entity"] {
                 sanitizedJson["resources"][index][entityKey] = entitySubJson
@@ -99,8 +98,10 @@ class CFApi {
     
     func refreshToken(loginURLRequest: CFRequest, originalURLRequest: NSMutableURLRequest, success: (json: JSON) -> Void) {
             self.request(loginURLRequest, success: { _ in
+                print("--- Token Refresh Success")
                 self.responseHandler.authRefreshSuccess(originalURLRequest, success: success)
             }, error: { (_, _) in
+                print("--- Token Refresh Fail")
                 self.responseHandler.authRefreshFailure()
         })
     }
@@ -109,8 +110,10 @@ class CFApi {
         if (response.result.isSuccess) {
             responseHandler.success(response, success: success)
         } else if (response.response?.statusCode == 401 && CFSession.account() != nil && responseHandler.retryLogin) {
+            print("--- Auth Fail")
             responseHandler.unauthorized(response.request!.URLRequest, success: success)
         } else if (response.result.isFailure) {
+            print("--- Error")
             responseHandler.error(response, error: error)
         }
     }

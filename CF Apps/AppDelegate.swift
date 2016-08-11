@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    internal func showAppsScreen() {
+    internal func showAppsScreen() -> AppsViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
         let navController = storyboard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appsController.dataStack = dataStack
         
         navController.pushViewController(appsController, animated: false)
+        
+        return appsController
     }
 
     // MARK: - Core Data stack

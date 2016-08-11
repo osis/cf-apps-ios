@@ -43,12 +43,31 @@ class CFSession {
         return NSUserDefaults.standardUserDefaults().objectForKey(orgKey) as! String?
     }
     
-    class func logout() {
+    class func reset() {
         CFSession.oauthToken = nil
         cancelRequests()
         
+        
         NSUserDefaults.standardUserDefaults().removeObjectForKey(accountKey)
         NSUserDefaults.standardUserDefaults().removeObjectForKey(orgKey)
+    }
+    
+    class func logout(isError: Bool) {
+        let account = CFSession.account()!
+        reset()
+        
+        try! CFAccountStore.delete(account)
+        
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        if CFAccountStore.isEmpty() {
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginController = storyboard.instantiateViewControllerWithIdentifier("LoginView") as! LoginViewController
+            loginController.authError = isError
+            delegate.window?.rootViewController = loginController
+        } else {
+            let appsController = delegate.showAppsScreen()
+            appsController.performSegueWithIdentifier("accounts", sender: nil)
+        }
     }
     
     private class func cancelRequests() {

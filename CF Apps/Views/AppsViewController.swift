@@ -43,6 +43,8 @@ class AppsViewController: UITableViewController {
     }
     
     func accountSwitched() {
+        self.items = [CFApp]()
+        self.tableView.reloadData()
         refresh()
         disableOrgsFilter()
     }
@@ -80,7 +82,7 @@ class AppsViewController: UITableViewController {
         do {
             try dataStack!.drop()
         } catch {
-            debugPrint("Could not drop database")
+            print("--- Could not drop database")
         }
         
         self.tableView.contentOffset.y -= self.refreshControl!.frame.size.height

@@ -16,7 +16,7 @@ class CFResponseHandlerTests: XCTestCase {
     
     func clearState() {
         removeAllStubs()
-        CFSession.logout()
+        CFSession.reset()
     }
     
     func createErrorResponse(statusCode: Int) -> Alamofire.Response<AnyObject, NSError> {
