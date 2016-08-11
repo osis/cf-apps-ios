@@ -4,25 +4,31 @@ import UIKit
 class AccountsViewController: UITableViewController {
     var accounts = [CFAccount]()
     let vendors = Vendor.list
+    
     override func viewDidLoad() {
         accounts = CFAccountStore.list()
+        
+        if CFSession.account() == nil {
+            CFSession.account(accounts.first!)
+            Alert.showAuthFail(self)
+        }
     }
     
     @IBAction func closeClicked(sender: AnyObject) {
         dismiss()
     }
-    
-    private func dismiss() {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
+}
+
+extension AccountsViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return accounts.count
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let account = accounts[indexPath.row]
-        CFSession.account(account)
+        if !CFSession.isCurrent(account) {
+            CFSession.account(account)
+        }
         
         dismiss()
     }
@@ -35,7 +41,7 @@ class AccountsViewController: UITableViewController {
         nameLabel.text = vendorName(account.target)
         
         let userLabel = cell?.viewWithTag(2) as! UILabel
-        userLabel.text = account.username
+        userLabel.text = "User \(indexPath.row+1)"
         
         let targetLabel = cell?.viewWithTag(3) as! UILabel
         targetLabel.text = account.target
@@ -53,20 +59,33 @@ class AccountsViewController: UITableViewController {
         
         return [action]
     }
+}
+
+private extension AccountsViewController {
+    func dismiss() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
-    private func deleteRow(action: UITableViewRowAction, indexPath: NSIndexPath) {
-        let account = accounts[indexPath.row]
-        do {
-            try CFAccountStore.delete(account)
-        } catch let e {
-            debugPrint("Account Delete Error - \(e)")
+    func deleteRow(action: UITableViewRowAction, indexPath: NSIndexPath) {
+        let deleteAccount = accounts[indexPath.row]
+        let isCurrent = CFSession.isCurrent(deleteAccount)
+        
+        if accounts.count == 1 {
+            CFSession.logout(false)
+        } else {
+            CFSession.reset()
+            try! CFAccountStore.delete(deleteAccount)
+            accounts = CFAccountStore.list()
+            
+            if isCurrent {
+                CFSession.account(accounts.first!)
+            }
         }
         
-        accounts = CFAccountStore.list()
         self.tableView.reloadData()
     }
     
-    private func vendorName(target: String) -> String {
+    func vendorName(target: String) -> String {
         let vendor = vendors.filter { v in
             let t = v.valueForKey("Target") as! String
             return t == target

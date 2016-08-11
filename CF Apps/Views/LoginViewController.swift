@@ -41,7 +41,7 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     
     override func viewDidAppear(animated: Bool) {
         if authError {
-            showAuthAlert()
+            Alert.showAuthFail(self)
         }
     }
     
@@ -122,17 +122,6 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
         button.alpha = 1
     }
     
-    func showAuthAlert() {
-        showAlert("Authentication Failed", message: "There was an error authenticating. Please try again.")
-    }
-    
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
-        alert.addAction(alertAction)
-        presentViewController(alert, animated: true) { () -> Void in }
-    }
-    
     func target() {
         startButtonSpinner(targetButton, spinner: apiTargetSpinner)
         startButtonSpinner(signupButton, spinner: loginSpinner)
@@ -144,7 +133,7 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
             self.stopButtonSpinner(self.signupButton, spinner: self.loginSpinner)
         }, error: { statusCode, url in
-            self.showAlert("Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
+           Alert.show(self, title: "Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
             self.stopButtonSpinner(self.signupButton, spinner: self.loginSpinner)
         })
@@ -166,14 +155,18 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
                 try CFAccountStore.create(account)
                 CFSession.account(account)
                 
-                self.performSegueWithIdentifier("apps", sender: nil)
+                if let navController = self.navigationController {
+                    navController.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    self.performSegueWithIdentifier("apps", sender: nil)
+                }
                 self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
             } catch {
-                self.showAlert("Error", message: "Could not save account.")
+                Alert.show(self, title: "Error", message: "Could not save account.")
                 self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
             }
         }, error: { statusCode, url in
-            self.showAlert("Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
+            Alert.show(self, title: "Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
             self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
         })
     }
