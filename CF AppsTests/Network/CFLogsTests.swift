@@ -7,6 +7,7 @@ import Mockingjay
 
 class CFLogsTests: XCTestCase {
     let testAppGuid = "50e5b89b-83a7-46c2-ba8b-7be656029238"
+    var account: CFAccount?
     
     class FakeLogger: NSObject, CFLogger {
         var appGuid: String
@@ -38,10 +39,19 @@ class CFLogsTests: XCTestCase {
         }
     }
     
+    override func setUp() {
+        super.setUp()
+        
+        account = CFAccountFactory.account()
+        try! CFAccountStore.create(account!)
+        CFSession.account(account!)
+    }
+    
     override func tearDown() {
         super.tearDown()
         
         CFSession.reset()
+        try! CFAccountStore.delete(account!)
         removeAllStubs()
     }
     
@@ -58,7 +68,6 @@ class CFLogsTests: XCTestCase {
     func testCreateSocket() {
         let logs = CFLogs(appGuid: testAppGuid)
         
-        KeychainTests.setCredentials()
         CFSession.oauthToken = "testToken"
         
         do {
@@ -72,12 +81,11 @@ class CFLogsTests: XCTestCase {
     func testCreateSocketRequest() {
         let logs = CFLogs(appGuid: testAppGuid)
         
-        KeychainTests.setCredentials()
         CFSession.oauthToken = "testToken"
         
         do {
             let request = try logs.createSocketRequest()
-            XCTAssertEqual(request.URLString, "wss://loggregator.capi.test/tail/?app=\(testAppGuid)")
+            XCTAssertEqual(request.URLString, "wss://loggregator.test.io:443/tail/?app=\(testAppGuid)")
             XCTAssertEqual(request.valueForHTTPHeaderField("Authorization"), "bearer testToken")
         } catch {
             XCTFail()
@@ -117,7 +125,6 @@ class CFLogsTests: XCTestCase {
             }
         }
         
-        KeychainTests.setCredentials()
         let expectation = expectationWithDescription("Logs Error")
         let logs = FakeCFLogs(expectation: expectation)
         
@@ -139,10 +146,8 @@ class CFLogsTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-        
-        KeychainTests.setCredentials()
+
         CFSession.oauthToken = ""
-        XCTAssertFalse(CFSession.isEmpty())
         
         let expectation = expectationWithDescription("Logs Error")
         let logs = FakeCFLogs(expectation: expectation)

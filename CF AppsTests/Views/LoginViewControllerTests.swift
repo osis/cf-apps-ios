@@ -64,7 +64,7 @@ class LoginViewControllerTests: XCTestCase {
     }
     
     func testVendorPickerNilChange() {
-        vc.vendorPickerView(didSelectVendor: nil, signupURL: nil)
+        vc.vendorPickerView(didSelectVendor: "https://", signupURL: "")
         
         let field = vc.apiTargetField
         

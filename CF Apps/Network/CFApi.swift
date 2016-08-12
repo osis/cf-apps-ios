@@ -31,14 +31,16 @@ class CFResponseHandler: ResponseHandler {
     func unauthorized(originalURLRequest: NSMutableURLRequest, success: (json: JSON) -> Void) {
         CFSession.oauthToken = nil
         
-        do {
-            self.retryLogin = false
-            
-            let (authURL, _, username, password) = try Keychain.getCredentials()
-            let loginURLRequest = CFRequest.Login(authURL, username, password)
+        self.retryLogin = false
+        if let account = CFSession.account() {
+            let loginURLRequest = CFRequest.Login(
+                account.info.authEndpoint,
+                account.username,
+                account.password
+            )
             
             CFApi(responseHandler: self).refreshToken(loginURLRequest, originalURLRequest: originalURLRequest, success: success)
-        } catch {
+        } else {
             self.authRefreshFailure()
         }
     }
@@ -56,7 +58,8 @@ class CFResponseHandler: ResponseHandler {
     }
     
     func authRefreshFailure() {
-        CFSession.logout()
+        // TODO: Delegate this
+        CFSession.logout(true)
     }
     
     func sanitizeJson(json: JSON) -> JSON {
@@ -68,7 +71,6 @@ class CFResponseHandler: ResponseHandler {
             for (metadataKey, metadataSubJson) in subJson["metadata"] {
                 sanitizedJson["resources"][index][metadataKey] = metadataSubJson
             }
-//            sanitizedJson["resources"][index]["metadata"] = nil
             
             for (entityKey, entitySubJson) in subJson["entity"] {
                 sanitizedJson["resources"][index][entityKey] = entitySubJson
@@ -96,18 +98,22 @@ class CFApi {
     
     func refreshToken(loginURLRequest: CFRequest, originalURLRequest: NSMutableURLRequest, success: (json: JSON) -> Void) {
             self.request(loginURLRequest, success: { _ in
+                print("--- Token Refresh Success")
                 self.responseHandler.authRefreshSuccess(originalURLRequest, success: success)
             }, error: { (_, _) in
-                CFSession.logout()
+                print("--- Token Refresh Fail")
+                self.responseHandler.authRefreshFailure()
         })
     }
     
     func handleResponse(response: Response<AnyObject, NSError>, success: (json: JSON) -> Void, error: (statusCode: Int?, url: NSURL?) -> Void) {
         if (response.result.isSuccess) {
             responseHandler.success(response, success: success)
-        } else if (response.response?.statusCode == 401 && Keychain.hasCredentials() && responseHandler.retryLogin) {
+        } else if (response.response?.statusCode == 401 && CFSession.account() != nil && responseHandler.retryLogin) {
+            print("--- Auth Fail")
             responseHandler.unauthorized(response.request!.URLRequest, success: success)
         } else if (response.result.isFailure) {
+            print("--- Error")
             responseHandler.error(response, error: error)
         }
     }

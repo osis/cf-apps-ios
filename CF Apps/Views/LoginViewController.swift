@@ -21,19 +21,16 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     @IBOutlet weak var targetButton: UIButton!
     
     var authError = false
-    var authEndpoint: String?
-    var loggingEndpoint: String?
+    var apiInfo: CFInfo?
     var signupURL: NSURL?
     let transitionSpeed = 0.5
     
     override func viewWillDisappear(animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: animated);
         super.viewWillDisappear(animated)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
         setup()
     }
     
@@ -44,12 +41,11 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     
     override func viewDidAppear(animated: Bool) {
         if authError {
-            showAuthAlert()
+            Alert.showAuthFail(self)
         }
     }
     
     func setup() {
-        CFSession.reset()
         vendorPicker.vendorPickerDelegate = self
         vendorPicker.pickerView(vendorPicker, didSelectRow: vendorPicker.selectedRowInComponent(0), inComponent: 0)
         showTargetForm()
@@ -83,13 +79,13 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
         apiTargetField.alpha = 0
     }
 
-    func vendorPickerView(didSelectVendor targetURL: String?, signupURL: String?) {
-        if let targetURL = targetURL {
+    func vendorPickerView(didSelectVendor targetURL: String, signupURL: String) {
+        if signupURL != "" {
             apiTargetField.enabled = false
             apiTargetField.textColor = UIColor.lightGrayColor()
             apiTargetField.text = targetURL
             signupButton.enabled = true
-            self.signupURL = NSURL(string: signupURL!)
+            self.signupURL = NSURL(string: signupURL)
             hideTargetField()
         } else {
             let urlString = "https://"
@@ -126,30 +122,18 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
         button.alpha = 1
     }
     
-    func showAuthAlert() {
-        showAlert("Authentication Failed", message: "There was an error authenticating. Please try again.")
-    }
-    
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
-        alert.addAction(alertAction)
-        presentViewController(alert, animated: true) { () -> Void in }
-    }
-    
     func target() {
         startButtonSpinner(targetButton, spinner: apiTargetSpinner)
         startButtonSpinner(signupButton, spinner: loginSpinner)
         let urlRequest = CFRequest.Info(self.apiTargetField.text!)
         CFApi().request(urlRequest, success: { (json) in
-            self.authEndpoint = json["authorization_endpoint"].string
-            self.loggingEndpoint = json["logging_endpoint"].string
+            self.apiInfo = CFInfo( json: json)
             self.hideTargetForm()
             self.showLoginForm()
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
             self.stopButtonSpinner(self.signupButton, spinner: self.loginSpinner)
         }, error: { statusCode, url in
-            self.showAlert("Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
+           Alert.show(self, title: "Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
             self.stopButtonSpinner(self.signupButton, spinner: self.loginSpinner)
         })
@@ -158,23 +142,43 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     func login() {
         self.startButtonSpinner(self.loginButton, spinner: self.loginSpinner)
         
-        let urlRequest = CFRequest.Login(self.authEndpoint!, usernameField.text!, passwordField.text!)
+        let urlRequest = CFRequest.Login(apiInfo!.authEndpoint, usernameField.text!, passwordField.text!)
         CFApi().request(urlRequest, success: { json in
-            CFSession.save(self.apiTargetField.text!, authURL: self.authEndpoint!, loggingURL: self.loggingEndpoint!, username: self.usernameField.text!, password: self.passwordField.text!)
-            self.performSegueWithIdentifier("apps", sender: nil)
-            self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
+            let account = CFAccount(
+                target: self.apiTargetField.text!,
+                username: self.usernameField.text!,
+                password: self.passwordField.text!,
+                info: self.apiInfo!
+            )
+            
+            do {
+                try CFAccountStore.create(account)
+                CFSession.account(account)
+                
+                if let navController = self.navigationController {
+                    navController.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    self.performSegueWithIdentifier("apps", sender: nil)
+                }
+                self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
+            } catch {
+                Alert.show(self, title: "Error", message: "Could not save account.")
+                self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
+            }
         }, error: { statusCode, url in
-            self.showAlert("Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
+            Alert.show(self, title: "Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
             self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
         })
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "apps") {
-            let controller = segue.destinationViewController as! AppsViewController
+            let navController = segue.destinationViewController as! UINavigationController
+            let appsViewController = navController.topViewController as! AppsViewController
             let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
             
-            controller.dataStack = delegate.dataStack
+            appsViewController.dataStack = delegate.dataStack
+            self.hidesBottomBarWhenPushed = false;
         }
     }
     

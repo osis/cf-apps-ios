@@ -74,21 +74,19 @@ class CFResponseHandlerTests: XCTestCase {
             }
         }
         
-        Keychain.setCredentials([
-            "apiURL": "https://api.capi.test",
-            "authURL": "https://auth.capi.test",
-            "loggingURL": "wss://loggregator.capi.test",
-            "username": "testUser",
-            "password": "testPass"
-        ])
+        let account = CFAccountFactory.account()
+        CFSession.account(account)
+        try! CFAccountStore.create(account)
 
         let expectation = expectationWithDescription("Auth Refresh Success Callback")
         let handler = FakeCFResponseHandler(expectation: expectation)
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://test.io")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.test.io")!)
         
         handler.unauthorized(request, success: { _ in })
         
         waitForExpectationsWithTimeout(1.0, handler: nil)
+        
+        try! CFAccountStore.delete(account)
     }
     
     func testUnauthorizedFailure() {
@@ -105,16 +103,13 @@ class CFResponseHandlerTests: XCTestCase {
             }
         }
         
-        Keychain.setCredentials([
-            "authURL": "http://test.io/authorize",
-            "loggingURL": "http://test.io/authorize",
-            "username":"testUser",
-            "password":"testPass"
-            ])
+        let account = CFAccountFactory.account()
+        CFSession.account(account)
+        try! CFAccountStore.create(account)
         
         let expectation = expectationWithDescription("Auth Refresh Success Callback")
         let handler = FakeCFResponseHandler(expectation: expectation)
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://test.io")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.test.io")!)
         
         handler.unauthorized(request, success: { _ in })
         
@@ -135,7 +130,7 @@ class CFResponseHandlerTests: XCTestCase {
 
         let expectation = expectationWithDescription("Auth Refresh Success Callback")
         let handler = FakeCFResponseHandler(expectation: expectation)
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://test.io")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.test.io")!)
 
         handler.unauthorized(request, success: { _ in })
         
@@ -147,7 +142,7 @@ class CFResponseHandlerTests: XCTestCase {
         stub(everything, builder: json([], status: 200))
         
         let handler = CFResponseHandler()
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://test.io")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.test.io")!)
         let expectation = expectationWithDescription("Auth Recovery Success Callback")
         
         handler.retryLogin = false
@@ -165,7 +160,7 @@ class CFResponseHandlerTests: XCTestCase {
         stub(everything, builder: json([], status: 200))
         
         let handler = CFResponseHandler()
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://test.io")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.test.io")!)
         let expectation = expectationWithDescription("Auth Recovery Success Callback")
        
         CFSession.oauthToken = "TestToken"

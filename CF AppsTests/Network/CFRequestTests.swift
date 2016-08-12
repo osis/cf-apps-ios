@@ -5,29 +5,26 @@ import Alamofire
 @testable import CF_Apps
 
 class CFRequestTests: XCTestCase {
-    let baseApiURL = "https://api.capi.test"
-    let baseLoginURL = "https://login.capi.test"
-    let baseLoggingURL = "wss://loggregator.capi.test"
+    let baseApiURL = CFAccountFactory.target
+    let baseLoginURL = CFAccountFactory.info().loggingEndpoint
+    let baseLoggingURL = CFAccountFactory.info().loggingEndpoint
+    
+    var account: CFAccount?
     
     override func setUp() {
         super.setUp()
         
-        Keychain.clearCredentials()
-        CFSession.oauthToken = nil
-        Keychain.setCredentials([
-            "apiURL": baseApiURL,
-            "authURL": baseLoginURL,
-            "loggingURL": baseLoggingURL,
-            "username": "testUsername",
-            "password": "testPassword"
-            ])
+        account = CFAccountFactory.account()
+        CFSession.account(account!)
+        try! CFAccountStore.create(account!)
     }
     
     override func tearDown() {
         super.tearDown()
         
-        Keychain.clearCredentials()
-    }
+        CFSession.reset()
+        try! CFAccountStore.delete(account!)
+    }   
     
     func testLoginAuthToken() {
         XCTAssertEqual(CFSession.loginAuthToken, "Y2Y6", "Login auth token is Y2Y6")
@@ -71,7 +68,16 @@ class CFRequestTests: XCTestCase {
         XCTAssertEqual(CFRequest.Login(baseLoginURL, "", "").method, Alamofire.Method.POST, "Login request method is POST")
         
         XCTAssertEqual(request.URLString, baseLoginURL + path, "Login urlrequest returns the login URL")
-        XCTAssertEqual(request.valueForHTTPHeaderField("Authorization")!, "Basic \(CFSession.loginAuthToken)", "URLRequest returns the login URL")
+        
+        let authHeader = request.valueForHTTPHeaderField("Authorization")!
+        XCTAssertEqual(authHeader, "Basic \(CFSession.loginAuthToken)")
+        
+        let contentTypeHeader = request.valueForHTTPHeaderField("Content-Type")!
+        XCTAssertEqual(contentTypeHeader, "application/x-www-form-urlencoded")
+        
+        let acceptHeader = request.valueForHTTPHeaderField("Accept")!
+        XCTAssertEqual(acceptHeader, "application/json")
+
 
         let requestBody = NSString(data: request.HTTPBody!, encoding: NSUTF8StringEncoding)
         

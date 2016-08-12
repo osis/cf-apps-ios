@@ -9,20 +9,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var dataStack: DATAStack = DATAStack(modelName: "CFStore")
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        if (Keychain.hasCredentials()) {
+        
+        if CFSession.account() != nil {
             showAppsScreen()
         }
         
         return true
     }
 
-    private func showAppsScreen() {
+    internal func showAppsScreen() -> AppsViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let nav = self.window!.rootViewController as! UINavigationController
-        let controller = storyboard.instantiateViewControllerWithIdentifier("AppsView") as! AppsViewController
-        controller.dataStack = dataStack
         
-        nav.pushViewController(controller, animated: false)
+        let navController = storyboard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
+        let appsController = storyboard.instantiateViewControllerWithIdentifier("AppsView") as! AppsViewController
+        
+        self.window!.rootViewController = navController
+        appsController.dataStack = dataStack
+        
+        navController.pushViewController(appsController, animated: false)
+        
+        return appsController
     }
 
     // MARK: - Core Data stack

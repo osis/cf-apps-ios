@@ -6,12 +6,12 @@ PODS:
   - DATAObjectIDs (0.5.1)
   - DATAStack (5.2.1)
   - Locksmith (2.0.7)
-  - Mockingjay (1.1.1):
-    - Mockingjay/Core (= 1.1.1)
-    - Mockingjay/XCTest (= 1.1.1)
-  - Mockingjay/Core (1.1.1):
+  - Mockingjay (1.2.2):
+    - Mockingjay/Core (= 1.2.2)
+    - Mockingjay/XCTest (= 1.2.2)
+  - Mockingjay/Core (1.2.2):
     - URITemplate (~> 1.3)
-  - Mockingjay/XCTest (1.1.1):
+  - Mockingjay/XCTest (1.2.2):
     - Mockingjay/Core
   - NSDictionary-ANDYSafeValue (0.3.1)
   - NSEntityDescription-SYNCPrimaryKey (1.2.3):
@@ -48,7 +48,7 @@ SPEC CHECKSUMS:
   DATAObjectIDs: 33db74dd1c858c2d22a45a4013c95f1082182e4e
   DATAStack: c6432c89d0bd2b1d2a17c947ca8a2c81f389f06d
   Locksmith: 46384a1c603836aa47a66020e289c157409c7541
-  Mockingjay: 757f80abc947b5ec2918b1bb14f3066574720430
+  Mockingjay: 5de65f14108473afc6727e05df9a3ecc9cef8562
   NSDictionary-ANDYSafeValue: 2d7adf339b6e302d71fec5f1d71ae00aacda993e
   NSEntityDescription-SYNCPrimaryKey: 9dbb89d7cbc1bea196dd935725bfcf3c0ff4249c
   NSManagedObject-HYPPropertyMapper: 1a34418531715f01520eb32abcd2c183952ea630

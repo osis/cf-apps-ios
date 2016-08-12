@@ -9,7 +9,6 @@ import ActionSheetPicker_3_0
 class AppsViewController: UITableViewController {
     
     @IBOutlet var orgPicker: UIPickerView!
-    @IBOutlet var logoutButton: UIBarButtonItem!
     @IBOutlet var orgPickerButton: UIBarButtonItem!
     
     let CellIdentifier = "AppCell"
@@ -30,6 +29,7 @@ class AppsViewController: UITableViewController {
         super.viewDidLoad()
         self.refreshControl!.beginRefreshing()
         fetchOrganizations()
+        observeAccounts()
     }
     
     func setupPicker() {
@@ -38,26 +38,40 @@ class AppsViewController: UITableViewController {
         self.orgPicker.delegate = delegate;
     }
     
+    private func observeAccounts() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(accountSwitched), name: "AccountSwitched", object: nil)
+    }
+    
+    func accountSwitched() {
+        self.items = [CFApp]()
+        self.tableView.reloadData()
+        refresh()
+        disableOrgsFilter()
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "app") {
+        switch segue.identifier! {
+        case "app":
             let controller = segue.destinationViewController as! AppViewController
             let cell = sender as! UITableViewCell
             let index = self.tableView.indexPathForCell(cell)
             
             controller.app = items[index!.item]
             controller.dataStack = self.dataStack!
+        default:
+            break
         }
     }
     
     @IBAction func filterOrgClicked(sender: UIBarButtonItem) {
-        let currentIndex = self.orgPickerValues.indexOf(CFSession.getOrg()!)
+        let currentIndex = self.orgPickerValues.indexOf(CFSession.org()!)
         ActionSheetMultipleStringPicker.showPickerWithTitle("Filter by Org", rows: [
             self.orgPickerLabels
             ], initialSelection: [currentIndex!], doneBlock: {
                 picker, values, indexes in
                 
                 let value = values[0] as! Int
-                CFSession.setOrg(self.orgPickerValues[value])
+                CFSession.org(self.orgPickerValues[value])
                 self.refresh()
                 
                 return
@@ -65,6 +79,12 @@ class AppsViewController: UITableViewController {
     }
     
     func refresh() {
+        do {
+            try dataStack!.drop()
+        } catch {
+            print("--- Could not drop database")
+        }
+        
         self.tableView.contentOffset.y -= self.refreshControl!.frame.size.height
         self.refreshControl!.beginRefreshing()
         self.refreshControl!.sendActionsForControlEvents(UIControlEvents.ValueChanged)
@@ -98,12 +118,6 @@ class AppsViewController: UITableViewController {
     }
     
     func handleOrgsResponse(json: JSON) {
-        do {
-            try dataStack!.drop()
-        } catch {
-            debugPrint("Could not drop database")
-        }
-        
         self.orgPickerLabels = []
         self.orgPickerValues = []
         var orgGuids: [String] = []
@@ -119,14 +133,14 @@ class AppsViewController: UITableViewController {
         
         self.enableOrgsFilter()
         
-        if CFSession.isOrgStale(orgGuids) {
-            CFSession.setOrg(orgGuids[0])
+        if CFSession.org() == nil || !orgGuids.contains(CFSession.org()!) {
+            CFSession.org(orgGuids[0])
         }
         
         let resources = json["resources"].arrayObject as! [[String:AnyObject]]
         CFStore(dataStack: self.dataStack!).syncOrgs(resources, completion: { error in
             print("--- Orgs Synced")
-            if !CFSession.isEmpty() { self.fetchApplications() }
+            self.fetchApplications()
         })
     }
     
@@ -137,9 +151,16 @@ class AppsViewController: UITableViewController {
         }
     }
     
+    func disableOrgsFilter() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.orgPickerButton.enabled = false
+            self.orgPickerButton.customView?.alpha = 0.8
+        }
+    }
+    
     func fetchApplications() {
         setRefreshTitle("Updating Apps")
-        let urlRequest = CFRequest.Apps(CFSession.getOrg()!, currentPage)
+        let urlRequest = CFRequest.Apps(CFSession.org()!, currentPage)
         CFApi().request(urlRequest, success: { (json) in
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                 self.handleAppsResponse(json)
@@ -174,7 +195,7 @@ class AppsViewController: UITableViewController {
         let clear = currentPage == 1
         CFStore(dataStack: self.dataStack!).syncApps(resources, clear: clear, completion: { error in
             print("--- Apps Synced")
-            if !CFSession.isEmpty() { self.fetchSpaces(appGuids) }
+            self.fetchSpaces(appGuids)
         })
     }
     
@@ -195,7 +216,7 @@ class AppsViewController: UITableViewController {
         let resources = json["resources"].arrayObject as! [[String:AnyObject]]
         CFStore(dataStack: self.dataStack!).syncSpaces(resources, completion: { (error) in
             print("--- Spaces Synced")
-            if !CFSession.isEmpty() { self.fetchCurrentObjects() }
+            self.fetchCurrentObjects()
         })
     }
     
@@ -217,9 +238,5 @@ class AppsViewController: UITableViewController {
         cell.render(app, dataStack: self.dataStack!)
         
         return cell
-    }
-    
-    @IBAction func logoutClicked(sender: UIBarButtonItem) {
-        CFSession.logout()
     }
 }
