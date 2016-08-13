@@ -22,7 +22,7 @@ PODS:
   - NSString-HYPNetworking (1.0.2)
   - ProtocolBuffers-Swift (2.4.3)
   - SwiftWebSocket (2.6.0)
-  - SwiftyJSON (2.3.0)
+  - SwiftyJSON (2.3.2)
   - Sync (1.9.0):
     - DATAFilter (~> 0.10.0)
     - DATAStack (~> 5.2.1)
@@ -55,7 +55,7 @@ SPEC CHECKSUMS:
   NSString-HYPNetworking: 7c18e44ca9529d2f74a30a1c2a7a787da76198c1
   ProtocolBuffers-Swift: afbdde78be3c6af8a610d2c257d6bc88e8c7c5d4
   SwiftWebSocket: c24c0dde0b33852f478ffb54226408bfe703b26b
-  SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Sync: f39edb4e3b931fdc387e836200c235a54750e072
   URITemplate: 398a48d6559e23b77bd41176b675b017ad1fc959
 
