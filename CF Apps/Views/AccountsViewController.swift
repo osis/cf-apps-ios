@@ -41,7 +41,7 @@ extension AccountsViewController {
         nameLabel.text = vendorName(account.target)
         
         let userLabel = cell?.viewWithTag(2) as! UILabel
-        userLabel.text = "User \(indexPath.row+1)"
+        userLabel.text = account.username
         
         let targetLabel = cell?.viewWithTag(3) as! UILabel
         targetLabel.text = account.target
