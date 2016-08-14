@@ -9,10 +9,10 @@
 - App details includes bounded services and instance information
 - Live application logs
 - View application events
+- Ability to target multiple Cloud Foundry deployments
 
 ## Goals
 
-- Ability to target multiple Cloud Foundry deployments
 - Application monitoring/alerts
 - Deploy an application from a repo
 - Much more!
