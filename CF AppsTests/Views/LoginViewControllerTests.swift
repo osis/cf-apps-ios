@@ -60,7 +60,6 @@ class LoginViewControllerTests: XCTestCase {
         XCTAssertEqual(field.enabled, false)
         XCTAssertEqual(field.textColor, UIColor.lightGrayColor())
         XCTAssertEqual(field.text, targetURL)
-        XCTAssertEqual(vc.signupURL!.absoluteString, signupURL)
     }
     
     func testVendorPickerNilChange() {
@@ -71,7 +70,6 @@ class LoginViewControllerTests: XCTestCase {
         XCTAssertEqual(field.enabled, true)
         XCTAssertEqual(field.textColor, UIColor.darkGrayColor())
         XCTAssertEqual(field.text, "https://")
-        XCTAssertNil(vc.signupURL)
     }
     
     func testHideTargetForm() {
