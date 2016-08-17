@@ -54,24 +54,11 @@
                                             <action selector="keyboardTargetAction:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="BSD-kP-gPr"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wfL-1W-ASW">
-                                        <rect key="frame" x="56" y="140" width="48" height="30"/>
-                                        <state key="normal" title="Signup">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="disabled">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="signupPushed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HVP-cF-YJE"/>
-                                        </connections>
-                                    </button>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="1Jf-WL-75B">
                                         <rect key="frame" x="110" y="150" width="20" height="20"/>
                                     </activityIndicatorView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i1c-w6-o63">
-                                        <rect key="frame" x="138" y="140" width="44" height="30"/>
+                                        <rect key="frame" x="98" y="140" width="44" height="30"/>
                                         <state key="normal" title="Target">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -94,10 +81,8 @@
                                     <constraint firstAttribute="width" constant="240" id="Xcr-lI-T3e"/>
                                     <constraint firstItem="B6o-RX-erY" firstAttribute="top" secondItem="vKC-fE-s9j" secondAttribute="bottom" id="aYB-pi-Ms4"/>
                                     <constraint firstItem="4L3-oQ-vbE" firstAttribute="top" secondItem="B6o-RX-erY" secondAttribute="bottom" id="dwe-0A-jwc"/>
-                                    <constraint firstItem="wfL-1W-ASW" firstAttribute="centerX" secondItem="COn-d3-ARe" secondAttribute="centerX" constant="-40" id="lAY-8T-fhq"/>
                                     <constraint firstAttribute="trailing" secondItem="B6o-RX-erY" secondAttribute="trailing" id="ogg-YU-Ewf"/>
-                                    <constraint firstAttribute="bottom" secondItem="wfL-1W-ASW" secondAttribute="bottom" id="sQs-4e-nRe"/>
-                                    <constraint firstItem="i1c-w6-o63" firstAttribute="centerX" secondItem="COn-d3-ARe" secondAttribute="centerX" constant="40" id="zVg-35-sa8"/>
+                                    <constraint firstItem="i1c-w6-o63" firstAttribute="centerX" secondItem="COn-d3-ARe" secondAttribute="centerX" id="zVg-35-sa8"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rP1-JC-zlY">
@@ -203,7 +188,6 @@
                         <outlet property="loginSpinner" destination="Q3c-Tq-N10" id="IsB-bv-hDP"/>
                         <outlet property="loginView" destination="rP1-JC-zlY" id="ODB-z7-Out"/>
                         <outlet property="passwordField" destination="iAf-el-aNP" id="QcS-8i-R3y"/>
-                        <outlet property="signupButton" destination="wfL-1W-ASW" id="F6Q-Sx-fhC"/>
                         <outlet property="targetButton" destination="i1c-w6-o63" id="WJk-DL-zx7"/>
                         <outlet property="usernameField" destination="5Hf-qT-0xk" id="Fer-ZC-pls"/>
                         <outlet property="vendorPicker" destination="B6o-RX-erY" id="SZK-YU-jeN"/>

@@ -16,13 +16,11 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     
 
     @IBOutlet var loginButton: UIButton!
-    @IBOutlet var signupButton: UIButton!
     @IBOutlet var vendorPicker: VendorPicker!
     @IBOutlet weak var targetButton: UIButton!
     
     var authError = false
     var apiInfo: CFInfo?
-    var signupURL: NSURL?
     let transitionSpeed = 0.5
     
     override func viewWillDisappear(animated: Bool) {
@@ -84,16 +82,12 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
             apiTargetField.enabled = false
             apiTargetField.textColor = UIColor.lightGrayColor()
             apiTargetField.text = targetURL
-            signupButton.enabled = true
-            self.signupURL = NSURL(string: signupURL)
             hideTargetField()
         } else {
             let urlString = "https://"
             apiTargetField.enabled = true
             apiTargetField.textColor = UIColor.darkGrayColor()
             apiTargetField.text = urlString
-            signupButton.enabled = false
-            self.signupURL = nil
             showTargetField()
         }
     }
@@ -124,18 +118,15 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     
     func target() {
         startButtonSpinner(targetButton, spinner: apiTargetSpinner)
-        startButtonSpinner(signupButton, spinner: loginSpinner)
         let urlRequest = CFRequest.Info(self.apiTargetField.text!)
         CFApi().request(urlRequest, success: { (json) in
             self.apiInfo = CFInfo( json: json)
             self.hideTargetForm()
             self.showLoginForm()
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
-            self.stopButtonSpinner(self.signupButton, spinner: self.loginSpinner)
         }, error: { statusCode, url in
            Alert.show(self, title: "Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
-            self.stopButtonSpinner(self.signupButton, spinner: self.loginSpinner)
         })
     }
     
@@ -200,10 +191,5 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     
     @IBAction func keyboardTargetAction(sender: AnyObject) {
         target()
-    }
-    
-    @IBAction func signupPushed(sender: AnyObject) {
-        let safariController = SFSafariViewController(URL: self.signupURL!)
-            presentViewController(safariController, animated: true, completion: nil)
     }
 }
