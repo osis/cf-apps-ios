@@ -79,7 +79,11 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func refresh() {
-        self.tableView.contentOffset.y -= self.refreshControl!.frame.size.height
+        let offset = self.tableView.contentOffset.y
+        let refreshHeight = self.refreshControl!.frame.size.height
+        let headerHeight = self.tableView.tableHeaderView!.frame.size.height
+        self.tableView.contentOffset.y -= (offset <= headerHeight * -1) ? refreshHeight : refreshHeight + headerHeight
+        
         self.refreshControl!.beginRefreshing()
         self.refreshControl!.sendActionsForControlEvents(UIControlEvents.ValueChanged)
     }
@@ -214,7 +218,7 @@ private extension AppsViewController {
         setRefreshTitle("Refresh Apps")
         self.tableView.tableFooterView = nil
         if searchText.isEmpty {
-            tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            tableView.setContentOffset(CGPointMake(0,-20), animated: true)
         }
     }
     
