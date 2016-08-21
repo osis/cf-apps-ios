@@ -6,7 +6,7 @@ enum CFRequest: URLRequestConvertible {
     case Login(String, String, String)
     case Orgs()
     case OrgApps(Int)
-    case Apps(String, Int)
+    case Apps(String, Int, String)
     case AppSummary(String)
     case AppStats(String)
     case Spaces([String])
@@ -59,8 +59,8 @@ enum CFRequest: URLRequestConvertible {
         switch self {
         case .Login(_, let username, let password):
             return loginURLRequest(username, password: password)
-        case .Apps(let orgGuid, let page):
-            return appsURLRequest(orgGuid, page: page)
+        case .Apps(let orgGuid, let page, let searchText):
+            return appsURLRequest(orgGuid, page: page, searchText: searchText)
         case .Spaces(let appGuids):
             return spacesURLRequest(appGuids)
         case .Events(let appGuid):
@@ -99,16 +99,34 @@ enum CFRequest: URLRequestConvertible {
         return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: loginParams).0
     }
     
-    func appsURLRequest(orgGuid: String, page: Int) -> NSMutableURLRequest{
+    func appsURLRequest(orgGuid: String, page: Int, searchText: String) -> NSMutableURLRequest{
         let mutableURLRequest = cfURLRequest()
-        let appsParams: [String : AnyObject] = [
+        var appsParams: [String : AnyObject] = [
             "order-direction": "desc",
-            "q": "organization_guid:\(orgGuid)",
+            "q": ["organization_guid:\(orgGuid)"],
             "results-per-page": "25",
             "page": page
         ]
         
-        return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: appsParams).0
+        if !searchText.isEmpty {
+            var queries = appsParams["q"] as! [AnyObject]
+            queries.append("name>=\(searchText)")
+            queries.append("name<=\(searchText.bumpLastChar())")
+            appsParams["q"] = queries
+        }
+        
+        let request = Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: appsParams).0
+        
+        if let query = request.URL?.query {
+            let URLComponents = NSURLComponents(URL: mutableURLRequest.URL!, resolvingAgainstBaseURL: false)
+            let trimmedQuery = query
+                .stringByReplacingOccurrencesOfString("%5B%5D", withString: "")
+            
+            URLComponents?.percentEncodedQuery =  trimmedQuery
+            request.URL = URLComponents?.URL
+        }
+        
+        return request
     }
     
     func spacesURLRequest(appGuids: [String]) -> NSMutableURLRequest {

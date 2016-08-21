@@ -234,9 +234,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="WKZ-1V-s9C">
+                            <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="dyp-KC-V5j" id="SdA-LO-zDR"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AppCell" id="o3c-2D-Dn5" customClass="AppTableViewCell" customModule="CF_Apps" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="86" width="600" height="87"/>
+                                <rect key="frame" x="0.0" y="130" width="600" height="87"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="o3c-2D-Dn5" id="nSA-2c-Mpv">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="86"/>
@@ -377,6 +385,8 @@
                     <connections>
                         <outlet property="orgPicker" destination="OlI-Lu-rBW" id="YJP-gQ-NBI"/>
                         <outlet property="orgPickerButton" destination="P7O-bo-gKL" id="dZD-wT-Cbt"/>
+                        <outlet property="searchBar" destination="WKZ-1V-s9C" id="Xgl-ua-Dfz"/>
+                        <outlet property="searchDisplayController" destination="ssy-RE-zpU" id="PCw-pl-RCo"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cts-dO-C5V" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -384,6 +394,30 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                 </pickerView>
+                <searchDisplayController id="dFb-HA-i1W">
+                    <connections>
+                        <outlet property="delegate" destination="dyp-KC-V5j" id="1nM-6v-zL6"/>
+                        <outlet property="searchContentsController" destination="dyp-KC-V5j" id="scN-sI-4W3"/>
+                        <outlet property="searchResultsDataSource" destination="dyp-KC-V5j" id="UKA-xZ-lcF"/>
+                        <outlet property="searchResultsDelegate" destination="dyp-KC-V5j" id="bsF-Bx-dME"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="n4l-GX-W53">
+                    <connections>
+                        <outlet property="delegate" destination="dyp-KC-V5j" id="skC-ao-vKl"/>
+                        <outlet property="searchContentsController" destination="dyp-KC-V5j" id="Bgf-WU-NYi"/>
+                        <outlet property="searchResultsDataSource" destination="dyp-KC-V5j" id="g2c-I1-2rJ"/>
+                        <outlet property="searchResultsDelegate" destination="dyp-KC-V5j" id="k7l-3P-B1U"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="ssy-RE-zpU">
+                    <connections>
+                        <outlet property="delegate" destination="dyp-KC-V5j" id="1Yf-7a-cGo"/>
+                        <outlet property="searchContentsController" destination="dyp-KC-V5j" id="XNI-kt-eUX"/>
+                        <outlet property="searchResultsDataSource" destination="dyp-KC-V5j" id="s3t-v5-ZrD"/>
+                        <outlet property="searchResultsDelegate" destination="dyp-KC-V5j" id="1jb-Qx-b92"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="984" y="292"/>
         </scene>

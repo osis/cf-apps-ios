@@ -6,10 +6,11 @@ import Sync
 import DATAStack
 import ActionSheetPicker_3_0
 
-class AppsViewController: UITableViewController {
+class AppsViewController: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet var orgPicker: UIPickerView!
     @IBOutlet var orgPickerButton: UIBarButtonItem!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     let CellIdentifier = "AppCell"
     
@@ -20,7 +21,8 @@ class AppsViewController: UITableViewController {
     var totalPages:Int?
     var orgPickerLabels = [String]()
     var orgPickerValues = [String]()
-
+    var searchText = ""
+    
     required init!(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -28,14 +30,10 @@ class AppsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.refreshControl!.beginRefreshing()
+        self.definesPresentationContext = true;
+        
         fetchOrganizations()
         observeAccounts()
-    }
-    
-    func setupPicker() {
-        let delegate = OrgPicker()
-        self.orgPicker.dataSource = delegate;
-        self.orgPicker.delegate = delegate;
     }
     
     private func observeAccounts() {
@@ -43,6 +41,7 @@ class AppsViewController: UITableViewController {
     }
     
     func accountSwitched() {
+        self.searchBar.text = ""
         self.items = [CFApp]()
         self.tableView.reloadData()
         refresh()
@@ -58,6 +57,7 @@ class AppsViewController: UITableViewController {
             
             controller.app = items[index!.item]
             controller.dataStack = self.dataStack!
+            self.searchBar.resignFirstResponder()
         default:
             break
         }
@@ -79,12 +79,6 @@ class AppsViewController: UITableViewController {
     }
     
     func refresh() {
-        do {
-            try dataStack!.drop()
-        } catch {
-            print("--- Could not drop database")
-        }
-        
         self.tableView.contentOffset.y -= self.refreshControl!.frame.size.height
         self.refreshControl!.beginRefreshing()
         self.refreshControl!.sendActionsForControlEvents(UIControlEvents.ValueChanged)
@@ -96,7 +90,41 @@ class AppsViewController: UITableViewController {
             self.fetchOrganizations()
         }
     }
+}
+
+extension AppsViewController {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
+    }
     
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (items.count > 1 && indexPath.row == items.count-1 && currentPage < totalPages) {
+            currentPage += 1
+            self.tableView.tableFooterView = LoadingIndicatorView()
+            fetchApplications()
+        }
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as! AppTableViewCell
+        let app = self.items[indexPath.row]
+        cell.render(app, dataStack: self.dataStack!)
+        
+        return cell
+    }
+}
+
+extension AppsViewController {
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchText = searchText
+        
+        // to limit network activity, reload half a second after last key press.
+        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(AppsViewController.refresh as (AppsViewController) -> () -> ()), object: nil)
+        self.performSelector(#selector(AppsViewController.refresh as (AppsViewController) -> () -> ()), withObject: nil, afterDelay: 1.0)
+    }
+}
+
+private extension AppsViewController {
     func setRefreshTitle(title: String) {
         dispatch_async(dispatch_get_main_queue()) {
             self.refreshControl!.attributedTitle = NSAttributedString(string: title)
@@ -118,6 +146,12 @@ class AppsViewController: UITableViewController {
     }
     
     func handleOrgsResponse(json: JSON) {
+        do {
+            try dataStack!.drop()
+        } catch {
+            print("--- Could not drop database")
+        }
+        
         self.orgPickerLabels = []
         self.orgPickerValues = []
         var orgGuids: [String] = []
@@ -160,7 +194,7 @@ class AppsViewController: UITableViewController {
     
     func fetchApplications() {
         setRefreshTitle("Updating Apps")
-        let urlRequest = CFRequest.Apps(CFSession.org()!, currentPage)
+        let urlRequest = CFRequest.Apps(CFSession.org()!, currentPage, searchText)
         CFApi().request(urlRequest, success: { (json) in
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                 self.handleAppsResponse(json)
@@ -179,6 +213,9 @@ class AppsViewController: UITableViewController {
         self.refreshControl!.endRefreshing()
         setRefreshTitle("Refresh Apps")
         self.tableView.tableFooterView = nil
+        if searchText.isEmpty {
+            tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        }
     }
     
     func handleAppsResponse(json: JSON) {
@@ -211,32 +248,12 @@ class AppsViewController: UITableViewController {
             }
         )
     }
-
+    
     func handleSpacesResponse(json: JSON) {
         let resources = json["resources"].arrayObject as! [[String:AnyObject]]
         CFStore(dataStack: self.dataStack!).syncSpaces(resources, completion: { (error) in
             print("--- Spaces Synced")
             self.fetchCurrentObjects()
         })
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
-    }
-    
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if (items.count > 1 && indexPath.row == items.count-1 && currentPage < totalPages) {
-            currentPage += 1
-            self.tableView.tableFooterView = LoadingIndicatorView()
-            fetchApplications()
-        }
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as! AppTableViewCell
-        let app = self.items[indexPath.row]
-        cell.render(app, dataStack: self.dataStack!)
-        
-        return cell
     }
 }

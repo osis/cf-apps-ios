@@ -111,14 +111,17 @@ class CFRequestTests: XCTestCase {
         let path = "/v2/apps"
         let orgGuid = "abc123"
         let currentPage: Int = 1
-        let request: NSURLRequest = CFRequest.Apps(orgGuid, currentPage).URLRequest
+        let request = CFRequest.Apps(orgGuid, currentPage, "")
         
-        XCTAssert((CFRequest.Apps(orgGuid, currentPage) as Any) is CFRequest, "Apps is a member")
-        XCTAssertEqual(CFRequest.Apps(orgGuid, currentPage).baseURLString, baseApiURL, "Apps returns api URL")
-        XCTAssertEqual(CFRequest.Apps(orgGuid, currentPage).path, "/v2/apps", "Apps returns applications path")
-        XCTAssertEqual(CFRequest.Apps(orgGuid, currentPage).method, Alamofire.Method.GET, "Apps request method is GET")
-        XCTAssertEqual(request.URLString, baseApiURL + path + "?order-direction=desc&page=1&q=organization_guid%3Aabc123&results-per-page=25", "Apps urlrequest returns the apps url with the right params")
-        XCTAssertNil(request.valueForHTTPHeaderField("Authorization"), "Apps doesn't use basic auth")
+        XCTAssert((request as Any) is CFRequest, "Apps is a member")
+        XCTAssertEqual(request.baseURLString, baseApiURL, "Apps returns api URL")
+        XCTAssertEqual(request.path, "/v2/apps", "Apps returns applications path")
+        XCTAssertEqual(request.method, Alamofire.Method.GET, "Apps request method is GET")
+        XCTAssertEqual(request.URLRequest.URLString, baseApiURL + path + "?order-direction=desc&page=1&q=organization_guid%3Aabc123&results-per-page=25", "Apps urlrequest returns the apps url with the right params")
+        XCTAssertNil(request.URLRequest.valueForHTTPHeaderField("Authorization"), "Apps doesn't use basic auth")
+        
+        let searchRequest = CFRequest.Apps(orgGuid, currentPage, "term")
+        XCTAssertEqual(searchRequest.URLRequest.URLString, baseApiURL + path + "?order-direction=desc&page=1&q=organization_guid%3Aabc123&q=name%3E%3Dterm&q=name%3C%3Dtern&results-per-page=25", "Should include search queries with brackets stripped and specified range with bumped char.")
     }
     
     func testEventsMember() {
