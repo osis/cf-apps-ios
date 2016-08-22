@@ -65,6 +65,7 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
     
     @IBAction func filterOrgClicked(sender: UIBarButtonItem) {
         let currentIndex = self.orgPickerValues.indexOf(CFSession.org()!)
+        
         ActionSheetMultipleStringPicker.showPickerWithTitle("Filter by Org", rows: [
             self.orgPickerLabels
             ], initialSelection: [currentIndex!], doneBlock: {
@@ -76,6 +77,8 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
                 
                 return
             }, cancelBlock: { ActionMultipleStringCancelBlock in return }, origin: sender)
+        
+        self.searchBar.resignFirstResponder()
     }
     
     func refresh() {
@@ -217,7 +220,7 @@ private extension AppsViewController {
         self.refreshControl!.endRefreshing()
         setRefreshTitle("Refresh Apps")
         self.tableView.tableFooterView = nil
-        if searchText.isEmpty {
+        if !self.searchBar.isFirstResponder() {
             tableView.setContentOffset(CGPointMake(0,-20), animated: true)
         }
     }
