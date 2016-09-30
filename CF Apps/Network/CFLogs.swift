@@ -4,6 +4,7 @@ import ProtocolBuffers
 
 protocol CFLogger: NSObjectProtocol {
     func logsMessage(text: NSMutableAttributedString)
+    func recentLogsFetched()
 }
 
 class CFLogs: NSObject {
@@ -21,14 +22,30 @@ class CFLogs: NSObject {
         super.init()
     }
     
+    func recent() {
+        logMessage(LogMessageString.out("Fetching Recent Logs..."))
+        let request = CFRequest.RecentLogs(self.appGuid)
+        CFApi().dopplerRequest(request) { (request, response, data, rError) in
+            if (response?.statusCode == 401) {
+                self.handleAuthFail()
+            } else {
+                self.handleRecent(response, data: data)
+            }
+        }
+    }
+    
     func connect() {
-        logMessage(LogMessageString.out("Connecting"))
+        logMessage(LogMessageString.out("Connecting..."))
         tail()
     }
     
     func reconnect() {
-        logMessage(LogMessageString.out("Reconnecting"))
+        logMessage(LogMessageString.out("Reconnecting..."))
         tail()
+    }
+    
+    func disconnect() {
+        self.ws?.close()
     }
     
     func tail() {
@@ -43,23 +60,6 @@ class CFLogs: NSObject {
             print("--- Logs Connection Failed")
             logMessage(LogMessageString.out("Logs connection failed. Please try again"))
         }
-    }
-    
-    func createSocket() throws -> WebSocket {
-        let request = try createSocketRequest()
-        
-        self.ws = WebSocket(request: request)
-        self.ws!.binaryType = WebSocketBinaryType.NSData
-        return self.ws!
-    }
-    
-    func createSocketRequest() throws -> NSMutableURLRequest {
-        let account = CFSession.account()!
-        let endpoint = account.info.loggingEndpoint
-        let url = NSURL(string: "\(endpoint)/tail/?app=\(self.appGuid)")
-        let request = NSMutableURLRequest(URL: url!)
-        request.addValue("bearer \(CFSession.oauthToken!)", forHTTPHeaderField: "Authorization")
-        return request
     }
     
     func opened() {
@@ -83,15 +83,15 @@ class CFLogs: NSObject {
     }
     
     func message(bytes: Any) {
-        print("--- Log Message Received")
         let data = bytes as! NSData
         var text: NSMutableAttributedString?
         
         do {
             let logm = try LogMessage.parseFromData(data)
             let message = String(data: logm.message_, encoding: NSASCIIStringEncoding)!
+            let src = logm.hasSourceName ? logm.sourceName : logm.sourceType
             
-            text = LogMessageString.message(logm.sourceName, sourceID: logm.sourceId, message: message, type: logm.messageType)
+            text = LogMessageString.message(src, sourceID: logm.sourceInstance, message: message, type: logm.messageType)
         } catch {
             print("Message parsing failed")
             text = NSMutableAttributedString(string: String(data: data, encoding: NSASCIIStringEncoding)!)
@@ -100,29 +100,85 @@ class CFLogs: NSObject {
         logMessage(text!)
     }
     
+    func createSocket() throws -> WebSocket {
+        let request = try createSocketRequest()
+        
+        self.ws = WebSocket(request: request)
+        self.ws!.binaryType = WebSocketBinaryType.NSData
+        return self.ws!
+    }
+    
+    func createSocketRequest() throws -> NSMutableURLRequest {
+        let account = CFSession.account()!
+        let endpoint = account.info.loggingEndpoint
+        let url = NSURL(string: "\(endpoint)/tail/?app=\(self.appGuid)")
+        let request = NSMutableURLRequest(URL: url!)
+        request.addValue("bearer \(CFSession.oauthToken!)", forHTTPHeaderField: "Authorization")
+        return request
+    }
+    
+    func handleAuthFail() {
+        // TODO: Delegate this
+        CFSession.logout(true)
+    }
+}
+
+private extension CFLogs {
     func logMessage(message: NSMutableAttributedString) {
         self.delegate?.logsMessage(message)
     }
     
-    func disconnect() {
-        self.ws?.close()
+    func handleRecent(response: NSHTTPURLResponse?, data: NSData?) {
+        if let contentType = response?.allHeaderFields["Content-Type"] as! String? {
+            let boundary = contentType.componentsSeparatedByString("boundary=").last!
+            let chunks = self.chunkMessage(data!, boundary: boundary)
+            
+            for log in chunks {
+                do {
+                    let envelope = try Events.Envelope.parseFromData(log)
+                    self.message(envelope.logMessage.data())
+                } catch {
+                    print(error)
+                }
+            }
+            delegate?.recentLogsFetched()
+        }
     }
     
-    private func handleAuthError() {
+    func handleAuthError() {
         if let account = CFSession.account() {
             let loginURLRequest = CFRequest.Login(account.info.authEndpoint, account.username, account.password)
             CFApi().request(loginURLRequest, success: { _ in
                 self.tail()
-            }, error: { _, _ in
-                self.handleAuthFail()
+                }, error: { _, _ in
+                    self.handleAuthFail()
             })
         } else {
             self.handleAuthFail()
         }
     }
     
-    func handleAuthFail() {
-        // TODO: Delegate this
-        CFSession.logout(true)
+    func chunkMessage(data: NSData, boundary: String) -> ArraySlice<NSData> {
+        let sepdata = String("--\(boundary)").dataUsingEncoding(NSASCIIStringEncoding, allowLossyConversion: false)!
+        var chunks : [NSData] = []
+        
+        // Find first occurrence of separator:
+        var searchRange = NSMakeRange(0, data.length)
+        var foundRange = data.rangeOfData(sepdata, options: NSDataSearchOptions(), range: searchRange)
+        while foundRange.location != NSNotFound {
+            // Append chunk without \r\n\r\n & \r\n (if not empty):
+            if foundRange.location - 6 > searchRange.location + 4 {
+                chunks.append(data.subdataWithRange(NSMakeRange(searchRange.location+4, foundRange.location-6 - searchRange.location)))
+            }
+            // Search next occurrence of separator:
+            searchRange.location = foundRange.location + foundRange.length
+            searchRange.length = data.length - searchRange.location
+            foundRange = data.rangeOfData(sepdata, options: NSDataSearchOptions(), range: searchRange)
+        }
+        // Check for final chunk:
+        if searchRange.length > 0 {
+            chunks.append(data.subdataWithRange(searchRange))
+        }
+        return chunks.dropLast().suffix(100)
     }
 }

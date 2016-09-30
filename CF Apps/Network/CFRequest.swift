@@ -11,6 +11,7 @@ enum CFRequest: URLRequestConvertible {
     case AppStats(String)
     case Spaces([String])
     case Events(String)
+    case RecentLogs(String)
     
     var baseURLString: String {
         switch self {
@@ -18,6 +19,12 @@ enum CFRequest: URLRequestConvertible {
             return url
         case .Info(let url):
             return url
+        case .RecentLogs(_):
+            if let components = NSURLComponents(string: CFSession.dopplerURLString) {
+                components.scheme = "https"
+                return components.URLString
+            }
+            return ""
         default:
             return CFSession.baseURLString
         }
@@ -41,6 +48,8 @@ enum CFRequest: URLRequestConvertible {
             return "/v2/spaces"
         case .Events:
             return "/v2/events"
+        case .RecentLogs(let guid):
+            return "/apps/\(guid)/recentlogs"
         default:
             return ""
         }

@@ -96,6 +96,13 @@ class CFApi {
         }
     }
     
+    func dopplerRequest(urlRequest: URLRequestConvertible, completionHandler: (request: NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> Void) {
+        
+        Alamofire.request(urlRequest.URLRequest).validate().response { (request, response, data, error) in
+            completionHandler(request: request, response: response, data: data, error: error)
+        }
+    }
+    
     func refreshToken(loginURLRequest: CFRequest, originalURLRequest: NSMutableURLRequest, success: (json: JSON) -> Void) {
             self.request(loginURLRequest, success: { _ in
                 print("--- Token Refresh Success")
