@@ -8,7 +8,7 @@ protocol CFLogger: NSObjectProtocol {
 }
 
 class CFLogs: NSObject {
-    let font = UIFont(name: "Courier", size: 11.00)!
+    let font = UIFont.init(name: "Courier", size: 11.00)!
     let prefixColor = UIColor(red: 51/255, green: 140/255, blue: 231/255, alpha: 1.0)
     let outColor = UIColor.whiteColor()
     let errColor = UIColor.redColor()
