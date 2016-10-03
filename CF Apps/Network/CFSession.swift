@@ -14,6 +14,12 @@ class CFSession {
         }
         return ""
     }
+    static var dopplerURLString: String {
+        if let account = CFSession.account() {
+            return account.info.dopplerLoggingEndpoint
+        }
+        return ""
+    }
     
     class func account(account: CFAccount) {
         NSUserDefaults.standardUserDefaults().setObject(account.account, forKey: accountKey)

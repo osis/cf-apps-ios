@@ -29,7 +29,7 @@ class LogsViewController: UIViewController, CFLogger {
     func startLogging() {
         UIApplication.sharedApplication().idleTimerDisabled = true
         self.logs!.delegate = self
-        self.logs!.connect()
+        self.logs!.recent()
     }
     
     func logsMessage(text: NSMutableAttributedString) {
@@ -37,6 +37,10 @@ class LogsViewController: UIViewController, CFLogger {
         logs.appendAttributedString(text)
         self.logView.attributedText = logs
         self.logView.scrollRangeToVisible(self.logView.selectedRange)
+    }
+    
+    func recentLogsFetched() {
+        self.logs!.connect()
     }
     
     func stopLogging() {

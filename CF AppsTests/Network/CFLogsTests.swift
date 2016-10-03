@@ -37,6 +37,10 @@ class CFLogsTests: XCTestCase {
             XCTAssertEqual(text.string, assertString!)
             expectation.fulfill()
         }
+        
+        func recentLogsFetched() {
+            expectation.fulfill()
+        }
     }
     
     override func setUp() {

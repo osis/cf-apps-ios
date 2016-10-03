@@ -23,6 +23,10 @@ class LogsViewControllerTests: XCTestCase {
         override func disconnect() {
             expectation.fulfill()
         }
+        
+        override func recent() {
+            expectation.fulfill()
+        }
     }
     
     var vc : LogsViewController!

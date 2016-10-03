@@ -48,7 +48,6 @@
 		65ABCB181D17256800268563 /* AppTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ABCB171D17256800268563 /* AppTableViewCell.swift */; };
 		65B010731C1E684000CECF07 /* CFSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B010721C1E684000CECF07 /* CFSpace.swift */; };
 		65C6FE431C70463D0083C4A1 /* CFApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B44411B532531009ED489 /* CFApi.swift */; };
-		65C7A8B61CAB957700BA1ADC /* LogMessage.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C7A8B41CAB957700BA1ADC /* LogMessage.proto.swift */; };
 		65C8E1E81CB06401004FD199 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */; };
 		65C942701D695B8500C4D9B0 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9426F1D695B8500C4D9B0 /* String.swift */; };
 		65C942751D695BE400C4D9B0 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C942741D695BE400C4D9B0 /* StringTests.swift */; };
@@ -65,6 +64,13 @@
 		65EE6FDE1B4713E80047519D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FDB1B4713E80047519D /* Main.storyboard */; };
 		65F523671D17357A00EA4F0E /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F523661D17357A00EA4F0E /* LoadingIndicatorView.swift */; };
 		D81CB45E1CF6C4050038ADC1 /* CFEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81CB45D1CF6C4050038ADC1 /* CFEventTests.swift */; };
+		D81F901E1D9EB2FC009FFC3A /* Events.Envelope.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81F90171D9EB2FC009FFC3A /* Events.Envelope.proto.swift */; };
+		D81F901F1D9EB2FC009FFC3A /* Events.Error.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81F90181D9EB2FC009FFC3A /* Events.Error.proto.swift */; };
+		D81F90201D9EB2FC009FFC3A /* Events.Http.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81F90191D9EB2FC009FFC3A /* Events.Http.proto.swift */; };
+		D81F90211D9EB2FC009FFC3A /* Events.Log.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81F901A1D9EB2FC009FFC3A /* Events.Log.proto.swift */; };
+		D81F90221D9EB2FC009FFC3A /* Events.Metric.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81F901B1D9EB2FC009FFC3A /* Events.Metric.proto.swift */; };
+		D81F90231D9EB2FC009FFC3A /* Events.Uuid.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81F901C1D9EB2FC009FFC3A /* Events.Uuid.proto.swift */; };
+		D81F90241D9EB2FC009FFC3A /* LogMessage.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81F901D1D9EB2FC009FFC3A /* LogMessage.proto.swift */; };
 		D821273F1CF2787E0053E6B2 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D821273E1CF2787E0053E6B2 /* EventsViewController.swift */; };
 		D821274C1CF2A21D0053E6B2 /* CFEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82127491CF280890053E6B2 /* CFEvent.swift */; };
 		D821274E1CF4C55B0053E6B2 /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = D82127471CF280030053E6B2 /* events.json */; };
@@ -131,8 +137,6 @@
 		65ABCB171D17256800268563 /* AppTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTableViewCell.swift; sourceTree = "<group>"; };
 		65B010721C1E684000CECF07 /* CFSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFSpace.swift; sourceTree = "<group>"; };
 		65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewControllerTests.swift; path = "CF AppsTests/Views/LoginViewControllerTests.swift"; sourceTree = "<group>"; };
-		65C7A8B41CAB957700BA1ADC /* LogMessage.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogMessage.proto.swift; sourceTree = "<group>"; };
-		65C7A8B71CAB959700BA1ADC /* LogMessage.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LogMessage.proto; sourceTree = "<group>"; };
 		65C9426F1D695B8500C4D9B0 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = String.swift; path = "CF Apps/Extensions/String.swift"; sourceTree = SOURCE_ROOT; };
 		65C942741D695BE400C4D9B0 /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringTests.swift; path = "CF AppsTests/Extensions/StringTests.swift"; sourceTree = "<group>"; };
 		65D050C21C83E0F5009C913E /* CFResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFResponse.swift; sourceTree = "<group>"; };
@@ -154,6 +158,13 @@
 		AF43FF454AC1D33CA8274022 /* Pods-CF Apps Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CF Apps Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CF Apps Tests/Pods-CF Apps Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C238CDD466EFC53FC735BE4E /* Pods-CF Apps Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CF Apps Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CF Apps Tests/Pods-CF Apps Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D81CB45D1CF6C4050038ADC1 /* CFEventTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFEventTests.swift; path = "CF AppsTests/Models/CFEventTests.swift"; sourceTree = "<group>"; };
+		D81F90171D9EB2FC009FFC3A /* Events.Envelope.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Events.Envelope.proto.swift; path = Proto/Events.Envelope.proto.swift; sourceTree = "<group>"; };
+		D81F90181D9EB2FC009FFC3A /* Events.Error.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Events.Error.proto.swift; path = Proto/Events.Error.proto.swift; sourceTree = "<group>"; };
+		D81F90191D9EB2FC009FFC3A /* Events.Http.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Events.Http.proto.swift; path = Proto/Events.Http.proto.swift; sourceTree = "<group>"; };
+		D81F901A1D9EB2FC009FFC3A /* Events.Log.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Events.Log.proto.swift; path = Proto/Events.Log.proto.swift; sourceTree = "<group>"; };
+		D81F901B1D9EB2FC009FFC3A /* Events.Metric.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Events.Metric.proto.swift; path = Proto/Events.Metric.proto.swift; sourceTree = "<group>"; };
+		D81F901C1D9EB2FC009FFC3A /* Events.Uuid.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Events.Uuid.proto.swift; path = Proto/Events.Uuid.proto.swift; sourceTree = "<group>"; };
+		D81F901D1D9EB2FC009FFC3A /* LogMessage.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogMessage.proto.swift; path = Proto/LogMessage.proto.swift; sourceTree = "<group>"; };
 		D821273E1CF2787E0053E6B2 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		D82127471CF280030053E6B2 /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = events.json; path = "CF AppsTests/Network/Fixtures/events.json"; sourceTree = "<group>"; };
 		D82127491CF280890053E6B2 /* CFEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFEvent.swift; sourceTree = "<group>"; };
@@ -362,8 +373,7 @@
 				654C87981C1A40DF00C0C79C /* CFOrg.swift */,
 				65B010721C1E684000CECF07 /* CFSpace.swift */,
 				65DBB5F71BC0D09200BD19BC /* Instance.swift */,
-				65C7A8B71CAB959700BA1ADC /* LogMessage.proto */,
-				65C7A8B41CAB957700BA1ADC /* LogMessage.proto.swift */,
+				D81F90161D9EB29A009FFC3A /* Proto */,
 				65DF28A81BEEFD4C0081B834 /* Service.swift */,
 				D85E45581D4E66000084FCD3 /* Vendor.swift */,
 			);
@@ -419,6 +429,20 @@
 				C238CDD466EFC53FC735BE4E /* Pods-CF Apps Tests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		D81F90161D9EB29A009FFC3A /* Proto */ = {
+			isa = PBXGroup;
+			children = (
+				D81F90171D9EB2FC009FFC3A /* Events.Envelope.proto.swift */,
+				D81F90181D9EB2FC009FFC3A /* Events.Error.proto.swift */,
+				D81F90191D9EB2FC009FFC3A /* Events.Http.proto.swift */,
+				D81F901A1D9EB2FC009FFC3A /* Events.Log.proto.swift */,
+				D81F901B1D9EB2FC009FFC3A /* Events.Metric.proto.swift */,
+				D81F901C1D9EB2FC009FFC3A /* Events.Uuid.proto.swift */,
+				D81F901D1D9EB2FC009FFC3A /* LogMessage.proto.swift */,
+			);
+			name = Proto;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -635,15 +659,20 @@
 				65DF28A91BEEFD4C0081B834 /* Service.swift in Sources */,
 				655B442E1B5305FD009ED489 /* AppsViewController.swift in Sources */,
 				65782EEA1BC08A510005040F /* InstancesViewController.swift in Sources */,
+				D81F90211D9EB2FC009FFC3A /* Events.Log.proto.swift in Sources */,
 				6512BC9F1D27355500FD87EB /* VendorPicker.swift in Sources */,
 				655B443C1B530622009ED489 /* CFRequest.swift in Sources */,
 				65DF28A71BEEF11F0081B834 /* ServicesViewController.swift in Sources */,
+				D81F90241D9EB2FC009FFC3A /* LogMessage.proto.swift in Sources */,
+				D81F901F1D9EB2FC009FFC3A /* Events.Error.proto.swift in Sources */,
 				65E2D0071CA856010038396A /* CFLogs.swift in Sources */,
 				65ABCB161D16613000268563 /* CFStore.swift in Sources */,
 				653CC9771CBB2EC600315E22 /* LogMessageString.swift in Sources */,
 				655B44401B530E1A009ED489 /* LoginViewController.swift in Sources */,
 				6568AD8A1D2DEBEF00502051 /* CFAccount.swift in Sources */,
+				D81F90201D9EB2FC009FFC3A /* Events.Http.proto.swift in Sources */,
 				65C942701D695B8500C4D9B0 /* String.swift in Sources */,
+				D81F901E1D9EB2FC009FFC3A /* Events.Envelope.proto.swift in Sources */,
 				655B443A1B530622009ED489 /* CFStore.xcdatamodeld in Sources */,
 				65671C331B97D858003F4DC9 /* AppViewController.swift in Sources */,
 				65D5DBA11C9B47FE00AF8EF1 /* CFApp.swift in Sources */,
@@ -653,9 +682,9 @@
 				654C207F1D583C9D00B99276 /* CFAccountStore.swift in Sources */,
 				654C879B1C1A4A4500C0C79C /* OrgPicker.swift in Sources */,
 				65C6FE431C70463D0083C4A1 /* CFApi.swift in Sources */,
+				D81F90231D9EB2FC009FFC3A /* Events.Uuid.proto.swift in Sources */,
 				D821273F1CF2787E0053E6B2 /* EventsViewController.swift in Sources */,
 				6568AD881D2B295500502051 /* AccountsViewController.swift in Sources */,
-				65C7A8B61CAB957700BA1ADC /* LogMessage.proto.swift in Sources */,
 				65414EA61CA7610900B17589 /* LogsViewController.swift in Sources */,
 				65F523671D17357A00EA4F0E /* LoadingIndicatorView.swift in Sources */,
 				65B010731C1E684000CECF07 /* CFSpace.swift in Sources */,
@@ -663,6 +692,7 @@
 				654C207D1D581E4A00B99276 /* Alert.swift in Sources */,
 				653E2F0C1C289A38008CFC10 /* CFSession.swift in Sources */,
 				654C87991C1A40DF00C0C79C /* CFOrg.swift in Sources */,
+				D81F90221D9EB2FC009FFC3A /* Events.Metric.proto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

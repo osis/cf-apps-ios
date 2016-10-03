@@ -14,21 +14,10 @@ public func == (lhs: LogMessage, rhs: LogMessage) -> Bool {
   fieldCheck = fieldCheck && (lhs.hasMessageType == rhs.hasMessageType) && (!lhs.hasMessageType || lhs.messageType == rhs.messageType)
   fieldCheck = fieldCheck && (lhs.hasTimestamp == rhs.hasTimestamp) && (!lhs.hasTimestamp || lhs.timestamp == rhs.timestamp)
   fieldCheck = fieldCheck && (lhs.hasAppId == rhs.hasAppId) && (!lhs.hasAppId || lhs.appId == rhs.appId)
-  fieldCheck = fieldCheck && (lhs.hasSourceId == rhs.hasSourceId) && (!lhs.hasSourceId || lhs.sourceId == rhs.sourceId)
+  fieldCheck = fieldCheck && (lhs.hasSourceType == rhs.hasSourceType) && (!lhs.hasSourceType || lhs.sourceType == rhs.sourceType)
+  fieldCheck = fieldCheck && (lhs.hasSourceInstance == rhs.hasSourceInstance) && (!lhs.hasSourceInstance || lhs.sourceInstance == rhs.sourceInstance)
   fieldCheck = fieldCheck && (lhs.drainUrls == rhs.drainUrls)
   fieldCheck = fieldCheck && (lhs.hasSourceName == rhs.hasSourceName) && (!lhs.hasSourceName || lhs.sourceName == rhs.sourceName)
-  fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
-  return fieldCheck
-}
-
-public func == (lhs: LogEnvelope, rhs: LogEnvelope) -> Bool {
-  if (lhs === rhs) {
-    return true
-  }
-  var fieldCheck:Bool = (lhs.hashValue == rhs.hashValue)
-  fieldCheck = fieldCheck && (lhs.hasRoutingKey == rhs.hasRoutingKey) && (!lhs.hasRoutingKey || lhs.routingKey == rhs.routingKey)
-  fieldCheck = fieldCheck && (lhs.hasSignature == rhs.hasSignature) && (!lhs.hasSignature || lhs.signature == rhs.signature)
-  fieldCheck = fieldCheck && (lhs.hasLogMessage == rhs.hasLogMessage) && (!lhs.hasLogMessage || lhs.logMessage == rhs.logMessage)
   fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
   return fieldCheck
 }
@@ -50,11 +39,13 @@ public struct LogMessageRoot {
   }
 }
 
+/// A LogMessage contains a "log line" and associated metadata.
 final public class LogMessage : GeneratedMessage, GeneratedMessageProtocol {
 
 
     //Enum type declaration start 
 
+    /// MessageType stores the destination of the message (corresponding to STDOUT or STDERR).
     public enum MessageType:Int32, CustomDebugStringConvertible, CustomStringConvertible {
       case Out = 1
       case Err = 2
@@ -71,20 +62,28 @@ final public class LogMessage : GeneratedMessage, GeneratedMessageProtocol {
 
     //Enum type declaration end 
 
+  /// Bytes of the log message. (Note that it is not required to be a single line.)
   public private(set) var message_:NSData = NSData()
 
   public private(set) var hasMessage_:Bool = false
   public private(set) var messageType:LogMessage.MessageType = LogMessage.MessageType.Out
   public private(set) var hasMessageType:Bool = false
+  /// UNIX timestamp (in nanoseconds) when the log was written.
   public private(set) var timestamp:Int64 = Int64(0)
 
   public private(set) var hasTimestamp:Bool = false
+  /// Application that emitted the message (or to which the application is related).
   public private(set) var appId:String = ""
 
   public private(set) var hasAppId:Bool = false
-  public private(set) var sourceId:String = ""
+  /// Source of the message. For Cloud Foundry, this can be "APP", "RTR", "DEA", "STG", etc.
+  public private(set) var sourceType:String = ""
 
-  public private(set) var hasSourceId:Bool = false
+  public private(set) var hasSourceType:Bool = false
+  /// Instance that emitted the message.
+  public private(set) var sourceInstance:String = ""
+
+  public private(set) var hasSourceInstance:Bool = false
   public private(set) var drainUrls:Array<String> = Array<String>()
   public private(set) var sourceName:String = ""
 
@@ -102,9 +101,6 @@ final public class LogMessage : GeneratedMessage, GeneratedMessageProtocol {
     if !hasTimestamp {
       return false
     }
-    if !hasAppId {
-      return false
-    }
    return true
   }
   override public func writeToCodedOutputStream(output:CodedOutputStream) throws {
@@ -115,13 +111,16 @@ final public class LogMessage : GeneratedMessage, GeneratedMessageProtocol {
       try output.writeEnum(2, value:messageType.rawValue)
     }
     if hasTimestamp {
-      try output.writeSInt64(3, value:timestamp)
+      try output.writeInt64(3, value:timestamp)
     }
     if hasAppId {
       try output.writeString(4, value:appId)
     }
-    if hasSourceId {
-      try output.writeString(6, value:sourceId)
+    if hasSourceType {
+      try output.writeString(5, value:sourceType)
+    }
+    if hasSourceInstance {
+      try output.writeString(6, value:sourceInstance)
     }
     if !drainUrls.isEmpty {
       for oneValuedrainUrls in drainUrls {
@@ -147,13 +146,16 @@ final public class LogMessage : GeneratedMessage, GeneratedMessageProtocol {
       serialize_size += messageType.rawValue.computeEnumSize(2)
     }
     if hasTimestamp {
-      serialize_size += timestamp.computeSInt64Size(3)
+      serialize_size += timestamp.computeInt64Size(3)
     }
     if hasAppId {
       serialize_size += appId.computeStringSize(4)
     }
-    if hasSourceId {
-      serialize_size += sourceId.computeStringSize(6)
+    if hasSourceType {
+      serialize_size += sourceType.computeStringSize(5)
+    }
+    if hasSourceInstance {
+      serialize_size += sourceInstance.computeStringSize(6)
     }
     var dataSizeDrainUrls:Int32 = 0
     for oneValuedrainUrls in drainUrls {
@@ -228,8 +230,11 @@ final public class LogMessage : GeneratedMessage, GeneratedMessageProtocol {
     if hasAppId {
       output += "\(indent) appId: \(appId) \n"
     }
-    if hasSourceId {
-      output += "\(indent) sourceId: \(sourceId) \n"
+    if hasSourceType {
+      output += "\(indent) sourceType: \(sourceType) \n"
+    }
+    if hasSourceInstance {
+      output += "\(indent) sourceInstance: \(sourceInstance) \n"
     }
     var drainUrlsElementIndex:Int = 0
     for oneValuedrainUrls in drainUrls  {
@@ -257,8 +262,11 @@ final public class LogMessage : GeneratedMessage, GeneratedMessageProtocol {
           if hasAppId {
              hashCode = (hashCode &* 31) &+ appId.hashValue
           }
-          if hasSourceId {
-             hashCode = (hashCode &* 31) &+ sourceId.hashValue
+          if hasSourceType {
+             hashCode = (hashCode &* 31) &+ sourceType.hashValue
+          }
+          if hasSourceInstance {
+             hashCode = (hashCode &* 31) &+ sourceInstance.hashValue
           }
           for oneValuedrainUrls in drainUrls {
               hashCode = (hashCode &* 31) &+ oneValuedrainUrls.hashValue
@@ -386,27 +394,50 @@ final public class LogMessage : GeneratedMessage, GeneratedMessageProtocol {
          builderResult.appId = ""
          return self
     }
-    public var hasSourceId:Bool {
+    public var hasSourceType:Bool {
          get {
-              return builderResult.hasSourceId
+              return builderResult.hasSourceType
          }
     }
-    public var sourceId:String {
+    public var sourceType:String {
          get {
-              return builderResult.sourceId
+              return builderResult.sourceType
          }
          set (value) {
-             builderResult.hasSourceId = true
-             builderResult.sourceId = value
+             builderResult.hasSourceType = true
+             builderResult.sourceType = value
          }
     }
-    public func setSourceId(value:String) -> LogMessage.Builder {
-      self.sourceId = value
+    public func setSourceType(value:String) -> LogMessage.Builder {
+      self.sourceType = value
       return self
     }
-    public func clearSourceId() -> LogMessage.Builder{
-         builderResult.hasSourceId = false
-         builderResult.sourceId = ""
+    public func clearSourceType() -> LogMessage.Builder{
+         builderResult.hasSourceType = false
+         builderResult.sourceType = ""
+         return self
+    }
+    public var hasSourceInstance:Bool {
+         get {
+              return builderResult.hasSourceInstance
+         }
+    }
+    public var sourceInstance:String {
+         get {
+              return builderResult.sourceInstance
+         }
+         set (value) {
+             builderResult.hasSourceInstance = true
+             builderResult.sourceInstance = value
+         }
+    }
+    public func setSourceInstance(value:String) -> LogMessage.Builder {
+      self.sourceInstance = value
+      return self
+    }
+    public func clearSourceInstance() -> LogMessage.Builder{
+         builderResult.hasSourceInstance = false
+         builderResult.sourceInstance = ""
          return self
     }
     public var drainUrls:Array<String> {
@@ -484,8 +515,11 @@ final public class LogMessage : GeneratedMessage, GeneratedMessageProtocol {
       if other.hasAppId {
            appId = other.appId
       }
-      if other.hasSourceId {
-           sourceId = other.sourceId
+      if other.hasSourceType {
+           sourceType = other.sourceType
+      }
+      if other.hasSourceInstance {
+           sourceInstance = other.sourceInstance
       }
       if !other.drainUrls.isEmpty {
           builderResult.drainUrls += other.drainUrls
@@ -520,357 +554,22 @@ final public class LogMessage : GeneratedMessage, GeneratedMessageProtocol {
           }
 
         case 24 :
-          timestamp = try input.readSInt64()
+          timestamp = try input.readInt64()
 
         case 34 :
           appId = try input.readString()
 
+        case 42 :
+          sourceType = try input.readString()
+
         case 50 :
-          sourceId = try input.readString()
+          sourceInstance = try input.readString()
 
         case 58 :
           drainUrls += [try input.readString()]
 
         case 66 :
           sourceName = try input.readString()
-
-        default:
-          if (!(try parseUnknownField(input,unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
-             unknownFields = try unknownFieldsBuilder.build()
-             return self
-          }
-        }
-      }
-    }
-  }
-
-}
-
-final public class LogEnvelope : GeneratedMessage, GeneratedMessageProtocol {
-  public private(set) var routingKey:String = ""
-
-  public private(set) var hasRoutingKey:Bool = false
-  public private(set) var signature:NSData = NSData()
-
-  public private(set) var hasSignature:Bool = false
-  public private(set) var logMessage:LogMessage!
-  public private(set) var hasLogMessage:Bool = false
-  required public init() {
-       super.init()
-  }
-  override public func isInitialized() -> Bool {
-    if !hasRoutingKey {
-      return false
-    }
-    if !hasSignature {
-      return false
-    }
-    if !hasLogMessage {
-      return false
-    }
-    if !logMessage.isInitialized() {
-      return false
-    }
-   return true
-  }
-  override public func writeToCodedOutputStream(output:CodedOutputStream) throws {
-    if hasRoutingKey {
-      try output.writeString(1, value:routingKey)
-    }
-    if hasSignature {
-      try output.writeData(2, value:signature)
-    }
-    if hasLogMessage {
-      try output.writeMessage(3, value:logMessage)
-    }
-    try unknownFields.writeToCodedOutputStream(output)
-  }
-  override public func serializedSize() -> Int32 {
-    var serialize_size:Int32 = memoizedSerializedSize
-    if serialize_size != -1 {
-     return serialize_size
-    }
-
-    serialize_size = 0
-    if hasRoutingKey {
-      serialize_size += routingKey.computeStringSize(1)
-    }
-    if hasSignature {
-      serialize_size += signature.computeDataSize(2)
-    }
-    if hasLogMessage {
-        if let varSizelogMessage = logMessage?.computeMessageSize(3) {
-            serialize_size += varSizelogMessage
-        }
-    }
-    serialize_size += unknownFields.serializedSize()
-    memoizedSerializedSize = serialize_size
-    return serialize_size
-  }
-  public class func parseArrayDelimitedFromInputStream(input:NSInputStream) throws -> Array<LogEnvelope> {
-    var mergedArray = Array<LogEnvelope>()
-    while let value = try parseFromDelimitedFromInputStream(input) {
-      mergedArray += [value]
-    }
-    return mergedArray
-  }
-  public class func parseFromDelimitedFromInputStream(input:NSInputStream) throws -> LogEnvelope? {
-    return try LogEnvelope.Builder().mergeDelimitedFromInputStream(input)?.build()
-  }
-  public class func parseFromData(data:NSData) throws -> LogEnvelope {
-    return try LogEnvelope.Builder().mergeFromData(data, extensionRegistry:LogMessageRoot.sharedInstance.extensionRegistry).build()
-  }
-  public class func parseFromData(data:NSData, extensionRegistry:ExtensionRegistry) throws -> LogEnvelope {
-    return try LogEnvelope.Builder().mergeFromData(data, extensionRegistry:extensionRegistry).build()
-  }
-  public class func parseFromInputStream(input:NSInputStream) throws -> LogEnvelope {
-    return try LogEnvelope.Builder().mergeFromInputStream(input).build()
-  }
-  public class func parseFromInputStream(input:NSInputStream, extensionRegistry:ExtensionRegistry) throws -> LogEnvelope {
-    return try LogEnvelope.Builder().mergeFromInputStream(input, extensionRegistry:extensionRegistry).build()
-  }
-  public class func parseFromCodedInputStream(input:CodedInputStream) throws -> LogEnvelope {
-    return try LogEnvelope.Builder().mergeFromCodedInputStream(input).build()
-  }
-  public class func parseFromCodedInputStream(input:CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> LogEnvelope {
-    return try LogEnvelope.Builder().mergeFromCodedInputStream(input, extensionRegistry:extensionRegistry).build()
-  }
-  public class func getBuilder() -> LogEnvelope.Builder {
-    return LogEnvelope.classBuilder() as! LogEnvelope.Builder
-  }
-  public func getBuilder() -> LogEnvelope.Builder {
-    return classBuilder() as! LogEnvelope.Builder
-  }
-  public override class func classBuilder() -> MessageBuilder {
-    return LogEnvelope.Builder()
-  }
-  public override func classBuilder() -> MessageBuilder {
-    return LogEnvelope.Builder()
-  }
-  public func toBuilder() throws -> LogEnvelope.Builder {
-    return try LogEnvelope.builderWithPrototype(self)
-  }
-  public class func builderWithPrototype(prototype:LogEnvelope) throws -> LogEnvelope.Builder {
-    return try LogEnvelope.Builder().mergeFrom(prototype)
-  }
-  override public func getDescription(indent:String) throws -> String {
-    var output:String = ""
-    if hasRoutingKey {
-      output += "\(indent) routingKey: \(routingKey) \n"
-    }
-    if hasSignature {
-      output += "\(indent) signature: \(signature) \n"
-    }
-    if hasLogMessage {
-      output += "\(indent) logMessage {\n"
-      if let outDescLogMessage = logMessage {
-        output += try outDescLogMessage.getDescription("\(indent)  ")
-      }
-      output += "\(indent) }\n"
-    }
-    output += unknownFields.getDescription(indent)
-    return output
-  }
-  override public var hashValue:Int {
-      get {
-          var hashCode:Int = 7
-          if hasRoutingKey {
-             hashCode = (hashCode &* 31) &+ routingKey.hashValue
-          }
-          if hasSignature {
-             hashCode = (hashCode &* 31) &+ signature.hashValue
-          }
-          if hasLogMessage {
-              if let hashValuelogMessage = logMessage?.hashValue {
-                  hashCode = (hashCode &* 31) &+ hashValuelogMessage
-              }
-          }
-          hashCode = (hashCode &* 31) &+  unknownFields.hashValue
-          return hashCode
-      }
-  }
-
-
-  //Meta information declaration start
-
-  override public class func className() -> String {
-      return "LogEnvelope"
-  }
-  override public func className() -> String {
-      return "LogEnvelope"
-  }
-  override public func classMetaType() -> GeneratedMessage.Type {
-      return LogEnvelope.self
-  }
-  //Meta information declaration end
-
-  final public class Builder : GeneratedMessageBuilder {
-    private var builderResult:LogEnvelope = LogEnvelope()
-    public func getMessage() -> LogEnvelope {
-        return builderResult
-    }
-
-    required override public init () {
-       super.init()
-    }
-    public var hasRoutingKey:Bool {
-         get {
-              return builderResult.hasRoutingKey
-         }
-    }
-    public var routingKey:String {
-         get {
-              return builderResult.routingKey
-         }
-         set (value) {
-             builderResult.hasRoutingKey = true
-             builderResult.routingKey = value
-         }
-    }
-    public func setRoutingKey(value:String) -> LogEnvelope.Builder {
-      self.routingKey = value
-      return self
-    }
-    public func clearRoutingKey() -> LogEnvelope.Builder{
-         builderResult.hasRoutingKey = false
-         builderResult.routingKey = ""
-         return self
-    }
-    public var hasSignature:Bool {
-         get {
-              return builderResult.hasSignature
-         }
-    }
-    public var signature:NSData {
-         get {
-              return builderResult.signature
-         }
-         set (value) {
-             builderResult.hasSignature = true
-             builderResult.signature = value
-         }
-    }
-    public func setSignature(value:NSData) -> LogEnvelope.Builder {
-      self.signature = value
-      return self
-    }
-    public func clearSignature() -> LogEnvelope.Builder{
-         builderResult.hasSignature = false
-         builderResult.signature = NSData()
-         return self
-    }
-    public var hasLogMessage:Bool {
-         get {
-             return builderResult.hasLogMessage
-         }
-    }
-    public var logMessage:LogMessage! {
-         get {
-             if logMessageBuilder_ != nil {
-                builderResult.logMessage = logMessageBuilder_.getMessage()
-             }
-             return builderResult.logMessage
-         }
-         set (value) {
-             builderResult.hasLogMessage = true
-             builderResult.logMessage = value
-         }
-    }
-    private var logMessageBuilder_:LogMessage.Builder! {
-         didSet {
-            builderResult.hasLogMessage = true
-         }
-    }
-    public func getLogMessageBuilder() -> LogMessage.Builder {
-      if logMessageBuilder_ == nil {
-         logMessageBuilder_ = LogMessage.Builder()
-         builderResult.logMessage = logMessageBuilder_.getMessage()
-         if logMessage != nil {
-            try! logMessageBuilder_.mergeFrom(logMessage)
-         }
-      }
-      return logMessageBuilder_
-    }
-    public func setLogMessage(value:LogMessage!) -> LogEnvelope.Builder {
-      self.logMessage = value
-      return self
-    }
-    public func mergeLogMessage(value:LogMessage) throws -> LogEnvelope.Builder {
-      if builderResult.hasLogMessage {
-        builderResult.logMessage = try LogMessage.builderWithPrototype(builderResult.logMessage).mergeFrom(value).buildPartial()
-      } else {
-        builderResult.logMessage = value
-      }
-      builderResult.hasLogMessage = true
-      return self
-    }
-    public func clearLogMessage() -> LogEnvelope.Builder {
-      logMessageBuilder_ = nil
-      builderResult.hasLogMessage = false
-      builderResult.logMessage = nil
-      return self
-    }
-    override public var internalGetResult:GeneratedMessage {
-         get {
-            return builderResult
-         }
-    }
-    public override func clear() -> LogEnvelope.Builder {
-      builderResult = LogEnvelope()
-      return self
-    }
-    public override func clone() throws -> LogEnvelope.Builder {
-      return try LogEnvelope.builderWithPrototype(builderResult)
-    }
-    public override func build() throws -> LogEnvelope {
-         try checkInitialized()
-         return buildPartial()
-    }
-    public func buildPartial() -> LogEnvelope {
-      let returnMe:LogEnvelope = builderResult
-      return returnMe
-    }
-    public func mergeFrom(other:LogEnvelope) throws -> LogEnvelope.Builder {
-      if other == LogEnvelope() {
-       return self
-      }
-      if other.hasRoutingKey {
-           routingKey = other.routingKey
-      }
-      if other.hasSignature {
-           signature = other.signature
-      }
-      if (other.hasLogMessage) {
-          try mergeLogMessage(other.logMessage)
-      }
-      try mergeUnknownFields(other.unknownFields)
-      return self
-    }
-    public override func mergeFromCodedInputStream(input:CodedInputStream) throws -> LogEnvelope.Builder {
-         return try mergeFromCodedInputStream(input, extensionRegistry:ExtensionRegistry())
-    }
-    public override func mergeFromCodedInputStream(input:CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> LogEnvelope.Builder {
-      let unknownFieldsBuilder:UnknownFieldSet.Builder = try UnknownFieldSet.builderWithUnknownFields(self.unknownFields)
-      while (true) {
-        let protobufTag = try input.readTag()
-        switch protobufTag {
-        case 0: 
-          self.unknownFields = try unknownFieldsBuilder.build()
-          return self
-
-        case 10 :
-          routingKey = try input.readString()
-
-        case 18 :
-          signature = try input.readData()
-
-        case 26 :
-          let subBuilder:LogMessage.Builder = LogMessage.Builder()
-          if hasLogMessage {
-            try subBuilder.mergeFrom(logMessage)
-          }
-          try input.readMessage(subBuilder, extensionRegistry:extensionRegistry)
-          logMessage = subBuilder.buildPartial()
 
         default:
           if (!(try parseUnknownField(input,unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
