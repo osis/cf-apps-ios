@@ -41,7 +41,7 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func accountSwitched() {
-        self.searchBar.text = ""
+        clearSearch()
         self.items = [CFApp]()
         self.tableView.reloadData()
         refresh()
@@ -78,7 +78,7 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
                 return
             }, cancelBlock: { ActionMultipleStringCancelBlock in return }, origin: sender)
         
-        self.searchBar.resignFirstResponder()
+        clearSearch()
     }
     
     func refresh() {
@@ -136,6 +136,12 @@ private extension AppsViewController {
         dispatch_async(dispatch_get_main_queue()) {
             self.refreshControl!.attributedTitle = NSAttributedString(string: title)
         }
+    }
+    
+    func clearSearch() {
+        self.searchText = ""
+        self.searchBar.text = ""
+        self.searchBar.resignFirstResponder()
     }
     
     func fetchOrganizations() {
