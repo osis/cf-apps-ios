@@ -8,21 +8,21 @@ class LogMessageString: NSMutableAttributedString {
     static let errColor = UIColor.redColor()
     
     class func out(string: String) -> NSMutableAttributedString {
-        return message("", sourceID: "", message: string, type: LogMessage.MessageType.Out)
+        return message("", sourceID: "", message: string, type: Events.LogMessage.MessageType.Out)
     }
     
     class func err(string: String) -> NSMutableAttributedString {
-        return message("", sourceID: "", message: string, type: LogMessage.MessageType.Err)
+        return message("", sourceID: "", message: string, type: Events.LogMessage.MessageType.Err)
     }
     
-    class func message(sourceName: String, sourceID: String, message: String, type: LogMessage.MessageType) -> NSMutableAttributedString {
+    class func message(sourceName: String, sourceID: String, message: String, type: Events.LogMessage.MessageType) -> NSMutableAttributedString {
         let prefix = "\(sourceName)[\(sourceID)]:"
         let text = NSMutableAttributedString(string: "\(prefix) \(message)\n\n", attributes: [NSFontAttributeName: font])
         
         let textString = NSString(string: text.string)
         let prefixRange = textString.rangeOfString(prefix)
         let messageRange = textString.rangeOfString(message)
-        let messageColor = (type == LogMessage.MessageType.Out) ? outColor : errColor
+        let messageColor = (type == Events.LogMessage.MessageType.Out) ? outColor : errColor
         
         text.addAttribute(NSForegroundColorAttributeName, value: prefixColor, range: prefixRange)
         text.addAttribute(NSForegroundColorAttributeName, value: messageColor, range: messageRange)

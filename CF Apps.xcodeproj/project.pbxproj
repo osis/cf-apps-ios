@@ -70,7 +70,6 @@
 		D81F90211D9EB2FC009FFC3A /* Events.Log.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81F901A1D9EB2FC009FFC3A /* Events.Log.proto.swift */; };
 		D81F90221D9EB2FC009FFC3A /* Events.Metric.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81F901B1D9EB2FC009FFC3A /* Events.Metric.proto.swift */; };
 		D81F90231D9EB2FC009FFC3A /* Events.Uuid.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81F901C1D9EB2FC009FFC3A /* Events.Uuid.proto.swift */; };
-		D81F90241D9EB2FC009FFC3A /* LogMessage.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81F901D1D9EB2FC009FFC3A /* LogMessage.proto.swift */; };
 		D821273F1CF2787E0053E6B2 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D821273E1CF2787E0053E6B2 /* EventsViewController.swift */; };
 		D821274C1CF2A21D0053E6B2 /* CFEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82127491CF280890053E6B2 /* CFEvent.swift */; };
 		D821274E1CF4C55B0053E6B2 /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = D82127471CF280030053E6B2 /* events.json */; };
@@ -164,7 +163,6 @@
 		D81F901A1D9EB2FC009FFC3A /* Events.Log.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Events.Log.proto.swift; path = Proto/Events.Log.proto.swift; sourceTree = "<group>"; };
 		D81F901B1D9EB2FC009FFC3A /* Events.Metric.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Events.Metric.proto.swift; path = Proto/Events.Metric.proto.swift; sourceTree = "<group>"; };
 		D81F901C1D9EB2FC009FFC3A /* Events.Uuid.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Events.Uuid.proto.swift; path = Proto/Events.Uuid.proto.swift; sourceTree = "<group>"; };
-		D81F901D1D9EB2FC009FFC3A /* LogMessage.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogMessage.proto.swift; path = Proto/LogMessage.proto.swift; sourceTree = "<group>"; };
 		D821273E1CF2787E0053E6B2 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		D82127471CF280030053E6B2 /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = events.json; path = "CF AppsTests/Network/Fixtures/events.json"; sourceTree = "<group>"; };
 		D82127491CF280890053E6B2 /* CFEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFEvent.swift; sourceTree = "<group>"; };
@@ -440,7 +438,6 @@
 				D81F901A1D9EB2FC009FFC3A /* Events.Log.proto.swift */,
 				D81F901B1D9EB2FC009FFC3A /* Events.Metric.proto.swift */,
 				D81F901C1D9EB2FC009FFC3A /* Events.Uuid.proto.swift */,
-				D81F901D1D9EB2FC009FFC3A /* LogMessage.proto.swift */,
 			);
 			name = Proto;
 			sourceTree = "<group>";
@@ -663,7 +660,6 @@
 				6512BC9F1D27355500FD87EB /* VendorPicker.swift in Sources */,
 				655B443C1B530622009ED489 /* CFRequest.swift in Sources */,
 				65DF28A71BEEF11F0081B834 /* ServicesViewController.swift in Sources */,
-				D81F90241D9EB2FC009FFC3A /* LogMessage.proto.swift in Sources */,
 				D81F901F1D9EB2FC009FFC3A /* Events.Error.proto.swift in Sources */,
 				65E2D0071CA856010038396A /* CFLogs.swift in Sources */,
 				65ABCB161D16613000268563 /* CFStore.swift in Sources */,

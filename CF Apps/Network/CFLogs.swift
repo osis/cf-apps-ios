@@ -87,17 +87,21 @@ class CFLogs: NSObject {
         var text: NSMutableAttributedString?
         
         do {
-            let logm = try LogMessage.parseFromData(data)
-            let message = String(data: logm.message_, encoding: NSASCIIStringEncoding)!
-            let src = logm.hasSourceName ? logm.sourceName : logm.sourceType
+            let envelope = try Events.Envelope.parseFromData(data)
+            let logm = envelope.logMessage
             
-            text = LogMessageString.message(src, sourceID: logm.sourceInstance, message: message, type: logm.messageType)
+            if envelope.hasLogMessage {
+                let message = String(data: logm.message_, encoding: NSASCIIStringEncoding)!
+                text = LogMessageString.message(logm.sourceType, sourceID: logm.sourceInstance, message: message, type: logm.messageType)
+            }
         } catch {
             print("Message parsing failed")
             text = NSMutableAttributedString(string: String(data: data, encoding: NSASCIIStringEncoding)!)
         }
         
-        logMessage(text!)
+        if let msg = text {
+            logMessage(msg)
+        }
     }
     
     func createSocket() throws -> WebSocket {
@@ -110,8 +114,8 @@ class CFLogs: NSObject {
     
     func createSocketRequest() throws -> NSMutableURLRequest {
         let account = CFSession.account()!
-        let endpoint = account.info.loggingEndpoint
-        let url = NSURL(string: "\(endpoint)/tail/?app=\(self.appGuid)")
+        let endpoint = account.info.dopplerLoggingEndpoint
+        let url = NSURL(string: "\(endpoint)/apps/\(self.appGuid)/stream")
         let request = NSMutableURLRequest(URL: url!)
         request.addValue("bearer \(CFSession.oauthToken!)", forHTTPHeaderField: "Authorization")
         return request
@@ -136,7 +140,7 @@ private extension CFLogs {
             for log in chunks {
                 do {
                     let envelope = try Events.Envelope.parseFromData(log)
-                    self.message(envelope.logMessage.data())
+                    self.message(envelope.data())
                 } catch {
                     print(error)
                 }
