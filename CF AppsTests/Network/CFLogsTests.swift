@@ -89,7 +89,7 @@ class CFLogsTests: XCTestCase {
         
         do {
             let request = try logs.createSocketRequest()
-            XCTAssertEqual(request.URLString, "wss://loggregator.test.io:443/tail/?app=\(testAppGuid)")
+            XCTAssertEqual(request.URLString, "wss://doppler.test.io:443/apps/\(testAppGuid)/stream")
             XCTAssertEqual(request.valueForHTTPHeaderField("Authorization"), "bearer testToken")
         } catch {
             XCTFail()

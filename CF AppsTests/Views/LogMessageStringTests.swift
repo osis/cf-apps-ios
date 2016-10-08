@@ -4,7 +4,7 @@ import XCTest
 @testable import CF_Apps
 class LogMessageStringTests: XCTestCase {
     func testMessageFormat() {
-        let message = LogMessageString.message("SRC", sourceID: "0", message: "Message", type: LogMessage.MessageType.Out)
+        let message = LogMessageString.message("SRC", sourceID: "0", message: "Message", type: Events.LogMessage.MessageType.Out)
         
         XCTAssertEqual(message.string, "SRC[0]: Message\n\n")
         
@@ -27,7 +27,7 @@ class LogMessageStringTests: XCTestCase {
     }
     
     func testMessageErrorFormat() {
-        let message = LogMessageString.message("SRC", sourceID: "0", message: "Message", type: LogMessage.MessageType.Err)
+        let message = LogMessageString.message("SRC", sourceID: "0", message: "Message", type: Events.LogMessage.MessageType.Err)
         
         var msgRange = NSString(string: message.string).rangeOfString("Message")
         let msgAttributes = message.attributesAtIndex(8, effectiveRange: &msgRange)
