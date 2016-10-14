@@ -16,9 +16,13 @@ class CFSessionTests: XCTestCase {
     }
     
     func testConstants() {
-        XCTAssertEqual(CFSession.loginAuthToken, "Y2Y6")
+        XCTAssertEqual(CFSession.loginAuthToken, "Y2Y6", "Login auth token is Y2Y6")
         XCTAssertEqual(CFSession.accountKey, "currentAccount")
         XCTAssertEqual(CFSession.orgKey, "currentOrg")
+    }
+    
+    func testInit() {
+        XCTAssertNil(CFSession.oauthToken, "OAuth token initializes as nil")
     }
 
 
