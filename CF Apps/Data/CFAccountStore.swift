@@ -16,9 +16,12 @@ class CFAccountStore {
     class func create(account: CFAccount) throws {
         do {
             try account.createInSecureStore()
-            saveKey(account.account)
         } catch LocksmithError.Duplicate {
             try account.updateInSecureStore()
+        }
+        
+        if !exists(account.username, target: account.target) {
+            saveKey(account.account)
         }
     }
     

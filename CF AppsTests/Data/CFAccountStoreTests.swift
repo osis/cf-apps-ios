@@ -40,6 +40,27 @@ class CFAccountStoreTests: XCTestCase {
         XCTAssertEqual(list[0].account, testAccountKey)
     }
     
+    func testAccountCreateExisting() {
+        try! CFAccountStore.create(testAccount!)
+        
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(CFAccountStore.accountListKey)
+        
+        try! CFAccountStore.create(testAccount!)
+        
+        let list = CFAccountStore.list()
+        XCTAssertEqual(list.count, 1)
+        XCTAssertEqual(list[0].account, testAccountKey)
+    }
+    
+    func testDuplicateCreate() {
+        try! CFAccountStore.create(testAccount!)
+        try! CFAccountStore.create(testAccount!)
+        
+        let list = CFAccountStore.list()
+        XCTAssertEqual(list.count, 1)
+        XCTAssertEqual(list[0].account, testAccountKey)
+    }
+    
     func testAccountRead() {
         try! CFAccountStore.create(testAccount!)
         
