@@ -116,7 +116,7 @@ class CFApi {
     func handleResponse(response: Response<AnyObject, NSError>, success: (json: JSON) -> Void, error: (statusCode: Int?, url: NSURL?) -> Void) {
         if (response.result.isSuccess) {
             responseHandler.success(response, success: success)
-        } else if (response.response?.statusCode == 401 && CFSession.account() != nil && responseHandler.retryLogin) {
+        } else if (response.response?.statusCode == 401 && responseHandler.retryLogin) {
             print("--- Auth Fail")
             responseHandler.unauthorized(response.request!.URLRequest, success: success)
         } else if (response.result.isFailure) {

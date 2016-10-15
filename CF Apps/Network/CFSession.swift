@@ -59,10 +59,11 @@ class CFSession {
     }
     
     class func logout(isError: Bool) {
-        let account = CFSession.account()!
-        reset()
+        if let account = CFSession.account() {
+            try! CFAccountStore.delete(account)
+        }
         
-        try! CFAccountStore.delete(account)
+        reset()
         
         let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
         if CFAccountStore.isEmpty() {
