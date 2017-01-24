@@ -23,9 +23,11 @@ class CFResponseHandlerTests: XCTestCase {
         let error = NSError(domain: NSInternalInconsistencyException, code: 500, userInfo: [NSLocalizedDescriptionKey: "Failed to construct response for stub."])
         let result = Result<AnyObject, NSError>.Failure(error)
         
-        let httpResponse = NSHTTPURLResponse(URL: NSURL(string: "https://test.io")!, statusCode: 500, HTTPVersion: "1.1", headerFields: nil)
+        let url = NSURL(string: "https://test.io")!
+        let response = NSHTTPURLResponse(URL: url, statusCode: 500, HTTPVersion: "1.1", headerFields: nil)
+        let request = NSURLRequest(URL: url)
         
-        return Response.init(request: nil, response: httpResponse, data: nil, result: result)
+        return Response.init(request: request, response: response, data: nil, result: result)
     }
     
     func testSuccess() {
@@ -48,7 +50,7 @@ class CFResponseHandlerTests: XCTestCase {
         
         CFResponseHandler().error(response, error: { statusCode, url in
             XCTAssertEqual(statusCode, 500)
-            XCTAssertEqual(url?.absoluteString, "https://test.io")
+            XCTAssertEqual(url.absoluteString, "https://test.io")
             
             expectation.fulfill()
         })

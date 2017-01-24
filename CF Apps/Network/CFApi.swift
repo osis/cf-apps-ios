@@ -5,7 +5,7 @@ import SwiftyJSON
 protocol ResponseHandler {
     var retryLogin: Bool { get set }
     func success(response: Response<AnyObject, NSError>, success: (json: JSON) -> Void)
-    func error(response: Response<AnyObject, NSError>, error: (statusCode: Int?, url: NSURL?) -> Void)
+    func error(response: Response<AnyObject, NSError>, error: (statusCode: Int?, url: NSURL) -> Void)
     func unauthorized(originalURLRequest: NSMutableURLRequest, success: (json: JSON) -> Void)
     func authRefreshSuccess(urlRequest: NSMutableURLRequest, success: (json: JSON) -> Void)
     func authRefreshFailure()
@@ -24,8 +24,8 @@ class CFResponseHandler: ResponseHandler {
         success(json: json)
     }
     
-    func error(response: Response<AnyObject, NSError>, error: (statusCode: Int?, url: NSURL?) -> Void) {
-        error(statusCode: response.response?.statusCode, url: response.response?.URL)
+    func error(response: Response<AnyObject, NSError>, error: (statusCode: Int?, url: NSURL) -> Void) {
+        error(statusCode: response.response?.statusCode, url: (response.request?.URL)!)
     }
     
     func unauthorized(originalURLRequest: NSMutableURLRequest, success: (json: JSON) -> Void) {
@@ -89,7 +89,7 @@ class CFApi {
         self.responseHandler = responseHandler
     }
     
-    func request(urlRequest: URLRequestConvertible, success: (json: JSON) -> Void, error: (statusCode: Int?, url: NSURL?) -> Void) {
+    func request(urlRequest: URLRequestConvertible, success: (json: JSON) -> Void, error: (statusCode: Int?, url: NSURL) -> Void) {
 
         Alamofire.request(urlRequest.URLRequest).validate().responseJSON { response in
             self.handleResponse(response, success: success, error: error)
@@ -113,7 +113,7 @@ class CFApi {
         })
     }
     
-    func handleResponse(response: Response<AnyObject, NSError>, success: (json: JSON) -> Void, error: (statusCode: Int?, url: NSURL?) -> Void) {
+    func handleResponse(response: Response<AnyObject, NSError>, success: (json: JSON) -> Void, error: (statusCode: Int?, url: NSURL) -> Void) {
         if (response.result.isSuccess) {
             responseHandler.success(response, success: success)
         } else if (response.response?.statusCode == 401 && CFSession.account() != nil && responseHandler.retryLogin) {
