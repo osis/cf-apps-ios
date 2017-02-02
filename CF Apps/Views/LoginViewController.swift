@@ -15,6 +15,7 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     @IBOutlet var loginSpinner: UIActivityIndicatorView!
     
 
+    @IBOutlet var cancelButton: UIButton!
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var vendorPicker: VendorPicker!
     @IBOutlet weak var targetButton: UIButton!
@@ -184,6 +185,10 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
         passwordField.becomeFirstResponder()
     }
     
+    @IBAction func cancelPushed(sender: AnyObject) {
+        setup()
+    }
+    
     @IBAction func loginPushed(sender: UIButton) {
         login()
     }
@@ -193,7 +198,9 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     }
     
     @IBAction func targetPushed(sender: AnyObject) {
-        target()
+        self.hideTargetForm()
+        self.showLoginForm()
+        self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
     }
     
     @IBAction func keyboardTargetAction(sender: AnyObject) {
