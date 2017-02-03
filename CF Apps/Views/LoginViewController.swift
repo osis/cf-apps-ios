@@ -117,6 +117,10 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     }
     
     func target() {
+        let urlString = self.apiTargetField.text!
+        
+        if (urlString.isValidURL()) {
+        // TODO: Refactor
         startButtonSpinner(targetButton, spinner: apiTargetSpinner)
         let urlRequest = CFRequest.Info(self.apiTargetField.text!)
         CFApi().request(urlRequest, success: { (json) in
@@ -128,6 +132,9 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
            Alert.show(self, title: "Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
         })
+        } else {
+            Alert.show(self, title: "Invalid URL", message: "The URL you've entered seems to be invalid. Please check and try again.")
+        }
     }
     
     func login() {
