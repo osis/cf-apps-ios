@@ -5,18 +5,19 @@ import SwiftyJSON
 // Accounts are stored in the Keychain.
 // Reference to those accounts are stored in NSUserDefaults.
 
-enum CFAccountError: ErrorType {
-    case NotFound
+enum CFAccountError: Error {
+    case notFound
 }
 
 class CFAccountStore {
     class var accountsKey: String { return "CFAccounts" }
     class var accountListKey: String { return "CFAccountList" }
     
-    class func create(account: CFAccount) throws {
+    class func create(_ account: CFAccount) throws {
         do {
             try account.createInSecureStore()
-        } catch LocksmithError.Duplicate {
+            saveKey(account.account)
+        } catch LocksmithError.duplicate {
             try account.updateInSecureStore()
         }
         
@@ -25,8 +26,8 @@ class CFAccountStore {
         }
     }
     
-    class func read(key: String) -> CFAccount? {
-        if let data = Locksmith.loadDataForUserAccount(key, inService: "CloudFoundry") {
+    class func read(_ key: String) -> CFAccount? {
+        if let data = Locksmith.loadDataForUserAccount(userAccount: key, inService: "CloudFoundry") {
             let json = JSON(data["info"]!)
             
             return CFAccount(
@@ -39,12 +40,12 @@ class CFAccountStore {
         return nil
     }
     
-    class func delete(account: CFAccount) throws {
+    class func delete(_ account: CFAccount) throws {
         try account.deleteFromSecureStore()
         removeKey(account.account)
     }
     
-    class func exists(username: String, target: String) -> Bool {
+    class func exists(_ username: String, target: String) -> Bool {
         return list().contains { $0.account == "\(username)_\(target)" }
     }
     
@@ -67,9 +68,8 @@ class CFAccountStore {
 
 private extension CFAccountStore {
     class func keyList() -> NSMutableArray {
-        let savedKeys = NSUserDefaults
-            .standardUserDefaults()
-            .arrayForKey(accountListKey)
+        let savedKeys = UserDefaults.standard
+            .array(forKey: accountListKey)
         
         if let keys = savedKeys {
             return NSMutableArray(array: keys)
@@ -78,19 +78,17 @@ private extension CFAccountStore {
         return NSMutableArray()
     }
     
-    class func saveKey(key: String) {
-        let keyList = self.keyList().arrayByAddingObject(key)
+    class func saveKey(_ key: String) {
+        let keyList = self.keyList().adding(key)
         
-        NSUserDefaults
-            .standardUserDefaults()
-            .setObject(keyList, forKey: accountListKey)
+        UserDefaults.standard
+            .set(keyList, forKey: accountListKey)
     }
     
-    class func removeKey(key: String) {
+    class func removeKey(_ key: String) {
         let list = self.keyList().filter { $0 as! String != key }
         
-        NSUserDefaults
-            .standardUserDefaults()
-            .setObject(list, forKey: accountListKey)
+        UserDefaults.standard
+            .set(list, forKey: accountListKey)
     }
 }

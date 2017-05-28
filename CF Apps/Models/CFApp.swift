@@ -45,8 +45,8 @@ class CFApp: NSManagedObject {
         return byteCount(diskQuota)
     }
     
-    private func byteCount(i: Int32) -> String {
+    fileprivate func byteCount(_ i: Int32) -> String {
         let count = Int64.init(i) * 1048576
-        return NSByteCountFormatter.stringFromByteCount(count, countStyle: NSByteCountFormatterCountStyle.Memory)
+        return ByteCountFormatter.string(fromByteCount: count, countStyle: ByteCountFormatter.CountStyle.memory)
     }
 }

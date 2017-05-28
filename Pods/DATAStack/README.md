@@ -1,21 +1,42 @@
-![DATAStack](https://raw.githubusercontent.com/3lvis/DATAStack/master/Images/datastack-logo.png)
+![DATAStack](https://raw.githubusercontent.com/SyncDB/DATAStack/master/Images/datastack-logo2.png)
 
 [![Version](https://img.shields.io/cocoapods/v/DATAStack.svg?style=flat)](https://cocoapods.org/pods/DATAStack)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/3lvis/DATAStack)
-![Swift 2.2.x](https://img.shields.io/badge/Swift-2.2.x-orange.svg)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/SyncDB/DATAStack)
+![Swift 3](https://img.shields.io/badge/Swift-3-orange.svg)
 ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20OS%20X%20%7C%20watchOS%20%7C%20tvOS%20-lightgrey.svg)
 [![License](https://img.shields.io/cocoapods/l/DATAStack.svg?style=flat)](https://cocoapods.org/pods/DATAStack)
 
 **DATAStack** helps you to alleviate the Core Data boilerplate. Now you can go to your AppDelegate remove all the Core Data related code and replace it with an instance of DATAStack ([ObjC](DemoObjectiveC/AppDelegate.m), [Swift](DemoSwift/AppDelegate.swift)).
 
 - Easier thread safety
-- Runs synchronously in testing enviroments
+- Runs synchronously when using unit tests
 - No singletons
 - SQLite and InMemory support out of the box
 - Easy database drop method
-- Swift
-- Objective-C support
+- Shines with Swift
+- Compatible with Objective-C
 - Free
+
+## Table of Contents
+
+* [Running the demos](#running-the-demos)
+* [Initialization](#initialization)
+* [Main Thread NSManagedObjectContext](#main-thread-nsmanagedobjectcontext)
+* [Background Thread NSManagedObjectContext](#background-thread-nsmanagedobjectcontext)
+* [Clean up](#clean-up)
+* [Testing](#testing)
+* [Migrations](#migrations)
+* [Installation](#installation)
+* [Be Awesome](#be-awesome)
+* [Author](#author)
+* [License](#license)
+
+## Running the demos
+Before being able to run the demos you have to install the demo dependencies using [CocoaPods](https://cocoapods.org/).
+
+- Install CocoaPods
+- Run `pod install`
+- Enjoy!
 
 ## Initialization
 
@@ -31,17 +52,51 @@ let dataStack = DATAStack(modelName:"MyAppModel")
 DATAStack *dataStack = [[DATAStack alloc] initWithModelName:@"MyAppModel"];
 ```
 
+There are plenty of other ways to intialize a DATAStack:
+
+- Using a custom store type.
+
+``` swift
+let dataStack = DATAStack(modelName:"MyAppModel", storeType: .InMemory)
+```
+
+- Using another bundle and a store type, let's say your test bundle and .InMemory store type, perfect for running unit tests.
+
+``` swift
+let dataStack = DATAStack(modelName: "Model", bundle: NSBundle(forClass: Tests.self), storeType: .InMemory)
+```
+
+- Using a different name for your .sqlite file than your model name, like `CustomStoreName.sqlite`.
+
+``` swift
+let dataStack = DATAStack(modelName: "Model", bundle: NSBundle.mainBundle(), storeType: .SQLite, storeName: "CustomStoreName")
+```
+
+- Providing a diferent container url, by default we'll use the documents folder, most apps do this, but if you want to share your sqlite file between your main app and your app extension you'll want this.
+
+``` swift
+let dataStack = DATAStack(modelName: "Model", bundle: NSBundle.mainBundle(), storeType: .SQLite, storeName: "CustomStoreName", containerURL: sharedURL)
+```
+
 ## Main Thread NSManagedObjectContext
 
 Getting access to the NSManagedObjectContext attached to the main thread is as simple as using the `mainContext` property.
 
-```objc
+```swift
 self.dataStack.mainContext
+```
+
+or
+
+```swift
+self.dataStack.viewContext
 ```
 
 ## Background Thread NSManagedObjectContext
 
 You can easily create a new background NSManagedObjectContext for data processing. This block is completely asynchronous and will be run on a background thread.
+
+To be compatible with NSPersistentContainer you can also use `performBackgroundTask` instead of `performInNewBackgroundContext`.
 
 **Swift**
 ```swift
@@ -69,7 +124,7 @@ func createUser() {
 }
 ```
 
-When using Xcode's autocompletion the `backgroundContext` parameter name doesn't get included. Make sure to add it.
+When using Xcode's Objective-C autocompletion the `backgroundContext` parameter name doesn't get included. Make sure to add it.
 
 ## Clean up
 
@@ -117,7 +172,7 @@ DATAStack *dataStack = [[DATAStack alloc] initWithModelName:@"MyAppModel"
                                                   storeType:DATAStackStoreTypeInMemory];
 ```
 
-_(Hint: Maybe you haven't found the best way to use NSFetchedResultsController, well [here it is](https://github.com/3lvis/DATASource).)_
+_(Hint: Maybe you haven't found the best way to use NSFetchedResultsController, well [here it is](https://github.com/SyncDB/DATASource).)_
 
 ## Migrations
 
@@ -130,14 +185,14 @@ If `DATAStack` has troubles creating your persistent coordinator because a migra
 ```ruby
 use_frameworks!
 
-pod 'DATAStack'
+pod 'DATAStack', '~> 6'
 ```
 
 **DATAStack** is also available through [Carthage](https://github.com/Carthage/Carthage). To install
 it, simply add the following line to your Cartfile:
 
 ```ruby
-github '3lvis/DATAStack'
+github "SyncDB/DATAStack" ~> 6
 ```
 
 ## Be Awesome
@@ -148,7 +203,7 @@ Have a great day.
 
 ## Author
 
-Elvis Nuñez, [@3lvis](https://twitter.com/3lvis)
+SyncDB, [@Sync_DB](https://twitter.com/Sync_DB)
 
 ## License
 

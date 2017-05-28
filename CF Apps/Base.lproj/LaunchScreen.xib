@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16D30a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,7 +18,7 @@
                     <rect key="frame" x="60" y="74" width="361" height="220"/>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" red="0.1450980392" green="0.5568627451" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.1450980392" green="0.5568627451" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="e7R-bu-AVK" secondAttribute="trailing" constant="60" id="194-Xg-GAr"/>
                 <constraint firstItem="e7R-bu-AVK" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="XIB-5A-fpt"/>

@@ -24,11 +24,11 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     var apiInfo: CFInfo?
     let transitionSpeed = 0.5
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setup()
     }
@@ -38,7 +38,7 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
         setup()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         if authError {
             Alert.showAuthFail(self)
         }
@@ -46,29 +46,29 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     
     func setup() {
         vendorPicker.vendorPickerDelegate = self
-        vendorPicker.pickerView(vendorPicker, didSelectRow: vendorPicker.selectedRowInComponent(0), inComponent: 0)
+        vendorPicker.pickerView(vendorPicker, didSelectRow: vendorPicker.selectedRow(inComponent: 0), inComponent: 0)
         showTargetForm()
         hideLoginForm()
         hideTargetField()
     }
     
     func showLoginForm() {
-        UIView.animateWithDuration(transitionSpeed, animations: {
+        UIView.animate(withDuration: transitionSpeed, animations: {
             self.loginView.alpha = 1
-            self.loginView.transform = CGAffineTransformIdentity
+            self.loginView.transform = CGAffineTransform.identity
             self.usernameField.becomeFirstResponder()
         })
     }
     
     func hideLoginForm() {
         loginView.alpha = 0
-        loginView.transform = CGAffineTransformMakeTranslation(0, 50)
+        loginView.transform = CGAffineTransform(translationX: 0, y: 50)
         usernameField.text = ""
         passwordField.text = ""
     }
     
     func showTargetField() {
-        UIView.animateWithDuration(transitionSpeed, animations: {
+        UIView.animate(withDuration: transitionSpeed, animations: {
             self.apiTargetField.alpha = 1
             self.apiTargetField.becomeFirstResponder()
         })
@@ -80,39 +80,39 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
 
     func vendorPickerView(didSelectVendor targetURL: String, signupURL: String) {
         if signupURL != "" {
-            apiTargetField.enabled = false
-            apiTargetField.textColor = UIColor.lightGrayColor()
+            apiTargetField.isEnabled = false
+            apiTargetField.textColor = UIColor.lightGray
             apiTargetField.text = targetURL
             hideTargetField()
         } else {
             let urlString = "https://"
-            apiTargetField.enabled = true
-            apiTargetField.textColor = UIColor.darkGrayColor()
+            apiTargetField.isEnabled = true
+            apiTargetField.textColor = UIColor.darkGray
             apiTargetField.text = urlString
             showTargetField()
         }
     }
     
     func showTargetForm() {
-        UIView.animateWithDuration(transitionSpeed, animations: {
+        UIView.animate(withDuration: transitionSpeed, animations: {
             self.apiTargetView.alpha = 1
-            self.apiTargetView.transform = CGAffineTransformMakeTranslation(0, 0)
+            self.apiTargetView.transform = CGAffineTransform(translationX: 0, y: 0)
         })
     }
     
     func hideTargetForm() {
-        UIView.animateWithDuration(transitionSpeed, animations: {
+        UIView.animate(withDuration: transitionSpeed, animations: {
             self.apiTargetView.alpha = 0
-            self.apiTargetView.transform = CGAffineTransformMakeTranslation(0, -50)
+            self.apiTargetView.transform = CGAffineTransform(translationX: 0, y: -50)
         })
     }
     
-    func startButtonSpinner(button: UIButton, spinner: UIActivityIndicatorView) {
+    func startButtonSpinner(_ button: UIButton, spinner: UIActivityIndicatorView) {
         spinner.startAnimating()
         button.alpha = 0
     }
     
-    func stopButtonSpinner(button: UIButton, spinner: UIActivityIndicatorView) {
+    func stopButtonSpinner(_ button: UIButton, spinner: UIActivityIndicatorView) {
         spinner.stopAnimating()
         button.alpha = 1
     }
@@ -123,9 +123,9 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
         if (urlString.isValidURL()) {
         // TODO: Refactor
         startButtonSpinner(targetButton, spinner: apiTargetSpinner)
-        let urlRequest = CFRequest.Info(self.apiTargetField.text!)
+        let urlRequest = CFRequest.info(self.apiTargetField.text!)
         CFApi().request(urlRequest, success: { (json) in
-            self.apiInfo = CFInfo( json: json)
+            self.apiInfo = CFInfo(json: json)
             self.hideTargetForm()
             self.showLoginForm()
             self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
@@ -141,7 +141,7 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     func login() {
         self.startButtonSpinner(self.loginButton, spinner: self.loginSpinner)
         
-        let urlRequest = CFRequest.Login(apiInfo!.authEndpoint, usernameField.text!, passwordField.text!)
+        let urlRequest = CFRequest.login(apiInfo!.authEndpoint, usernameField.text!, passwordField.text!)
         CFApi().request(urlRequest, success: { json in
             let account = CFAccount(
                 target: self.apiTargetField.text!,
@@ -155,9 +155,9 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
                 CFSession.account(account)
                 
                 if let navController = self.navigationController {
-                    navController.dismissViewControllerAnimated(true, completion: nil)
+                    navController.dismiss(animated: true, completion: nil)
                 } else {
-                    self.performSegueWithIdentifier("apps", sender: nil)
+                    self.performSegue(withIdentifier: "apps", sender: nil)
                 }
                 self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
             } catch {
@@ -170,40 +170,38 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
         })
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "apps") {
-            let navController = segue.destinationViewController as! UINavigationController
+            let navController = segue.destination as! UINavigationController
             let appsViewController = navController.topViewController as! AppsViewController
-            let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let delegate = UIApplication.shared.delegate as! AppDelegate
             
             appsViewController.dataStack = delegate.dataStack
             self.hidesBottomBarWhenPushed = false;
         }
     }
     
-    @IBAction func usernameNextPressed(sender: AnyObject) {
+    @IBAction func usernameNextPressed(_ sender: AnyObject) {
         passwordField.becomeFirstResponder()
     }
     
-    @IBAction func cancelPushed(sender: AnyObject) {
+    @IBAction func cancelPushed(_ sender: AnyObject) {
         setup()
     }
     
-    @IBAction func loginPushed(sender: UIButton) {
+    @IBAction func loginPushed(_ sender: UIButton) {
         login()
     }
     
-    @IBAction func keyboardLoginAction(sender: AnyObject) {
+    @IBAction func keyboardLoginAction(_ sender: AnyObject) {
         login()
     }
     
-    @IBAction func targetPushed(sender: AnyObject) {
-        self.hideTargetForm()
-        self.showLoginForm()
-        self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
+    @IBAction func targetPushed(_ sender: AnyObject) {
+        target()
     }
     
-    @IBAction func keyboardTargetAction(sender: AnyObject) {
+    @IBAction func keyboardTargetAction(_ sender: AnyObject) {
         target()
     }
 }

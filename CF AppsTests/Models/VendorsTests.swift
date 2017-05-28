@@ -7,16 +7,17 @@ class VendorsTests: XCTestCase {
     func testListOrder() {
         var names = [String]()
         
-        for v in Vendor.list {
-            XCTAssertNotNil(v.valueForKey("Name"))
-            XCTAssertNotNil(v.valueForKey("Target"))
-            XCTAssertNotNil(v.valueForKey("URL"))
+        for v in Vendor.list as [AnyObject] {
+            XCTAssertNotNil(v.value(forKey: "Name"))
+            XCTAssertNotNil(v.value(forKey: "Name"))
+            XCTAssertNotNil(v.value(forKey: "Target"))
+            XCTAssertNotNil(v.value(forKey: "URL"))
             
-            let name = v.valueForKey("Name") as! String
-            names.append(name.lowercaseString)
+            let name = v.value(forKey: "Name") as! String
+            names.append(name.lowercased())
         }
         
-        let sortedNames = names.sort()
+        let sortedNames = names.sorted()
         XCTAssertEqual(names, sortedNames)
     }
     
@@ -26,7 +27,7 @@ class VendorsTests: XCTestCase {
         XCTAssertTrue(options.count > 1)
         
         let lastOption = options.lastObject as! NSDictionary
-        let lastName = lastOption.valueForKey("Name") as! String
+        let lastName = lastOption.value(forKey: "Name") as! String
         XCTAssertEqual(lastName, "Other")
     }
 }

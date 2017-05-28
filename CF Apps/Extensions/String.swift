@@ -10,16 +10,18 @@ extension String {
             v += 1
         }
         
-        s.removeAtIndex(s.endIndex.predecessor())
-        s.append(UnicodeScalar(v))
+        if let endIndex = s?.endIndex {
+            s?.remove(at: (s?.characters.index(before: endIndex))!)
+            s?.append(String(describing: UnicodeScalar(v)!))
+        }
         
-        return s
+        return s!
     }
     
     func isValidURL() -> Bool {
         let regex = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
         let predicate = NSPredicate(format: "SELF MATCHES %@", argumentArray: [regex])
         
-        return predicate.evaluateWithObject(self)
+        return predicate.evaluate(with: self)
     }
 }

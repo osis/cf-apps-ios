@@ -59,8 +59,13 @@ code_sign_if_enabled() {
   if [ -n "${EXPANDED_CODE_SIGN_IDENTITY}" -a "${CODE_SIGNING_REQUIRED}" != "NO" -a "${CODE_SIGNING_ALLOWED}" != "NO" ]; then
     # Use the current code_sign_identitiy
     echo "Code Signing $1 with Identity ${EXPANDED_CODE_SIGN_IDENTITY_NAME}"
-    echo "/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} ${OTHER_CODE_SIGN_FLAGS} --preserve-metadata=identifier,entitlements \"$1\""
-    /usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} ${OTHER_CODE_SIGN_FLAGS} --preserve-metadata=identifier,entitlements "$1"
+    local code_sign_cmd="/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} ${OTHER_CODE_SIGN_FLAGS} --preserve-metadata=identifier,entitlements '$1'"
+
+    if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
+      code_sign_cmd="$code_sign_cmd &"
+    fi
+    echo "$code_sign_cmd"
+    eval "$code_sign_cmd"
   fi
 }
 
@@ -85,14 +90,9 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire/Alamofire.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/DATAFilter/DATAFilter.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/DATAObjectIDs/DATAObjectIDs.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DATAStack/DATAStack.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Locksmith/Locksmith.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/NSDictionary-ANDYSafeValue/NSDictionary_ANDYSafeValue.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/NSEntityDescription-SYNCPrimaryKey/NSEntityDescription_SYNCPrimaryKey.framework"
   install_framework "$BUILT_PRODUCTS_DIR/NSManagedObject-HYPPropertyMapper/NSManagedObject_HYPPropertyMapper.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/NSString-HYPNetworking/NSString_HYPNetworking.framework"
   install_framework "$BUILT_PRODUCTS_DIR/ProtocolBuffers-Swift/ProtocolBuffers.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftWebSocket/SwiftWebSocket.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
@@ -102,18 +102,16 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire/Alamofire.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/DATAFilter/DATAFilter.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/DATAObjectIDs/DATAObjectIDs.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DATAStack/DATAStack.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Locksmith/Locksmith.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/NSDictionary-ANDYSafeValue/NSDictionary_ANDYSafeValue.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/NSEntityDescription-SYNCPrimaryKey/NSEntityDescription_SYNCPrimaryKey.framework"
   install_framework "$BUILT_PRODUCTS_DIR/NSManagedObject-HYPPropertyMapper/NSManagedObject_HYPPropertyMapper.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/NSString-HYPNetworking/NSString_HYPNetworking.framework"
   install_framework "$BUILT_PRODUCTS_DIR/ProtocolBuffers-Swift/ProtocolBuffers.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftWebSocket/SwiftWebSocket.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Sync/Sync.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Mockingjay/Mockingjay.framework"
   install_framework "$BUILT_PRODUCTS_DIR/URITemplate/URITemplate.framework"
+fi
+if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
+  wait
 fi

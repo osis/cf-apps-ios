@@ -21,10 +21,10 @@ class CFSession {
         return ""
     }
     
-    class func account(account: CFAccount) {
-        NSUserDefaults.standardUserDefaults().setObject(account.account, forKey: accountKey)
+    class func account(_ account: CFAccount) {
+        UserDefaults.standard.set(account.account, forKey: accountKey)
         
-        NSNotificationCenter.defaultCenter().postNotificationName("AccountSwitched", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "AccountSwitched"), object: nil)
     }
     
     class func account() -> CFAccount? {
@@ -34,19 +34,19 @@ class CFSession {
         return nil
     }
     
-    class func isCurrent(account: CFAccount) -> Bool {
+    class func isCurrent(_ account: CFAccount) -> Bool {
         if let sessionAccount = self.account() {
             return sessionAccount.account == account.account
         }
         return false
     }
     
-    class func org(orgGuid: String) {
-        return NSUserDefaults.standardUserDefaults().setObject(orgGuid, forKey: orgKey)
+    class func org(_ orgGuid: String) {
+        return UserDefaults.standard.set(orgGuid, forKey: orgKey)
     }
     
     class func org() -> String? {
-        return NSUserDefaults.standardUserDefaults().objectForKey(orgKey) as! String?
+        return UserDefaults.standard.object(forKey: orgKey) as! String?
     }
     
     class func reset() {
@@ -54,36 +54,36 @@ class CFSession {
         cancelRequests()
         
         
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(accountKey)
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(orgKey)
+        UserDefaults.standard.removeObject(forKey: accountKey)
+        UserDefaults.standard.removeObject(forKey: orgKey)
     }
     
-    class func logout(isError: Bool) {
+    class func logout(_ isError: Bool) {
         if let account = CFSession.account() {
             try! CFAccountStore.delete(account)
         }
         
         reset()
         
-        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let delegate = UIApplication.shared.delegate as! AppDelegate
         if CFAccountStore.isEmpty() {
             let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginController = storyboard.instantiateViewControllerWithIdentifier("LoginView") as! LoginViewController
+            let loginController = storyboard.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
             loginController.authError = isError
             delegate.window?.rootViewController = loginController
         } else {
             let appsController = delegate.showAppsScreen()
-            appsController.performSegueWithIdentifier("accounts", sender: nil)
+            appsController.performSegue(withIdentifier: "accounts", sender: nil)
         }
     }
     
-    private class func cancelRequests() {
-        Alamofire.Manager.sharedInstance.session.getAllTasksWithCompletionHandler { tasks in
+    fileprivate class func cancelRequests() {
+        Alamofire.SessionManager.default.session.getAllTasks { tasks in
             tasks.forEach { $0.cancel() }
         }
     }
 
-    private class func currentAccountKey() -> String? {
-        return NSUserDefaults.standardUserDefaults().objectForKey(accountKey) as! String?
+    fileprivate class func currentAccountKey() -> String? {
+        return UserDefaults.standard.object(forKey: accountKey) as! String?
     }
 }

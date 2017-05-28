@@ -9,7 +9,7 @@ class AppTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    func render(app: CFApp, dataStack: DATAStack) {
+    func render(_ app: CFApp, dataStack: DATAStack) {
         let appNameLabel: UILabel = self.viewWithTag(1) as! UILabel
         let memLabel: UILabel = self.viewWithTag(2) as! UILabel
         let diskLabel: UILabel = self.viewWithTag(3) as! UILabel
@@ -18,9 +18,8 @@ class AppTableViewCell: UITableViewCell {
         let spaceLabel: UILabel = self.viewWithTag(6) as! UILabel
         
         do {
-            let space = try CFStore(dataStack: dataStack).fetchSpace(app.spaceGuid)
-            if let s = space {
-                spaceLabel.text = s.name
+            if let space = try CFStore(dataStack: dataStack).fetchSpace(app.spaceGuid) {
+                spaceLabel.text = space.name
             }
         } catch {
             spaceLabel.text = "N/A"

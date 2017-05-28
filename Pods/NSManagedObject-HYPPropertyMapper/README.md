@@ -21,7 +21,7 @@ Your Core Data entities should match your backend models. Your attributes should
 There are two exceptions to this rule:
 
 * `id`s should match `remoteID`
-* Reserved attributes should be prefixed with the `entityName` (`type` becomes `userType`, `description` becomes `userDescription` and so on). In the JSON they don't need to change, you can keep `type` and `description` for example. A full list of reserved attributes can be found [here](https://github.com/hyperoslo/NSManagedObject-HYPPropertyMapper/blob/master/Source/NSManagedObject%2BHYPPropertyMapper.m#L265)
+* Reserved attributes should be prefixed with the `entityName` (`type` becomes `userType`, `description` becomes `userDescription` and so on). In the JSON they don't need to change, you can keep `type` and `description` for example. A full list of reserved attributes can be found [here](https://github.com/SyncDB/NSManagedObject-HYPPropertyMapper/blob/master/Source/NSManagedObject%2BHYPPropertyMapper.m#L265)
 
 ## JSON in snake_case
 
@@ -42,13 +42,13 @@ Your Core Data entities should match your backend models but in `camelCase`. You
 There are two exceptions to this rule:
 
 * `id`s should match `remoteID`
-* Reserved attributes should be prefixed with the `entityName` (`type` becomes `userType`, `description` becomes `userDescription` and so on). In the JSON they don't need to change, you can keep `type` and `description` for example. A full list of reserved attributes can be found [here](https://github.com/hyperoslo/NSManagedObject-HYPPropertyMapper/blob/master/Source/NSManagedObject%2BHYPPropertyMapper.m#L265)
+* Reserved attributes should be prefixed with the `entityName` (`type` becomes `userType`, `description` becomes `userDescription` and so on). In the JSON they don't need to change, you can keep `type` and `description` for example. A full list of reserved attributes can be found [here](https://github.com/SyncDB/NSManagedObject-HYPPropertyMapper/blob/master/Source/NSManagedObject%2BHYPPropertyMapper.m#L265)
 
 ## Custom
 
 If you want to map your Core Data attribute with a JSON attribute that has different naming, you can do by adding `hyper.remoteKey` in the user info box with the value you want to map.
 
-![Remote mapping documentation](https://raw.githubusercontent.com/hyperoslo/NSManagedObject-HYPPropertyMapper/master/Resources/userInfo_documentation.png)
+![Remote mapping documentation](https://raw.githubusercontent.com/SyncDB/NSManagedObject-HYPPropertyMapper/master/Resources/userInfo_documentation.png)
 
 ## Attribute Types
 
@@ -58,7 +58,7 @@ For mapping for arrays and dictionaries just set attributes as `Binary Data` on 
 
 ### Dates
 
-We went for supporting [ISO8601](http://en.wikipedia.org/wiki/ISO_8601) and unix timestamp out of the box because those are the most common formats when parsing dates, also we have a [quite performant way to parse this strings](https://github.com/hyperoslo/NSManagedObject-HYPPropertyMapper/blob/master/Source/NSManagedObject%2BHYPPropertyMapper.m#L272-L319) which overcomes the [performance issues of using `NSDateFormatter`](http://blog.soff.es/how-to-drastically-improve-your-app-with-an-afternoon-and-instruments/).
+We went for supporting [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) and unix timestamp out of the box because those are the most common formats when parsing dates, also we have a [quite performant way to parse this strings](https://github.com/3lvis/DateParser) which overcomes the [performance issues of using `NSDateFormatter`](http://blog.soff.es/how-to-drastically-improve-your-app-with-an-afternoon-and-instruments/).
 
 ```objc
 NSDictionary *values = @{@"created_at" : @"2014-01-01T00:00:00+00:00",
@@ -77,6 +77,12 @@ NSDate *updatedAt = [managedObject valueForKey:@"updatedAt"];
 NSDate *publishedAt = [managedObject valueForKey:@"publishedAt"];
 // ==> "2015-09-10 00:00:00 +00:00" 
 ```
+
+If your date is not [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) compliant, you can use a transformer attribute to parse your date, too. First set your attribute to `Transformable`, and set the name of your transformer like, in this example is `DateStringTransformer`:
+
+![transformable-attribute](https://raw.githubusercontent.com/SyncDB/NSManagedObject-HYPPropertyMapper/master/Resources/date-transformable.png)
+
+You can find an example of date transformer in [DateStringTransformer](https://github.com/SyncDB/NSManagedObject-HYPPropertyMapper/blob/master/Tests/Models/DateStringTransformer.m).
 
 ### Array
 ```objc
@@ -180,7 +186,7 @@ pod 'NSManagedObject-HYPPropertyMapper'
 
 ## Contributing
 
-Please check our [playbook](https://github.com/hyperoslo/playbook/blob/master/GIT_AND_GITHUB.md) for guidelines on contributing.
+Please check our [playbook](https://github.com/SyncDB/playbook/blob/master/GIT_AND_GITHUB.md) for guidelines on contributing.
 
 ## Credits
 
@@ -189,4 +195,4 @@ and if you're using this library we probably want to [hire you](http://www.hyper
 
 ## License
 
-NSManagedObject-HYPPropertyMapper is available under the MIT license. See the [LICENSE](https://raw.githubusercontent.com/hyperoslo/NSManagedObject-HYPPropertyMapper/master/LICENSE.md) file for more info.
+NSManagedObject-HYPPropertyMapper is available under the MIT license. See the [LICENSE](https://raw.githubusercontent.com/SyncDB/NSManagedObject-HYPPropertyMapper/master/LICENSE.md) file for more info.

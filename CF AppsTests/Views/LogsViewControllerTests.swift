@@ -35,7 +35,7 @@ class LogsViewControllerTests: XCTestCase {
         super.setUp()
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        vc = storyboard.instantiateViewControllerWithIdentifier("LogsView") as! LogsViewController
+        vc = storyboard.instantiateViewController(withIdentifier: "LogsView") as! LogsViewController
         vc.appGuid = "testGuid"
         vc.loadView()
     }
@@ -45,15 +45,15 @@ class LogsViewControllerTests: XCTestCase {
     }
     
     func testStartLogging() {
-        let expectation = expectationWithDescription("Tail Logs")
+        let exp = expectation(description: "Tail Logs")
         
-        vc.logs = FakeCFLogs(expectation: expectation)
+        vc.logs = FakeCFLogs(expectation: exp)
         
         vc.startLogging()
         
         XCTAssertTrue(vc.logs!.delegate === vc)
-        XCTAssertTrue(UIApplication.sharedApplication().idleTimerDisabled)
-        waitForExpectationsWithTimeout(1.0, handler: nil)
+        XCTAssertTrue(UIApplication.shared.isIdleTimerDisabled)
+        waitForExpectations(timeout: 1.0, handler: nil)
     }
     
     func testLogsMessage() {
@@ -63,12 +63,12 @@ class LogsViewControllerTests: XCTestCase {
     }
     
     func testStopLogging() {
-        let expectation = expectationWithDescription("Stop Logging")
+        let exp = expectation(description: "Stop Logging")
         
-        vc.logs = FakeCFLogs(expectation: expectation)
+        vc.logs = FakeCFLogs(expectation: exp)
         vc.stopLogging()
         
-        XCTAssertFalse(UIApplication.sharedApplication().idleTimerDisabled)
-        waitForExpectationsWithTimeout(1.0, handler: nil)
+        XCTAssertFalse(UIApplication.shared.isIdleTimerDisabled)
+        waitForExpectations(timeout: 1.0, handler: nil)
     }
 }

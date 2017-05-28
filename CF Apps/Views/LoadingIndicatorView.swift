@@ -3,9 +3,9 @@ import UIKit
 
 class LoadingIndicatorView: UIActivityIndicatorView {
     required init() {
-        super.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+        super.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
         self.startAnimating()
-        self.frame = CGRectMake(0, 0, 320, 44)
+        self.frame = CGRect(x: 0, y: 0, width: 320, height: 44)
     }
     
     required init(coder: NSCoder) {

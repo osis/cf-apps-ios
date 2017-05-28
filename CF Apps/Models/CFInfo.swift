@@ -57,7 +57,7 @@ public struct CFInfo {
         return getStringValue(Keys.dopplerLoggingEndpoint)
     }
     
-    private func getStringValue(key: String) -> String {
+    fileprivate func getStringValue(_ key: String) -> String {
         return json[key].stringValue
     }
     

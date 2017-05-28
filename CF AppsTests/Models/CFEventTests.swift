@@ -10,9 +10,9 @@ class CFEventTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        let path = NSBundle(forClass: self.dynamicType).pathForResource("events", ofType: "json")
+        let path = Bundle(for: type(of: self)).path(forResource: "events", ofType: "json")
         let data = NSData(contentsOfFile: path!)
-        self.json = CFResponseHandler().sanitizeJson(JSON(data: data!))
+        self.json = CFResponseHandler().sanitizeJson(JSON(data: data! as Data))
     }
     
     func operationEvent() -> CFEvent {
