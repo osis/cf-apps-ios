@@ -14,17 +14,17 @@ class AccountsViewController: UITableViewController {
         }
     }
     
-    @IBAction func closeClicked(sender: AnyObject) {
+    @IBAction func closeClicked(_ sender: AnyObject) {
         dismiss()
     }
 }
 
 extension AccountsViewController {
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return accounts.count
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let account = accounts[indexPath.row]
         if !CFSession.isCurrent(account) {
             CFSession.account(account)
@@ -33,8 +33,8 @@ extension AccountsViewController {
         dismiss()
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("accountCell")
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "accountCell")
         let account = accounts[indexPath.row]
         
         let nameLabel = cell?.viewWithTag(1) as! UILabel
@@ -53,9 +53,9 @@ extension AccountsViewController {
         return cell!
     }
     
-    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        let action = UITableViewRowAction(style: .Normal, title: "Delete", handler: self.deleteRow)
-        action.backgroundColor = UIColor.redColor()
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let action = UITableViewRowAction(style: .normal, title: "Delete", handler: self.deleteRow)
+        action.backgroundColor = UIColor.red
         
         return [action]
     }
@@ -63,10 +63,10 @@ extension AccountsViewController {
 
 private extension AccountsViewController {
     func dismiss() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    func deleteRow(action: UITableViewRowAction, indexPath: NSIndexPath) {
+    func deleteRow(_ action: UITableViewRowAction, indexPath: IndexPath) {
         let deleteAccount = accounts[indexPath.row]
         let isCurrent = CFSession.isCurrent(deleteAccount)
         
@@ -85,13 +85,13 @@ private extension AccountsViewController {
         self.tableView.reloadData()
     }
     
-    func vendorName(target: String) -> String {
+    func vendorName(_ target: String) -> String {
         let vendor = vendors.filter { v in
-            let t = v.valueForKey("Target") as! String
+            let t = (v as AnyObject).value(forKey: "Target") as! String
             return t == target
         }
         if vendor.count > 0 {
-            return vendor[0].valueForKey("Name") as! String
+            return (vendor[0] as AnyObject).value(forKey: "Name") as! String
         }
         return "Other"
     }

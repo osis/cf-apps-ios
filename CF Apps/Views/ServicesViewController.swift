@@ -9,19 +9,19 @@ class ServicesViewController: UIViewController, UITableViewDelegate, UITableView
         return services != nil
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Services"
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (isLoaded()) {
             return (services!.isEmpty) ? 1 : services!.arrayValue.count
         }
         return 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: nil)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: nil)
 
         let service = Service(json: services![indexPath.row])
         

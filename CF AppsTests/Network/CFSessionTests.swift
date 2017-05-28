@@ -29,7 +29,7 @@ class CFSessionTests: XCTestCase {
     func testSetAccount() {
         CFSession.account(account)
         
-        let key = NSUserDefaults.standardUserDefaults().objectForKey(CFSession.accountKey) as! String
+        let key = UserDefaults.standard.object(forKey: CFSession.accountKey) as! String
         XCTAssertEqual(key, account.account)
     }
     
@@ -81,7 +81,7 @@ class CFSessionTests: XCTestCase {
         XCTAssertNil(CFSession.account())
         XCTAssertNil(CFSession.oauthToken)
         
-        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let delegate = UIApplication.shared.delegate as! AppDelegate
         let controller = delegate.window?.rootViewController as! LoginViewController
         XCTAssertTrue(controller.authError)
     }

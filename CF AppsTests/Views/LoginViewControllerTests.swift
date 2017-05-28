@@ -10,7 +10,7 @@ class LoginViewControllerTests: XCTestCase {
         super.setUp()
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        vc = storyboard.instantiateViewControllerWithIdentifier("LoginView") as! LoginViewController
+        vc = storyboard.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
         vc.loadView()
     }
 
@@ -27,14 +27,14 @@ class LoginViewControllerTests: XCTestCase {
         vc.showLoginForm()
         
         XCTAssertEqual(vc.loginView.alpha, 1)
-        XCTAssertEqual(vc.loginView.transform.ty, CGAffineTransformIdentity.ty)
+        XCTAssertEqual(vc.loginView.transform.ty, CGAffineTransform.identity.ty)
     }
 
     func testHideLoginForm() {
         vc.hideLoginForm()
         
         XCTAssertEqual(vc.loginView.alpha, 0)
-        XCTAssertEqual(vc.loginView.transform.ty, CGAffineTransformMakeTranslation(0, 50).ty)
+        XCTAssertEqual(vc.loginView.transform.ty, CGAffineTransform(translationX: 0, y: 50).ty)
     }
     
     func testShowTargetField() {
@@ -43,7 +43,7 @@ class LoginViewControllerTests: XCTestCase {
         let field = vc.apiTargetField
         
 //        XCTAssertTrue(vc.apiTargetView.isFirstResponder())
-        XCTAssertEqual(field.alpha, 1)
+        XCTAssertEqual(field?.alpha, 1)
     }
     
     func testHideTargetField() {
@@ -57,9 +57,9 @@ class LoginViewControllerTests: XCTestCase {
         
         let field = vc.apiTargetField
         
-        XCTAssertEqual(field.enabled, false)
-        XCTAssertEqual(field.textColor, UIColor.lightGrayColor())
-        XCTAssertEqual(field.text, targetURL)
+        XCTAssertEqual(field?.isEnabled, false)
+        XCTAssertEqual(field?.textColor, UIColor.lightGray)
+        XCTAssertEqual(field?.text, targetURL)
     }
     
     func testVendorPickerNilChange() {
@@ -67,9 +67,9 @@ class LoginViewControllerTests: XCTestCase {
         
         let field = vc.apiTargetField
         
-        XCTAssertEqual(field.enabled, true)
-        XCTAssertEqual(field.textColor, UIColor.darkGrayColor())
-        XCTAssertEqual(field.text, "https://")
+        XCTAssertEqual(field?.isEnabled, true)
+        XCTAssertEqual(field?.textColor, UIColor.darkGray)
+        XCTAssertEqual(field?.text, "https://")
     }
     
     func testHideTargetForm() {
@@ -77,7 +77,7 @@ class LoginViewControllerTests: XCTestCase {
         
         let view = vc.apiTargetView
         
-        XCTAssertEqual(view.alpha, 0)
-        XCTAssertEqual(view.transform.ty, CGAffineTransformMakeTranslation(0, -50).ty)
+        XCTAssertEqual(view?.alpha, 0)
+        XCTAssertEqual(view?.transform.ty, CGAffineTransform(translationX: 0, y: -50).ty)
     }
 }

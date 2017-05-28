@@ -7,34 +7,34 @@ class LogsViewController: UIViewController, CFLogger {
     var appGuid: String?
     var logs: CFLogs?
     
-    let notificationCenter = NSNotificationCenter.defaultCenter()
+    let notificationCenter = NotificationCenter.default
 
     override func viewDidLoad() {
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(applicationBecameActive(_:)),
-                                                         name: UIApplicationDidBecomeActiveNotification,
+                                                         name: NSNotification.Name.UIApplicationDidBecomeActive,
                                                          object: nil)
         self.logs = CFLogs(appGuid: self.appGuid!)
         startLogging()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         stopLogging()
     }
     
-    func applicationBecameActive(notification: NSNotification) {
+    func applicationBecameActive(_ notification: Notification) {
         self.logs!.reconnect()
     }
     
     func startLogging() {
-        UIApplication.sharedApplication().idleTimerDisabled = true
+        UIApplication.shared.isIdleTimerDisabled = true
         self.logs!.delegate = self
         self.logs!.recent()
     }
     
-    func logsMessage(text: NSMutableAttributedString) {
+    func logsMessage(_ text: NSMutableAttributedString) {
         let logs = self.logView.attributedText.mutableCopy() as! NSMutableAttributedString
-        logs.appendAttributedString(text)
+        logs.append(text)
         self.logView.attributedText = logs
         self.logView.scrollRangeToVisible(self.logView.selectedRange)
     }
@@ -44,7 +44,7 @@ class LogsViewController: UIViewController, CFLogger {
     }
     
     func stopLogging() {
-        UIApplication.sharedApplication().idleTimerDisabled = false
+        UIApplication.shared.isIdleTimerDisabled = false
         self.logs?.disconnect()
     }
 }

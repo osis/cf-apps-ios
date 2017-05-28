@@ -10,16 +10,16 @@ class CFEvent: NSObject {
     }
     
     func date() -> String {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         
         let dateString = json!["timestamp"].stringValue
-        let date = dateFormatter.dateFromString(dateString)
+        let date = dateFormatter.date(from: dateString)
         
-        dateFormatter.dateStyle = .MediumStyle
-        dateFormatter.timeStyle = .MediumStyle
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
         
-        return dateFormatter.stringFromDate(date!)
+        return dateFormatter.string(from: date!)
     }
     
     func type() -> String? {
@@ -83,7 +83,7 @@ class CFEvent: NSObject {
     
     func exitDesciption() -> String? {
         let description = json!["metadata"]["exit_description"]
-        return (description != nil) ? description.stringValue.stringByReplacingOccurrencesOfString("\n\n", withString: "\n") : nil
+        return (description != nil) ? description.stringValue.replacingOccurrences(of: "\n\n", with: "\n") : nil
     }
     
     func reason() -> String? {
@@ -118,19 +118,19 @@ class CFEvent: NSObject {
             attributes.append("Envionment JSON: \(envJson)")
         }
         
-        return attributes.joinWithSeparator(", ")
+        return attributes.joined(separator: ", ")
     }
     
-    private func formattedMemory(value: Int64) -> String {
+    fileprivate func formattedMemory(_ value: Int64) -> String {
         return byteCount(value)
     }
     
-    private func formattedDiskQuota(value: Int64) -> String {
+    fileprivate func formattedDiskQuota(_ value: Int64) -> String {
         return byteCount(value)
     }
     
-    private func byteCount(i: Int64) -> String {
+    fileprivate func byteCount(_ i: Int64) -> String {
         let count = i * 1048576
-        return NSByteCountFormatter.stringFromByteCount(count, countStyle: NSByteCountFormatterCountStyle.Memory)
+        return ByteCountFormatter.string(fromByteCount: count, countStyle: ByteCountFormatter.CountStyle.memory)
     }
 }

@@ -10,13 +10,13 @@ class CFOrgTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        dataStack = DATAStack(modelName: "CFStore", bundle: NSBundle(forClass: CFAppsTests.self), storeType: DATAStackStoreType.InMemory)
+        dataStack = DATAStack(modelName: "CFStore", bundle: Bundle(for: CFAppsTests.self), storeType: DATAStackStoreType.inMemory)
     }
     
     func makeOrg() -> CFOrg {
         let moc = dataStack!.mainContext
-        let entity = NSEntityDescription.entityForName("CFOrg", inManagedObjectContext: moc)
-        return CFOrg(entity: entity!, insertIntoManagedObjectContext: moc)
+        let entity = NSEntityDescription.entity(forEntityName: "CFOrg", in: moc)
+        return CFOrg(entity: entity!, insertInto: moc)
     }
     
     func testGuidType() {

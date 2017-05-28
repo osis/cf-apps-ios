@@ -22,7 +22,7 @@ class CFAccountStoreTests: XCTestCase {
             print(error)
         }
         
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(CFAccountStore.accountListKey)
+        UserDefaults.standard.removeObject(forKey: CFAccountStore.accountListKey)
     }
     
     func testAccountKeyFormat() {
@@ -43,7 +43,7 @@ class CFAccountStoreTests: XCTestCase {
     func testAccountCreateExisting() {
         try! CFAccountStore.create(testAccount!)
         
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(CFAccountStore.accountListKey)
+        UserDefaults.standard.removeObject(forKey: CFAccountStore.accountListKey)
         
         try! CFAccountStore.create(testAccount!)
         

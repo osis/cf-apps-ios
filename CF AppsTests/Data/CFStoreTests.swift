@@ -10,7 +10,7 @@ class CFStoreTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        dataStack = DATAStack(modelName: "CFStore", bundle: NSBundle(forClass: CFAppsTests.self), storeType: DATAStackStoreType.InMemory)
+        dataStack = DATAStack(modelName: "CFStore", bundle: Bundle(for: CFAppsTests.self), storeType: DATAStackStoreType.inMemory)
         syncApps()
     }
     
@@ -21,15 +21,15 @@ class CFStoreTests: XCTestCase {
     }
     
     func syncApps() {
-        let expectation = expectationWithDescription("Apps Sync")
-        let data:[[String : AnyObject]] = [
+        let exp = expectation(description: "Apps Sync")
+        let data:[[String : Any]] = [
             ["name":"testApp", "guid":"testGuid", "created_at":"2016-06-08T16:41:45Z"],
             ["name":"testApp1", "guid":"testGuid1", "created_at":"2016-06-08T16:4:46Z"]
         ]
-        CFStore(dataStack: self.dataStack!).syncApps(data, clear: false, completion: { (error) in
-            expectation.fulfill()
+        CFStore(dataStack: self.dataStack!).syncApps(data as [[String : AnyObject]], clear: false, completion: { (error) in
+            exp.fulfill()
         })
-        waitForExpectationsWithTimeout(1.0, handler: nil)
+        waitForExpectations(timeout: 1.0, handler: nil)
     }
     
     func testSyncApps() {
@@ -41,15 +41,15 @@ class CFStoreTests: XCTestCase {
     }
     
     func testSyncAppUpdate() {
-        let expectation = expectationWithDescription("Update App")
+        let exp = expectation(description: "Update App")
         let guid = "testGuid1"
-        let data:[String : AnyObject] = ["name":"testAppUpdated", "guid":guid]
+        let data:[String : Any] = ["name":"testAppUpdated", "guid":guid]
         
         CFStore(dataStack: self.dataStack!).syncApp(data, guid: guid, completion: { (error) in
-            expectation.fulfill()
+            exp.fulfill()
         })
         
-        waitForExpectationsWithTimeout(1.0, handler: nil)
+        waitForExpectations(timeout: 1.0, handler: nil)
         
         let apps = CFStore(dataStack: self.dataStack!).fetchApps()
         
@@ -58,15 +58,15 @@ class CFStoreTests: XCTestCase {
     }
     
     func syncSpaces() {
-        let expectation = expectationWithDescription("Spaces Sync")
-        let data:[[String : AnyObject]] = [
+        let exp = expectation(description: "Spaces Sync")
+        let data:[[String : Any]] = [
             ["name":"testSpace", "guid":"testGuid", "created_at":"2016-06-08T16:41:45Z"],
-            ["name":"testSpace1", "guid":"testGuid1", "created_at":"2016-06-08T16:4:46Z"]
+            ["name":"testSpace1", "guid":"testGuid1", "created_at":"2016-06-08T16:41:46Z"]
         ]
         CFStore(dataStack: self.dataStack!).syncSpaces(data, completion: { (error) in
-            expectation.fulfill()
+            exp.fulfill()
         })
-        waitForExpectationsWithTimeout(1.0, handler: nil)
+        waitForExpectations(timeout: 1.0, handler: nil)
     }
     
     func testFetchSpaces() {
@@ -75,6 +75,17 @@ class CFStoreTests: XCTestCase {
         do {
             let space = try CFStore(dataStack: self.dataStack!).fetchSpace("testGuid1")
             XCTAssertEqual(space!.name, "testSpace1")
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func testFetchSpacesNil() {
+        syncSpaces()
+        
+        do {
+            let space = try CFStore(dataStack: self.dataStack!).fetchSpace("nil")
+            XCTAssertNil(space)
         } catch {
             XCTFail()
         }

@@ -10,14 +10,14 @@ class EventsViewController: UITableViewController {
         super.viewDidLoad()
         self.tableView.contentOffset.y -= self.refreshControl!.frame.size.height
         self.refreshControl!.beginRefreshing()
-        self.refreshControl!.sendActionsForControlEvents(UIControlEvents.ValueChanged)
+        self.refreshControl!.sendActions(for: UIControlEvents.valueChanged)
         fetchEvents()
     }
     
     func fetchEvents() {
         setRefreshTitle("Fetching Events")
         
-        let request = CFRequest.Events(self.appGuid!)
+        let request = CFRequest.events(self.appGuid!)
         CFApi().request(request, success: { (json) in
             self.handleEventsRequest(json)
         }, error: { (statusCode, url) in
@@ -27,7 +27,7 @@ class EventsViewController: UITableViewController {
         })
     }
     
-    func handleEventsRequest(json: JSON) {
+    func handleEventsRequest(_ json: JSON) {
         for e in json["resources"].arrayValue {
             let event = CFEvent(json: e)
             if let _ = event.type() {
@@ -40,21 +40,21 @@ class EventsViewController: UITableViewController {
         setRefreshTitle("Refresh Events")
     }
     
-    @IBAction func refresh(sender: AnyObject) {
+    @IBAction func refresh(_ sender: AnyObject) {
         fetchEvents()
     }
     
-    func setRefreshTitle(title: String) {
-        dispatch_async(dispatch_get_main_queue()) {
+    func setRefreshTitle(_ title: String) {
+        DispatchQueue.main.async {
             self.refreshControl!.attributedTitle = NSAttributedString(string: title)
         }
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return events.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let event = events[indexPath.item]
         
         if let type = event.type() {
@@ -71,8 +71,8 @@ class EventsViewController: UITableViewController {
         return event.isOperationalEvent() ? operationalEventCell(event) : attributeEventCell(event)
     }
     
-    func operationalEventCell(event: CFEvent) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("OperationEventCell")
+    func operationalEventCell(_ event: CFEvent) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "OperationEventCell")
         
         let dateLabel = cell!.viewWithTag(1) as! UILabel
         dateLabel.text = event.date()
@@ -81,13 +81,13 @@ class EventsViewController: UITableViewController {
         stateLabel.text = event.state()
         
         let stateImg = cell!.viewWithTag(3) as! UIImageView
-        stateImg.image = UIImage(named: event.state()!.localizedLowercaseString)
+        stateImg.image = UIImage(named: event.state()!.localizedLowercase)
         
         return cell!
     }
     
-    func attributeEventCell(event: CFEvent) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("AttributeEventCell")
+    func attributeEventCell(_ event: CFEvent) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "AttributeEventCell")
         
         let dateLabel = cell!.viewWithTag(1) as! UILabel
         dateLabel.text = event.date()
@@ -98,8 +98,8 @@ class EventsViewController: UITableViewController {
         return cell!
     }
     
-    func crashEventCell(event: CFEvent) ->  UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("CrashEventCell")
+    func crashEventCell(_ event: CFEvent) ->  UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "CrashEventCell")
         
         let dateLabel = cell!.viewWithTag(1) as! UILabel
         dateLabel.text = event.date()

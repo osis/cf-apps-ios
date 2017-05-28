@@ -1,8 +1,7 @@
-
-
-
 import Foundation
 import CoreData
+
+@objc(CFOrg)
 
 class CFOrg: NSManagedObject {
     

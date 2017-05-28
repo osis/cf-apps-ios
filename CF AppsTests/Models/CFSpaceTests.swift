@@ -10,13 +10,13 @@ class CFSpaceTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        dataStack = DATAStack(modelName: "CFStore", bundle: NSBundle(forClass: CFAppsTests.self), storeType: DATAStackStoreType.InMemory)
+        dataStack = DATAStack(modelName: "CFStore", bundle: Bundle(for: CFAppsTests.self), storeType: DATAStackStoreType.inMemory)
     }
     
     func makeSpace() -> CFSpace {
         let moc = dataStack!.mainContext
-        let entity = NSEntityDescription.entityForName("CFSpace", inManagedObjectContext: moc)
-        return CFSpace(entity: entity!, insertIntoManagedObjectContext: moc)
+        let entity = NSEntityDescription.entity(forEntityName: "CFSpace", in: moc)
+        return CFSpace(entity: entity!, insertInto: moc)
     }
     
     func testGuidType() {

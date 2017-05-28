@@ -53,21 +53,21 @@ class Instance: NSObject {
         return toPercent(Double(diskUsage()), quota: Double(diskQuota()))
     }
     
-    private func usage() -> [String: JSON]? {
+    fileprivate func usage() -> [String: JSON]? {
         let usage = stats()?["usage"]
         return (usage != nil) ? usage!.dictionaryValue : nil
     }
     
-    private func stats() -> [String: JSON]? {
+    fileprivate func stats() -> [String: JSON]? {
         let stats = json!["stats"]
         return (stats != nil) ? stats.dictionaryValue : nil
     }
     
-    private func toPercent(usage: Double, quota: Double) -> Double {
+    fileprivate func toPercent(_ usage: Double, quota: Double) -> Double {
         return (quota != 0) ? round(10*(usage / quota))/10: 0
     }
     
-    private func toMb(i: Double) -> Double {
+    fileprivate func toMb(_ i: Double) -> Double {
         return i / pow(1024.0,2.0)
     }
 }

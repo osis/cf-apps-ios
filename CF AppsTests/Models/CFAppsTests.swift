@@ -11,7 +11,7 @@ class CFAppsTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        self.dataStack = DATAStack(modelName: "CFStore", bundle: NSBundle(forClass: CFAppsTests.self), storeType: DATAStackStoreType.InMemory)
+        self.dataStack = DATAStack(modelName: "CFStore", bundle: Bundle(for: CFAppsTests.self), storeType: DATAStackStoreType.inMemory)
     }
     
     override func tearDown() {
@@ -22,8 +22,8 @@ class CFAppsTests: XCTestCase {
     
     func makeApp() -> CFApp {
         let moc = dataStack!.mainContext
-        let entity = NSEntityDescription.entityForName("CFApp", inManagedObjectContext: moc)
-        return CFApp(entity: entity!, insertIntoManagedObjectContext: moc)
+        let entity = NSEntityDescription.entity(forEntityName: "CFApp", in: moc)
+        return CFApp(entity: entity!, insertInto: moc)
     }
     
     func testBuildPack() {

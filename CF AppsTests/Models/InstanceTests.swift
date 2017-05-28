@@ -7,9 +7,9 @@ import SwiftyJSON
 class InstanceTests: XCTestCase {
     
     func instance() -> Instance {
-        let path = NSBundle(forClass: self.dynamicType).pathForResource("app_stats", ofType: "json")
+        let path = Bundle(for: type(of: self)).path(forResource: "app_stats", ofType: "json")
         let data = NSData(contentsOfFile: path!)
-        let json = CFResponseHandler().sanitizeJson(JSON(data: data!))
+        let json = CFResponseHandler().sanitizeJson(JSON(data: data! as Data))
         return Instance(json: json["0"])
     }
     

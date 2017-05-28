@@ -8,9 +8,9 @@ class CFInfoTests: XCTestCase {
     var info: CFInfo?
 
     override func setUp() {
-        let path = NSBundle(forClass: self.dynamicType).pathForResource("info", ofType: "json")
+        let path = Bundle(for: type(of: self)).path(forResource: "info", ofType: "json")
         let data = NSData(contentsOfFile: path!)
-        let json = JSON(data: data!)
+        let json = JSON(data: data! as Data)
 
         self.info = CFInfo(json: json)
     }

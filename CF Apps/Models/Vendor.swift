@@ -1,7 +1,7 @@
 import Foundation
 
 class Vendor {
-    private static var otherOption: NSDictionary {
+    fileprivate static var otherOption: NSDictionary {
             let params = [
                 "Name": "Other",
                 "Target": "https://",
@@ -12,11 +12,11 @@ class Vendor {
     }
     
     static var list: NSArray {
-        let list = NSBundle.mainBundle().pathForResource("vendors", ofType: "plist")!
+        let list = Bundle.main.path(forResource: "vendors", ofType: "plist")!
         return NSArray(contentsOfFile: list)!
     }
     
     static var options: NSArray {
-        return list.arrayByAddingObject(otherOption)
+        return list.adding(otherOption) as NSArray
     }
 }

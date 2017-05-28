@@ -29,7 +29,7 @@ class CFRequestTests: XCTestCase {
     }
     
     func testOAuthToken() {
-        let oauthHeaderValue = CFRequest.Info(baseApiURL).URLRequest.valueForHTTPHeaderField("Authorization")
+        let oauthHeaderValue = CFRequest.info(baseApiURL).urlRequest?.value(forHTTPHeaderField: "Authorization")
         
         XCTAssertEqual(CFSession.oauthToken!, "testToken", "token should not be nil when set")
         XCTAssertEqual(oauthHeaderValue!, "Bearer testToken", "token should be entered into header when not nil")
@@ -37,20 +37,20 @@ class CFRequestTests: XCTestCase {
     
     func testInfoMember() {
         let path = "/v2/info"
-        let request: CFRequest = CFRequest.Info(baseApiURL)
+        let request: CFRequest = CFRequest.info(baseApiURL)
         
         CFSession.oauthToken = nil
         
-        assertRequestURLStructure(request, base: baseApiURL, path: path)
-        assertGetParams(request, params: "")
+        assertRequestURLStructure(request: request, base: baseApiURL, path: path)
+        assertGetParams(request: request, params: "")
         
-        XCTAssertNil(request.URLRequest.valueForHTTPHeaderField("Authorization"), "Info doesn't use basic auth")
+        XCTAssertNil(request.urlRequest?.value(forHTTPHeaderField: "Authorization"), "Info doesn't use basic auth")
     }
     
     func testLoginMember() {
         let path = "/oauth/token"
-        let request: CFRequest = CFRequest.Login(baseLoginURL, account!.username, account!.password)
-        let authHeader = request.URLRequest.valueForHTTPHeaderField("Authorization")!
+        let request: CFRequest = CFRequest.login(baseLoginURL, account!.username, account!.password)
+        let authHeader = request.urlRequest?.value(forHTTPHeaderField: "Authorization")!
         let params = [
             "grant_type": "password",
             "username": account!.username,
@@ -58,19 +58,19 @@ class CFRequestTests: XCTestCase {
             "scope": "&" // Login should have empty scope
         ]
         
-        assertRequestURLStructure(request, base: baseLoginURL, path: path)
-        assertPostParams(request, params: params)
+        assertRequestURLStructure(request: request, base: baseLoginURL, path: path)
+        assertPostParams(request: request, params: params)
         
         XCTAssertEqual(authHeader, "Basic \(CFSession.loginAuthToken)")
     }
     
     func testOrgsMember() {
         let path = "/v2/organizations"
-        let request: CFRequest = CFRequest.Orgs()
+        let request: CFRequest = CFRequest.orgs()
         
-        assertRequestURLStructure(request, base: baseApiURL, path: path)
-        assertGetParams(request, params: "")
-        assertBearerToken(request)
+        assertRequestURLStructure(request: request, base: baseApiURL, path: path)
+        assertGetParams(request: request, params: "")
+        assertBearerToken(request: request)
     }
     
     func testAppsMember() {
@@ -80,39 +80,39 @@ class CFRequestTests: XCTestCase {
         
         // Normal apps request
         let params = "order-direction=desc&page=1&q=organization_guid%3Aabc123&results-per-page=25"
-        let request: CFRequest = CFRequest.Apps(orgGuid, currentPage, "")
+        let request: CFRequest = CFRequest.apps(orgGuid, currentPage, "")
         
-        assertRequestURLStructure(request, base: baseApiURL, path: path)
-        assertGetParams(request, params: params)
-        assertBearerToken(request)
+        assertRequestURLStructure(request: request, base: baseApiURL, path: path)
+        assertGetParams(request: request, params: params)
+        assertBearerToken(request: request)
         
         // Apps search
         let searchParams = "order-direction=desc&page=1&q=organization_guid%3Aabc123&q=name%3E%3Dterm&q=name%3C%3Dtern&results-per-page=25"
-        let searchRequest = CFRequest.Apps(orgGuid, currentPage, "term")
+        let searchRequest = CFRequest.apps(orgGuid, currentPage, "term")
         
-        assertGetParams(searchRequest, params: searchParams)
+        assertGetParams(request: searchRequest, params: searchParams)
     }
     
     func testEventsMember() {
         let appGuid = "abc123"
         let path = "/v2/events"
         let params = "order-direction=desc&q=actee%3Aabc123&results-per-page=50"
-        let request: CFRequest = CFRequest.Events(appGuid)
+        let request: CFRequest = CFRequest.events(appGuid)
         
-        assertRequestURLStructure(request, base: baseApiURL, path: path)
-        assertGetParams(request, params: params)
-        assertBearerToken(request)
+        assertRequestURLStructure(request: request, base: baseApiURL, path: path)
+        assertGetParams(request: request, params: params)
+        assertBearerToken(request: request)
     }
     
     func testRecentLogsMember() {
         let appGuid = "abc123"
         let path = "/apps/\(appGuid)/recentlogs"
-        let baseURL = baseLoggingURL.stringByReplacingOccurrencesOfString("wss", withString: "https")
-        let request: CFRequest = CFRequest.RecentLogs(appGuid)
+        let baseURL = baseLoggingURL.replacingOccurrences(of: "wss", with: "https")
+        let request: CFRequest = CFRequest.recentLogs(appGuid)
         
-        assertRequestURLStructure(request, base: baseURL, path: path)
-        assertGetParams(request, params: "")
-        assertBearerToken(request)
+        assertRequestURLStructure(request: request, base: baseURL, path: path)
+        assertGetParams(request: request, params: "")
+        assertBearerToken(request: request)
     }
 }
 
@@ -124,36 +124,36 @@ private extension CFRequestTests {
     }
     
     func assertAuth(request: CFRequest) {
-        XCTAssertEqual(request.URLRequest.valueForHTTPHeaderField("Authorization"), "Request does have an Authorization header.")
+        XCTAssertEqual(request.urlRequest?.value(forHTTPHeaderField: "Authorization"), "Request does have an Authorization header.")
     }
     
     func assertBearerToken(request: CFRequest) {
-        XCTAssertEqual(request.URLRequest.valueForHTTPHeaderField("Authorization"), "Bearer \(oauthToken)", "Request has the correct bearer token")
+        XCTAssertEqual(request.urlRequest?.value(forHTTPHeaderField: "Authorization"), "Bearer \(oauthToken)", "Request has the correct bearer token")
     }
     
     func assertGetParams(request: CFRequest, params: String) {
-        XCTAssertEqual(request.method, Alamofire.Method.GET, "Request method is GET")
+        XCTAssertEqual(request.method, Alamofire.HTTPMethod.get, "Request method is GET")
         
-        let urlParts = request.URLRequest.URLString.componentsSeparatedByString("?")
-        let requestParams = (urlParts.count == 2) ? urlParts.last : ""
+        let urlParts = request.urlRequest?.url?.absoluteString.components(separatedBy: "?")
+        let requestParams = (urlParts?.count == 2) ? urlParts?.last : ""
         
         XCTAssertEqual(requestParams, params, "Request params are \(params)")
     }
     
-    func assertPostParams(request: CFRequest, params: NSDictionary) {
-        XCTAssertEqual(request.method, Alamofire.Method.POST, "Request method is POST")
+    func assertPostParams(request: CFRequest, params: [String: Any]) {
+        XCTAssertEqual(request.method, Alamofire.HTTPMethod.post, "Request method is POST")
         
-        let urlRequest = request.URLRequest
+        let urlRequest = request.urlRequest!
         
-        let contentTypeHeader = urlRequest.valueForHTTPHeaderField("Content-Type")!
+        let contentTypeHeader = urlRequest.value(forHTTPHeaderField: "Content-Type")!
         XCTAssertEqual(contentTypeHeader, "application/x-www-form-urlencoded")
         
-        let acceptHeader = urlRequest.valueForHTTPHeaderField("Accept")!
+        let acceptHeader = urlRequest.value(forHTTPHeaderField: "Accept")!
         XCTAssertEqual(acceptHeader, "application/json")
         
-        let bodyString = NSString(data: urlRequest.HTTPBody!, encoding: NSUTF8StringEncoding)!
+        let bodyString = NSString(data: urlRequest.httpBody!, encoding: String.Encoding.utf8.rawValue)!
         for (k, v) in params {
-            let location = bodyString.rangeOfString("\(k)=\(v)").location
+            let location = bodyString.range(of: "\(k)=\(v)").location
             XCTAssertNotEqual(location, NSNotFound, "\(k) params should exist in the body")
         }
     }

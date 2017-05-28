@@ -2,14 +2,14 @@ import Foundation
 import UIKit
 
 class Alert {
-    class func showAuthFail(controller: UIViewController) {
+    class func showAuthFail(_ controller: UIViewController) {
         show(controller, title: "Authentication Failed", message: "There was an error authenticating. Please try again.")
     }
     
-    class func show(controller: UIViewController, title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
+    class func show(_ controller: UIViewController, title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (UIAlertAction) -> Void in }
         alert.addAction(alertAction)
-        controller.presentViewController(alert, animated: true) { () -> Void in }
+        controller.present(alert, animated: true) { () -> Void in }
     }
 }

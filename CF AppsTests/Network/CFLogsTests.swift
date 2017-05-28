@@ -33,7 +33,7 @@ class CFLogsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        func logsMessage(text: NSMutableAttributedString) {
+        func logsMessage(_ text: NSMutableAttributedString) {
             XCTAssertEqual(text.string, assertString!)
             expectation.fulfill()
         }
@@ -76,7 +76,7 @@ class CFLogsTests: XCTestCase {
         
         do {
             let socket = try logs.createSocket()
-            XCTAssertEqual(socket.binaryType, WebSocketBinaryType.NSData)
+            XCTAssertEqual(socket.binaryType, WebSocketBinaryType.nsData)
         } catch {
             XCTFail()
         }
@@ -89,33 +89,33 @@ class CFLogsTests: XCTestCase {
         
         do {
             let request = try logs.createSocketRequest()
-            XCTAssertEqual(request.URLString, "wss://doppler.test.io:443/apps/\(testAppGuid)/stream")
-            XCTAssertEqual(request.valueForHTTPHeaderField("Authorization"), "bearer testToken")
+            XCTAssertEqual(request.url?.absoluteString, "wss://doppler.test.io:443/apps/\(testAppGuid)/stream")
+            XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), "bearer testToken")
         } catch {
             XCTFail()
         }
     }
     
     func testLogsConnected() {
-        let expectation = expectationWithDescription("Logs Connected")
+        let exp = expectation(description: "Logs Connected")
         let logs = CFLogs(appGuid: testAppGuid)
         
-        logs.delegate = FakeLogger(appGuid: testAppGuid, assertString: "[]: Connected\n\n", expectation: expectation)
+        logs.delegate = FakeLogger(appGuid: testAppGuid, assertString: "[]: Connected\n\n", expectation: exp)
         logs.opened()
-        waitForExpectationsWithTimeout(1.0, handler: nil)
+        waitForExpectations(timeout: 1.0, handler: nil)
     }
     
     func testLogsError() {
-        let expectation = expectationWithDescription("Logs Error")
+        let exp = expectation(description: "Logs Error")
         let logs = CFLogs(appGuid: testAppGuid)
         
-        logs.delegate = FakeLogger(appGuid: testAppGuid, assertString: "[]: Network(test error)\n\n", expectation: expectation)
-        logs.error(WebSocketError.Network("test error"))
-        waitForExpectationsWithTimeout(1.0, handler: nil)
+        logs.delegate = FakeLogger(appGuid: testAppGuid, assertString: "[]: Network(test error)\n\n", expectation: exp)
+        logs.error(WebSocketError.network("test error"))
+        waitForExpectations(timeout: 1.0, handler: nil)
     }
     
     func testLogsAuthRecovery() {
-        stub(everything, builder: json([], status: 200))
+        stub(everything, json([], status: 200))
         class FakeCFLogs: CFLogs {
             let expectation: XCTestExpectation
             
@@ -129,15 +129,15 @@ class CFLogsTests: XCTestCase {
             }
         }
         
-        let expectation = expectationWithDescription("Logs Error")
-        let logs = FakeCFLogs(expectation: expectation)
+        let exp = expectation(description: "Logs Error")
+        let logs = FakeCFLogs(expectation: exp)
         
-        logs.error(WebSocketError.InvalidResponse("HTTP/1.1 401 Unauthorized"))
-        waitForExpectationsWithTimeout(1.0, handler: nil)
+        logs.error(WebSocketError.invalidResponse("HTTP/1.1 401 Unauthorized"))
+        waitForExpectations(timeout: 1.0, handler: nil)
     }
 
     func testLogsAuthFail() {
-        stub(everything, builder: json([], status: 500))
+        stub(everything, json([], status: 500))
         class FakeCFLogs: CFLogs {
             let expectation: XCTestExpectation
             
@@ -153,10 +153,10 @@ class CFLogsTests: XCTestCase {
 
         CFSession.oauthToken = ""
         
-        let expectation = expectationWithDescription("Logs Error")
-        let logs = FakeCFLogs(expectation: expectation)
-        logs.error(WebSocketError.InvalidResponse("HTTP/1.1 401 Unauthorized"))
+        let exp = expectation(description: "Logs Error")
+        let logs = FakeCFLogs(expectation: exp)
+        logs.error(WebSocketError.invalidResponse("HTTP/1.1 401 Unauthorized"))
         
-        waitForExpectationsWithTimeout(1.0, handler: nil)
+        waitForExpectations(timeout: 1.0, handler: nil)
     }
 }

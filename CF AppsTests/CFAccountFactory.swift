@@ -10,10 +10,10 @@ class CFAccountFactory {
     static let oauthToken = "testToken"
     
     class func info() -> CFInfo {
-        let bundle = NSBundle.mainBundle()
-        let path = bundle.pathForResource("PlugIns/CF Apps Tests.xctest/info", ofType: "json")
+        let bundle = Bundle.main
+        let path = bundle.path(forResource: "PlugIns/CF Apps Tests.xctest/info", ofType: "json")
         let data = NSData(contentsOfFile: path!)
-        let json = JSON(data: data!)
+        let json = JSON(data: data! as Data)
         return CFInfo(json: json)
     }
     

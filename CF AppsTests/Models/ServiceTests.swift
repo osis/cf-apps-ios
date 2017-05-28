@@ -7,9 +7,9 @@ import SwiftyJSON
 class ServiceTests:XCTestCase {
     
     func service() -> Service {
-        let path = NSBundle(forClass: self.dynamicType).pathForResource("app_summary", ofType: "json")
+        let path = Bundle(for: type(of: self)).path(forResource: "app_summary", ofType: "json")
         let data = NSData(contentsOfFile: path!)
-        let json = CFResponseHandler().sanitizeJson(JSON(data: data!))
+        let json = CFResponseHandler().sanitizeJson(JSON(data: data! as Data))
         return Service(json: json["services"][0])
     }
     

@@ -12,12 +12,12 @@ struct CFAccount: ReadableSecureStorable, CreateableSecureStorable, DeleteableSe
     let service = "CloudFoundry"
     var account: String { return "\(username)_\(target)" }
     
-    var data: [String : AnyObject] {
+    var data: [String : Any] {
         let data: [String : AnyObject] = [
-            "target" : target,
-            "username" : username,
-            "password" : password,
-            "info" : info.serialize()
+            "target" : target as AnyObject,
+            "username" : username as AnyObject,
+            "password" : password as AnyObject,
+            "info" : info.serialize() as AnyObject
         ]
 
         return data
