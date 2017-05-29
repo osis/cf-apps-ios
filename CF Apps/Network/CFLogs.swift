@@ -87,9 +87,9 @@ class CFLogs: NSObject {
         var text: NSMutableAttributedString?
         
         do {
-            let envelope = try Events.Envelope.parseFrom(data: data)
+            let env = try Events.Envelope.parseFrom(data: data)
             
-            if let logm = envelope.logMessage, envelope.hasLogMessage {
+            if let logm = env.logMessage, logm.hasMessage {
                 let message = String(data: logm.message, encoding: String.Encoding.ascii)!
                 text = LogMessageString.message(logm.sourceType, sourceID: logm.sourceInstance, message: message, type: logm.messageType)
             }
@@ -139,8 +139,8 @@ private extension CFLogs {
             
             for log in chunks {
                 do {
-                    let envelope = try Events.Envelope.parseFrom(data: data!)
-                    self.message(envelope.logMessage.data())
+                    let envelope = try Events.Envelope.parseFrom(data: log)
+                    self.message(envelope.data())
                 } catch {
                     print(error)
                 }
@@ -174,8 +174,7 @@ private extension CFLogs {
             // Append chunk without \r\n\r\n & \r\n (if not empty):
             if foundRange!.lowerBound - 6 > searchRange.location + 4 {
                 let newRange = NSMakeRange(searchRange.location+4, foundRange!.lowerBound-6 - searchRange.location)
-                let d1 = data.subdata(in: newRange.toRange()!)
-                chunks.append(d1)
+                chunks.append(data.subdata(in: newRange.toRange()!))
             }
             // Search next occurrence of separator:
             searchRange.location = foundRange!.lowerBound + foundRange!.count
