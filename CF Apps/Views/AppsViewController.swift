@@ -55,8 +55,6 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
     
     func accountSwitched() {
         clearSearch()
-        self.items = [CFApp]()
-        self.tableView.reloadData()
         refresh()
         disableOrgsFilter()
     }
@@ -95,6 +93,8 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func refresh() {
+        self.clearList()
+        
         let offset = self.tableView.contentOffset.y
         let refreshHeight = self.refreshControl!.frame.size.height
         let headerHeight = self.tableView.tableHeaderView!.frame.size.height
@@ -155,6 +155,11 @@ private extension AppsViewController {
         self.searchText = ""
         self.searchBar.text = ""
         self.searchBar.resignFirstResponder()
+    }
+    
+    func clearList() {
+        self.items = [CFApp]()
+        self.tableView.reloadData()
     }
     
     func fetchOrganizations() {
@@ -239,9 +244,6 @@ private extension AppsViewController {
         self.refreshControl!.endRefreshing()
         setRefreshTitle("Refresh Apps")
         self.tableView.tableFooterView = nil
-        if !self.searchBar.isFirstResponder {
-            tableView.setContentOffset(CGPoint(x: 0,y: -20), animated: true)
-        }
     }
     
     func handleAppsResponse(_ json: JSON) {
