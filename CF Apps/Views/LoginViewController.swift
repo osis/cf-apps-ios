@@ -124,7 +124,7 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
         // TODO: Refactor
         startButtonSpinner(targetButton, spinner: apiTargetSpinner)
         let urlRequest = CFRequest.info(self.apiTargetField.text!)
-        CFApi().request(urlRequest, success: { (json) in
+        CFApi().authRequest(urlRequest, success: { (json) in
             self.apiInfo = CFInfo(json: json)
             self.hideTargetForm()
             self.showLoginForm()
@@ -142,7 +142,7 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
         self.startButtonSpinner(self.loginButton, spinner: self.loginSpinner)
         
         let urlRequest = CFRequest.login(apiInfo!.authEndpoint, usernameField.text!, passwordField.text!)
-        CFApi().request(urlRequest, success: { json in
+        CFApi().authRequest(urlRequest, success: { json in
             let account = CFAccount(
                 target: self.apiTargetField.text!,
                 username: self.usernameField.text!,
