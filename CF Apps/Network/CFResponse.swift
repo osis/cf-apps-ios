@@ -8,7 +8,7 @@ class CFResponse {
             let statusString = HTTPURLResponse.localizedString(forStatusCode: c)
             return "\(c) \((statusString)) response from \(u)"
         } else {
-            return "Cannot connect to \(url)"
+            return "Cannot connect to \(String(describing: url))"
         }
     }
     

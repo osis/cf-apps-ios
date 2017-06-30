@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -357,7 +357,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="olq-SB-2eC">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" image="accounts" style="plain" id="dR8-gx-aRG">
+                        <barButtonItem key="leftBarButtonItem" image="accounts" id="dR8-gx-aRG">
                             <color key="tintColor" red="1" green="0.97481899910000003" blue="0.98001719080000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="OIc-fw-gXa" kind="popoverPresentation" identifier="accounts" popoverAnchorBarButtonItem="dR8-gx-aRG" id="YLb-v3-5CQ">
@@ -369,8 +369,8 @@
                             <rect key="frame" x="55" y="5.5" width="213" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" misplaced="YES" image="launch_icon" translatesAutoresizingMaskIntoConstraints="NO" id="cBT-qb-Sr8">
-                                    <rect key="frame" x="-120" y="5" width="480" height="23"/>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="launch_icon" translatesAutoresizingMaskIntoConstraints="NO" id="cBT-qb-Sr8">
+                                    <rect key="frame" x="-133" y="5" width="479" height="23"/>
                                 </imageView>
                             </subviews>
                             <constraints>
@@ -452,7 +452,7 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="91"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wle-yV-ERa" id="MM1-E9-7gV">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="90.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="91"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pivotal Web Services" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngj-3n-ORk">
@@ -499,7 +499,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Accounts" id="WDx-pY-AOY">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="yka-26-eEg">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="yka-26-eEg">
                             <connections>
                                 <action selector="closeClicked:" destination="wTF-c0-P1G" id="8BV-25-MkF"/>
                             </connections>
@@ -817,19 +817,19 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tr2-sG-pMz">
                                 <rect key="frame" x="-4" y="460" width="328" height="44"/>
                                 <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="RTX-UW-jIZ"/>
+                                    <barButtonItem systemItem="flexibleSpace" id="RTX-UW-jIZ"/>
                                     <barButtonItem title="Logs" id="Nj1-rF-9Wv">
                                         <connections>
                                             <segue destination="bnK-7Y-JBh" kind="show" identifier="logs" id="SSq-YK-9F5"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="jED-bg-hZE"/>
+                                    <barButtonItem systemItem="flexibleSpace" id="jED-bg-hZE"/>
                                     <barButtonItem title="Events" id="qgL-Et-fE7">
                                         <connections>
                                             <segue destination="E93-IP-TeA" kind="show" identifier="events" id="Lac-Ek-Lja"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="gSc-PY-Man"/>
+                                    <barButtonItem systemItem="flexibleSpace" id="gSc-PY-Man"/>
                                 </items>
                                 <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>

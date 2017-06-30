@@ -8,10 +8,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     lazy var dataStack: DATAStack = DATAStack(modelName: "CFStore")
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [AnyHashable: Any]?) -> Bool {
+    private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [AnyHashable: Any]?) -> Bool {
         
         if CFSession.account() != nil {
-            showAppsScreen()
+            let _ = showAppsScreen()
         }
         
         return true
