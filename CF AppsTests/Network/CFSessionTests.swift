@@ -61,7 +61,7 @@ class CFSessionTests: XCTestCase {
     func testReset() {
         CFSession.oauthToken = ""
         CFSession.org("guid")
-        try! CFSession.account(account)
+        CFSession.account(account)
         
         CFSession.reset()
         
