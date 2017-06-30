@@ -84,10 +84,17 @@ class CFResponseHandler: ResponseHandler {
 }
 
 class CFApi {
-    let responseHandler: ResponseHandler
+    var responseHandler: ResponseHandler
     
     init(responseHandler: ResponseHandler = CFResponseHandler()) {
         self.responseHandler = responseHandler
+    }
+    
+    func authRequest(_ urlRequest: URLRequestConvertible, success: @escaping (_ json: JSON) -> Void, error: @escaping (_ statusCode: Int?, _ url: URL?) -> Void) {
+        responseHandler.retryLogin = false
+        Alamofire.request(urlRequest.urlRequest!).validate().responseJSON { response in
+            self.handleResponse(response, success: success, error: error)
+        }
     }
     
     func request(_ urlRequest: URLRequestConvertible, success: @escaping (_ json: JSON) -> Void, error: @escaping (_ statusCode: Int?, _ url: URL?) -> Void) {
