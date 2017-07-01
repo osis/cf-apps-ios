@@ -1,7 +1,5 @@
 
-# CF Apps: An iOS Client for Cloud Foundry [![Build Status](https://travis-ci.org/osis/cf-apps-ios.svg?branch=master)](https://travis-ci.org/osis/cf-apps-ios)
-[![codebeat
-badge](https://codebeat.co/badges/1474971d-5a1f-4c1d-856d-27b346b233a9)](https://codebeat.co/projects/github-com-osis-cf-apps-ios-master-0bbbf265-0ea5-4f79-81f7-2172ef3055b3)
+# CF Apps: An iOS Client for Cloud Foundry [![Build Status](https://travis-ci.org/osis/cf-apps-ios.svg?branch=master)](https://travis-ci.org/osis/cf-apps-ios) [![codebeat badge](https://codebeat.co/badges/0c143ba0-2c88-4bf3-b19e-342e9ab542bb)](https://codebeat.co/projects/github-com-osis-cf-apps-ios-master)
 
 [![Download](https://cloud.githubusercontent.com/assets/347097/13373777/c5321c16-dd3e-11e5-8bd0-64e985bfe19a.png)](https://itunes.apple.com/ca/app/cf-apps/id1070237537?mt=8)
 
