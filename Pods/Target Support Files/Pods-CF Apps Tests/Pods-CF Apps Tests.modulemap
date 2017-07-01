@@ -1,6 +1,0 @@
-framework module Pods_CF_Apps_Tests {
-  umbrella header "Pods-CF Apps Tests-umbrella.h"
-
-  export *
-  module * { export * }
-}
