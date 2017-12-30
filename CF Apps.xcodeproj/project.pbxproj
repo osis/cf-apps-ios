@@ -294,8 +294,7 @@
 				655B44301B53060E009ED489 /* Supporting Files */,
 				655B442B1B5305FD009ED489 /* Views */,
 			);
-			name = "CF Apps";
-			path = "CF Commander";
+			path = "CF Apps";
 			sourceTree = "<group>";
 		};
 		651C849E1B2A92A30006DC3A /* Resources */ = {
