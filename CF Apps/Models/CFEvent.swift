@@ -43,52 +43,52 @@ class CFEvent: NSObject {
     
     func state() -> String? {
         let state = json!["metadata"]["request"]["state"]
-        return (state != nil) ? state.stringValue : nil
+        return (state != JSON.null) ? state.stringValue : nil
     }
     
     func name() -> String? {
         let name = json!["metadata"]["request"]["name"]
-        return (name != nil) ? name.stringValue : nil
+        return (name != JSON.null) ? name.stringValue : nil
     }
     
     func instances() -> Int? {
         let instances = json!["metadata"]["request"]["instances"]
-        return (instances != nil) ? instances.intValue : nil
+        return (instances != JSON.null) ? instances.intValue : nil
     }
     
     func memory() -> String? {
         let memory = json!["metadata"]["request"]["memory"]
-        return (memory != nil) ? formattedMemory(memory.int64Value) : nil
+        return (memory != JSON.null) ? formattedMemory(memory.int64Value) : nil
     }
     
     func diskQuota() -> String? {
         let disk = json!["metadata"]["request"]["disk_quota"]
-        return (disk != nil) ? formattedDiskQuota(disk.int64Value) : nil
+        return (disk != JSON.null) ? formattedDiskQuota(disk.int64Value) : nil
     }
     
     func buildpack() -> String? {
         let buildpack = json!["metadata"]["request"]["buildpack"]
-        return (buildpack != nil) ? buildpack.stringValue : nil
+        return (buildpack != JSON.null) ? buildpack.stringValue : nil
     }
     
     func environmentJson() -> String? {
         let envJson = json!["metadata"]["request"]["environment_json"]
-        return (envJson != nil) ? envJson.stringValue : nil
+        return (envJson != JSON.null) ? envJson.stringValue : nil
     }
     
     func index() -> Int? {
         let index = json!["metadata"]["index"]
-        return (index != nil) ? index.intValue : nil
+        return (index != JSON.null) ? index.intValue : nil
     }
     
     func exitDesciption() -> String? {
         let description = json!["metadata"]["exit_description"]
-        return (description != nil) ? description.stringValue.replacingOccurrences(of: "\n\n", with: "\n") : nil
+        return (description != JSON.null) ? description.stringValue.replacingOccurrences(of: "\n\n", with: "\n") : nil
     }
     
     func reason() -> String? {
         let reason = json!["metadata"]["reason"]
-        return (reason != nil) ? reason.stringValue : nil
+        return (reason != JSON.null) ? reason.stringValue : nil
     }
     
     func attributeSummary() -> String {
