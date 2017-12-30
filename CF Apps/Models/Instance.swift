@@ -60,7 +60,7 @@ class Instance: NSObject {
     
     fileprivate func stats() -> [String: JSON]? {
         let stats = json!["stats"]
-        return (stats != nil) ? stats.dictionaryValue : nil
+        return (stats != JSON.null) ? stats.dictionaryValue : nil
     }
     
     fileprivate func toPercent(_ usage: Double, quota: Double) -> Double {

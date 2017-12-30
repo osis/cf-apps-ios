@@ -76,7 +76,7 @@ class CFResponseHandler: ResponseHandler {
             for (entityKey, entitySubJson) in subJson["entity"] {
                 sanitizedJson["resources"][index][entityKey] = entitySubJson
             }
-            sanitizedJson["resources"][index]["entity"] = nil
+            sanitizedJson["resources"][index]["entity"] = JSON.null
         }
         
         return sanitizedJson
