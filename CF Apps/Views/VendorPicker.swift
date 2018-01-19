@@ -7,7 +7,7 @@ protocol VendorPickerDelegate: NSObjectProtocol {
 
 class VendorPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
     var vendorPickerDelegate: VendorPickerDelegate?
-    let initialIndex = 5
+    let initialIndex = 8
     let vendors = Vendor.options
 
     required init?(coder aDecoder: NSCoder) {
