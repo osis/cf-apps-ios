@@ -12,7 +12,7 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>AppFog East</string>
+		<string>AppFog (East)</string>
 		<key>Target</key>
 		<string>https://api.useast.appfog.ctl.io</string>
 		<key>URL</key>
@@ -20,7 +20,7 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>AppFog West</string>
+		<string>AppFog (West)</string>
 		<key>Target</key>
 		<string>https://api.uswest.appfog.ctl.io</string>
 		<key>URL</key>
@@ -36,7 +36,31 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>IBM BlueMix</string>
+		<string>IBM BlueMix (AU)</string>
+		<key>Target</key>
+		<string>https://api.au-syd.bluemix.net</string>
+		<key>URL</key>
+		<string>http://www.ibm.com/cloud-computing/bluemix</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>IBM BlueMix (DE)</string>
+		<key>Target</key>
+		<string>https://api.eu-de.bluemix.net</string>
+		<key>URL</key>
+		<string>http://www.ibm.com/cloud-computing/bluemix</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>IBM BlueMix (GB)</string>
+		<key>Target</key>
+		<string>https://api.eu-gb.bluemix.net</string>
+		<key>URL</key>
+		<string>http://www.ibm.com/cloud-computing/bluemix</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>IBM BlueMix (US)</string>
 		<key>Target</key>
 		<string>https://api.ng.bluemix.net</string>
 		<key>URL</key>
