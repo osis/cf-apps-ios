@@ -64,7 +64,7 @@ class AppViewController: UIViewController {
             }
             
             if let summary = appSummary {
-                DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
+                DispatchQueue.main.async {
                     self.handleSummaryResponse(summary)
                     self.refreshControl.endRefreshing()
                 }
@@ -85,15 +85,13 @@ class AppViewController: UIViewController {
         let delegate = servicesTableView.delegate as! ServicesViewController
         delegate.serviceBindings = app.serviceBindings
         
-        DispatchQueue.main.async(execute: {
-            self.servicesTableView.tableFooterView = nil
-            self.servicesTableView.reloadData()
-            let height = self.servicesTableView.contentSize.height
-            self.servicesTableHeightConstraint.constant = height
-            
-            self.view.setNeedsLayout()
-            self.view.layoutIfNeeded()
-        })
+        self.servicesTableView.tableFooterView = nil
+        self.servicesTableView.reloadData()
+        let height = self.servicesTableView.contentSize.height
+        self.servicesTableHeightConstraint.constant = height
+        
+        self.view.setNeedsLayout()
+        self.view.layoutIfNeeded()
     }
     
     func fetchStats() {
