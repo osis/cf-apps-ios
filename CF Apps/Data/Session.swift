@@ -1,25 +1,10 @@
 import Foundation
 import UIKit
-import Alamofire
+import CFoundry
 
-class CFSession {
-    static let loginAuthToken = "Y2Y6"
+class Session {
     static let accountKey = "currentAccount"
     static let orgKey = "currentOrg"
-    
-    static var oauthToken: String?
-    static var baseURLString: String {
-        if let account = CFSession.account() {
-            return account.target
-        }
-        return ""
-    }
-    static var dopplerURLString: String {
-        if let account = CFSession.account() {
-            return account.info.dopplerLoggingEndpoint
-        }
-        return ""
-    }
     
     class func account(_ account: CFAccount) {
         UserDefaults.standard.set(account.account, forKey: accountKey)
@@ -29,7 +14,7 @@ class CFSession {
     
     class func account() -> CFAccount? {
         if let key = currentAccountKey() {
-            return CFAccountStore.read(key)
+            return AccountStore.read(key)
         }
         return nil
     }
@@ -50,23 +35,22 @@ class CFSession {
     }
     
     class func reset() {
-        CFSession.oauthToken = nil
-        cancelRequests()
-        
+        //TODO: CFAPI Reset?
+        CFApi.logout()
         
         UserDefaults.standard.removeObject(forKey: accountKey)
         UserDefaults.standard.removeObject(forKey: orgKey)
     }
     
     class func logout(_ isError: Bool) {
-        if let account = CFSession.account() {
-            try! CFAccountStore.delete(account)
+        if let account = Session.account() {
+            try! AccountStore.delete(account)
         }
         
         reset()
         
         let delegate = UIApplication.shared.delegate as! AppDelegate
-        if CFAccountStore.isEmpty() {
+        if AccountStore.isEmpty() {
             let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let loginController = storyboard.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
             loginController.authError = isError
@@ -77,13 +61,8 @@ class CFSession {
         }
     }
     
-    fileprivate class func cancelRequests() {
-        Alamofire.SessionManager.default.session.getAllTasks { tasks in
-            tasks.forEach { $0.cancel() }
-        }
-    }
-
     fileprivate class func currentAccountKey() -> String? {
         return UserDefaults.standard.object(forKey: accountKey) as! String?
     }
 }
+

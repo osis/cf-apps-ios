@@ -1,9 +1,8 @@
 import Foundation
 import UIKit
-import Alamofire
 import QuartzCore
-import SwiftyJSON
 import SafariServices
+import CFoundry
 
 class LoginViewController: UIViewController, VendorPickerDelegate {
     @IBOutlet var loginView: UIView!
@@ -121,18 +120,22 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
         let urlString = self.apiTargetField.text!
         
         if (urlString.isValidURL()) {
-        // TODO: Refactor
-        startButtonSpinner(targetButton, spinner: apiTargetSpinner)
-        let urlRequest = CFRequest.info(self.apiTargetField.text!)
-        CFApi().authRequest(urlRequest, success: { (json) in
-            self.apiInfo = CFInfo(json: json)
-            self.hideTargetForm()
-            self.showLoginForm()
-            self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
-        }, error: { statusCode, url in
-           Alert.show(self, title: "Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
-            self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
-        })
+            // TODO: Refactor
+            startButtonSpinner(targetButton, spinner: apiTargetSpinner)
+            CFApi.info(apiURL: urlString) { (info: CFInfo?, error: Error?) in
+                if let e = error {
+                    Alert.show(self, title: "Error", message: e.localizedDescription)
+                    return
+                }
+                
+                if let i = info {
+                    self.apiInfo = i
+                    self.hideTargetForm()
+                    self.showLoginForm()
+                }
+                
+                self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
+            }
         } else {
             Alert.show(self, title: "Invalid URL", message: "The URL you've entered seems to be invalid. Please check and try again.")
         }
@@ -141,33 +144,32 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     func login() {
         self.startButtonSpinner(self.loginButton, spinner: self.loginSpinner)
         
-        let urlRequest = CFRequest.login(apiInfo!.authEndpoint, usernameField.text!, passwordField.text!)
-        CFApi().authRequest(urlRequest, success: { json in
-            let account = CFAccount(
-                target: self.apiTargetField.text!,
-                username: self.usernameField.text!,
-                password: self.passwordField.text!,
-                info: self.apiInfo!
-            )
+        let account = CFAccount(
+            target: self.apiTargetField.text!,
+            username: self.usernameField.text!,
+            password: self.passwordField.text!,
+            info: self.apiInfo!
+        )
+        CFApi.login(account: account) { (error: Error?) in
+            self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
+            
+            if let e = error {
+                Alert.show(self, title: "Error", message: e.localizedDescription)
+                return
+            }
             
             do {
-                try CFAccountStore.create(account)
-                CFSession.account(account)
+                try AccountStore.create(account)
                 
                 if let navController = self.navigationController {
                     navController.dismiss(animated: true, completion: nil)
                 } else {
                     self.performSegue(withIdentifier: "apps", sender: nil)
                 }
-                self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
             } catch {
                 Alert.show(self, title: "Error", message: "Could not save account.")
-                self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
             }
-        }, error: { statusCode, url in
-            Alert.show(self, title: "Error", message: CFResponse.stringForLoginStatusCode(statusCode, url: url))
-            self.stopButtonSpinner(self.loginButton, spinner: self.loginSpinner)
-        })
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -176,7 +178,6 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
             let appsViewController = navController.topViewController as! AppsViewController
             let delegate = UIApplication.shared.delegate as! AppDelegate
             
-            appsViewController.dataStack = delegate.dataStack
             self.hidesBottomBarWhenPushed = false;
         }
     }

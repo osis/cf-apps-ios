@@ -1,4 +1,5 @@
 import XCTest
+import CFoundry
 
 @testable import CF_Apps
 

@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import CFoundry
 
 class LogsViewController: UIViewController, CFLogger {
     @IBOutlet var logView: UITextView!

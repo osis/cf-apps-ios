@@ -1,10 +1,8 @@
 import UIKit
 import Foundation
-import Alamofire
-import SwiftyJSON
-import Sync
-import DATAStack
 import ActionSheetPicker_3_0
+import CFoundry
+
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
@@ -27,9 +25,10 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
     
     let CellIdentifier = "AppCell"
     
-    var dataStack: DATAStack?
     var token:String?
-    var items = [CFApp]()
+    var apps = [CFApp]()
+    var orgs = [CFOrg]()
+    var spaces = [CFSpace]()
     var currentPage = 1
     var totalPages:Int?
     var orgPickerLabels = [String]()
@@ -66,8 +65,7 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
             let cell = sender as! UITableViewCell
             let index = self.tableView.indexPath(for: cell)
             
-            controller.app = items[index!.item]
-            controller.dataStack = self.dataStack!
+            controller.app = apps[index!.item]
             self.searchBar.resignFirstResponder()
         default:
             break
@@ -75,15 +73,18 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
     }
     
     @IBAction func filterOrgClicked(_ sender: UIBarButtonItem) {
-        let currentIndex = self.orgPickerValues.index(of: CFSession.org()!)
+        // TODO: Initial selection should be from session
+//        let currentIndex = self.orgPickerValues.index(of: CFSession.org()!)
+        let currentIndex = 0
         
         ActionSheetMultipleStringPicker.show(withTitle: "Filter by Org", rows: [
             self.orgPickerLabels
-            ], initialSelection: [currentIndex!], doneBlock: {
+            ], initialSelection: [currentIndex], doneBlock: {
                 picker, values, indexes in
                 
                 let value = values?[0] as! Int
-                CFSession.org(self.orgPickerValues[value])
+                // TODO: Save org to session
+//                CFSession.org(self.orgPickerValues[value])
                 self.refresh()
                 
                 return
@@ -106,6 +107,7 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
 
     @IBAction func refresh(_ sender: UIRefreshControl) {
         DispatchQueue.main.async {
+            self.refresh()
             self.currentPage = 1
             self.fetchOrganizations()
         }
@@ -114,11 +116,13 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
 
 extension AppsViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        print(apps.count)
+        return apps.count
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if (items.count > 1 && indexPath.row == items.count-1 && currentPage < totalPages) {
+        if (apps.count > 1 && indexPath.row == apps.count-1 && currentPage < totalPages) {
+            print("Grabbing another page...")
             currentPage += 1
             self.tableView.tableFooterView = LoadingIndicatorView()
             fetchApplications()
@@ -127,8 +131,14 @@ extension AppsViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: CellIdentifier) as! AppTableViewCell
-        let app = self.items[indexPath.row]
-        cell.render(app, dataStack: self.dataStack!)
+        let app = self.apps[indexPath.row]
+        let spaceIndex = self.spaces.index { (s) -> Bool in
+            return app.spaceGuid == s.guid
+        }
+        
+        let space = self.spaces[spaceIndex!]
+        
+        cell.render(app: app, space: space)
         
         return cell
     }
@@ -158,55 +168,48 @@ private extension AppsViewController {
     }
     
     func clearList() {
-        self.items = [CFApp]()
+        self.apps = [CFApp]()
         self.tableView.reloadData()
     }
     
     func fetchOrganizations() {
         setRefreshTitle("Updating Organizations")
-        CFApi().request(CFRequest.orgs(),
-            success: { (json) in
-                DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-                    self.handleOrgsResponse(json)
-                }
-            },
-            error: { (statusCode) in
-                print([statusCode])
+        CFApi.orgs() { orgs, error in
+            if let e = error {
+                print(e.localizedDescription)
+                return
             }
-        )
+            
+            if let orgs = orgs {
+                DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
+                    self.handleOrgsResponse(orgs)
+                }
+            }
+        }
     }
     
-    func handleOrgsResponse(_ json: JSON) {
-        do {
-            try dataStack!.drop()
-        } catch {
-            print("--- Could not drop database")
-        }
-        
+    func handleOrgsResponse(_ orgs: [CFOrg]) {
         self.orgPickerLabels = []
         self.orgPickerValues = []
         var orgGuids: [String] = []
         
-        for (key, _) in json["resources"] {
-            let index = Int(key)!
-            let resource = json["resources"][index]
-            
-            self.orgPickerValues.append(resource["guid"].stringValue)
-            self.orgPickerLabels.append(resource["name"].stringValue)
-            orgGuids.append(resource["guid"].stringValue)
+        for org in orgs {
+            self.orgPickerValues.append(org.guid)
+            self.orgPickerLabels.append(org.name)
+            orgGuids.append(org.guid)
         }
         
         self.enableOrgsFilter()
         
-        if CFSession.org() == nil || !orgGuids.contains(CFSession.org()!) {
-            CFSession.org(orgGuids[0])
-        }
+        // TODO: Select the org from the previous session
+//        if CFSession.org() == nil || !orgGuids.contains(CFSession.org()!) {
+//            CFSession.org(orgGuids[0])
+//        }
         
-        let resources = json["resources"].arrayObject as! [[String:AnyObject]]
-        CFStore(dataStack: self.dataStack!).syncOrgs(resources, completion: { error in
-            print("--- Orgs Synced")
-            self.fetchApplications()
-        })
+        self.orgs = orgs
+        
+        print("--- Orgs Synced")
+        self.fetchApplications()
     }
     
     func enableOrgsFilter() {
@@ -225,63 +228,72 @@ private extension AppsViewController {
     
     func fetchApplications() {
         setRefreshTitle("Updating Apps")
-        let urlRequest = CFRequest.apps(CFSession.org()!, currentPage, searchText)
-        CFApi().request(urlRequest, success: { (json) in
-            DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-                self.handleAppsResponse(json)
+        
+        CFApi.apps(orgGuid: orgPickerValues.first!, page: currentPage, searchText: searchText) { apps, error in
+            if let e = error {
+                print(e.localizedDescription)
             }
-            }, error: { (statusCode) in
-                print([statusCode])
+            
+            if let apps = apps {
+                DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
+                    self.handleAppsResponse(apps)
+                }
             }
-        )
+        }
     }
     
     func fetchCurrentObjects() {
-        items = CFStore(dataStack: self.dataStack!).fetchApps()
-        
-        tableView.reloadData()
-        
-        self.refreshControl!.endRefreshing()
-        setRefreshTitle("Refresh Apps")
-        self.tableView.tableFooterView = nil
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            
+            self.refreshControl!.endRefreshing()
+            self.setRefreshTitle("Refresh Apps")
+            self.tableView.tableFooterView = nil
+        }
     }
     
-    func handleAppsResponse(_ json: JSON) {
+    func handleAppsResponse(_ apps: [CFApp]) {
         var appGuids: [String] = []
         
-        for (key, _) in json["resources"] {
-            let index = Int(key)!
-            appGuids.append(json["resources"][index]["guid"].stringValue)
+        for app in apps {
+            appGuids.append(app.guid)
         }
         
-        self.totalPages = json["total_pages"].intValue
+//        self.totalPages = json["total_pages"].intValue
+        self.totalPages = 1
         
-        let resources = json["resources"].arrayObject as! [[String:AnyObject]]
-        let clear = currentPage == 1
-        CFStore(dataStack: self.dataStack!).syncApps(resources, clear: clear, completion: { error in
-            print("--- Apps Synced")
-            self.fetchSpaces(appGuids)
-        })
+//        let resources = json["resources"].arrayObject as! [[String:AnyObject]]
+        self.apps += apps
+//        let clear = currentPage == 1
+        print("--- Apps Synced")
+        self.fetchSpaces(appGuids)
     }
     
     func fetchSpaces(_ appGuids: [String]) {
         setRefreshTitle("Updating Spaces")
-        let urlRequest = CFRequest.spaces(appGuids)
-        CFApi().request(urlRequest, success: { (json) in
-            DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-                self.handleSpacesResponse(json)
+        CFApi.appSpaces(appGuids: appGuids) { spaces, error in
+            if let error = error {
+                print(error.localizedDescription)
             }
-            }, error: { (statusCode) in
-                print([statusCode])
+            
+            if let spaces = spaces {
+                DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
+                    self.handleSpacesResponse(spaces)
+                }
             }
-        )
+        }
+//        let urlRequest = CFRequest.spaces(appGuids)
+//        CFApi().request(urlRequest, success: { (json) in
+//
+//            }, error: { (statusCode) in
+//                print([statusCode])
+//            }
+//        )
     }
     
-    func handleSpacesResponse(_ json: JSON) {
-        let resources = json["resources"].arrayObject as! [[String:AnyObject]]
-        CFStore(dataStack: self.dataStack!).syncSpaces(resources, completion: { (error) in
-            print("--- Spaces Synced")
-            self.fetchCurrentObjects()
-        })
+    func handleSpacesResponse(_ spaces: [CFSpace]) {
+        self.spaces += spaces
+        print("--- Spaces Synced")
+        self.fetchCurrentObjects()
     }
 }

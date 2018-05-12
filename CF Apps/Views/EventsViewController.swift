@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import SwiftyJSON
+import CFoundry
 
 class EventsViewController: UITableViewController {
     var appGuid: String?
@@ -17,23 +18,31 @@ class EventsViewController: UITableViewController {
     func fetchEvents() {
         setRefreshTitle("Fetching Events")
         
-        let request = CFRequest.events(self.appGuid!)
-        CFApi().request(request, success: { (json) in
-            self.handleEventsRequest(json)
-        }, error: { (statusCode, url) in
-            if let s = statusCode, let u = url {
-                print("Network Error. Status: %s, URL: %s", s, u)
-            } else {
-                print("Unknown Network Error")
+        CFApi.events(appGuid: self.appGuid!) { events, error in
+            if let e = error {
+                print(e.localizedDescription)
             }
-        })
+            
+            if let events = events {
+                self.handleEventsRequest(events)
+            }
+        }
+//        let request = CFRequest.events(self.appGuid!)
+//        CFApi().request(request, success: { (json) in
+//            self.handleEventsRequest(json)
+//        }, error: { (statusCode, url) in
+//            if let s = statusCode, let u = url {
+//                print("Network Error. Status: %s, URL: %s", s, u)
+//            } else {
+//                print("Unknown Network Error")
+//            }
+//        })
     }
     
-    func handleEventsRequest(_ json: JSON) {
-        for e in json["resources"].arrayValue {
-            let event = CFEvent(json: e)
-            if let _ = event.type() {
-                events.append(event)
+    func handleEventsRequest(_ events: [CFEvent]) {
+        for e in events {
+            if let _ = e.readableType() {
+                self.events.append(e)
             }
         }
         
@@ -59,7 +68,7 @@ class EventsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let event = events[indexPath.item]
         
-        if let type = event.type() {
+        if let type = event.readableType() {
             switch type {
             case "operation":
                 return operationalEventCell(event)
@@ -76,14 +85,15 @@ class EventsViewController: UITableViewController {
     func operationalEventCell(_ event: CFEvent) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "OperationEventCell")
         
+
         let dateLabel = cell!.viewWithTag(1) as! UILabel
-        dateLabel.text = event.date()
+        dateLabel.text = formattedDate(timestamp: event.timestamp)
         
         let stateLabel = cell!.viewWithTag(2) as! UILabel
-        stateLabel.text = event.state()
+        stateLabel.text = event.requestedState!
         
         let stateImg = cell!.viewWithTag(3) as! UIImageView
-        stateImg.image = UIImage(named: event.state()!.localizedLowercase)
+        stateImg.image = UIImage(named: event.requestedState!.localizedLowercase)
         
         return cell!
     }
@@ -92,7 +102,7 @@ class EventsViewController: UITableViewController {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "AttributeEventCell")
         
         let dateLabel = cell!.viewWithTag(1) as! UILabel
-        dateLabel.text = event.date()
+        dateLabel.text = formattedDate(timestamp: event.timestamp)
         
         let descriptionLabel = cell?.viewWithTag(2) as! UILabel
         descriptionLabel.text = event.attributeSummary()
@@ -104,14 +114,26 @@ class EventsViewController: UITableViewController {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "CrashEventCell")
         
         let dateLabel = cell!.viewWithTag(1) as! UILabel
-        dateLabel.text = event.date()
+        dateLabel.text = formattedDate(timestamp: event.timestamp)
         
         let reasonLabel = cell!.viewWithTag(2) as! UILabel
-        reasonLabel.text = event.reason()
+        reasonLabel.text = event.reason
         
         let descriptionLabel = cell!.viewWithTag(3) as! UILabel
-        descriptionLabel.text = event.exitDesciption()
+        descriptionLabel.text = event.exitDescription
         
         return cell!
+    }
+    
+    func formattedDate(timestamp: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        
+        let date = dateFormatter.date(from: timestamp)
+        
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        
+        return dateFormatter.string(from: date!)
     }
 }

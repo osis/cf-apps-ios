@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import DATAStack
+import CFoundry
 
 class AppTableViewCell: UITableViewCell {
     let identifier = "AppCell"
@@ -9,7 +10,7 @@ class AppTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    func render(_ app: CFApp, dataStack: DATAStack) {
+    func render(app: CFApp, space: CFSpace) {
         let appNameLabel: UILabel = self.viewWithTag(1) as! UILabel
         let memLabel: UILabel = self.viewWithTag(2) as! UILabel
         let diskLabel: UILabel = self.viewWithTag(3) as! UILabel
@@ -17,14 +18,7 @@ class AppTableViewCell: UITableViewCell {
         let buildpackLabel: UILabel = self.viewWithTag(5) as! UILabel
         let spaceLabel: UILabel = self.viewWithTag(6) as! UILabel
         
-        do {
-            if let space = try CFStore(dataStack: dataStack).fetchSpace(app.spaceGuid) {
-                spaceLabel.text = space.name
-            }
-        } catch {
-            spaceLabel.text = "N/A"
-        }
-        
+        spaceLabel.text = space.name
         appNameLabel.text = app.name
         memLabel.text = app.formattedMemory()
         diskLabel.text = app.formattedDiskQuota()

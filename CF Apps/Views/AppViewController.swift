@@ -1,10 +1,7 @@
 import Foundation
 import UIKit
-import Alamofire
-import DATAStack
-import Sync
-import SwiftyJSON
 import SafariServices
+import CFoundry
 
 class AppViewController: UIViewController {
     @IBOutlet var servicesTableHeightConstraint: NSLayoutConstraint!
@@ -20,8 +17,6 @@ class AppViewController: UIViewController {
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var browseButton: UIBarButtonItem!
     
-    
-    var dataStack: DATAStack?
     var app: CFApp?
     var refreshControl: UIRefreshControl!
     var url: URL?
@@ -63,17 +58,18 @@ class AppViewController: UIViewController {
     
     func fetchSummary() {
         servicesTableView.tableFooterView = LoadingIndicatorView()
-        let urlRequest = CFRequest.appSummary(app!.guid)
-        CFApi().request(urlRequest,
-            success: { (json) in
+        CFApi.appSummary(appGuid: app!.guid) { appSummary, error in
+            if let e = error {
+                print(e.localizedDescription)
+            }
+            
+            if let summary = appSummary {
                 DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-                    self.handleSummaryResponse(json)
+                    self.handleSummaryResponse(summary)
                     self.refreshControl.endRefreshing()
                 }
-            },
-            error: { (statusCode) in
-                print([statusCode])
-        })
+            }
+        }
     }
     
     func addRefreshControl() {
@@ -83,13 +79,11 @@ class AppViewController: UIViewController {
         self.scrollView.insertSubview(self.refreshControl, at: 0)
     }
     
-    func handleSummaryResponse(_ json: JSON) {
-        let delegate = servicesTableView.delegate as! ServicesViewController
-        delegate.services = json["services"]
+    func handleSummaryResponse(_ app: CFApp) {
+        self.setSummary(app)
         
-        CFStore(dataStack: self.dataStack!).syncApp(json.dictionaryObject! as [String : AnyObject], guid: self.app!.guid, completion: { (error) in
-            self.setSummary(self.app!.guid)
-        })
+        let delegate = servicesTableView.delegate as! ServicesViewController
+        delegate.serviceBindings = app.serviceBindings
         
         DispatchQueue.main.async(execute: {
             self.servicesTableView.tableFooterView = nil
@@ -105,26 +99,28 @@ class AppViewController: UIViewController {
     func fetchStats() {
         instancesTableView.tableFooterView = LoadingIndicatorView()
         
-        let urlRequest = CFRequest.appStats(app!.guid)
-        CFApi().request(urlRequest,
-            success: { (json) in
+        CFApi.appStats(appGuid: app!.guid) { stats, error in
+            if let e = error {
+                print(e.localizedDescription)
+            }
+            
+            if let stats = stats {
                 DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-                    self.handleStatsResponse(json)
+                    self.handleStatsResponse(stats)
                 }
-            },
-            error: { (statusCode) in
-                print([statusCode])
-        })
+            }
+            
+        }
     }
     
-    func handleStatsResponse(_ json: JSON) {
-        showInstances(json)
-        toggleBrowsing(json)
+    func handleStatsResponse(_ stats: CFAppStats) {
+        showInstances(stats.instances)
+        toggleBrowsing(stats.instances)
     }
     
-    func showInstances(_ json: JSON) {
+    func showInstances(_ instances: [CFAppInstance]) {
         let delegate = instancesTableView.delegate as! InstancesViewConroller
-        delegate.instances = json
+        delegate.instances = instances
         DispatchQueue.main.async(execute: {
             self.instancesTableView.tableFooterView = nil
             self.instancesTableView.reloadData()
@@ -136,10 +132,11 @@ class AppViewController: UIViewController {
         })
     }
     
-    func toggleBrowsing(_ json: JSON) {
-        if let urlString = Instance(json: json["0"]).uri() {
+    func toggleBrowsing(_ instances: [CFAppInstance]) {
+        if instances.count > 0 && instances[0].uris!.count > 0 {
+            let uri = instances[0].uris![0]
             DispatchQueue.main.async {
-                self.url = URL(string: urlString)
+                self.url = URL(string: uri)
                 self.browseButton.isEnabled = true
                 self.browseButton.customView?.alpha = 1
             }
@@ -148,21 +145,13 @@ class AppViewController: UIViewController {
         }
     }
     
-    func setSummary(_ guid: String) {
-        do {
-            self.app = try CFStore(dataStack: self.dataStack!).fetchApp(app!.guid)
-            let state = app!.state
-            
-            nameLabel.text = app!.name
-            stateLabel.text = state
-            buildpackLabel.text = app!.activeBuildpack()
-            memoryLabel.text = app!.formattedMemory()
-            diskLabel.text = app!.formattedDiskQuota()
-            commandLabel.text = app!.command
-        } catch {
-            self.app = nil
-            nameLabel.text = "Error"
-        }
+    func setSummary(_ app: CFApp) {
+        nameLabel.text = app.name
+        stateLabel.text = app.state
+        buildpackLabel.text = app.activeBuildpack()
+        memoryLabel.text = app.formattedMemory()
+        diskLabel.text = app.formattedDiskQuota()
+        commandLabel.text = app.command
     }
     
     @IBAction func browseButtonPushed(_ sender: UIBarButtonItem) {

@@ -1,12 +1,13 @@
 import Foundation
 import UIKit
 import SwiftyJSON
+import CFoundry
 
 class ServicesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var services: JSON?
+    var serviceBindings: [CFServiceBinding]?
     
     func isLoaded() -> Bool {
-        return services != nil
+        return serviceBindings != nil
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -15,7 +16,7 @@ class ServicesViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (isLoaded()) {
-            return (services!.isEmpty) ? 1 : services!.arrayValue.count
+            return (serviceBindings!.isEmpty) ? 1 : serviceBindings!.count
         }
         return 0
     }
@@ -23,13 +24,10 @@ class ServicesViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: nil)
 
-        let service = Service(json: services![indexPath.row])
+        let sb = serviceBindings![indexPath.row]
         
-        let name = (services!.isEmpty) ? "None" : service.name()
-        let plan = (services!.isEmpty) ? "" : service.planName()
-        
-        cell.textLabel?.text = name
-        cell.detailTextLabel?.text = plan
+        cell.textLabel?.text = sb.name
+        cell.detailTextLabel?.text = sb.planName
         
         return cell
     }
