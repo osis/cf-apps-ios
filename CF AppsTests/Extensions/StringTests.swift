@@ -1,7 +1,7 @@
 import Foundation
 import XCTest
 
-@testable import CF_Apps
+@testable import CFoundry
 
 class StringTests: XCTestCase {
     func testBumpLastChar() {

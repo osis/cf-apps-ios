@@ -1,9 +1,10 @@
 import Foundation
 import UIKit
 import SwiftyJSON
+import CFoundry
 
 class InstancesViewConroller: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var instances: JSON?
+    var instances: [CFAppInstance]?
     
     override func viewDidLoad() {
     }
@@ -17,7 +18,7 @@ class InstancesViewConroller: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let instance = Instance(json: instances!["\(indexPath.row)"])
+        let instance = instances![indexPath.row]
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "InstanceCell") as UITableViewCell!
         
@@ -34,7 +35,7 @@ class InstancesViewConroller: UIViewController, UITableViewDelegate, UITableView
         diskLabel.text = "\(instance.diskUsagePercentage())%"
         
         let stateView: UIImageView = cell!.viewWithTag(5) as! UIImageView
-        stateView.image = UIImage(named: instance.state())
+        stateView.image = UIImage(named: instance.state)
         
         return cell!
     }

@@ -1,15 +1,16 @@
 import Foundation
 import UIKit
+import CFoundry
 
 class AccountsViewController: UITableViewController {
     var accounts = [CFAccount]()
     let vendors = Vendor.list
     
     override func viewDidLoad() {
-        accounts = CFAccountStore.list()
+        accounts = AccountStore.list()
         
-        if CFSession.account() == nil {
-            CFSession.account(accounts.first!)
+        if Session.account() == nil {
+            Session.account(accounts.first!)
             Alert.showAuthFail(self)
         }
     }
@@ -26,8 +27,8 @@ extension AccountsViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let account = accounts[indexPath.row]
-        if !CFSession.isCurrent(account) {
-            CFSession.account(account)
+        if !Session.isCurrent(account) {
+            Session.account(account)
         }
         
         dismiss()
@@ -46,7 +47,7 @@ extension AccountsViewController {
         let targetLabel = cell?.viewWithTag(3) as! UILabel
         targetLabel.text = account.target
         
-        if CFSession.isCurrent(account) {
+        if Session.isCurrent(account) {
             userLabel.textColor = UIColor(red: 0.27, green: 0.62, blue: 0.97, alpha: 1)
         }
         
@@ -68,17 +69,17 @@ private extension AccountsViewController {
     
     func deleteRow(_ action: UITableViewRowAction, indexPath: IndexPath) {
         let deleteAccount = accounts[indexPath.row]
-        let isCurrent = CFSession.isCurrent(deleteAccount)
+        let isCurrent = Session.isCurrent(deleteAccount)
         
         if accounts.count == 1 {
-            CFSession.logout(false)
+            Session.logout(false)
         } else {
-            CFSession.reset()
-            try! CFAccountStore.delete(deleteAccount)
-            accounts = CFAccountStore.list()
+            Session.reset()
+            try! AccountStore.delete(deleteAccount)
+            accounts = AccountStore.list()
             
             if isCurrent {
-                CFSession.account(accounts.first!)
+                Session.account(accounts.first!)
             }
         }
         
