@@ -73,9 +73,7 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
     }
     
     @IBAction func filterOrgClicked(_ sender: UIBarButtonItem) {
-        // TODO: Initial selection should be from session
-//        let currentIndex = self.orgPickerValues.index(of: CFSession.org()!)
-        let currentIndex = 0
+        let currentIndex = self.orgPickerValues.index(of: Session.org()!)
         
         ActionSheetMultipleStringPicker.show(withTitle: "Filter by Org", rows: [
             self.orgPickerLabels
@@ -83,8 +81,7 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
                 picker, values, indexes in
                 
                 let value = values?[0] as! Int
-                // TODO: Save org to session
-//                CFSession.org(self.orgPickerValues[value])
+                Session.org(self.orgPickerValues[value])
                 self.refresh()
                 
                 return
@@ -107,7 +104,6 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
 
     @IBAction func refresh(_ sender: UIRefreshControl) {
         DispatchQueue.main.async {
-            self.refresh()
             self.currentPage = 1
             self.fetchOrganizations()
         }
@@ -201,10 +197,9 @@ private extension AppsViewController {
         
         self.enableOrgsFilter()
         
-        // TODO: Select the org from the previous session
-//        if CFSession.org() == nil || !orgGuids.contains(CFSession.org()!) {
-//            CFSession.org(orgGuids[0])
-//        }
+        if Session.org() == nil || !orgGuids.contains(Session.org()!) {
+            Session.org(orgGuids[0])
+        }
         
         self.orgs = orgs
         
@@ -229,7 +224,7 @@ private extension AppsViewController {
     func fetchApplications() {
         setRefreshTitle("Updating Apps")
         
-        CFApi.apps(orgGuid: orgPickerValues.first!, page: currentPage, searchText: searchText) { apps, error in
+        CFApi.apps(orgGuid: Session.org()!, page: currentPage, searchText: searchText) { apps, error in
             if let e = error {
                 print(e.localizedDescription)
             }
