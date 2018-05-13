@@ -105,7 +105,6 @@ class AppViewController: UIViewController {
             if let stats = stats {
                 self.handleStatsResponse(stats)
             }
-            
         }
     }
     

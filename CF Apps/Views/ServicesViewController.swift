@@ -6,17 +6,13 @@ import CFoundry
 class ServicesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var serviceBindings: [CFServiceBinding]?
     
-    func isLoaded() -> Bool {
-        return serviceBindings != nil
-    }
-    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Services"
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (isLoaded()) {
-            return (serviceBindings!.isEmpty) ? 1 : serviceBindings!.count
+        if let sbs = serviceBindings {
+            return (sbs.isEmpty) ? 1 : sbs.count
         }
         return 0
     }
@@ -24,10 +20,14 @@ class ServicesViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: nil)
 
-        let sb = serviceBindings![indexPath.row]
-        
-        cell.textLabel?.text = sb.name
-        cell.detailTextLabel?.text = sb.planName
+        if let sbs = serviceBindings, sbs.isEmpty {
+            cell.textLabel?.text = "None"
+        } else {
+            let sb = serviceBindings![indexPath.row]
+            
+            cell.textLabel?.text = sb.name
+            cell.detailTextLabel?.text = sb.planName
+        }
         
         return cell
     }
