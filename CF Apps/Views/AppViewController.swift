@@ -64,10 +64,7 @@ class AppViewController: UIViewController {
             }
             
             if let summary = appSummary {
-                DispatchQueue.main.async {
-                    self.handleSummaryResponse(summary)
-                    self.refreshControl.endRefreshing()
-                }
+                self.handleSummaryResponse(summary)
             }
         }
     }
@@ -80,18 +77,21 @@ class AppViewController: UIViewController {
     }
     
     func handleSummaryResponse(_ app: CFApp) {
-        self.setSummary(app)
-        
-        let delegate = servicesTableView.delegate as! ServicesViewController
-        delegate.serviceBindings = app.serviceBindings
-        
-        self.servicesTableView.tableFooterView = nil
-        self.servicesTableView.reloadData()
-        let height = self.servicesTableView.contentSize.height
-        self.servicesTableHeightConstraint.constant = height
-        
-        self.view.setNeedsLayout()
-        self.view.layoutIfNeeded()
+        DispatchQueue.main.async {
+            self.refreshControl.endRefreshing()
+            self.setSummary(app)
+            
+            let delegate = self.servicesTableView.delegate as! ServicesViewController
+            delegate.serviceBindings = app.serviceBindings
+            
+            self.servicesTableView.tableFooterView = nil
+            self.servicesTableView.reloadData()
+            let height = self.servicesTableView.contentSize.height
+            self.servicesTableHeightConstraint.constant = height
+            
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+        }
     }
     
     func fetchStats() {
@@ -103,9 +103,7 @@ class AppViewController: UIViewController {
             }
             
             if let stats = stats {
-                DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-                    self.handleStatsResponse(stats)
-                }
+                self.handleStatsResponse(stats)
             }
             
         }
@@ -134,7 +132,7 @@ class AppViewController: UIViewController {
         if instances.count > 0 && instances[0].uris!.count > 0 {
             let uri = instances[0].uris![0]
             DispatchQueue.main.async {
-                self.url = URL(string: uri)
+                self.url = URL(string: "http://\(uri)")
                 self.browseButton.isEnabled = true
                 self.browseButton.customView?.alpha = 1
             }
