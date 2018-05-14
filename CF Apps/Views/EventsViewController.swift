@@ -12,7 +12,6 @@ class EventsViewController: UITableViewController {
         self.tableView.contentOffset.y -= self.refreshControl!.frame.size.height
         self.refreshControl!.beginRefreshing()
         self.refreshControl!.sendActions(for: UIControlEvents.valueChanged)
-        fetchEvents()
     }
     
     func fetchEvents() {
