@@ -30,7 +30,7 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
     var orgs = [CFOrg]()
     var spaces = [CFSpace]()
     var currentPage = 1
-    var totalPages:Int?
+    var pagination = true
     var orgPickerLabels = [String]()
     var orgPickerValues = [String]()
     var searchText = ""
@@ -44,6 +44,7 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
         self.refreshControl!.beginRefreshing()
         self.definesPresentationContext = true;
         
+        refresh()
         fetchOrganizations()
         observeAccounts()
     }
@@ -105,6 +106,8 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
     @IBAction func refresh(_ sender: UIRefreshControl) {
         DispatchQueue.main.async {
             self.currentPage = 1
+            self.pagination = true
+            self.clearList()
             self.fetchOrganizations()
         }
     }
@@ -112,12 +115,11 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
 
 extension AppsViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(apps.count)
         return apps.count
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if (apps.count > 1 && indexPath.row == apps.count-1 && currentPage < totalPages) {
+        if (apps.count > 1 && indexPath.row == apps.count-1 && pagination) {
             print("Grabbing another page...")
             currentPage += 1
             self.tableView.tableFooterView = LoadingIndicatorView()
@@ -254,14 +256,15 @@ private extension AppsViewController {
             appGuids.append(app.guid)
         }
         
-//        self.totalPages = json["total_pages"].intValue
-        self.totalPages = 1
+        if apps.count == 0 {
+            self.pagination = false
+            self.fetchCurrentObjects()
+        } else {
+            self.apps += apps
+            self.fetchSpaces(appGuids)
+        }
         
-//        let resources = json["resources"].arrayObject as! [[String:AnyObject]]
-        self.apps += apps
-//        let clear = currentPage == 1
         print("--- Apps Synced")
-        self.fetchSpaces(appGuids)
     }
     
     func fetchSpaces(_ appGuids: [String]) {
