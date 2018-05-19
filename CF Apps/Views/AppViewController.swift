@@ -41,7 +41,7 @@ class AppViewController: UIViewController {
         }
     }
     
-    func loadData() {
+    @objc func loadData() {
         fetchSummary()
         
         if (app!.statusImageName() == "started") {

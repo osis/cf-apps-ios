@@ -53,7 +53,7 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(accountSwitched), name: NSNotification.Name(rawValue: "AccountSwitched"), object: nil)
     }
     
-    func accountSwitched() {
+    @objc func accountSwitched() {
         clearSearch()
         refresh()
         disableOrgsFilter()
@@ -91,7 +91,7 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
         clearSearch()
     }
     
-    func refresh() {
+    @objc func refresh() {
         self.clearList()
         
         let offset = self.tableView.contentOffset.y

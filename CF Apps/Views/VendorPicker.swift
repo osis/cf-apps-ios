@@ -32,7 +32,7 @@ class VendorPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let title = (vendors[row] as AnyObject).value(forKey: "Name") as! String
-        return NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName:UIColor.white])
+        return NSAttributedString(string: title, attributes: [.foregroundColor:UIColor.white])
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
