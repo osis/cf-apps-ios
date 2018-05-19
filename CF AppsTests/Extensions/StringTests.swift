@@ -1,20 +1,9 @@
 import Foundation
 import XCTest
 
-@testable import CFoundry
+@testable import CF_Apps
 
 class StringTests: XCTestCase {
-    func testBumpLastChar() {
-        assertBumpedChar(before: "a", after: "b")
-        assertBumpedChar(before: "aa", after: "ab")
-        assertBumpedChar(before: "-", after: ".")
-        assertBumpedChar(before: " ", after: " ")
-    }
-    
-    func assertBumpedChar(before: String, after: String) {
-        XCTAssertEqual(before.bumpLastChar(), after)
-    }
-    
     func testIsValidURL() {
         assertURLValididty(url: "invalid", isValid: false)
         assertURLValididty(url: "https://", isValid: false)

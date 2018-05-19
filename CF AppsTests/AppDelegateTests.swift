@@ -6,7 +6,7 @@ import CFoundry
 
 class AppDelegateTests: XCTestCase {
     var delegate: AppDelegate?
-    var account: CFAccount?
+//    var account: CFAccount?
     
     override func setUp() {
         super.setUp()
