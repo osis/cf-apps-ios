@@ -23,7 +23,7 @@ class LogsViewController: UIViewController, CFLogger {
         stopLogging()
     }
     
-    func applicationBecameActive(_ notification: Notification) {
+    @objc func applicationBecameActive(_ notification: Notification) {
         self.logs!.reconnect()
     }
     
