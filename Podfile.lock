@@ -19,7 +19,7 @@ PODS:
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0 (~> 2.2.0)
-  - CFoundry (from `../CFoundry`)
+  - CFoundry (from `https://github.com/osis/cf-swift-sdk.git`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -34,19 +34,24 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   CFoundry:
-    :path: "../CFoundry"
+    :git: https://github.com/osis/cf-swift-sdk.git
+
+CHECKOUT OPTIONS:
+  CFoundry:
+    :commit: 2d1250da628f934d67f0ede10a6d3aff240d521d
+    :git: https://github.com/osis/cf-swift-sdk.git
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: d11a4c12c6aaf704b8a3f56d179198c99f3e41e6
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   AlamofireObjectMapper: 5fafc816351cbbc0d486611aaeba7461c0cbad49
-  CFoundry: 3904f29fc302121355c1f63b23de5d941da763a9
+  CFoundry: e19da737b135d686724bd4942946f62aa49d06f2
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
   ProtocolBuffers-Swift: ac5867ab2acc97ca67f5ec6a62b654bd31563028
   SwiftWebSocket: 612c9729fd503cb6b0b8b45390c788686dac306f
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 3cce4df793058fd9bb5b6e18ea952eadb76e3b35
+PODFILE CHECKSUM: 4a1a0c2fa40dc8a452634776411c120cfe09ce44
 
 COCOAPODS: 1.5.2
