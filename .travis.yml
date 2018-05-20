@@ -1,6 +1,6 @@
 language: objective-c
 
-osx_image: xcode8.3
+osx_image: xcode9.3
 xcode_sdk: iphonesimulator
 xcode_workspace: CF Apps.xcworkspace
 xcode_scheme: CF Apps
