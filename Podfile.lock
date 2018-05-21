@@ -14,12 +14,14 @@ PODS:
   - Locksmith (3.0.0)
   - ObjectMapper (3.1.0)
   - ProtocolBuffers-Swift (3.0.22)
+  - Swifter (1.4.1)
   - SwiftWebSocket (2.7.0)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0 (~> 2.2.0)
   - CFoundry (from `https://github.com/osis/cf-swift-sdk.git`)
+  - Swifter (~> 1.4.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -29,6 +31,7 @@ SPEC REPOS:
     - Locksmith
     - ObjectMapper
     - ProtocolBuffers-Swift
+    - Swifter
     - SwiftWebSocket
     - SwiftyJSON
 
@@ -49,9 +52,10 @@ SPEC CHECKSUMS:
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
   ProtocolBuffers-Swift: ac5867ab2acc97ca67f5ec6a62b654bd31563028
+  Swifter: 62d14781d34600ffb6be99d350cf271be500600f
   SwiftWebSocket: 612c9729fd503cb6b0b8b45390c788686dac306f
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 7d537a8e62caa1b1792579f75507225112c04507
+PODFILE CHECKSUM: 93ea1aa665879b765c95c8f514ba73184295b058
 
 COCOAPODS: 1.5.2
