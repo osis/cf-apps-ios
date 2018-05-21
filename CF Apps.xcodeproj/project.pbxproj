@@ -26,8 +26,8 @@
 		65C8E1E81CB06401004FD199 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */; };
 		65C942751D695BE400C4D9B0 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C942741D695BE400C4D9B0 /* StringTests.swift */; };
 		65DF28A71BEEF11F0081B834 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */; };
-		65E2102120B2FFB500B40F1C /* CF_Apps_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E2102020B2FFB500B40F1C /* CF_Apps_UITests.swift */; };
 		65E2102820B3055600B40F1C /* vendors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65EBCB841D1EE49100545CEF /* vendors.plist */; };
+		65E2102A20B35C0800B40F1C /* LoginViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E2102920B35C0800B40F1C /* LoginViewTests.swift */; };
 		65EBCB851D1EE49100545CEF /* vendors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65EBCB841D1EE49100545CEF /* vendors.plist */; };
 		65EE6FCC1B4712A70047519D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65EE6FCB1B4712A70047519D /* Images.xcassets */; };
 		65EE6FCE1B4712B30047519D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE6FCD1B4712B30047519D /* AppDelegate.swift */; };
@@ -86,8 +86,8 @@
 		65C942741D695BE400C4D9B0 /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringTests.swift; path = "CF AppsTests/Extensions/StringTests.swift"; sourceTree = "<group>"; };
 		65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		65E2101E20B2FFB400B40F1C /* CF Apps UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CF Apps UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		65E2102020B2FFB500B40F1C /* CF_Apps_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CF_Apps_UITests.swift; sourceTree = "<group>"; };
 		65E2102220B2FFB500B40F1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65E2102920B35C0800B40F1C /* LoginViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewTests.swift; sourceTree = "<group>"; };
 		65EBCB841D1EE49100545CEF /* vendors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = vendors.plist; path = "CF Apps/Supporting Files/vendors.plist"; sourceTree = SOURCE_ROOT; };
 		65EE6FCB1B4712A70047519D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "CF Apps/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		65EE6FCD1B4712B30047519D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "CF Apps/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
@@ -291,8 +291,8 @@
 		65E2101F20B2FFB500B40F1C /* CF Apps UITests */ = {
 			isa = PBXGroup;
 			children = (
-				65E2102020B2FFB500B40F1C /* CF_Apps_UITests.swift */,
 				65E2102220B2FFB500B40F1C /* Info.plist */,
+				65E2102920B35C0800B40F1C /* LoginViewTests.swift */,
 			);
 			path = "CF Apps UITests";
 			sourceTree = "<group>";
@@ -595,7 +595,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65E2102120B2FFB500B40F1C /* CF_Apps_UITests.swift in Sources */,
+				65E2102A20B35C0800B40F1C /* LoginViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

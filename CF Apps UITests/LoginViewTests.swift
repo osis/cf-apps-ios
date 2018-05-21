@@ -1,7 +1,7 @@
 import XCTest
 import Swifter
 
-class CF_Apps_UITests: XCTestCase {
+class LoginViewTests: XCTestCase {
     var app:XCUIApplication!
     
     var logo: XCUIElement { return app.images["launch_icon"] }
@@ -14,27 +14,19 @@ class CF_Apps_UITests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
         app = XCUIApplication()
         app.launch()
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
     func testLoginDefault() {
         XCTAssertTrue(logo.exists)
         XCTAssertTrue(logo.isHittable)
-
+        
         XCTAssertTrue(title.exists)
         XCTAssertTrue(title.isHittable)
         
@@ -106,7 +98,7 @@ class CF_Apps_UITests: XCTestCase {
     }
     
     func loadVendors() -> [[String : String]] {
-        let vendorsPath = Bundle(for: CF_Apps_UITests.self).url(forResource: "vendors", withExtension: "plist")
+        let vendorsPath = Bundle(for: LoginViewTests.self).url(forResource: "vendors", withExtension: "plist")
         return NSArray(contentsOf: vendorsPath!) as! [[String : String]]
     }
 }
