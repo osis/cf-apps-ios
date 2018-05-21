@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F8A81F06E2BB0E3EFEC54D8F96C45D1D"
+               BlueprintIdentifier = "C2D2079B4E8DF13F52077D7146F6A63D"
                BuildableName = "Pods_CF_Apps.framework"
                BlueprintName = "Pods-CF Apps"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -54,7 +54,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
@@ -64,6 +63,16 @@
                BlueprintIdentifier = "651C848D1B2A7FB60006DC3A"
                BuildableName = "CF Apps Tests.xctest"
                BlueprintName = "CF Apps Tests"
+               ReferencedContainer = "container:CF Apps.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "65E2101D20B2FFB400B40F1C"
+               BuildableName = "CF Apps UITests.xctest"
+               BlueprintName = "CF Apps UITests"
                ReferencedContainer = "container:CF Apps.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -84,7 +93,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"

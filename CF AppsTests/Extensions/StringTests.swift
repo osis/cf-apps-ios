@@ -7,9 +7,10 @@ class StringTests: XCTestCase {
     func testIsValidURL() {
         assertURLValididty(url: "invalid", isValid: false)
         assertURLValididty(url: "https://", isValid: false)
-        assertURLValididty(url: "https://test", isValid: false)
+        assertURLValididty(url: "https://test", isValid: true)
         assertURLValididty(url: "https://test.io", isValid: true)
         assertURLValididty(url: "https://test.test.io", isValid: true)
+        assertURLValididty(url: "https://test.test.io:8080", isValid: true)
     }
     
     func assertURLValididty(url: String, isValid: Bool) {

@@ -123,8 +123,10 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
             // TODO: Refactor
             startButtonSpinner(targetButton, spinner: apiTargetSpinner)
             CFApi.info(apiURL: urlString) { (info: CFInfo?, error: Error?) in
+                self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
+                
                 if let e = error {
-                    Alert.show(self, title: "Error", message: e.localizedDescription)
+                    Alert.show(self, title: "Error", message: "\(urlString) \(e.localizedDescription)")
                     return
                 }
                 
@@ -133,8 +135,6 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
                     self.hideTargetForm()
                     self.showLoginForm()
                 }
-                
-                self.stopButtonSpinner(self.targetButton, spinner: self.apiTargetSpinner)
             }
         } else {
             Alert.show(self, title: "Invalid URL", message: "The URL you've entered seems to be invalid. Please check and try again.")
