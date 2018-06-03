@@ -45,7 +45,6 @@ class AppsViewController: UITableViewController, UISearchBarDelegate {
         self.definesPresentationContext = true;
         
         refresh()
-        fetchOrganizations()
         observeAccounts()
     }
     
