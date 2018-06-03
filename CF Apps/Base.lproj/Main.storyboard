@@ -815,13 +815,24 @@
                                 </constraints>
                             </scrollView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tr2-sG-pMz">
-                                <rect key="frame" x="-4" y="460" width="328" height="44"/>
+                                <rect key="frame" x="-4" y="384" width="328" height="120"/>
                                 <items>
                                     <barButtonItem systemItem="flexibleSpace" id="RTX-UW-jIZ"/>
                                     <barButtonItem title="Logs" id="Nj1-rF-9Wv">
                                         <connections>
                                             <segue destination="bnK-7Y-JBh" kind="show" identifier="logs" id="SSq-YK-9F5"/>
                                         </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="t16-2J-Sk7"/>
+                                    <barButtonItem image="stopped" style="plain" id="5Yi-yX-Ks5">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5cH-5N-xCs">
+                                            <rect key="frame" x="71.5" y="0.0" width="174" height="120"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Button" image="stopped"/>
+                                            <connections>
+                                                <action selector="startStopPushed:" destination="Gz0-Se-qP4" eventType="touchUpInside" id="fLw-22-syE"/>
+                                            </connections>
+                                        </button>
                                     </barButtonItem>
                                     <barButtonItem systemItem="flexibleSpace" id="jED-bg-hZE"/>
                                     <barButtonItem title="Events" id="qgL-Et-fE7">
@@ -867,6 +878,7 @@
                         <outlet property="scrollView" destination="rb5-tk-1u7" id="eh3-sw-Glt"/>
                         <outlet property="servicesTableHeightConstraint" destination="pIH-ek-J8Y" id="rxU-tn-3WB"/>
                         <outlet property="servicesTableView" destination="hfw-sl-7cH" id="ae2-43-YLj"/>
+                        <outlet property="startStopButton" destination="5cH-5N-xCs" id="rNY-Mm-vUK"/>
                         <outlet property="stateLabel" destination="xyq-l0-xFD" id="Eat-Z1-RDF"/>
                     </connections>
                 </viewController>
@@ -874,7 +886,7 @@
                 <customObject id="TlU-sV-WTh" userLabel="Services Table Delegate" customClass="ServicesViewController" customModule="CF_Apps" customModuleProvider="target"/>
                 <customObject id="cuQ-4J-hoO" userLabel="Instances Table Delegate" customClass="InstancesViewConroller" customModule="CF_Apps" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="1663" y="292"/>
+            <point key="canvasLocation" x="1661.25" y="291.54929577464787"/>
         </scene>
         <!--Logs-->
         <scene sceneID="f7u-4R-nHZ">

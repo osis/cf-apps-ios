@@ -16,6 +16,7 @@ class AppViewController: UIViewController {
     @IBOutlet var instancesTableView: UITableView!
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var browseButton: UIBarButtonItem!
+    @IBOutlet var startStopButton: UIButton!
     
     var app: CFApp?
     var refreshControl: UIRefreshControl!
@@ -147,6 +148,38 @@ class AppViewController: UIViewController {
         memoryLabel.text = app.formattedMemory()
         diskLabel.text = app.formattedDiskQuota()
         commandLabel.text = app.command
+    }
+    
+    @IBAction func startStopPushed(_ sender: Any) {
+        if let app = app {
+            if app.state == "STOPPED" {
+                print("Starting...")
+                CFApi.appStart(appGuid: app.guid) { app, error in
+                    if let app = app {
+                        self.startStopButton.setImage(UIImage(named: "stopped"), for: .normal)
+                        self.app = app
+                        self.handleSummaryResponse(app)
+                        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        
+                        let logsController = storyboard.instantiateViewController(withIdentifier: "LogsView") as! LogsViewController
+                        
+                        logsController.appGuid = app.guid
+                        logsController.skipRecent = true
+                        
+                        self.navigationController?.pushViewController(logsController, animated: true)
+                    }
+                }
+            } else if app.state == "STARTED" {
+                print("Stopping...")
+                CFApi.appStop(appGuid: app.guid) { app, error in
+                    if let app = app {
+                        self.startStopButton.setImage(UIImage(named: "started"), for: .normal)
+                        self.app = app
+                        self.handleSummaryResponse(app)
+                    }
+                }
+            }
+        }
     }
     
     @IBAction func browseButtonPushed(_ sender: UIBarButtonItem) {

@@ -7,6 +7,7 @@ class LogsViewController: UIViewController, CFLogger {
     
     var appGuid: String?
     var logs: CFLogs?
+    var skipRecent: Bool = false
     
     let notificationCenter = NotificationCenter.default
 
@@ -30,7 +31,12 @@ class LogsViewController: UIViewController, CFLogger {
     func startLogging() {
         UIApplication.shared.isIdleTimerDisabled = true
         self.logs!.delegate = self
-        self.logs!.recent()
+        
+        if skipRecent {
+            self.logs!.connect()
+        } else {
+            self.logs!.recent()
+        }
     }
     
     func logsMessage(_ text: NSMutableAttributedString) {
