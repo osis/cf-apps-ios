@@ -4,7 +4,7 @@ PODS:
   - AlamofireObjectMapper (5.0.0):
     - Alamofire (~> 4.1)
     - ObjectMapper (~> 3.0)
-  - CFoundry (0.0.1):
+  - CFoundry (0.0.2):
     - Alamofire (~> 4.7.2)
     - AlamofireObjectMapper (~> 5.0.0)
     - Locksmith (~> 3.0.0)
@@ -12,7 +12,7 @@ PODS:
     - SwiftWebSocket (~> 2.7.0)
     - SwiftyJSON (~> 3.1.4)
   - Locksmith (3.0.0)
-  - ObjectMapper (3.1.0)
+  - ObjectMapper (3.2.0)
   - ProtocolBuffers-Swift (3.0.22)
   - Swifter (1.4.1)
   - SwiftWebSocket (2.7.0)
@@ -20,7 +20,7 @@ PODS:
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0 (~> 2.2.0)
-  - CFoundry (from `https://github.com/osis/cf-swift-sdk.git`)
+  - CFoundry (~> 0.0.2)
   - Swifter (~> 1.4.0)
 
 SPEC REPOS:
@@ -28,6 +28,7 @@ SPEC REPOS:
     - ActionSheetPicker-3.0
     - Alamofire
     - AlamofireObjectMapper
+    - CFoundry
     - Locksmith
     - ObjectMapper
     - ProtocolBuffers-Swift
@@ -35,27 +36,18 @@ SPEC REPOS:
     - SwiftWebSocket
     - SwiftyJSON
 
-EXTERNAL SOURCES:
-  CFoundry:
-    :git: https://github.com/osis/cf-swift-sdk.git
-
-CHECKOUT OPTIONS:
-  CFoundry:
-    :commit: 2d1250da628f934d67f0ede10a6d3aff240d521d
-    :git: https://github.com/osis/cf-swift-sdk.git
-
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: d11a4c12c6aaf704b8a3f56d179198c99f3e41e6
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   AlamofireObjectMapper: 5fafc816351cbbc0d486611aaeba7461c0cbad49
-  CFoundry: e19da737b135d686724bd4942946f62aa49d06f2
+  CFoundry: b862212abcefbf1dd615e21f80f2752c6ec65208
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
-  ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
+  ObjectMapper: 5cccd2de6f253eda859df8116a5a554d9769e859
   ProtocolBuffers-Swift: ac5867ab2acc97ca67f5ec6a62b654bd31563028
   Swifter: 62d14781d34600ffb6be99d350cf271be500600f
   SwiftWebSocket: 612c9729fd503cb6b0b8b45390c788686dac306f
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: f1c1a3f14501a5390d0bf7e048d9bd31b3c80fa0
+PODFILE CHECKSUM: 355d96d85c3798d777d03e868af6ee1ec909e2d3
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.5.3
