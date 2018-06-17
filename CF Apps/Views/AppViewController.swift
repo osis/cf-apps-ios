@@ -32,6 +32,9 @@ class AppViewController: UIViewController {
         
         setStopStartButton()
         addRefreshControl()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         loadData()
     }
     
@@ -133,6 +136,7 @@ class AppViewController: UIViewController {
         let delegate = instancesTableView.delegate as! InstancesViewConroller
         delegate.instances = instances
         DispatchQueue.main.async(execute: {
+            self.instancesTableView.isHidden = false
             self.instancesTableView.tableFooterView = nil
             self.instancesTableView.reloadData()
             let height = self.instancesTableView.contentSize.height
@@ -196,7 +200,6 @@ class AppViewController: UIViewController {
     
     func handleStartSuccess(_ app: CFApp) {
         self.app = app
-        self.handleSummaryResponse(app)
         
         self.toolbar.items![self.startStopIndex!] = self.stopButton
         
@@ -227,6 +230,7 @@ class AppViewController: UIViewController {
         self.toolbar.items![self.startStopIndex!] = self.startButton
         self.app = app
         self.handleSummaryResponse(app)
+        self.hideInstancesTable()
     }
     
     @IBAction func browseButtonPushed(_ sender: UIBarButtonItem) {
