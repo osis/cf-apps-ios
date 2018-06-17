@@ -16,18 +16,21 @@ class AppViewController: UIViewController {
     @IBOutlet var instancesTableView: UITableView!
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var browseButton: UIBarButtonItem!
-    @IBOutlet var startStopButton: UIButton!
+    @IBOutlet var startStopButton: UIBarButtonItem!
+    @IBOutlet var toolbar: UIToolbar!
     
-    var app: CFApp?
+    let stopButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.pause, target: self, action: #selector(stop))
+    let startButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.play, target: self, action: #selector(start))
+    
+    var app: CFApp!
     var refreshControl: UIRefreshControl!
     var url: URL?
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
-    }
+    var startStopIndex: Int?
     
     override func viewDidLoad() {
         self.browseButton.isEnabled = false
+        
+        setStopStartButton()
         addRefreshControl()
         loadData()
     }
@@ -35,21 +38,25 @@ class AppViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "logs") {
             let controller = segue.destination as! LogsViewController
-            controller.appGuid = self.app!.guid
+            controller.appGuid = self.app.guid
         } else if (segue.identifier == "events") {
             let controller = segue.destination as! EventsViewController
-            controller.appGuid = self.app!.guid
+            controller.appGuid = self.app.guid
+        }
+    }
+    
+    func setStopStartButton() {
+        self.startStopIndex = (self.toolbar.items?.index(of: startStopButton))!
+        if (app.state == "STARTED") {
+            self.toolbar.items![self.startStopIndex!] = self.stopButton
+        } else {
+            self.toolbar.items![self.startStopIndex!] = self.startButton
         }
     }
     
     @objc func loadData() {
         fetchSummary()
-        
-        if (app!.statusImageName() == "started") {
-            fetchStats()
-        } else {
-            hideInstancesTable()
-        }
+        fetchStats()
     }
     
     func hideInstancesTable() {
@@ -59,7 +66,7 @@ class AppViewController: UIViewController {
     
     func fetchSummary() {
         servicesTableView.tableFooterView = LoadingIndicatorView()
-        CFApi.appSummary(appGuid: app!.guid) { appSummary, error in
+        CFApi.appSummary(appGuid: app.guid) { appSummary, error in
             if let e = error {
                 print(e.localizedDescription)
             }
@@ -96,9 +103,17 @@ class AppViewController: UIViewController {
     }
     
     func fetchStats() {
+        if (app.statusImageName() == "started") {
+            requestStats()
+        } else {
+            hideInstancesTable()
+        }
+    }
+    
+    func requestStats() {
         instancesTableView.tableFooterView = LoadingIndicatorView()
         
-        CFApi.appStats(appGuid: app!.guid) { stats, error in
+        CFApi.appStats(appGuid: app.guid) { stats, error in
             if let e = error {
                 print(e.localizedDescription)
             }
@@ -150,36 +165,68 @@ class AppViewController: UIViewController {
         commandLabel.text = app.command
     }
     
-    @IBAction func startStopPushed(_ sender: Any) {
-        if let app = app {
-            if app.state == "STOPPED" {
-                print("Starting...")
-                CFApi.appStart(appGuid: app.guid) { app, error in
-                    if let app = app {
-                        self.startStopButton.setImage(UIImage(named: "stopped"), for: .normal)
-                        self.app = app
-                        self.handleSummaryResponse(app)
-                        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                        
-                        let logsController = storyboard.instantiateViewController(withIdentifier: "LogsView") as! LogsViewController
-                        
-                        logsController.appGuid = app.guid
-                        logsController.skipRecent = true
-                        
-                        self.navigationController?.pushViewController(logsController, animated: true)
-                    }
-                }
-            } else if app.state == "STARTED" {
-                print("Stopping...")
-                CFApi.appStop(appGuid: app.guid) { app, error in
-                    if let app = app {
-                        self.startStopButton.setImage(UIImage(named: "started"), for: .normal)
-                        self.app = app
-                        self.handleSummaryResponse(app)
-                    }
-                }
+    @objc func start() {
+        print("Starting App...")
+        requestStart(app: app)
+    }
+    
+    func requestStart(app: CFApp) {
+        CFApi.appStart(appGuid: app.guid) { app, error in
+            if let error = error {
+                self.handleStartError(error)
+            }
+            
+            if let app = app {
+                self.handleStartSuccess(app)
             }
         }
+    }
+    
+    func handleStartError(_ error: Error) {
+        showError(title: "Error Starting App", error: error)
+    }
+    
+    func handleStopError(_ error: Error) {
+        showError(title: "Error Stopping App", error: error)
+    }
+    
+    func showError(title: String, error: Error) {
+        Alert.show(self, title: title, message: error.localizedDescription)
+    }
+    
+    func handleStartSuccess(_ app: CFApp) {
+        self.app = app
+        self.handleSummaryResponse(app)
+        
+        self.toolbar.items![self.startStopIndex!] = self.stopButton
+        
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let logsController = storyboard.instantiateViewController(withIdentifier: "LogsView") as! LogsViewController
+        logsController.appGuid = app.guid
+        logsController.skipRecent = true
+        self.navigationController?.pushViewController(logsController, animated: true)
+    }
+    
+    @objc func stop() {
+        print("Stopping...")
+        requestStop(app)
+    }
+    
+    func requestStop(_ app: CFApp) {
+        CFApi.appStop(appGuid: app.guid) { app, error in
+            if let error = error {
+                self.handleStopError(error)
+            }
+            if let app = app {
+                self.handleStopSuccess(app)
+            }
+        }
+    }
+    
+    func handleStopSuccess(_ app: CFApp) {
+        self.toolbar.items![self.startStopIndex!] = self.startButton
+        self.app = app
+        self.handleSummaryResponse(app)
     }
     
     @IBAction func browseButtonPushed(_ sender: UIBarButtonItem) {
