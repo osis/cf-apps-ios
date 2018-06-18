@@ -5,6 +5,7 @@
 
 ## Features
 
+- Powered by the [Cloud Foundry Swift Client](https://github.com/osis/cf-swift-client)
 - Works with any hosted (PWS, Bluemix, etc) or private Cloud Foundry installation
 - Does not use any third-party services for communication
 - Lists applications filtered by organization
