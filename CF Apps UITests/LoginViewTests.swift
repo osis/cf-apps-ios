@@ -130,7 +130,7 @@ class LoginViewTests: XCTestCase {
         
         targetButton.tap()
         
-        XCTAssertTrue(usernameField.waitForExistence(timeout: 0))
+        XCTAssertTrue(usernameField.waitForExistence(timeout: 1))
         XCTAssertTrue(passwordField.exists)
         XCTAssertTrue(loginButton.exists)
         XCTAssertTrue(cancelButton.exists)
@@ -141,19 +141,19 @@ class LoginViewTests: XCTestCase {
         
         loginButton.tap()
         
-        XCTAssertTrue(app.navigationBars["Navigation"].waitForExistence(timeout: 0))
+        XCTAssertTrue(app.navigationBars["Navigation"].waitForExistence(timeout: 1))
         
         sleep(10) //TODO: Not sure why this is needed. NSUserDefaults doesn't synchronize without it but synchonize() method is deprecated.
         
         app = XCUIApplication()
         app.launch()
         
-        XCTAssertTrue(app.navigationBars["Navigation"].waitForExistence(timeout: 0))
+        XCTAssertTrue(app.navigationBars["Navigation"].waitForExistence(timeout: 1))
         
         let accountsButton = app.navigationBars["Navigation"].children(matching: .button).element(boundBy: 0)
         accountsButton.tap()
         
-        XCTAssertTrue(app.navigationBars["Accounts"].waitForExistence(timeout: 0))
+        XCTAssertTrue(app.navigationBars["Accounts"].waitForExistence(timeout: 1))
         
         let tablesQuery = app.tables
         tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["testUser"]/*[[".cells.staticTexts[\"testUser\"]",".staticTexts[\"testUser\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.swipeLeft()
