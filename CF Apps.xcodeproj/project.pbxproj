@@ -25,6 +25,9 @@
 		65B0317020300C29001CA690 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0316F20300C29001CA690 /* String.swift */; };
 		65C8E1E81CB06401004FD199 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */; };
 		65C942751D695BE400C4D9B0 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C942741D695BE400C4D9B0 /* StringTests.swift */; };
+		65D2EBEF20DE6C0F00E58FDD /* orgs.json in Resources */ = {isa = PBXBuildFile; fileRef = 65D2EBEC20DE6C0F00E58FDD /* orgs.json */; };
+		65D2EBF220DE6C4B00E58FDD /* info.json in Resources */ = {isa = PBXBuildFile; fileRef = 65D2EBF120DE6C4B00E58FDD /* info.json */; };
+		65D2EBF420DEFFE200E58FDD /* tokens.json in Resources */ = {isa = PBXBuildFile; fileRef = 65D2EBF320DEFFE200E58FDD /* tokens.json */; };
 		65DF28A71BEEF11F0081B834 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */; };
 		65E2102820B3055600B40F1C /* vendors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65EBCB841D1EE49100545CEF /* vendors.plist */; };
 		65E2102A20B35C0800B40F1C /* LoginViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E2102920B35C0800B40F1C /* LoginViewTests.swift */; };
@@ -84,6 +87,9 @@
 		65B0316F20300C29001CA690 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		65C6FE3F1C70437C0083C4A1 /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewControllerTests.swift; path = "CF AppsTests/Views/LoginViewControllerTests.swift"; sourceTree = "<group>"; };
 		65C942741D695BE400C4D9B0 /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringTests.swift; path = "CF AppsTests/Extensions/StringTests.swift"; sourceTree = "<group>"; };
+		65D2EBEC20DE6C0F00E58FDD /* orgs.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = orgs.json; sourceTree = "<group>"; };
+		65D2EBF120DE6C4B00E58FDD /* info.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = info.json; sourceTree = "<group>"; };
+		65D2EBF320DEFFE200E58FDD /* tokens.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tokens.json; sourceTree = "<group>"; };
 		65DF28A61BEEF11F0081B834 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		65E2101E20B2FFB400B40F1C /* CF Apps UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CF Apps UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65E2102220B2FFB500B40F1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -288,9 +294,20 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		65D2EBEA20DE6C0F00E58FDD /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				65D2EBF120DE6C4B00E58FDD /* info.json */,
+				65D2EBEC20DE6C0F00E58FDD /* orgs.json */,
+				65D2EBF320DEFFE200E58FDD /* tokens.json */,
+			);
+			path = Fixtures;
+			sourceTree = "<group>";
+		};
 		65E2101F20B2FFB500B40F1C /* CF Apps UITests */ = {
 			isa = PBXGroup;
 			children = (
+				65D2EBEA20DE6C0F00E58FDD /* Fixtures */,
 				65E2102220B2FFB500B40F1C /* Info.plist */,
 				65E2102920B35C0800B40F1C /* LoginViewTests.swift */,
 			);
@@ -439,6 +456,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65D2EBF220DE6C4B00E58FDD /* info.json in Resources */,
+				65D2EBF420DEFFE200E58FDD /* tokens.json in Resources */,
+				65D2EBEF20DE6C0F00E58FDD /* orgs.json in Resources */,
 				65E2102820B3055600B40F1C /* vendors.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

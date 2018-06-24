@@ -3,6 +3,7 @@ import Swifter
 
 class LoginViewTests: XCTestCase {
     var app:XCUIApplication!
+    var server: HttpServer!
     
     var logo: XCUIElement { return app.images["launch_icon"] }
     var title: XCUIElement { return app.staticTexts["API Endpoint"] }
@@ -12,15 +13,23 @@ class LoginViewTests: XCTestCase {
     var emptyTargetField: XCUIElement { return app.textFields[""] }
     var progressSpinner: XCUIElement { return app.activityIndicators["In progress"] }
     
+    var usernameField: XCUIElement { return app.textFields["Username"] }
+    var passwordField: XCUIElement { return app.secureTextFields["Password"] }
+    var loginButton: XCUIElement { return app.buttons["Login"] }
+    var cancelButton: XCUIElement { return app.buttons["Cancel"] }
+    
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
         app = XCUIApplication()
         app.launch()
+        
+        server = HttpServer()
     }
     
     override func tearDown() {
         super.tearDown()
+        server.stop()
     }
     
     func testLoginDefault() {
@@ -38,38 +47,49 @@ class LoginViewTests: XCTestCase {
         
         XCTAssertFalse(targetField.exists)
         XCTAssertFalse(progressSpinner.exists)
+        XCTAssertFalse(usernameField.exists)
+        XCTAssertFalse(passwordField.exists)
+        XCTAssertFalse(loginButton.exists)
+        XCTAssertFalse(cancelButton.exists)
     }
     
-    func testOtherVendorField() {
+    func testLoginPickerWheelVendors() {
+        let vendors = loadVendors()
+        
+        var picker = vendorPicker
+        for v in vendors {
+            let name = v["Name"]!
+            picker.adjust(toPickerWheelValue: name)
+            picker = app.pickerWheels[name]
+            
+            XCTAssertTrue(picker.waitForExistence(timeout: 0))
+        }
     }
     
     func testTargetInvalidURL() {
         vendorPicker.adjust(toPickerWheelValue: "Other")
-        usleep(50000)
         
-        XCTAssertTrue(targetField.exists)
-        
-        var exp = expectation(description: "Invalid URL Dialog")
-        addUIInterruptionMonitor(withDescription: "Invalid URL") { (alert) -> Bool in
-            alert.buttons["OK"].tap()
-            exp.fulfill()
-            return true
+        if targetField.waitForExistence(timeout: 0) {
+            let exp = expectation(description: "Invalid URL Dialog")
+            addUIInterruptionMonitor(withDescription: "Invalid URL") { (alert) -> Bool in
+                alert.buttons["OK"].tap()
+                exp.fulfill()
+                return true
+            }
+            targetButton.tap()
+            app.tap()
+            waitForExpectations(timeout: 1, handler: nil)
         }
-        targetButton.tap()
-        app.tap()
-        waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testTarget404() {
         vendorPicker.adjust(toPickerWheelValue: "Other")
-        usleep(50000)
         
-        XCTAssertTrue(targetField.exists)
+        XCTAssertTrue(targetField.waitForExistence(timeout: 0))
         targetField.clearAndEnterText(text: "")
         emptyTargetField.typeText("http://127.0.0.1:8080")
         
         let serverExp = expectation(description: "Server Request")
-        let server = HttpServer()
         server["/v2/info"] = { request in
             sleep(1)
             serverExp.fulfill()
@@ -85,22 +105,73 @@ class LoginViewTests: XCTestCase {
         XCTAssertFalse(progressSpinner.exists)
     }
     
-    func testLoginPickerWheelVendors() {
-        let vendors = loadVendors()
+    func testLoginAndRemember() {
+        vendorPicker.adjust(toPickerWheelValue: "Other")
         
-        var picker = vendorPicker
-        for v in vendors {
-            let name = v["Name"]!
-            picker.adjust(toPickerWheelValue: name)
-            usleep(50000)
-            picker = app.pickerWheels[name]
+        XCTAssertTrue(targetField.waitForExistence(timeout: 0))
+        
+        targetField.clearAndEnterText(text: "")
+        emptyTargetField.typeText("http://127.0.0.1:8080")
+        
+        let path = Bundle(for: type(of: self)).path(forResource: "info", ofType: "json")
+        server["/v2/info"] = shareFile(path!)
+        server["/oauth/token"] = { request in
+            let body = self.responseObject(filename: "tokens")
+            return HttpResponse.ok(.json(body))
         }
+        server["/v2/organizations"] = { request in
+            let body = self.responseObject(filename: "orgs")
+            return HttpResponse.ok(.json(body))
+        }
+        server["/v2/apps"] = { request in
+            return HttpResponse.ok(.json(["resources": []] as AnyObject))
+        }
+        try! server.start(8080)
+        
+        targetButton.tap()
+        
+        XCTAssertTrue(usernameField.waitForExistence(timeout: 0))
+        XCTAssertTrue(passwordField.exists)
+        XCTAssertTrue(loginButton.exists)
+        XCTAssertTrue(cancelButton.exists)
+        
+        usernameField.typeText("testUser")
+        passwordField.tap()
+        passwordField.typeText("testPass")
+        
+        loginButton.tap()
+        
+        XCTAssertTrue(app.navigationBars["Navigation"].waitForExistence(timeout: 0))
+        
+        sleep(10) //TODO: Not sure why this is needed. NSUserDefaults doesn't synchronize without it but synchonize() method is deprecated.
+        
+        app = XCUIApplication()
+        app.launch()
+        
+        XCTAssertTrue(app.navigationBars["Navigation"].waitForExistence(timeout: 0))
+        
+        let accountsButton = app.navigationBars["Navigation"].children(matching: .button).element(boundBy: 0)
+        accountsButton.tap()
+        
+        XCTAssertTrue(app.navigationBars["Accounts"].waitForExistence(timeout: 0))
+        
+        let tablesQuery = app.tables
+        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["testUser"]/*[[".cells.staticTexts[\"testUser\"]",".staticTexts[\"testUser\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.swipeLeft()
+        
+        app.tables.buttons["Delete"].tap()
     }
     
     func loadVendors() -> [[String : String]] {
         let vendorsPath = Bundle(for: LoginViewTests.self).url(forResource: "vendors", withExtension: "plist")
         return NSArray(contentsOf: vendorsPath!) as! [[String : String]]
     }
+    
+    func responseObject(filename: String) -> AnyObject {
+        let path = Bundle(for: type(of: self)).path(forResource: filename, ofType: "json")
+        let jsonData = try! Data(contentsOf: URL(fileURLWithPath: path!))
+        return try! JSONSerialization.jsonObject(with: jsonData, options: []) as AnyObject
+    }
+
 }
 
 extension XCUIElement {
