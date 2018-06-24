@@ -357,7 +357,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="olq-SB-2eC">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" image="accounts" id="dR8-gx-aRG">
+                        <barButtonItem key="leftBarButtonItem" title="Accounts" image="accounts" id="dR8-gx-aRG" userLabel="Accounts Button">
                             <color key="tintColor" red="1" green="0.97481899910000003" blue="0.98001719080000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="OIc-fw-gXa" kind="popoverPresentation" identifier="accounts" popoverAnchorBarButtonItem="dR8-gx-aRG" id="YLb-v3-5CQ">

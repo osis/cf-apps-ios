@@ -149,12 +149,9 @@ class LoginViewTests: XCTestCase {
         app.launch()
         
         XCTAssertTrue(app.navigationBars["Navigation"].waitForExistence(timeout: 1))
-        
-        let accountsButton = app.navigationBars["Navigation"].children(matching: .button).element(boundBy: 0)
-        accountsButton.tap()
+        app.buttons["Accounts"].tap()
         
         XCTAssertTrue(app.navigationBars["Accounts"].waitForExistence(timeout: 1))
-        
         let tablesQuery = app.tables
         tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["testUser"]/*[[".cells.staticTexts[\"testUser\"]",".staticTexts[\"testUser\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.swipeLeft()
         
