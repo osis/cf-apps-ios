@@ -35,7 +35,6 @@ class Session {
     }
     
     class func reset() {
-        //TODO: CFAPI Reset?
         CFApi.logout()
         
         UserDefaults.standard.removeObject(forKey: accountKey)

@@ -3,20 +3,6 @@ import Foundation
 import ActionSheetPicker_3_0
 import CFoundry
 
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-
 class AppsViewController: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet var orgPicker: UIPickerView!
@@ -279,13 +265,6 @@ private extension AppsViewController {
                 }
             }
         }
-//        let urlRequest = CFRequest.spaces(appGuids)
-//        CFApi().request(urlRequest, success: { (json) in
-//
-//            }, error: { (statusCode) in
-//                print([statusCode])
-//            }
-//        )
     }
     
     func handleSpacesResponse(_ spaces: [CFSpace]) {

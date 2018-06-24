@@ -26,16 +26,6 @@ class EventsViewController: UITableViewController {
                 self.handleEventsRequest(events)
             }
         }
-//        let request = CFRequest.events(self.appGuid!)
-//        CFApi().request(request, success: { (json) in
-//            self.handleEventsRequest(json)
-//        }, error: { (statusCode, url) in
-//            if let s = statusCode, let u = url {
-//                print("Network Error. Status: %s, URL: %s", s, u)
-//            } else {
-//                print("Unknown Network Error")
-//            }
-//        })
     }
     
     func handleEventsRequest(_ events: [CFEvent]) {

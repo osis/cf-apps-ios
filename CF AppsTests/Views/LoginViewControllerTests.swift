@@ -41,8 +41,7 @@ class LoginViewControllerTests: XCTestCase {
         vc.showTargetField()
         
         let field = vc.apiTargetField
-        
-//        XCTAssertTrue(vc.apiTargetView.isFirstResponder())
+
         XCTAssertEqual(field?.alpha, 1)
     }
     
