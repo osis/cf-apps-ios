@@ -13,7 +13,6 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
     @IBOutlet var apiTargetSpinner: UIActivityIndicatorView!
     @IBOutlet var loginSpinner: UIActivityIndicatorView!
     
-
     @IBOutlet var cancelButton: UIButton!
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var vendorPicker: VendorPicker!
@@ -160,6 +159,7 @@ class LoginViewController: UIViewController, VendorPickerDelegate {
             
             do {
                 try AccountStore.create(account)
+                Session.account(account)
                 
                 if let navController = self.navigationController {
                     navController.dismiss(animated: true, completion: nil)

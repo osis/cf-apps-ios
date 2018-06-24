@@ -1,0 +1,17 @@
+{
+  "name":"",
+  "build":"",
+  "support":"http://support.cloudfoundry.com",
+  "version":0,
+  "description":"Cloud Foundry",
+  "authorization_endpoint":"http://127.0.0.1:8080",
+  "token_endpoint":"http://127.0.0.1:8080",
+  "min_cli_version":"6.13.0",
+  "min_recommended_cli_version":"latest",
+  "api_version":"2.57.0",
+  "app_ssh_endpoint":"ssh.test.io:2222",
+  "app_ssh_host_key_fingerprint":"11:22:33:44:55:66:77:88:99:00:a1:a2:a3",
+  "app_ssh_oauth_client":"ssh-proxy",
+  "logging_endpoint":"wss://127.0.0.1:8080",
+  "doppler_logging_endpoint":"wss://127.0.0.1:8080"
+}
