@@ -13,7 +13,4 @@ before_install:
 install: true
 
 script:
-  - xcodebuild -workspace CF\ Apps.xcworkspace -scheme CF\ Apps -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone SE' build-for-testing test | xcpretty
-
-after_success:
-  - sleep 5
+  - travis_retry xcodebuild -workspace CF\ Apps.xcworkspace -scheme CF\ Apps -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone SE' build-for-testing test | xcpretty
